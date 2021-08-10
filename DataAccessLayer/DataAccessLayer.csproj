@@ -123,6 +123,9 @@
     <Compile Include="SBP_BlotterOpeningBalance.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="SBP_BlotterOpeningClosingBalanceDIfferential.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="SBP_BlotterRECON.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>

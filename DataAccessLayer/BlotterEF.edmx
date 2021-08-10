@@ -172,7 +172,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CRRFinconId" Type="int" Nullable="false" />
-          <Property Name="ReportDate" Type="date" Nullable="false" />
+          <Property Name="ReportDate" Type="date" />
           <Property Name="WeekDays" Type="varchar" MaxLength="20" />
           <Property Name="KarachiTotal" Type="numeric" Precision="18" Scale="0" />
           <Property Name="HyderabadTotal" Type="numeric" Precision="18" Scale="0" />
@@ -395,7 +395,6 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="EstimatedOpenBal" Type="numeric" Precision="18" Scale="0" />
           <Property Name="OpenBalActual" Type="numeric" Precision="18" Scale="0" />
           <Property Name="AdjOpenBal" Type="numeric" Precision="18" Scale="0" />
           <Property Name="BalDate" Type="date" />
@@ -405,6 +404,23 @@
           <Property Name="UpdateDate" Type="datetime" />
           <Property Name="BR" Type="int" Nullable="false" />
           <Property Name="BID" Type="int" Nullable="false" />
+          <Property Name="CurID" Type="int" Nullable="false" />
+          <Property Name="Flag" Type="varchar" MaxLength="2" />
+          <Property Name="EstimatedOpenBal" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="SBP_BlotterOpeningClosingBalanceDIfferential">
+          <Key>
+            <PropertyRef Name="SNo" />
+          </Key>
+          <Property Name="SNo" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OpenBalID" Type="bigint" Nullable="false" />
+          <Property Name="DataType" Type="varchar" MaxLength="50" />
+          <Property Name="Date" Type="date" />
+          <Property Name="InFlow" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="OutFLow" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="BR" Type="int" Nullable="false" />
           <Property Name="CurID" Type="int" Nullable="false" />
           <Property Name="Flag" Type="varchar" MaxLength="2" />
         </EntityType>
@@ -787,6 +803,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SBP_BlotterOpeningClosingBalanceDIfferential_OpenBalID">
+          <End Role="SBP_BlotterOpeningBalance" Type="Self.SBP_BlotterOpeningBalance" Multiplicity="1" />
+          <End Role="SBP_BlotterOpeningClosingBalanceDIfferential" Type="Self.SBP_BlotterOpeningClosingBalanceDIfferential" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SBP_BlotterOpeningBalance">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SBP_BlotterOpeningClosingBalanceDIfferential">
+              <PropertyRef Name="OpenBalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SBP_BlotterRTGS_BranchID">
           <End Role="Branches" Type="Self.Branches" Multiplicity="1" />
           <End Role="SBP_BlotterRTGS" Type="Self.SBP_BlotterRTGS" Multiplicity="*" />
@@ -982,10 +1010,6 @@
           <Parameter Name="userid" Type="int" Mode="In" />
         </Function>
         <Function Name="SP_GETAllClearingTransactionTitles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="SP_GetAllNostroBankList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="currencyId" Type="int" Mode="In" />
-        </Function>
-        <Function Name="SP_GETAllNostroBanks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SP_GetAllOpeningBalance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
           <Parameter Name="BranchID" Type="int" Mode="In" />
@@ -1023,12 +1047,6 @@
           <Parameter Name="Date" Type="datetime" Mode="In" />
           <Parameter Name="Flag" Type="varchar" Mode="In" />
         </Function>
-        <Function Name="SP_GetSBPBlotterCRD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="UserID" Type="int" Mode="In" />
-          <Parameter Name="BranchID" Type="int" Mode="In" />
-          <Parameter Name="CurID" Type="int" Mode="In" />
-          <Parameter Name="BR" Type="int" Mode="In" />
-        </Function>
         <Function Name="SP_GetSBPBlotterCRRFINCON" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
           <Parameter Name="BranchID" Type="int" Mode="In" />
@@ -1036,12 +1054,6 @@
           <Parameter Name="BR" Type="int" Mode="In" />
         </Function>
         <Function Name="SP_GetSBPBlotterFR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="UserID" Type="int" Mode="In" />
-          <Parameter Name="BranchID" Type="int" Mode="In" />
-          <Parameter Name="CurID" Type="int" Mode="In" />
-          <Parameter Name="BR" Type="int" Mode="In" />
-        </Function>
-        <Function Name="SP_GetSBPBlotterRECON" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
           <Parameter Name="BranchID" Type="int" Mode="In" />
           <Parameter Name="CurID" Type="int" Mode="In" />
@@ -1067,6 +1079,20 @@
           <Parameter Name="BlotterType" Type="nvarchar" Mode="In" />
           <Parameter Name="URID" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_InsertOpeningBalance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OpenBalActual" Type="numeric" Mode="In" />
+          <Parameter Name="AdjOpenBal" Type="numeric" Mode="In" />
+          <Parameter Name="BalDate" Type="date" Mode="In" />
+          <Parameter Name="DataType" Type="varchar" Mode="In" />
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="CreateDate" Type="datetime" Mode="In" />
+          <Parameter Name="UpdateDate" Type="datetime" Mode="In" />
+          <Parameter Name="BR" Type="int" Mode="In" />
+          <Parameter Name="BID" Type="int" Mode="In" />
+          <Parameter Name="CurID" Type="int" Mode="In" />
+          <Parameter Name="Flag" Type="varchar" Mode="In" />
+          <Parameter Name="EstimatedOpenBal" Type="numeric" Mode="In" />
+        </Function>
         <Function Name="SP_ReconcileOPICSManualData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BR" Type="int" Mode="In" />
           <Parameter Name="Date" Type="datetime" Mode="In" />
@@ -1075,10 +1101,6 @@
           <Parameter Name="Br" Type="varchar" Mode="In" />
           <Parameter Name="DataType" Type="varchar" Mode="In" />
           <Parameter Name="SelectedDate" Type="date" Mode="In" />
-        </Function>
-        <Function Name="SP_SBPBlotter_FCY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Br" Type="varchar" Mode="In" />
-          <Parameter Name="Curr" Type="int" Mode="In" />
         </Function>
         <Function Name="SP_SBPBlotterRunningBal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Br" Type="varchar" Mode="In" />
@@ -1120,6 +1142,21 @@
           <Parameter Name="BlotterType" Type="nvarchar" Mode="In" />
           <Parameter Name="URID" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_UpdateOpeningBalance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="bigint" Mode="In" />
+          <Parameter Name="OpenBalActual" Type="numeric" Mode="In" />
+          <Parameter Name="AdjOpenBal" Type="numeric" Mode="In" />
+          <Parameter Name="BalDate" Type="date" Mode="In" />
+          <Parameter Name="DataType" Type="varchar" Mode="In" />
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="CreateDate" Type="datetime" Mode="In" />
+          <Parameter Name="UpdateDate" Type="datetime" Mode="In" />
+          <Parameter Name="BR" Type="int" Mode="In" />
+          <Parameter Name="BID" Type="int" Mode="In" />
+          <Parameter Name="CurID" Type="int" Mode="In" />
+          <Parameter Name="Flag" Type="varchar" Mode="In" />
+          <Parameter Name="EstimatedOpenBal" Type="numeric" Mode="In" />
+        </Function>
         <Function Name="SP_UpdateUserPassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userId" Type="int" Mode="In" />
           <Parameter Name="OldPassword" Type="varchar" Mode="In" />
@@ -1148,6 +1185,7 @@
           <EntitySet Name="SBP_BlotterManualEstBalance" EntityType="Self.SBP_BlotterManualEstBalance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterOpening" EntityType="Self.SBP_BlotterOpening" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterOpeningBalance" EntityType="Self.SBP_BlotterOpeningBalance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SBP_BlotterOpeningClosingBalanceDIfferential" EntityType="Self.SBP_BlotterOpeningClosingBalanceDIfferential" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterRECON" EntityType="Self.SBP_BlotterRECON" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterRTGS" EntityType="Self.SBP_BlotterRTGS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterSetup" EntityType="Self.SBP_BlotterSetup" Schema="dbo" store:Type="Tables" />
@@ -1230,6 +1268,10 @@
             <End Role="SBP_LoginInfo" EntitySet="SBP_LoginInfo" />
             <End Role="SBP_BlotterOpeningBalance" EntitySet="SBP_BlotterOpeningBalance" />
           </AssociationSet>
+          <AssociationSet Name="FK_SBP_BlotterOpeningClosingBalanceDIfferential_OpenBalID" Association="Self.FK_SBP_BlotterOpeningClosingBalanceDIfferential_OpenBalID">
+            <End Role="SBP_BlotterOpeningBalance" EntitySet="SBP_BlotterOpeningBalance" />
+            <End Role="SBP_BlotterOpeningClosingBalanceDIfferential" EntitySet="SBP_BlotterOpeningClosingBalanceDIfferential" />
+          </AssociationSet>
           <AssociationSet Name="FK_SBP_BlotterRTGS_BranchID" Association="Self.FK_SBP_BlotterRTGS_BranchID">
             <End Role="Branches" EntitySet="Branches" />
             <End Role="SBP_BlotterRTGS" EntitySet="SBP_BlotterRTGS" />
@@ -1294,7 +1336,6 @@
           <FunctionImport Name="SP_GETAllClearingTransactionTitles" ReturnType="Collection(BlotterEF.SP_GETAllClearingTransactionTitles_Result)" />
           <FunctionImport Name="SP_GETAllTBOTransactionTitles" ReturnType="Collection(BlotterEF.SP_GETAllTBOTransactionTitles_Result)" />
           <FunctionImport Name="SP_GETAllTradeTransactionTitles" ReturnType="Collection(BlotterEF.SP_GETAllTradeTransactionTitles_Result)" />
-          <EntitySet Name="NostroBanks" EntityType="BlotterEF.NostroBank" />
           <EntitySet Name="Branches" EntityType="BlotterEF.Branches" />
           <EntitySet Name="UserRoles" EntityType="BlotterEF.UserRole" />
           <EntitySet Name="UserRoleRelations" EntityType="BlotterEF.UserRoleRelation" />
@@ -1392,16 +1433,6 @@
             <Parameter Name="CurID" Mode="In" Type="Int32" />
             <Parameter Name="BR" Mode="In" Type="Int32" />
           </FunctionImport>
-          <EntitySet Name="SBP_BlotterCRD" EntityType="BlotterEF.SBP_BlotterCRD" />
-          <EntitySet Name="SBP_BlotterRECON" EntityType="BlotterEF.SBP_BlotterRECON" />
-          <AssociationSet Name="FK__SBP_Blott__Nostr__7D8391DF" Association="BlotterEF.FK__SBP_Blott__Nostr__7D8391DF">
-            <End Role="NostroBank" EntitySet="NostroBanks" />
-            <End Role="SBP_BlotterRECON" EntitySet="SBP_BlotterRECON" />
-          </AssociationSet>
-          <AssociationSet Name="FK__SBP_Blott__Nostr__7E77B618" Association="BlotterEF.FK__SBP_Blott__Nostr__7E77B618">
-            <End Role="NostroBank" EntitySet="NostroBanks" />
-            <End Role="SBP_BlotterCRD" EntitySet="SBP_BlotterCRD" />
-          </AssociationSet>
           <FunctionImport Name="SP_GetSBPBlotterCRD" ReturnType="Collection(BlotterEF.SP_GetSBPBlotterCRD_Result)">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="BranchID" Mode="In" Type="Int32" />
@@ -1411,9 +1442,6 @@
           <FunctionImport Name="SP_SBPBlotter_FCY" ReturnType="Collection(BlotterEF.SP_SBPBlotter_FCY_Result)">
             <Parameter Name="Br" Mode="In" Type="String" />
             <Parameter Name="Curr" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="SP_GetAllBlotterCurrencyById" ReturnType="Collection(BlotterEF.SP_GetAllBlotterCurrencyById_Result)">
-          <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_GetAllNostroBankList" ReturnType="Collection(BlotterEF.SP_GetAllNostroBankList_Result)">
           <Parameter Name="currencyId" Mode="In" Type="Int32" />
@@ -1626,6 +1654,54 @@
             <Parameter Name="BR" Mode="In" Type="Int32" />
             <Parameter Name="Date" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <EntitySet Name="SBP_BlotterOpeningClosingBalanceDIfferential" EntityType="BlotterEF.SBP_BlotterOpeningClosingBalanceDIfferential" />
+          <AssociationSet Name="FK_SBP_BlotterOpeningClosingBalanceDIfferential_OpenBalID" Association="BlotterEF.FK_SBP_BlotterOpeningClosingBalanceDIfferential_OpenBalID">
+            <End Role="SBP_BlotterOpeningBalance" EntitySet="SBP_BlotterOpeningBalance" />
+            <End Role="SBP_BlotterOpeningClosingBalanceDIfferential" EntitySet="SBP_BlotterOpeningClosingBalanceDIfferential" />
+          </AssociationSet>
+          <FunctionImport Name="SP_InsertOpeningBalance">
+            <Parameter Name="OpenBalActual" Mode="In" Type="Decimal" />
+            <Parameter Name="AdjOpenBal" Mode="In" Type="Decimal" />
+            <Parameter Name="BalDate" Mode="In" Type="DateTime" />
+            <Parameter Name="DataType" Mode="In" Type="String" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="CreateDate" Mode="In" Type="DateTime" />
+            <Parameter Name="UpdateDate" Mode="In" Type="DateTime" />
+            <Parameter Name="BR" Mode="In" Type="Int32" />
+            <Parameter Name="BID" Mode="In" Type="Int32" />
+            <Parameter Name="CurID" Mode="In" Type="Int32" />
+            <Parameter Name="Flag" Mode="In" Type="String" />
+            <Parameter Name="EstimatedOpenBal" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="SP_UpdateOpeningBalance">
+            <Parameter Name="Id" Mode="In" Type="Int64" />
+            <Parameter Name="OpenBalActual" Mode="In" Type="Decimal" />
+            <Parameter Name="AdjOpenBal" Mode="In" Type="Decimal" />
+            <Parameter Name="BalDate" Mode="In" Type="DateTime" />
+            <Parameter Name="DataType" Mode="In" Type="String" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="CreateDate" Mode="In" Type="DateTime" />
+            <Parameter Name="UpdateDate" Mode="In" Type="DateTime" />
+            <Parameter Name="BR" Mode="In" Type="Int32" />
+            <Parameter Name="BID" Mode="In" Type="Int32" />
+            <Parameter Name="CurID" Mode="In" Type="Int32" />
+            <Parameter Name="Flag" Mode="In" Type="String" />
+            <Parameter Name="EstimatedOpenBal" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="SP_GetAllBlotterCurrencyById" ReturnType="Collection(BlotterEF.SP_GetAllBlotterCurrencyById_Result)">
+          <Parameter Name="userid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="NostroBanks" EntityType="BlotterEF.NostroBank" />
+          <EntitySet Name="SBP_BlotterCRD" EntityType="BlotterEF.SBP_BlotterCRD" />
+          <EntitySet Name="SBP_BlotterRECON" EntityType="BlotterEF.SBP_BlotterRECON" />
+          <AssociationSet Name="FK__SBP_Blott__Nostr__7D8391DF" Association="BlotterEF.FK__SBP_Blott__Nostr__7D8391DF">
+            <End Role="NostroBank" EntitySet="NostroBanks" />
+            <End Role="SBP_BlotterRECON" EntitySet="SBP_BlotterRECON" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SBP_Blott__Nostr__7E77B618" Association="BlotterEF.FK__SBP_Blott__Nostr__7E77B618">
+            <End Role="NostroBank" EntitySet="NostroBanks" />
+            <End Role="SBP_BlotterCRD" EntitySet="SBP_BlotterCRD" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="SP_SBPOpicsSystemDate_Result">
           <Property Type="DateTime" Name="OpicsCurrentDate" Nullable="true" Precision="23" />
@@ -1687,21 +1763,6 @@
           <Property Type="Int32" Name="TTID" Nullable="false" />
           <Property Type="String" Name="TranctionTitle" Nullable="true" MaxLength="50" />
         </ComplexType>
-        <EntityType Name="NostroBank">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BankName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="NostroLimit" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="NostroDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="isActive" Type="Boolean" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
-          <Property Name="CurId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="SBP_BlotterRECON" Relationship="BlotterEF.FK__SBP_Blott__Nostr__7D8391DF" FromRole="NostroBank" ToRole="SBP_BlotterRECON" />
-          <NavigationProperty Name="SBP_BlotterCRD" Relationship="BlotterEF.FK__SBP_Blott__Nostr__7E77B618" FromRole="NostroBank" ToRole="SBP_BlotterCRD" />
-        </EntityType>
         <EntityType Name="Branches">
           <Key>
             <PropertyRef Name="BID" />
@@ -2085,7 +2146,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CRRFinconId" Type="Int32" Nullable="false" />
-          <Property Name="ReportDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ReportDate" Type="DateTime" Precision="0" />
           <Property Name="WeekDays" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="KarachiTotal" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="HyderabadTotal" Type="Decimal" Precision="18" Scale="0" />
@@ -2169,69 +2230,6 @@
           <Property Type="Int32" Name="CurID" Nullable="false" />
           <Property Type="String" Name="Flag" Nullable="true" MaxLength="2" />
         </ComplexType>
-        <EntityType Name="SBP_BlotterCRD">
-          <Key>
-            <PropertyRef Name="SNo" />
-          </Key>
-          <Property Name="SNo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nostro_Account" Type="Int64" Nullable="false" />
-          <Property Name="ValueDate" Type="DateTime" Precision="0" />
-          <Property Name="CRD_InFlow" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="CRD_OutFlow" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
-          <Property Name="BR" Type="Int32" Nullable="false" />
-          <Property Name="BID" Type="Int32" Nullable="false" />
-          <Property Name="CurID" Type="Int32" Nullable="false" />
-          <Property Name="Flag" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="NostroBank" Relationship="BlotterEF.FK__SBP_Blott__Nostr__7E77B618" FromRole="SBP_BlotterCRD" ToRole="NostroBank" />
-        </EntityType>
-        <EntityType Name="SBP_BlotterRECON">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NostroBankId" Type="Int64" Nullable="false" />
-          <Property Name="LastStatementDate" Type="DateTime" Precision="0" />
-          <Property Name="OurBooks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="TheirBooks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ConversionRate" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="EquivalentUSD" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="LimitAvailable" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
-          <Property Name="BR" Type="Int32" Nullable="false" />
-          <Property Name="BID" Type="Int32" Nullable="false" />
-          <Property Name="CurID" Type="Int32" Nullable="false" />
-          <Property Name="Flag" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="NostroBank" Relationship="BlotterEF.FK__SBP_Blott__Nostr__7D8391DF" FromRole="SBP_BlotterRECON" ToRole="NostroBank" />
-        </EntityType>
-        <Association Name="FK__SBP_Blott__Nostr__7D8391DF">
-          <End Type="BlotterEF.NostroBank" Role="NostroBank" Multiplicity="1" />
-          <End Type="BlotterEF.SBP_BlotterRECON" Role="SBP_BlotterRECON" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NostroBank">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="SBP_BlotterRECON">
-              <PropertyRef Name="NostroBankId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__SBP_Blott__Nostr__7E77B618">
-          <End Type="BlotterEF.NostroBank" Role="NostroBank" Multiplicity="1" />
-          <End Type="BlotterEF.SBP_BlotterCRD" Role="SBP_BlotterCRD" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NostroBank">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="SBP_BlotterCRD">
-              <PropertyRef Name="Nostro_Account" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <ComplexType Name="SP_GetSBPBlotterCRD_Result">
           <Property Type="Int64" Name="SNo" Nullable="false" />
           <Property Type="Int64" Name="Nostro_Account" Nullable="false" />
@@ -2258,10 +2256,6 @@
           <Property Type="Decimal" Name="Inflow" Nullable="true" Precision="38" Scale="4" />
           <Property Type="Decimal" Name="Outflow" Nullable="true" Precision="38" Scale="4" />
           <Property Type="Decimal" Name="OpeningBalance" Nullable="false" Precision="19" Scale="4" />
-        </ComplexType>
-        <ComplexType Name="SP_GetAllBlotterCurrencyById_Result">
-          <Property Type="String" Name="BlotterType" Nullable="true" MaxLength="3" />
-          <Property Type="String" Name="Currencies" Nullable="true" />
         </ComplexType>
         <ComplexType Name="SP_GetAllNostroBankList_Result">
           <Property Type="Int64" Name="ID" Nullable="false" />
@@ -2448,6 +2442,7 @@
           <Property Name="Flag" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Branch" Relationship="BlotterEF.FK_SBP_BlotterOpeningBalance_BranchID" FromRole="SBP_BlotterOpeningBalance" ToRole="Branches" />
           <NavigationProperty Name="SBP_LoginInfo" Relationship="BlotterEF.FK_SBP_BlotterOpeningBalance_UserID" FromRole="SBP_BlotterOpeningBalance" ToRole="SBP_LoginInfo" />
+          <NavigationProperty Name="SBP_BlotterOpeningClosingBalanceDIfferential" Relationship="BlotterEF.FK_SBP_BlotterOpeningClosingBalanceDIfferential_OpenBalID" FromRole="SBP_BlotterOpeningBalance" ToRole="SBP_BlotterOpeningClosingBalanceDIfferential" />
         </EntityType>
         <Association Name="FK_SBP_BlotterOpeningBalance_BranchID">
           <End Type="BlotterEF.Branches" Role="Branches" Multiplicity="1" />
@@ -3066,6 +3061,117 @@
           <Property Type="Int32" Name="CurID" Nullable="false" />
           <Property Type="String" Name="Flag" Nullable="true" MaxLength="2" />
         </ComplexType>
+        <EntityType Name="SBP_BlotterOpeningClosingBalanceDIfferential">
+          <Key>
+            <PropertyRef Name="SNo" />
+          </Key>
+          <Property Name="SNo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OpenBalID" Type="Int64" Nullable="false" />
+          <Property Name="DataType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="InFlow" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="OutFLow" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="BR" Type="Int32" Nullable="false" />
+          <Property Name="CurID" Type="Int32" Nullable="false" />
+          <Property Name="Flag" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SBP_BlotterOpeningBalance" Relationship="BlotterEF.FK_SBP_BlotterOpeningClosingBalanceDIfferential_OpenBalID" FromRole="SBP_BlotterOpeningClosingBalanceDIfferential" ToRole="SBP_BlotterOpeningBalance" />
+        </EntityType>
+        <Association Name="FK_SBP_BlotterOpeningClosingBalanceDIfferential_OpenBalID">
+          <End Type="BlotterEF.SBP_BlotterOpeningBalance" Role="SBP_BlotterOpeningBalance" Multiplicity="1" />
+          <End Type="BlotterEF.SBP_BlotterOpeningClosingBalanceDIfferential" Role="SBP_BlotterOpeningClosingBalanceDIfferential" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SBP_BlotterOpeningBalance">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SBP_BlotterOpeningClosingBalanceDIfferential">
+              <PropertyRef Name="OpenBalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="SP_GetAllBlotterCurrencyById_Result">
+          <Property Type="String" Name="BlotterType" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="Currencies" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="NostroBank">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BankName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NostroLimit" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="NostroDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="CurId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SBP_BlotterRECON" Relationship="BlotterEF.FK__SBP_Blott__Nostr__7D8391DF" FromRole="NostroBank" ToRole="SBP_BlotterRECON" />
+          <NavigationProperty Name="SBP_BlotterCRD" Relationship="BlotterEF.FK__SBP_Blott__Nostr__7E77B618" FromRole="NostroBank" ToRole="SBP_BlotterCRD" />
+        </EntityType>
+        <EntityType Name="SBP_BlotterCRD">
+          <Key>
+            <PropertyRef Name="SNo" />
+          </Key>
+          <Property Name="SNo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nostro_Account" Type="Int64" Nullable="false" />
+          <Property Name="ValueDate" Type="DateTime" Precision="0" />
+          <Property Name="CRD_InFlow" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CRD_OutFlow" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="BR" Type="Int32" Nullable="false" />
+          <Property Name="BID" Type="Int32" Nullable="false" />
+          <Property Name="CurID" Type="Int32" Nullable="false" />
+          <Property Name="Flag" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="NostroBank" Relationship="BlotterEF.FK__SBP_Blott__Nostr__7E77B618" FromRole="SBP_BlotterCRD" ToRole="NostroBank" />
+        </EntityType>
+        <EntityType Name="SBP_BlotterRECON">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NostroBankId" Type="Int64" Nullable="false" />
+          <Property Name="LastStatementDate" Type="DateTime" Precision="0" />
+          <Property Name="OurBooks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="TheirBooks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ConversionRate" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="EquivalentUSD" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="LimitAvailable" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="BR" Type="Int32" Nullable="false" />
+          <Property Name="BID" Type="Int32" Nullable="false" />
+          <Property Name="CurID" Type="Int32" Nullable="false" />
+          <Property Name="Flag" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="NostroBank" Relationship="BlotterEF.FK__SBP_Blott__Nostr__7D8391DF" FromRole="SBP_BlotterRECON" ToRole="NostroBank" />
+        </EntityType>
+        <Association Name="FK__SBP_Blott__Nostr__7D8391DF">
+          <End Type="BlotterEF.NostroBank" Role="NostroBank" Multiplicity="1" />
+          <End Type="BlotterEF.SBP_BlotterRECON" Role="SBP_BlotterRECON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NostroBank">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SBP_BlotterRECON">
+              <PropertyRef Name="NostroBankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SBP_Blott__Nostr__7E77B618">
+          <End Type="BlotterEF.NostroBank" Role="NostroBank" Multiplicity="1" />
+          <End Type="BlotterEF.SBP_BlotterCRD" Role="SBP_BlotterCRD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NostroBank">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SBP_BlotterCRD">
+              <PropertyRef Name="Nostro_Account" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3152,20 +3258,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="NostroBanks">
-            <EntityTypeMapping TypeName="BlotterEF.NostroBank">
-              <MappingFragment StoreEntitySet="NostroBanks">
-                <ScalarProperty Name="CurId" ColumnName="CurId" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="isActive" ColumnName="isActive" />
-                <ScalarProperty Name="NostroDescription" ColumnName="NostroDescription" />
-                <ScalarProperty Name="NostroLimit" ColumnName="NostroLimit" />
-                <ScalarProperty Name="BankName" ColumnName="BankName" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Branches">
             <EntityTypeMapping TypeName="BlotterEF.Branches">
               <MappingFragment StoreEntitySet="Branches">
@@ -3606,132 +3698,6 @@
                 <ScalarProperty Name="BID" ColumnName="BID" />
                 <ScalarProperty Name="CurID" ColumnName="CurID" />
                 <ScalarProperty Name="Flag" ColumnName="Flag" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <EntitySetMapping Name="SBP_BlotterCRD">
-            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterCRD">
-              <MappingFragment StoreEntitySet="SBP_BlotterCRD">
-                <ScalarProperty Name="Flag" ColumnName="Flag" />
-                <ScalarProperty Name="CurID" ColumnName="CurID" />
-                <ScalarProperty Name="BID" ColumnName="BID" />
-                <ScalarProperty Name="BR" ColumnName="BR" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="CRD_OutFlow" ColumnName="CRD_OutFlow" />
-                <ScalarProperty Name="CRD_InFlow" ColumnName="CRD_InFlow" />
-                <ScalarProperty Name="ValueDate" ColumnName="ValueDate" />
-                <ScalarProperty Name="Nostro_Account" ColumnName="Nostro_Account" />
-                <ScalarProperty Name="SNo" ColumnName="SNo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SBP_BlotterRECON">
-            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterRECON">
-              <MappingFragment StoreEntitySet="SBP_BlotterRECON">
-                <ScalarProperty Name="Flag" ColumnName="Flag" />
-                <ScalarProperty Name="CurID" ColumnName="CurID" />
-                <ScalarProperty Name="BID" ColumnName="BID" />
-                <ScalarProperty Name="BR" ColumnName="BR" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="LimitAvailable" ColumnName="LimitAvailable" />
-                <ScalarProperty Name="EquivalentUSD" ColumnName="EquivalentUSD" />
-                <ScalarProperty Name="ConversionRate" ColumnName="ConversionRate" />
-                <ScalarProperty Name="TheirBooks" ColumnName="TheirBooks" />
-                <ScalarProperty Name="OurBooks" ColumnName="OurBooks" />
-                <ScalarProperty Name="LastStatementDate" ColumnName="LastStatementDate" />
-                <ScalarProperty Name="NostroBankId" ColumnName="NostroBankId" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="SP_GetSBPBlotterCRD" FunctionName="BlotterEF.Store.SP_GetSBPBlotterCRD">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="BlotterEF.SP_GetSBPBlotterCRD_Result">
-                <ScalarProperty Name="SNo" ColumnName="SNo" />
-                <ScalarProperty Name="Nostro_Account" ColumnName="Nostro_Account" />
-                <ScalarProperty Name="ValueDate" ColumnName="ValueDate" />
-                <ScalarProperty Name="CRD_InFlow" ColumnName="CRD_InFlow" />
-                <ScalarProperty Name="CRD_OutFlow" ColumnName="CRD_OutFlow" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="BR" ColumnName="BR" />
-                <ScalarProperty Name="BID" ColumnName="BID" />
-                <ScalarProperty Name="CurID" ColumnName="CurID" />
-                <ScalarProperty Name="Flag" ColumnName="Flag" />
-                <ScalarProperty Name="BankName" ColumnName="BankName" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_SBPBlotter_FCY" FunctionName="BlotterEF.Store.SP_SBPBlotter_FCY">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="BlotterEF.SP_SBPBlotter_FCY_Result">
-                <ScalarProperty Name="DealNo" ColumnName="DealNo" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="DealDate" ColumnName="DealDate" />
-                <ScalarProperty Name="ValueDate" ColumnName="ValueDate" />
-                <ScalarProperty Name="MaturityDate" ColumnName="MaturityDate" />
-                <ScalarProperty Name="Currency" ColumnName="Currency" />
-                <ScalarProperty Name="Inflow" ColumnName="Inflow" />
-                <ScalarProperty Name="Outflow" ColumnName="Outflow" />
-                <ScalarProperty Name="OpeningBalance" ColumnName="OpeningBalance" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_GetAllBlotterCurrencyById" FunctionName="BlotterEF.Store.SP_GetAllBlotterCurrencyById">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="BlotterEF.SP_GetAllBlotterCurrencyById_Result">
-                <ScalarProperty Name="BlotterType" ColumnName="BlotterType" />
-                <ScalarProperty Name="Currencies" ColumnName="Currencies" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_GetAllNostroBankList" FunctionName="BlotterEF.Store.SP_GetAllNostroBankList">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="BlotterEF.SP_GetAllNostroBankList_Result">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="BankName" ColumnName="BankName" />
-                <ScalarProperty Name="NostroLimit" ColumnName="NostroLimit" />
-                <ScalarProperty Name="NostroDescription" ColumnName="NostroDescription" />
-                <ScalarProperty Name="isActive" ColumnName="isActive" />
-                <ScalarProperty Name="CurId" ColumnName="CurId" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_GetSBPBlotterRECON" FunctionName="BlotterEF.Store.SP_GetSBPBlotterRECON">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="BlotterEF.SP_GetSBPBlotterRECON_Result">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="NostroBankId" ColumnName="NostroBankId" />
-                <ScalarProperty Name="LastStatementDate" ColumnName="LastStatementDate" />
-                <ScalarProperty Name="OurBooks" ColumnName="OurBooks" />
-                <ScalarProperty Name="TheirBooks" ColumnName="TheirBooks" />
-                <ScalarProperty Name="ConversionRate" ColumnName="ConversionRate" />
-                <ScalarProperty Name="EquivalentUSD" ColumnName="EquivalentUSD" />
-                <ScalarProperty Name="LimitAvailable" ColumnName="LimitAvailable" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="BR" ColumnName="BR" />
-                <ScalarProperty Name="BID" ColumnName="BID" />
-                <ScalarProperty Name="CurID" ColumnName="CurID" />
-                <ScalarProperty Name="Flag" ColumnName="Flag" />
-                <ScalarProperty Name="BankName" ColumnName="BankName" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_GETAllNostroBanks" FunctionName="BlotterEF.Store.SP_GETAllNostroBanks">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="BlotterEF.SP_GETAllNostroBanks_Result">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="BankName" ColumnName="BankName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -4251,6 +4217,86 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="SBP_BlotterOpeningClosingBalanceDIfferential">
+            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterOpeningClosingBalanceDIfferential">
+              <MappingFragment StoreEntitySet="SBP_BlotterOpeningClosingBalanceDIfferential">
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+                <ScalarProperty Name="CurID" ColumnName="CurID" />
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="OutFLow" ColumnName="OutFLow" />
+                <ScalarProperty Name="InFlow" ColumnName="InFlow" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="DataType" ColumnName="DataType" />
+                <ScalarProperty Name="OpenBalID" ColumnName="OpenBalID" />
+                <ScalarProperty Name="SNo" ColumnName="SNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_InsertOpeningBalance" FunctionName="BlotterEF.Store.SP_InsertOpeningBalance" />
+          <FunctionImportMapping FunctionImportName="SP_UpdateOpeningBalance" FunctionName="BlotterEF.Store.SP_UpdateOpeningBalance" />
+          <FunctionImportMapping FunctionImportName="SP_GetAllBlotterCurrencyById" FunctionName="BlotterEF.Store.SP_GetAllBlotterCurrencyById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BlotterEF.SP_GetAllBlotterCurrencyById_Result">
+                <ScalarProperty Name="BlotterType" ColumnName="BlotterType" />
+                <ScalarProperty Name="Currencies" ColumnName="Currencies" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="NostroBanks">
+            <EntityTypeMapping TypeName="BlotterEF.NostroBank">
+              <MappingFragment StoreEntitySet="NostroBanks">
+                <ScalarProperty Name="CurId" ColumnName="CurId" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="NostroDescription" ColumnName="NostroDescription" />
+                <ScalarProperty Name="NostroLimit" ColumnName="NostroLimit" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SBP_BlotterCRD">
+            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterCRD">
+              <MappingFragment StoreEntitySet="SBP_BlotterCRD">
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+                <ScalarProperty Name="CurID" ColumnName="CurID" />
+                <ScalarProperty Name="BID" ColumnName="BID" />
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="CRD_OutFlow" ColumnName="CRD_OutFlow" />
+                <ScalarProperty Name="CRD_InFlow" ColumnName="CRD_InFlow" />
+                <ScalarProperty Name="ValueDate" ColumnName="ValueDate" />
+                <ScalarProperty Name="Nostro_Account" ColumnName="Nostro_Account" />
+                <ScalarProperty Name="SNo" ColumnName="SNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SBP_BlotterRECON">
+            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterRECON">
+              <MappingFragment StoreEntitySet="SBP_BlotterRECON">
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+                <ScalarProperty Name="CurID" ColumnName="CurID" />
+                <ScalarProperty Name="BID" ColumnName="BID" />
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="LimitAvailable" ColumnName="LimitAvailable" />
+                <ScalarProperty Name="EquivalentUSD" ColumnName="EquivalentUSD" />
+                <ScalarProperty Name="ConversionRate" ColumnName="ConversionRate" />
+                <ScalarProperty Name="TheirBooks" ColumnName="TheirBooks" />
+                <ScalarProperty Name="OurBooks" ColumnName="OurBooks" />
+                <ScalarProperty Name="LastStatementDate" ColumnName="LastStatementDate" />
+                <ScalarProperty Name="NostroBankId" ColumnName="NostroBankId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

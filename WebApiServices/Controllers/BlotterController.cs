@@ -96,11 +96,11 @@ namespace WebApiServices.Controllers
 
         // GET:   
         [HttpGet]
-        public JsonResult<Models.SBP_BlotterOpeningBalance> GetLatestOpeningBalaceForToday(int BR)
+        public JsonResult<Models.SBP_BlotterOpeningBalance> GetLatestOpeningBalaceForToday(int BR,string Date)
         {
 
             EntityMapperBlotter<DataAccessLayer.SP_GetOpeningBalance_Result, Models.SBP_BlotterOpeningBalance> mapObj = new EntityMapperBlotter<DataAccessLayer.SP_GetOpeningBalance_Result, Models.SBP_BlotterOpeningBalance>();
-            DataAccessLayer.SP_GetOpeningBalance_Result dalEmail = DAL.GetOpeningBalance(BR);
+            DataAccessLayer.SP_GetOpeningBalance_Result dalEmail = DAL.GetOpeningBalance(BR,Convert.ToDateTime(Date));
             Models.SBP_BlotterOpeningBalance SumForEmail = new Models.SBP_BlotterOpeningBalance();
 
             SumForEmail = mapObj.Translate(dalEmail);

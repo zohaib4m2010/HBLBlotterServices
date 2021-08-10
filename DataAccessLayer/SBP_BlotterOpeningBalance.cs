@@ -14,6 +14,12 @@ namespace DataAccessLayer
     
     public partial class SBP_BlotterOpeningBalance
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public SBP_BlotterOpeningBalance()
+        {
+            this.SBP_BlotterOpeningClosingBalanceDIfferential = new HashSet<SBP_BlotterOpeningClosingBalanceDIfferential>();
+        }
+    
         public long Id { get; set; }
         public Nullable<decimal> EstimatedOpenBal { get; set; }
         public Nullable<decimal> OpenBalActual { get; set; }
@@ -30,5 +36,7 @@ namespace DataAccessLayer
     
         public virtual Branches Branch { get; set; }
         public virtual SBP_LoginInfo SBP_LoginInfo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SBP_BlotterOpeningClosingBalanceDIfferential> SBP_BlotterOpeningClosingBalanceDIfferential { get; set; }
     }
 }

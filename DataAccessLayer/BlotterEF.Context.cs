@@ -31,7 +31,6 @@ namespace DataAccessLayer
         public virtual DbSet<SBP_BlotterSetup> SBP_BlotterSetup { get; set; }
         public virtual DbSet<SBP_BlotterOpening> SBP_BlotterOpening { get; set; }
         public virtual DbSet<SBP_BlotterDTL> SBP_BlotterDTL { get; set; }
-        public virtual DbSet<NostroBank> NostroBanks { get; set; }
         public virtual DbSet<Branches> Branches { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<UserRoleRelation> UserRoleRelations { get; set; }
@@ -41,8 +40,6 @@ namespace DataAccessLayer
         public virtual DbSet<SBP_BlotterCRRFINCON> SBP_BlotterCRRFINCON { get; set; }
         public virtual DbSet<SBP_BlotterBreakups> SBP_BlotterBreakups { get; set; }
         public virtual DbSet<SBP_BlotterCRRReportDaysWiseBal> SBP_BlotterCRRReportDaysWiseBal { get; set; }
-        public virtual DbSet<SBP_BlotterCRD> SBP_BlotterCRD { get; set; }
-        public virtual DbSet<SBP_BlotterRECON> SBP_BlotterRECON { get; set; }
         public virtual DbSet<SBP_LoginInfo> SBP_LoginInfo { get; set; }
         public virtual DbSet<SBP_BlotterOpeningBalance> SBP_BlotterOpeningBalance { get; set; }
         public virtual DbSet<SBP_BlotterManualEstBalance> SBP_BlotterManualEstBalance { get; set; }
@@ -55,6 +52,10 @@ namespace DataAccessLayer
         public virtual DbSet<SBP_BlotterBai_Muajjal> SBP_BlotterBai_Muajjal { get; set; }
         public virtual DbSet<SBP_BlotterManualData> SBP_BlotterManualData { get; set; }
         public virtual DbSet<SBP_BlotterFundingRepo> SBP_BlotterFundingRepo { get; set; }
+        public virtual DbSet<SBP_BlotterOpeningClosingBalanceDIfferential> SBP_BlotterOpeningClosingBalanceDIfferential { get; set; }
+        public virtual DbSet<NostroBank> NostroBanks { get; set; }
+        public virtual DbSet<SBP_BlotterCRD> SBP_BlotterCRD { get; set; }
+        public virtual DbSet<SBP_BlotterRECON> SBP_BlotterRECON { get; set; }
     
         public virtual ObjectResult<SP_SBPOpicsSystemDate_Result> SP_SBPOpicsSystemDate(string brCode)
         {
@@ -359,15 +360,6 @@ namespace DataAccessLayer
                 new ObjectParameter("Curr", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_SBPBlotter_FCY_Result>("SP_SBPBlotter_FCY", brParameter, currParameter);
-        }
-    
-        public virtual ObjectResult<SP_GetAllBlotterCurrencyById_Result> SP_GetAllBlotterCurrencyById(Nullable<int> userid)
-        {
-            var useridParameter = userid.HasValue ?
-                new ObjectParameter("userid", userid) :
-                new ObjectParameter("userid", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetAllBlotterCurrencyById_Result>("SP_GetAllBlotterCurrencyById", useridParameter);
         }
     
         public virtual ObjectResult<SP_GetAllNostroBankList_Result> SP_GetAllNostroBankList(Nullable<int> currencyId)
@@ -731,6 +723,125 @@ namespace DataAccessLayer
                 new ObjectParameter("Date", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetOpeningBalance_Result>("SP_GetOpeningBalance", bRParameter, dateParameter);
+        }
+    
+        public virtual int SP_InsertOpeningBalance(Nullable<decimal> openBalActual, Nullable<decimal> adjOpenBal, Nullable<System.DateTime> balDate, string dataType, Nullable<int> userID, Nullable<System.DateTime> createDate, Nullable<System.DateTime> updateDate, Nullable<int> bR, Nullable<int> bID, Nullable<int> curID, string flag, Nullable<decimal> estimatedOpenBal)
+        {
+            var openBalActualParameter = openBalActual.HasValue ?
+                new ObjectParameter("OpenBalActual", openBalActual) :
+                new ObjectParameter("OpenBalActual", typeof(decimal));
+    
+            var adjOpenBalParameter = adjOpenBal.HasValue ?
+                new ObjectParameter("AdjOpenBal", adjOpenBal) :
+                new ObjectParameter("AdjOpenBal", typeof(decimal));
+    
+            var balDateParameter = balDate.HasValue ?
+                new ObjectParameter("BalDate", balDate) :
+                new ObjectParameter("BalDate", typeof(System.DateTime));
+    
+            var dataTypeParameter = dataType != null ?
+                new ObjectParameter("DataType", dataType) :
+                new ObjectParameter("DataType", typeof(string));
+    
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var createDateParameter = createDate.HasValue ?
+                new ObjectParameter("CreateDate", createDate) :
+                new ObjectParameter("CreateDate", typeof(System.DateTime));
+    
+            var updateDateParameter = updateDate.HasValue ?
+                new ObjectParameter("UpdateDate", updateDate) :
+                new ObjectParameter("UpdateDate", typeof(System.DateTime));
+    
+            var bRParameter = bR.HasValue ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(int));
+    
+            var bIDParameter = bID.HasValue ?
+                new ObjectParameter("BID", bID) :
+                new ObjectParameter("BID", typeof(int));
+    
+            var curIDParameter = curID.HasValue ?
+                new ObjectParameter("CurID", curID) :
+                new ObjectParameter("CurID", typeof(int));
+    
+            var flagParameter = flag != null ?
+                new ObjectParameter("Flag", flag) :
+                new ObjectParameter("Flag", typeof(string));
+    
+            var estimatedOpenBalParameter = estimatedOpenBal.HasValue ?
+                new ObjectParameter("EstimatedOpenBal", estimatedOpenBal) :
+                new ObjectParameter("EstimatedOpenBal", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_InsertOpeningBalance", openBalActualParameter, adjOpenBalParameter, balDateParameter, dataTypeParameter, userIDParameter, createDateParameter, updateDateParameter, bRParameter, bIDParameter, curIDParameter, flagParameter, estimatedOpenBalParameter);
+        }
+    
+        public virtual int SP_UpdateOpeningBalance(Nullable<long> id, Nullable<decimal> openBalActual, Nullable<decimal> adjOpenBal, Nullable<System.DateTime> balDate, string dataType, Nullable<int> userID, Nullable<System.DateTime> createDate, Nullable<System.DateTime> updateDate, Nullable<int> bR, Nullable<int> bID, Nullable<int> curID, string flag, Nullable<decimal> estimatedOpenBal)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(long));
+    
+            var openBalActualParameter = openBalActual.HasValue ?
+                new ObjectParameter("OpenBalActual", openBalActual) :
+                new ObjectParameter("OpenBalActual", typeof(decimal));
+    
+            var adjOpenBalParameter = adjOpenBal.HasValue ?
+                new ObjectParameter("AdjOpenBal", adjOpenBal) :
+                new ObjectParameter("AdjOpenBal", typeof(decimal));
+    
+            var balDateParameter = balDate.HasValue ?
+                new ObjectParameter("BalDate", balDate) :
+                new ObjectParameter("BalDate", typeof(System.DateTime));
+    
+            var dataTypeParameter = dataType != null ?
+                new ObjectParameter("DataType", dataType) :
+                new ObjectParameter("DataType", typeof(string));
+    
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var createDateParameter = createDate.HasValue ?
+                new ObjectParameter("CreateDate", createDate) :
+                new ObjectParameter("CreateDate", typeof(System.DateTime));
+    
+            var updateDateParameter = updateDate.HasValue ?
+                new ObjectParameter("UpdateDate", updateDate) :
+                new ObjectParameter("UpdateDate", typeof(System.DateTime));
+    
+            var bRParameter = bR.HasValue ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(int));
+    
+            var bIDParameter = bID.HasValue ?
+                new ObjectParameter("BID", bID) :
+                new ObjectParameter("BID", typeof(int));
+    
+            var curIDParameter = curID.HasValue ?
+                new ObjectParameter("CurID", curID) :
+                new ObjectParameter("CurID", typeof(int));
+    
+            var flagParameter = flag != null ?
+                new ObjectParameter("Flag", flag) :
+                new ObjectParameter("Flag", typeof(string));
+    
+            var estimatedOpenBalParameter = estimatedOpenBal.HasValue ?
+                new ObjectParameter("EstimatedOpenBal", estimatedOpenBal) :
+                new ObjectParameter("EstimatedOpenBal", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_UpdateOpeningBalance", idParameter, openBalActualParameter, adjOpenBalParameter, balDateParameter, dataTypeParameter, userIDParameter, createDateParameter, updateDateParameter, bRParameter, bIDParameter, curIDParameter, flagParameter, estimatedOpenBalParameter);
+        }
+    
+        public virtual ObjectResult<SP_GetAllBlotterCurrencyById_Result> SP_GetAllBlotterCurrencyById(Nullable<int> userid)
+        {
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetAllBlotterCurrencyById_Result>("SP_GetAllBlotterCurrencyById", useridParameter);
         }
     }
 }

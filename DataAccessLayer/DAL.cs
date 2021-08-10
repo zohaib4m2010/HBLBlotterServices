@@ -41,9 +41,10 @@ namespace DataAccessLayer
 
 
 
-        public static SP_GetOpeningBalance_Result GetOpeningBalance(int BR)
+        public static SP_GetOpeningBalance_Result GetOpeningBalance(int BR,DateTime Date)
         {
-            var results = DbContextB.SP_GetOpeningBalance(BR ,DateTime.Now.AddDays(-38)).FirstOrDefault();
+            //var results = DbContextB.SP_GetOpeningBalance(BR ,DateTime.Now.AddDays(-38)).FirstOrDefault();
+            var results = DbContextB.SP_GetOpeningBalance(BR, Date).FirstOrDefault();
             return results;
         }
 
@@ -122,7 +123,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -143,7 +144,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -236,7 +237,6 @@ namespace DataAccessLayer
                         CRRFINCONItems.RequirementExtBenefit = CRRFINCONItem.RequirementExtBenefit;
                         CRRFINCONItems.CurID = CRRFINCONItem.CurID;
                         CRRFINCONItems.UpdateDate = CRRFINCONItem.UpdateDate;
-                        CRRFINCONItems.UserID = CRRFINCONItem.UserID;
                         DbContextB.SaveChanges();
                         DbContextB.SP_UpdateDaysInBlotterReport(CRRFINCONItem.DemandTimeLiablitiesTotalForCRR, CRRFINCONItem.StartDate, CRRFINCONItem.EndDate, CRRFINCONItem.BR);
                     }
@@ -250,7 +250,7 @@ namespace DataAccessLayer
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -270,7 +270,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -325,17 +325,17 @@ namespace DataAccessLayer
                 {
                     TboItems.DataType = TBOItem.DataType;
                     TboItems.TTID = TBOItem.TTID;
+                    TboItems.TBO_Date = TBOItem.TBO_Date;
                     TboItems.TBO_InFlow = TBOItem.TBO_InFlow;
                     TboItems.TBO_OutFLow = TBOItem.TBO_OutFLow;
                     TboItems.Note = TBOItem.Note;
                     TboItems.CurID = TBOItem.CurID;
-                    TboItems.UserID = TBOItem.UserID;
                     TboItems.UpdateDate = TBOItem.UpdateDate;
                     DbContextB.SaveChanges();
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -355,7 +355,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -410,7 +410,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -430,7 +430,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -484,7 +484,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -504,7 +504,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -569,7 +569,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -588,7 +588,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -643,7 +643,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -663,7 +663,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -718,7 +718,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -738,7 +738,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -817,7 +817,7 @@ namespace DataAccessLayer
                     status = true;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -837,7 +837,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -884,6 +884,7 @@ namespace DataAccessLayer
                 SBP_BlotterBreakups Items = DbContextB.SBP_BlotterBreakups.Where(p => p.SNo == Item.SNo).FirstOrDefault();
                 if (Items != null)
                 {
+                    Items.BreakupDate = Item.BreakupDate;
                     Items.FoodPayment_inFlow = Item.FoodPayment_inFlow;
                     Items.HOKRemittance_inFlow = Item.HOKRemittance_inFlow;
                     Items.ERF_inflow = Item.ERF_inflow;
@@ -897,12 +898,11 @@ namespace DataAccessLayer
                     Items.SBPCheqGivenToOtherBank_outFlow = Item.SBPCheqGivenToOtherBank_outFlow;
                     Items.Miscellaneous_outflow = Item.Miscellaneous_outflow;
                     Items.UpdateDate = Item.UpdateDate;
-                    Items.UserID = Item.UserID;
                     DbContextB.SaveChanges();
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -922,7 +922,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -987,18 +987,18 @@ namespace DataAccessLayer
 
                     CLRItems.DataType = ClearingItem.DataType;
                     CLRItems.TTID = ClearingItem.TTID;
-                        CLRItems.Clearing_InFlow = ClearingItem.Clearing_InFlow;
+                    CLRItems.Clearing_Date = ClearingItem.Clearing_Date;
+                    CLRItems.Clearing_InFlow = ClearingItem.Clearing_InFlow;
                         CLRItems.Clearing_OutFLow = ClearingItem.Clearing_OutFLow;
                         CLRItems.Note = ClearingItem.Note;
                         CLRItems.CurID = ClearingItem.CurID;
                         CLRItems.UpdateDate = ClearingItem.UpdateDate;
-                    CLRItems.UserID = ClearingItem.UserID;
                     DbContextB.SaveChanges();
                     }
                     status = true;
                 //}
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -1018,7 +1018,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -1117,12 +1117,12 @@ namespace DataAccessLayer
                 {
 
                     CLRItems1.DataType = FundsTransferItem.DataType;
+                    CLRItems1.FT_Date = FundsTransferItem.FT_Date;
                     CLRItems1.FT_InFlow = FundsTransferItem.FT_InFlow;
                     CLRItems1.FT_OutFLow = FundsTransferItem.FT_OutFLow;
                     CLRItems1.Note = FundsTransferItem.Note;
                     CLRItems1.CurID = FundsTransferItem.CurID;
                     CLRItems1.UpdateDate = FundsTransferItem.UpdateDate;
-                    CLRItems1.UserID = FundsTransferItem.UserID;
                     DbContextB.SaveChanges();
                 }
 
@@ -1159,18 +1159,18 @@ namespace DataAccessLayer
                 {
 
                     CLRItems2.DataType = FundsTransferItem.DataType;
+                    CLRItems2.FT_Date = FundsTransferItem.FT_Date;
                     CLRItems2.FT_InFlow = FundsTransferItem.FT_InFlow;
                     CLRItems2.FT_OutFLow = FundsTransferItem.FT_OutFLow;
                     CLRItems2.Note = FundsTransferItem.Note;
                     CLRItems2.CurID = FundsTransferItem.CurID;
                     CLRItems2.UpdateDate = FundsTransferItem.UpdateDate;
-                    CLRItems2.UserID = FundsTransferItem.UserID;
                     DbContextB.SaveChanges();
                 }
                 status = true;
                 //}
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -1214,7 +1214,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -1283,13 +1283,12 @@ namespace DataAccessLayer
                     CLRItems.Note = Bai_MuajjalItem.Note;
                     CLRItems.CurID = Bai_MuajjalItem.CurID;
                     CLRItems.UpdateDate = Bai_MuajjalItem.UpdateDate;
-                    CLRItems.UserID = Bai_MuajjalItem.UserID;
                     DbContextB.SaveChanges();
                 }
                 status = true;
                 //}
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -1309,7 +1308,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -1335,7 +1334,7 @@ namespace DataAccessLayer
                     status = false;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -1399,18 +1398,18 @@ namespace DataAccessLayer
                 {
                     RTGSItems.DataType = RTGSItem.DataType;
                     RTGSItems.TTID = RTGSItem.TTID;
-                        RTGSItems.RTGS_InFlow = RTGSItem.RTGS_InFlow;
+                    RTGSItems.RTGS_Date = RTGSItem.RTGS_Date;
+                    RTGSItems.RTGS_InFlow = RTGSItem.RTGS_InFlow;
                         RTGSItems.RTGS_OutFLow = RTGSItem.RTGS_OutFLow;
                         RTGSItems.CurID = RTGSItem.CurID;
                         RTGSItems.Note = RTGSItem.Note;
                         RTGSItems.UpdateDate = RTGSItem.UpdateDate;
-                    RTGSItems.UserID = RTGSItem.UserID;
                     DbContextB.SaveChanges();
                     }
                     status = true;
                 //}
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -1430,7 +1429,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -1451,31 +1450,32 @@ namespace DataAccessLayer
         {
             return DbContextB.SBP_BlotterOpeningBalance.Where(p => p.Id == OpnBalId).FirstOrDefault();
         }
-        public static bool InsertOpenBal(SBP_BlotterOpeningBalance OpnBalItem)
+        public static bool InsertOpenBal(SBP_BlotterOpeningBalance OpenBalItem)
         {
             bool status;
             try
             {
-                List<SBP_BlotterOpeningBalance> GetCount = DbContextB.SBP_BlotterOpeningBalance.Where(p => p.DataType == OpnBalItem.DataType &&  p.BalDate== OpnBalItem.BalDate && p.BR==OpnBalItem.BR).ToList();
-                if (GetCount.Count > 0)
-                {
-                    SBP_BlotterOpeningBalance OpenBalItems = DbContextB.SBP_BlotterOpeningBalance.Where(p => p.DataType == OpnBalItem.DataType && p.BalDate == OpnBalItem.BalDate && p.BR == OpnBalItem.BR).FirstOrDefault();
-                    if (OpenBalItems != null)
-                    {
-                        OpenBalItems.OpenBalActual = OpnBalItem.OpenBalActual;
-                        OpenBalItems.AdjOpenBal = OpnBalItem.AdjOpenBal;
-                        OpenBalItems.CurID = OpnBalItem.CurID;
-                        OpenBalItems.UpdateDate = OpnBalItem.UpdateDate;
-                        DbContextB.SaveChanges();
-                    }
-                    status = true;
-                }
-                else
-                {
-                    DbContextB.SBP_BlotterOpeningBalance.Add(OpnBalItem);
-                    DbContextB.SaveChanges();
-                    status = true;
-                }
+                DbContextB.SP_InsertOpeningBalance(OpenBalItem.OpenBalActual, OpenBalItem.AdjOpenBal, OpenBalItem.BalDate, OpenBalItem.DataType, OpenBalItem.UserID, OpenBalItem.CreateDate, OpenBalItem.UpdateDate, OpenBalItem.BR, OpenBalItem.BID, OpenBalItem.CurID, OpenBalItem.Flag, OpenBalItem.EstimatedOpenBal);
+                //List<SBP_BlotterOpeningBalance> GetCount = DbContextB.SBP_BlotterOpeningBalance.Where(p => p.DataType == OpnBalItem.DataType &&  p.BalDate== OpnBalItem.BalDate && p.BR==OpnBalItem.BR).ToList();
+                //if (GetCount.Count > 0)
+                //{
+                //    SBP_BlotterOpeningBalance OpenBalItems = DbContextB.SBP_BlotterOpeningBalance.Where(p => p.DataType == OpnBalItem.DataType && p.BalDate == OpnBalItem.BalDate && p.BR == OpnBalItem.BR).FirstOrDefault();
+                //    if (OpenBalItems != null)
+                //    {
+                //        OpenBalItems.OpenBalActual = OpnBalItem.OpenBalActual;
+                //        OpenBalItems.AdjOpenBal = OpnBalItem.AdjOpenBal;
+                //        OpenBalItems.CurID = OpnBalItem.CurID;
+                //        OpenBalItems.UpdateDate = OpnBalItem.UpdateDate;
+                //        DbContextB.SaveChanges();
+                //    }
+                status = true;
+                //}
+                //else
+                //{
+                //    DbContextB.SBP_BlotterOpeningBalance.Add(OpnBalItem);
+                //    DbContextB.SaveChanges();
+                //    status = true;
+                //}
             }
             catch (Exception ex)
             {
@@ -1490,38 +1490,39 @@ namespace DataAccessLayer
             bool status;
             try
             {
-                List<SBP_BlotterOpeningBalance> GetCount = DbContextB.SBP_BlotterOpeningBalance.Where(p => p.Id != OpenBalItem.Id && p.BalDate == OpenBalItem.BalDate && p.BR == OpenBalItem.BR).ToList();
-                if (GetCount.Count > 0)
-                {
-                    SBP_BlotterOpeningBalance OpenBalItems = DbContextB.SBP_BlotterOpeningBalance.Where(p => p.Id == OpenBalItem.Id && p.BalDate == OpenBalItem.BalDate && p.BR == OpenBalItem.BR).FirstOrDefault();
-                    if (OpenBalItems != null)
-                    {
-                        OpenBalItems.OpenBalActual = OpenBalItem.OpenBalActual;
-                        OpenBalItems.AdjOpenBal = OpenBalItem.AdjOpenBal;
-                        OpenBalItems.CurID = OpenBalItem.CurID;
-                        OpenBalItems.UpdateDate = OpenBalItem.UpdateDate;
-                        OpenBalItems.UserID = OpenBalItem.UserID;
-                        DbContextB.SaveChanges();
-                    }
-                    status = true;
-                }
-                else
-                {
-                    SBP_BlotterOpeningBalance OpenBalItems = DbContextB.SBP_BlotterOpeningBalance.Where(p => p.Id == OpenBalItem.Id).FirstOrDefault();
-                    if (OpenBalItems != null)
-                    {
-                        OpenBalItems.OpenBalActual = OpenBalItem.OpenBalActual;
-                        OpenBalItems.AdjOpenBal = OpenBalItem.AdjOpenBal;
-                        OpenBalItems.BalDate = OpenBalItem.BalDate;
-                        OpenBalItems.CurID = OpenBalItem.CurID;
-                        OpenBalItems.UpdateDate = OpenBalItem.UpdateDate;
-                        OpenBalItems.UserID = OpenBalItem.UserID;
-                        DbContextB.SaveChanges();
-                    }
-                    status = true;
-                }
+                DbContextB.SP_UpdateOpeningBalance(OpenBalItem.Id,OpenBalItem.OpenBalActual,OpenBalItem.AdjOpenBal,OpenBalItem.BalDate,OpenBalItem.DataType,OpenBalItem.UserID,OpenBalItem.CreateDate,OpenBalItem.UpdateDate,OpenBalItem.BR,OpenBalItem.BID,OpenBalItem.CurID,OpenBalItem.Flag,OpenBalItem.EstimatedOpenBal);
+                //List<SBP_BlotterOpeningBalance> GetCount = DbContextB.SBP_BlotterOpeningBalance.Where(p => p.Id != OpenBalItem.Id && p.BalDate == OpenBalItem.BalDate && p.BR == OpenBalItem.BR).ToList();
+                //if (GetCount.Count > 0)
+                //{
+                //    SBP_BlotterOpeningBalance OpenBalItems = DbContextB.SBP_BlotterOpeningBalance.Where(p => p.Id == OpenBalItem.Id && p.BalDate == OpenBalItem.BalDate && p.BR == OpenBalItem.BR).FirstOrDefault();
+                //    if (OpenBalItems != null)
+                //    {
+                //        OpenBalItems.OpenBalActual = OpenBalItem.OpenBalActual;
+                //        OpenBalItems.AdjOpenBal = OpenBalItem.AdjOpenBal;
+                //        OpenBalItems.CurID = OpenBalItem.CurID;
+                //        OpenBalItems.UpdateDate = OpenBalItem.UpdateDate;
+                //        OpenBalItems.UserID = OpenBalItem.UserID;
+                //        DbContextB.SaveChanges();
+                //    }
+                status = true;
+                //}
+                //else
+                //{
+                //    SBP_BlotterOpeningBalance OpenBalItems = DbContextB.SBP_BlotterOpeningBalance.Where(p => p.Id == OpenBalItem.Id).FirstOrDefault();
+                //    if (OpenBalItems != null)
+                //    {
+                //        OpenBalItems.OpenBalActual = OpenBalItem.OpenBalActual;
+                //        OpenBalItems.AdjOpenBal = OpenBalItem.AdjOpenBal;
+                //        OpenBalItems.BalDate = OpenBalItem.BalDate;
+                //        OpenBalItems.CurID = OpenBalItem.CurID;
+                //        OpenBalItems.UpdateDate = OpenBalItem.UpdateDate;
+                //        OpenBalItems.UserID = OpenBalItem.UserID;
+                //        DbContextB.SaveChanges();
+                //    }
+                //    status = true;
+                //}
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -1541,7 +1542,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -1604,7 +1605,6 @@ namespace DataAccessLayer
                         prodItem.Note = FundingRepoIdItem.Note;
                         prodItem.CurID = FundingRepoIdItem.CurID;
                         prodItem.UpdateDate = FundingRepoIdItem.UpdateDate;
-                        prodItem.UserID = FundingRepoIdItem.UserID;
                         DbContextB.SaveChanges();
                     }
                     status = true;
@@ -1634,7 +1634,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -1671,7 +1671,6 @@ namespace DataAccessLayer
                         EstAdjBalItems.isAdjusted = EstAdjBalItem.isAdjusted;
                         EstAdjBalItems.CurID = EstAdjBalItem.CurID;
                         EstAdjBalItems.UpdateDate = EstAdjBalItem.UpdateDate;
-                        EstAdjBalItems.UserID = EstAdjBalItem.UserID;
                         DbContextB.SaveChanges();
                     }
                     status = true;
@@ -1706,7 +1705,6 @@ namespace DataAccessLayer
                         EstAdjBalItems.isAdjusted = EstAdjBalItem.isAdjusted;
                         EstAdjBalItems.CurID = EstAdjBalItem.CurID;
                         EstAdjBalItems.UpdateDate = EstAdjBalItem.UpdateDate;
-                        EstAdjBalItems.UserID = EstAdjBalItem.UserID;
                         DbContextB.SaveChanges();
                     }
                     status = true;
@@ -1720,13 +1718,12 @@ namespace DataAccessLayer
                         EstAdjBalItems.isAdjusted = EstAdjBalItem.isAdjusted;
                         EstAdjBalItems.CurID = EstAdjBalItem.CurID;
                         EstAdjBalItems.UpdateDate = EstAdjBalItem.UpdateDate;
-                        EstAdjBalItems.UserID = EstAdjBalItem.UserID;
                         DbContextB.SaveChanges();
                     }
                     status = true;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -1746,7 +1743,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -1769,7 +1766,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -1820,17 +1817,17 @@ namespace DataAccessLayer
                 {
                     TRDItems.DataType = TradeItem.DataType;
                     TRDItems.TTID = TradeItem.TTID;
+                    TRDItems.Trade_Date = TradeItem.Trade_Date;
                     TRDItems.Trade_InFlow = TradeItem.Trade_InFlow;
                     TRDItems.Trade_OutFLow = TradeItem.Trade_OutFLow;
                     TRDItems.Note = TradeItem.Note;
                     TRDItems.CurID = TradeItem.CurID;
                     TRDItems.UpdateDate = TradeItem.UpdateDate;
-                    TRDItems.UserID = TradeItem.UserID;
                     DbContextB.SaveChanges();
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -1850,7 +1847,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -1876,7 +1873,7 @@ namespace DataAccessLayer
                 DbContextB.SaveChanges();
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -1896,7 +1893,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -1915,7 +1912,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -1963,7 +1960,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -1982,7 +1979,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -2047,7 +2044,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -2066,7 +2063,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -2172,7 +2169,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -2294,7 +2291,7 @@ namespace DataAccessLayer
                     status = false;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -2314,7 +2311,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }
@@ -2408,7 +2405,7 @@ namespace DataAccessLayer
                 }
                 status = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
             }

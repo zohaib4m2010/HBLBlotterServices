@@ -16,7 +16,7 @@ namespace DataAccessLayer
     {
         public int Id { get; set; }
         public int CRRFinconId { get; set; }
-        public System.DateTime ReportDate { get; set; }
+        public Nullable<System.DateTime> ReportDate { get; set; }
         public string WeekDays { get; set; }
         public Nullable<decimal> KarachiTotal { get; set; }
         public Nullable<decimal> HyderabadTotal { get; set; }
