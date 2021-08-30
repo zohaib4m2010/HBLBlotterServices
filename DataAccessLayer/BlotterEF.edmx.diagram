@@ -21,7 +21,6 @@
         <AssociationConnector Association="BlotterEF.FK_BlotterCRRFINCON_BranchID" />
         <EntityTypeShape EntityType="BlotterEF.SBP_BlotterBreakups" Width="1.5" PointX="3.375" PointY="4.5" />
         <AssociationConnector Association="BlotterEF.FK_SBP_BlotterBreakups_BranchID" />
-        <EntityTypeShape EntityType="BlotterEF.SBP_BlotterCRRReportDaysWiseBal" Width="1.5" PointX="8.375" PointY="5.75" />
         <EntityTypeShape EntityType="BlotterEF.SBP_LoginInfo" Width="1.5" PointX="5.5" PointY="3.75" />
         <AssociationConnector Association="BlotterEF.FK_SBP_BlotterBreakups_UserID" />
         <AssociationConnector Association="BlotterEF.FK_SBP_BlotterCRRFINCON_UserID" />
@@ -65,6 +64,7 @@
         <EntityTypeShape EntityType="BlotterEF.SBP_BlotterRECON" Width="1.5" PointX="12.625" PointY="19.5" />
         <AssociationConnector Association="BlotterEF.FK__SBP_Blott__Nostr__7D8391DF" />
         <AssociationConnector Association="BlotterEF.FK__SBP_Blott__Nostr__7E77B618" />
+        <EntityTypeShape EntityType="BlotterEF.SBP_BlotterCRRReportDaysWiseBal" Width="1.5" PointX="3.375" PointY="12.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

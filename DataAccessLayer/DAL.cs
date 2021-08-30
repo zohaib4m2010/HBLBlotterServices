@@ -1033,7 +1033,7 @@ namespace DataAccessLayer
 
         public static List<SBP_BlotterFundsTransfer> GetAllBlotterFundsTransfer(int UserID, int BranchID, int CurID, int BR)
         {
-            return DbContextB.SBP_BlotterFundsTransfer.Where(p => p.UserID== UserID && p.BID== BranchID && p.CurID== CurID && p.BR== BR).ToList();
+            return DbContextB.SBP_BlotterFundsTransfer.Where(p => p.BID== BranchID && p.CurID== CurID && p.BR== BR).ToList();
         }
         public static SBP_BlotterFundsTransfer GetFundsTransferItem(int FundsTransferId)
         {
@@ -1112,7 +1112,7 @@ namespace DataAccessLayer
                 //}
                 //else
                 //{
-                SBP_BlotterFundsTransfer CLRItems1 = DbContextB.SBP_BlotterFundsTransfer.Where(p => p.SNo == FundsTransferItem.SNo && p.FT_Date== FundsTransferItem.FT_Date).FirstOrDefault();
+                SBP_BlotterFundsTransfer CLRItems1 = DbContextB.SBP_BlotterFundsTransfer.Where(p => p.SNo == FundsTransferItem.SNo).FirstOrDefault();
                 if (CLRItems1 != null)
                 {
 
@@ -1154,7 +1154,7 @@ namespace DataAccessLayer
                         FundsTransferItem.FT_OutFLow = 0;
                     }
                 }
-                SBP_BlotterFundsTransfer CLRItems2 = DbContextB.SBP_BlotterFundsTransfer.Where(p => p.SNo != FundsTransferItem.SNo && p.FT_Date == FundsTransferItem.FT_Date).FirstOrDefault();
+                SBP_BlotterFundsTransfer CLRItems2 = DbContextB.SBP_BlotterFundsTransfer.Where(p => p.SNo != FundsTransferItem.SNo).FirstOrDefault();
                 if (CLRItems2 != null)
                 {
 
@@ -2412,6 +2412,45 @@ namespace DataAccessLayer
             return status;
         }
 
+        //*****************************************************
+        //Opening Closing Balance Differential Repo Producers
+        //*****************************************************
+
+        public static List<SP_GetSBPBlotterOpeningClosingBalanceDIfferential_Result> GetAllBlotterOpeningClosingBalanceDifferential(int BranchID, int CurID, int BR)
+        {
+            return DbContextB.SP_GetSBPBlotterOpeningClosingBalanceDIfferential(BranchID, CurID, BR).ToList();
+        }
+
+
+        public static bool UpdaterOpeningClosingBalanceDifferential(int Sno)
+        {
+            bool status;
+            try
+            {
+                List<SBP_BlotterOpeningClosingBalanceDIfferential> GetCount = DbContextB.SBP_BlotterOpeningClosingBalanceDIfferential.Where(p => p.SNo == Sno).ToList();
+                if (GetCount.Count > 0)
+                {
+                    SBP_BlotterOpeningClosingBalanceDIfferential prodItem = DbContextB.SBP_BlotterOpeningClosingBalanceDIfferential.Where(p => p.SNo == Sno).FirstOrDefault();
+                    if (prodItem != null)
+                    {
+                        prodItem.InFlow = 0;
+                        prodItem.OutFLow = 0;
+                        prodItem.UpdateDate = DateTime.Now;
+                        DbContextB.SaveChanges();
+                    }
+                    status = true;
+                }
+                else
+                {
+                    status = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                status = false;
+            }
+            return status;
+        }
 
         //*****************************************************
         //Currencies 

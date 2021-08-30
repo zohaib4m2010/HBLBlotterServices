@@ -39,7 +39,6 @@ namespace DataAccessLayer
         public virtual DbSet<SBP_BlotterCRRReportCalcSetup> SBP_BlotterCRRReportCalcSetup { get; set; }
         public virtual DbSet<SBP_BlotterCRRFINCON> SBP_BlotterCRRFINCON { get; set; }
         public virtual DbSet<SBP_BlotterBreakups> SBP_BlotterBreakups { get; set; }
-        public virtual DbSet<SBP_BlotterCRRReportDaysWiseBal> SBP_BlotterCRRReportDaysWiseBal { get; set; }
         public virtual DbSet<SBP_LoginInfo> SBP_LoginInfo { get; set; }
         public virtual DbSet<SBP_BlotterOpeningBalance> SBP_BlotterOpeningBalance { get; set; }
         public virtual DbSet<SBP_BlotterManualEstBalance> SBP_BlotterManualEstBalance { get; set; }
@@ -56,6 +55,7 @@ namespace DataAccessLayer
         public virtual DbSet<NostroBank> NostroBanks { get; set; }
         public virtual DbSet<SBP_BlotterCRD> SBP_BlotterCRD { get; set; }
         public virtual DbSet<SBP_BlotterRECON> SBP_BlotterRECON { get; set; }
+        public virtual DbSet<SBP_BlotterCRRReportDaysWiseBal> SBP_BlotterCRRReportDaysWiseBal { get; set; }
     
         public virtual ObjectResult<SP_SBPOpicsSystemDate_Result> SP_SBPOpicsSystemDate(string brCode)
         {
@@ -296,15 +296,6 @@ namespace DataAccessLayer
                 new ObjectParameter("BR", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetLatestBreakup_Result>("SP_GetLatestBreakup", userIDParameter, branchIDParameter, curIDParameter, bRParameter);
-        }
-    
-        public virtual ObjectResult<SP_GETLatestBlotterDTLReportDayWise_Result> SP_GETLatestBlotterDTLReportDayWise(Nullable<int> bR)
-        {
-            var bRParameter = bR.HasValue ?
-                new ObjectParameter("BR", bR) :
-                new ObjectParameter("BR", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GETLatestBlotterDTLReportDayWise_Result>("SP_GETLatestBlotterDTLReportDayWise", bRParameter);
         }
     
         public virtual ObjectResult<SP_GetAllOpeningBalance_Result> SP_GetAllOpeningBalance(Nullable<int> userID, Nullable<int> branchID, Nullable<int> curID, Nullable<int> bR)
@@ -842,6 +833,32 @@ namespace DataAccessLayer
                 new ObjectParameter("userid", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetAllBlotterCurrencyById_Result>("SP_GetAllBlotterCurrencyById", useridParameter);
+        }
+    
+        public virtual ObjectResult<SP_GetSBPBlotterOpeningClosingBalanceDIfferential_Result> SP_GetSBPBlotterOpeningClosingBalanceDIfferential(Nullable<int> branchID, Nullable<int> curID, Nullable<int> bR)
+        {
+            var branchIDParameter = branchID.HasValue ?
+                new ObjectParameter("BranchID", branchID) :
+                new ObjectParameter("BranchID", typeof(int));
+    
+            var curIDParameter = curID.HasValue ?
+                new ObjectParameter("CurID", curID) :
+                new ObjectParameter("CurID", typeof(int));
+    
+            var bRParameter = bR.HasValue ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetSBPBlotterOpeningClosingBalanceDIfferential_Result>("SP_GetSBPBlotterOpeningClosingBalanceDIfferential", branchIDParameter, curIDParameter, bRParameter);
+        }
+    
+        public virtual ObjectResult<SP_GETLatestBlotterDTLReportDayWise_Result> SP_GETLatestBlotterDTLReportDayWise(Nullable<int> bR)
+        {
+            var bRParameter = bR.HasValue ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GETLatestBlotterDTLReportDayWise_Result>("SP_GETLatestBlotterDTLReportDayWise", bRParameter);
         }
     }
 }
