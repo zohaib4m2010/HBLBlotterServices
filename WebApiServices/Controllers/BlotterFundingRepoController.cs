@@ -165,11 +165,11 @@ namespace WebApiServices.Controllers
 
 
         [HttpGet]
-        public JsonResult<List<Models.SP_GetSBPBlotterFR_Result>> GetAllblotterFundingRepo(int UserID, int BranchID, int CurID, int BR)
+        public JsonResult<List<Models.SP_GetSBPBlotterFR_Result>> GetAllblotterFundingRepo(int UserID, int BranchID, int CurID, int BR, string DateVal)
         {
             EntitiyMapperBlotterFR<DataAccessLayer.SP_GetSBPBlotterFR_Result, Models.SP_GetSBPBlotterFR_Result> mapObj = new EntitiyMapperBlotterFR<DataAccessLayer.SP_GetSBPBlotterFR_Result, Models.SP_GetSBPBlotterFR_Result>();
 
-            List<DataAccessLayer.SP_GetSBPBlotterFR_Result> blotterFRList = DAL.GetAllBlotterFundingRepo(UserID, BranchID, CurID, BR);
+            List<DataAccessLayer.SP_GetSBPBlotterFR_Result> blotterFRList = DAL.GetAllBlotterFundingRepo(UserID, BranchID, CurID, BR,DateVal);
             List<Models.SP_GetSBPBlotterFR_Result> blotterFR = new List<Models.SP_GetSBPBlotterFR_Result>();
             foreach (var item in blotterFRList)
             {

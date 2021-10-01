@@ -27,11 +27,11 @@ namespace WebApiServices.Controllers
         }
 
         [HttpGet]
-        public JsonResult<List<Models.SBP_BlotterBai_Muajjal>> GetAllBlotterBai_Muajjal(int UserID, int BranchID, int CurID, int BR)
+        public JsonResult<List<Models.SBP_BlotterBai_Muajjal>> GetAllBlotterBai_Muajjal(int UserID, int BranchID, int CurID, int BR, string DateVal)
         {
             EntityMapperBlotterBai_Muajjal<DataAccessLayer.SBP_BlotterBai_Muajjal, Models.SBP_BlotterBai_Muajjal> mapObj = new EntityMapperBlotterBai_Muajjal<DataAccessLayer.SBP_BlotterBai_Muajjal, Models.SBP_BlotterBai_Muajjal>();
 
-            List<DataAccessLayer.SBP_BlotterBai_Muajjal> blotterBai_MuajjalList = DAL.GetAllBlotterBai_Muajjal(UserID, BranchID, CurID, BR);
+            List<DataAccessLayer.SBP_BlotterBai_Muajjal> blotterBai_MuajjalList = DAL.GetAllBlotterBai_Muajjal(UserID, BranchID, CurID, BR,DateVal);
             List<Models.SBP_BlotterBai_Muajjal> blotterBai_Muajjal = new List<Models.SBP_BlotterBai_Muajjal>();
             foreach (var item in blotterBai_MuajjalList)
             {

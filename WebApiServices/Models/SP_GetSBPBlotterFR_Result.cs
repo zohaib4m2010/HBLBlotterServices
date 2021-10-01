@@ -26,5 +26,6 @@ namespace WebApiServices.Models
         public int BID { get; set; }
         public int CurID { get; set; }
         public string Flag { get; set; }
+        public Nullable<System.DateTime> Date { get; set; }
     }
 }

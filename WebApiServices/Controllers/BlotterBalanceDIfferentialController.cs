@@ -14,11 +14,11 @@ namespace WebApiServices.Controllers
     {
 
         [HttpGet]
-        public JsonResult<List<Models.SP_GetSBPBlotterOpeningClosingBalanceDIfferential_Result>> GetAllblotteropeningclosingbaldiff(int BranchID, int CurID, int BR)
+        public JsonResult<List<Models.SP_GetSBPBlotterOpeningClosingBalanceDIfferential_Result>> GetAllblotteropeningclosingbaldiff(int BranchID, int CurID, int BR, string DateVal)
         {
             EntitiyMapperBlotterBalDiff<DataAccessLayer.SP_GetSBPBlotterOpeningClosingBalanceDIfferential_Result, Models.SP_GetSBPBlotterOpeningClosingBalanceDIfferential_Result> mapObj = new EntitiyMapperBlotterBalDiff<DataAccessLayer.SP_GetSBPBlotterOpeningClosingBalanceDIfferential_Result, Models.SP_GetSBPBlotterOpeningClosingBalanceDIfferential_Result>();
 
-            List<DataAccessLayer.SP_GetSBPBlotterOpeningClosingBalanceDIfferential_Result> blotterbaldiffList = DAL.GetAllBlotterOpeningClosingBalanceDifferential(BranchID, CurID, BR);
+            List<DataAccessLayer.SP_GetSBPBlotterOpeningClosingBalanceDIfferential_Result> blotterbaldiffList = DAL.GetAllBlotterOpeningClosingBalanceDifferential(BranchID, CurID, BR, DateVal);
             List<Models.SP_GetSBPBlotterOpeningClosingBalanceDIfferential_Result> blotterBalDiff = new List<Models.SP_GetSBPBlotterOpeningClosingBalanceDIfferential_Result>();
             foreach (var item in blotterbaldiffList)
             {

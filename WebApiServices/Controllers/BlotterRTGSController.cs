@@ -40,11 +40,11 @@ namespace WebApiServices.Controllers
         }
 
         [HttpGet]
-        public JsonResult<List<Models.SP_GetAll_SBPBlotterRTGS_Result>> GetAllBlotterRTGS(int UserID, int BranchID, int CurID, int BR)
+        public JsonResult<List<Models.SP_GetAll_SBPBlotterRTGS_Result>> GetAllBlotterRTGS(int UserID, int BranchID, int CurID, int BR, string DateVal)
         {
             EntityMapperBlotterRTGS<DataAccessLayer.SP_GetAll_SBPBlotterRTGS_Result, Models.SP_GetAll_SBPBlotterRTGS_Result> mapObj = new EntityMapperBlotterRTGS<DataAccessLayer.SP_GetAll_SBPBlotterRTGS_Result, Models.SP_GetAll_SBPBlotterRTGS_Result>();
 
-            List<DataAccessLayer.SP_GetAll_SBPBlotterRTGS_Result> blotterRTGSList = DAL.GetAllBlotterRTGS(UserID, BranchID, CurID, BR);
+            List<DataAccessLayer.SP_GetAll_SBPBlotterRTGS_Result> blotterRTGSList = DAL.GetAllBlotterRTGS(UserID, BranchID, CurID, BR,DateVal);
             List<Models.SP_GetAll_SBPBlotterRTGS_Result> blotterRTGS = new List<Models.SP_GetAll_SBPBlotterRTGS_Result>();
             foreach (var item in blotterRTGSList)
             {

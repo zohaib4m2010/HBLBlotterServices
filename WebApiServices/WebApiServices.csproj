@@ -160,6 +160,7 @@
     <Compile Include="Controllers\BlotterCRDController.cs" />
     <Compile Include="Controllers\BlotterCRRFINCONController.cs" />
     <Compile Include="Controllers\BlotterCurrencyController.cs" />
+    <Compile Include="Controllers\BlotterDMMOController.cs" />
     <Compile Include="Controllers\BlotterDTController.cs" />
     <Compile Include="Controllers\BlotterDTLController.cs" />
     <Compile Include="Controllers\BlotterDTLDBController.cs" />
@@ -170,6 +171,7 @@
     <Compile Include="Controllers\BlotterOpenBalController.cs" />
     <Compile Include="Controllers\BlotterOpeningController.cs" />
     <Compile Include="Controllers\BlotterRECONController.cs" />
+    <Compile Include="Controllers\BlotterReservedDiffController.cs" />
     <Compile Include="Controllers\BlotterRTGSController.cs" />
     <Compile Include="Controllers\BlotterSetupController.cs" />
     <Compile Include="Controllers\BlotterTBOController.cs" />
@@ -184,6 +186,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\SBP_BlotterReserved.cs" />
     <Compile Include="Models\BlotterSumEmail.cs" />
     <Compile Include="Models\Branches.cs" />
     <Compile Include="Models\ChangePassword.cs" />
@@ -203,6 +206,7 @@
     <Compile Include="Models\SBP_BlotterRECON.cs" />
     <Compile Include="Models\SBP_BlotterRTGS.cs" />
     <Compile Include="Models\SBP_BlotterTrade.cs" />
+    <Compile Include="Models\SBP_BlotterDMMO.cs" />
     <Compile Include="Models\SBP_LoginInfo.cs" />
     <Compile Include="Models\SBP_LoginInfoWithRoleId.cs" />
     <Compile Include="Models\SP_ADD_SessionStart.cs" />
@@ -229,6 +233,8 @@
     <Compile Include="Models\SP_GetSBPBlotterFR_Result.cs" />
     <Compile Include="Models\SP_GetSBPBlotterOpeningClosingBalanceDIfferential_Result.cs" />
     <Compile Include="Models\SP_GetSBPBlotterRECON_Result.cs" />
+    <Compile Include="Models\SP_GetSBP_DMMO_Result.cs" />
+    <Compile Include="Models\SP_GetSBP_Reserved_Result.cs" />
     <Compile Include="Models\SP_SBPBlotterRunningBal.cs" />
     <Compile Include="Models\SP_SBPBlotter_FCY_Result.cs" />
     <Compile Include="Models\SP_SBPGetLoginInfo_Result.cs" />
@@ -241,8 +247,10 @@
     <Compile Include="Repository\EntitiyMapperBlotterBalDiff.cs" />
     <Compile Include="Repository\EntitiyMapperBlotterCRD.cs" />
     <Compile Include="Repository\EntitiyMapperBlotterCRRFINCON.cs" />
+    <Compile Include="Repository\EntitiyMapperBlotterDMMO.cs" />
     <Compile Include="Repository\EntitiyMapperBlotterFR.cs" />
     <Compile Include="Repository\EntitiyMapperBlotterRECON.cs" />
+    <Compile Include="Repository\EntitiyMapperBlotterReserved.cs" />
     <Compile Include="Repository\EntitiyMapperBlotterTBO.cs" />
     <Compile Include="Repository\EntityMapperBlotterBai_Muajjal.cs" />
     <Compile Include="Repository\EntityMapperBlotterBreakups.cs" />
@@ -267,6 +275,8 @@
     <Compile Include="Repository\EntityMapperUserRole.cs" />
     <Compile Include="Repository\EntityMapperUsersProfile.cs" />
     <Compile Include="Repository\EntityMapperWebPages.cs" />
+    <Compile Include="TimerClass\FillFwdDumpBlotter.cs" />
+    <Compile Include="TimerClass\FillRegDumpBlotter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

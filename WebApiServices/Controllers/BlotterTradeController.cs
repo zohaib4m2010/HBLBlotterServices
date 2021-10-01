@@ -40,11 +40,11 @@ namespace WebApiServices.Controllers
         }
 
         [HttpGet]
-        public JsonResult<List<Models.SP_GetAll_SBPBlotterTrade_Result>> GetAllBlotterTrade(int UserID, int BranchID, int CurID,int BR)
+        public JsonResult<List<Models.SP_GetAll_SBPBlotterTrade_Result>> GetAllBlotterTrade(int UserID, int BranchID, int CurID,int BR, string DateVal)
         {
             EntityMapperBlotterTrade<DataAccessLayer.SP_GetAll_SBPBlotterTrade_Result, Models.SP_GetAll_SBPBlotterTrade_Result> mapObj = new EntityMapperBlotterTrade<DataAccessLayer.SP_GetAll_SBPBlotterTrade_Result, Models.SP_GetAll_SBPBlotterTrade_Result>();
 
-            List<DataAccessLayer.SP_GetAll_SBPBlotterTrade_Result> blotterTradeList = DAL.GetAllBlotterTrade(UserID,BranchID,CurID,BR);
+            List<DataAccessLayer.SP_GetAll_SBPBlotterTrade_Result> blotterTradeList = DAL.GetAllBlotterTrade(UserID,BranchID,CurID,BR,DateVal);
             List<Models.SP_GetAll_SBPBlotterTrade_Result> blotterTrade = new List<Models.SP_GetAll_SBPBlotterTrade_Result>();
             foreach (var item in blotterTradeList)
             {

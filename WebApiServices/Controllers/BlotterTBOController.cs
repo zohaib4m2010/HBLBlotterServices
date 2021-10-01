@@ -37,11 +37,11 @@ namespace WebApiServices.Controllers
             return Json<Models.SBP_BlotterTBO>(products);
         }
         [HttpGet]
-        public JsonResult<List<Models.SP_GetAll_SBPBlotterTBO_Result>> GetAllBlotterTBO(int UserID, int BranchID, int CurID, int BR)
+        public JsonResult<List<Models.SP_GetAll_SBPBlotterTBO_Result>> GetAllBlotterTBO(int UserID, int BranchID, int CurID, int BR, string DateVal)
         {
             EntitiyMapperBlotterTBO<DataAccessLayer.SP_GetAll_SBPBlotterTBO_Result, Models.SP_GetAll_SBPBlotterTBO_Result> mapObj = new EntitiyMapperBlotterTBO<DataAccessLayer.SP_GetAll_SBPBlotterTBO_Result, Models.SP_GetAll_SBPBlotterTBO_Result>();
 
-            List<DataAccessLayer.SP_GetAll_SBPBlotterTBO_Result> blotterTBOList = DAL.GetAllBlotterTBO(UserID,BranchID,CurID,BR);
+            List<DataAccessLayer.SP_GetAll_SBPBlotterTBO_Result> blotterTBOList = DAL.GetAllBlotterTBO(UserID,BranchID,CurID,BR,DateVal);
             List<Models.SP_GetAll_SBPBlotterTBO_Result> blotterTBO = new List<Models.SP_GetAll_SBPBlotterTBO_Result>();
             foreach (var item in blotterTBOList)
             {

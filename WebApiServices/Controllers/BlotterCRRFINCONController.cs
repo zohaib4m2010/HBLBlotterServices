@@ -23,11 +23,11 @@ namespace WebApiServices.Controllers
             return Json<Models.SBP_BlotterCRRFINCON>(products);
         }
         [HttpGet]
-        public JsonResult<List<Models.SBP_BlotterCRRFINCON>> GetAllBlotterCRRFINCON(int UserID, int BranchID, int CurID,int BR)
+        public JsonResult<List<Models.SBP_BlotterCRRFINCON>> GetAllBlotterCRRFINCON(int UserID, int BranchID, int CurID,int BR,string StartDate,string EndDate)
         {
             EntitiyMapperBlotterCRRFINCON<DataAccessLayer.SP_GetSBPBlotterCRRFINCON_Result, Models.SBP_BlotterCRRFINCON> mapObj = new EntitiyMapperBlotterCRRFINCON<DataAccessLayer.SP_GetSBPBlotterCRRFINCON_Result, Models.SBP_BlotterCRRFINCON>();
 
-            List<DataAccessLayer.SP_GetSBPBlotterCRRFINCON_Result> blotterCRRFINCONList = DAL.GetAllBlotterCRRFINCON(UserID, BranchID, CurID,BR);
+            List<DataAccessLayer.SP_GetSBPBlotterCRRFINCON_Result> blotterCRRFINCONList = DAL.GetAllBlotterCRRFINCON(UserID, BranchID, CurID,BR,StartDate,EndDate);
             List<Models.SBP_BlotterCRRFINCON> blotterCRRFINCON = new List<Models.SBP_BlotterCRRFINCON>();
             foreach (var item in blotterCRRFINCONList)
             {

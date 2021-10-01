@@ -27,11 +27,11 @@ namespace WebApiServices.Controllers
         }
 
         [HttpGet]
-        public JsonResult<List<Models.SBP_BlotterFundsTransfer>> GetAllBlotterFundsTransfer(int UserID, int BranchID, int CurID, int BR)
+        public JsonResult<List<Models.SBP_BlotterFundsTransfer>> GetAllBlotterFundsTransfer(int UserID, int BranchID, int CurID, int BR, string DateVal)
         {
             EntityMapperBlotterFundsTransfer<DataAccessLayer.SBP_BlotterFundsTransfer, Models.SBP_BlotterFundsTransfer> mapObj = new EntityMapperBlotterFundsTransfer<DataAccessLayer.SBP_BlotterFundsTransfer, Models.SBP_BlotterFundsTransfer>();
 
-            List<DataAccessLayer.SBP_BlotterFundsTransfer> blotterFundsTransferList = DAL.GetAllBlotterFundsTransfer(UserID, BranchID, CurID, BR);
+            List<DataAccessLayer.SBP_BlotterFundsTransfer> blotterFundsTransferList = DAL.GetAllBlotterFundsTransfer(UserID, BranchID, CurID, BR,DateVal);
             List<Models.SBP_BlotterFundsTransfer> blotterFundsTransfer = new List<Models.SBP_BlotterFundsTransfer>();
             foreach (var item in blotterFundsTransferList)
             {

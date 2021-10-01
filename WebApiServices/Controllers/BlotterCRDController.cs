@@ -12,7 +12,7 @@ namespace WebApiServices.Controllers
 {
     public class BlotterCRDController : ApiController
     {
-        
+
         // GET: blotterCRD
         [HttpGet]
         public JsonResult<Models.SBP_BlotterCRD> GetblotterCRD(int id)
