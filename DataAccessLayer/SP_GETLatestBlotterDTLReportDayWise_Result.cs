@@ -14,7 +14,7 @@ namespace DataAccessLayer
     public partial class SP_GETLatestBlotterDTLReportDayWise_Result
     {
         public int Id { get; set; }
-        public int CRRFinconId { get; set; }
+        public long CRRFinconId { get; set; }
         public Nullable<System.DateTime> ReportDate { get; set; }
         public string WeekDays { get; set; }
         public decimal KarachiTotal { get; set; }
@@ -46,8 +46,10 @@ namespace DataAccessLayer
         public decimal CRR5PcrReqWithoutEB { get; set; }
         public Nullable<double> BalMaintAgainstExtBenft { get; set; }
         public Nullable<double> BalMaintAgainstPenalty { get; set; }
+        public Nullable<decimal> ReservedSBP { get; set; }
+        public Nullable<decimal> ReservedSBPDif { get; set; }
         public string Remarks { get; set; }
-        public Nullable<int> BR { get; set; }
+        public int BR { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
     }

@@ -16,8 +16,11 @@ namespace DataAccessLayer
             DbContextB = new BlotterEntities();
 
         }
-        public static List<SP_SBPBlotter_Result> GetAllBlotterData(String Br, String DataType, String CurrentDate)
+        public static List<SP_SBPBlotter_Result> GetAllBlotterData(String Br, String DataType, String CurrentDate,bool LoadData)
         {
+            if (LoadData)
+                DbContextB.SP_SBPFillDumBlotterBR1("01", Convert.ToDateTime(CurrentDate));
+
             var results = DbContextB.SP_SBPBlotter(Br, DataType,Convert.ToDateTime(CurrentDate)).ToList();
             return results;
         }
@@ -687,6 +690,7 @@ namespace DataAccessLayer
                 if (Items != null)
                 {
                     Items.PageName = Item.PageName;
+                    Items.BlotterType = Item.BlotterType;
                     Items.PageDescription = Item.PageDescription;
                     Items.ControllerName = Item.ControllerName;
                     Items.DisplayName = Item.DisplayName;

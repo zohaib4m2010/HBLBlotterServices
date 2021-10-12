@@ -42,11 +42,8 @@ namespace DataAccessLayer
         public virtual DbSet<SBP_LoginInfo> SBP_LoginInfo { get; set; }
         public virtual DbSet<SBP_BlotterOpeningBalance> SBP_BlotterOpeningBalance { get; set; }
         public virtual DbSet<SBP_BlotterManualEstBalance> SBP_BlotterManualEstBalance { get; set; }
-        public virtual DbSet<WebPages> WebPages { get; set; }
         public virtual DbSet<SBP_BlotterClearing> SBP_BlotterClearing { get; set; }
         public virtual DbSet<SBP_BlotterRTGS> SBP_BlotterRTGS { get; set; }
-        public virtual DbSet<SBP_BlotterTBO> SBP_BlotterTBO { get; set; }
-        public virtual DbSet<SBP_BlotterTrade> SBP_BlotterTrade { get; set; }
         public virtual DbSet<SBP_BlotterFundsTransfer> SBP_BlotterFundsTransfer { get; set; }
         public virtual DbSet<SBP_BlotterBai_Muajjal> SBP_BlotterBai_Muajjal { get; set; }
         public virtual DbSet<SBP_BlotterManualData> SBP_BlotterManualData { get; set; }
@@ -58,6 +55,9 @@ namespace DataAccessLayer
         public virtual DbSet<SBP_BlotterFundingRepo> SBP_BlotterFundingRepo { get; set; }
         public virtual DbSet<SBP_BlotterDMMO> SBP_BlotterDMMO { get; set; }
         public virtual DbSet<SBP_BlotterReserved> SBP_BlotterReserved { get; set; }
+        public virtual DbSet<SBP_BlotterTBO> SBP_BlotterTBO { get; set; }
+        public virtual DbSet<SBP_BlotterTrade> SBP_BlotterTrade { get; set; }
+        public virtual DbSet<WebPages> WebPages { get; set; }
     
         public virtual ObjectResult<SP_SBPOpicsSystemDate_Result> SP_SBPOpicsSystemDate(string brCode)
         {
@@ -819,23 +819,6 @@ namespace DataAccessLayer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetSBPBlotterOpeningClosingBalanceDIfferential_Result>("SP_GetSBPBlotterOpeningClosingBalanceDIfferential", branchIDParameter, curIDParameter, bRParameter, dateValParameter);
         }
     
-        public virtual ObjectResult<SP_GETLatestBlotterDTLReportDayWise_Result> SP_GETLatestBlotterDTLReportDayWise(Nullable<int> bR, string startdate, string enddate)
-        {
-            var bRParameter = bR.HasValue ?
-                new ObjectParameter("BR", bR) :
-                new ObjectParameter("BR", typeof(int));
-    
-            var startdateParameter = startdate != null ?
-                new ObjectParameter("startdate", startdate) :
-                new ObjectParameter("startdate", typeof(string));
-    
-            var enddateParameter = enddate != null ?
-                new ObjectParameter("enddate", enddate) :
-                new ObjectParameter("enddate", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GETLatestBlotterDTLReportDayWise_Result>("SP_GETLatestBlotterDTLReportDayWise", bRParameter, startdateParameter, enddateParameter);
-        }
-    
         public virtual ObjectResult<SP_GetSBPBlotterCRRFINCON_Result> SP_GetSBPBlotterCRRFINCON(Nullable<int> userID, Nullable<int> branchID, Nullable<int> curID, Nullable<int> bR, Nullable<System.DateTime> satrtDate, Nullable<System.DateTime> endDate)
         {
             var userIDParameter = userID.HasValue ?
@@ -990,6 +973,23 @@ namespace DataAccessLayer
                 new ObjectParameter("BR", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetSBP_Reserved_Result>("SP_GetSBP_Reserved", userIDParameter, branchIDParameter, bRParameter);
+        }
+    
+        public virtual ObjectResult<SP_GETLatestBlotterDTLReportDayWise_Result> SP_GETLatestBlotterDTLReportDayWise(Nullable<int> bR, string startdate, string enddate)
+        {
+            var bRParameter = bR.HasValue ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(int));
+    
+            var startdateParameter = startdate != null ?
+                new ObjectParameter("startdate", startdate) :
+                new ObjectParameter("startdate", typeof(string));
+    
+            var enddateParameter = enddate != null ?
+                new ObjectParameter("enddate", enddate) :
+                new ObjectParameter("enddate", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GETLatestBlotterDTLReportDayWise_Result>("SP_GETLatestBlotterDTLReportDayWise", bRParameter, startdateParameter, enddateParameter);
         }
     }
 }

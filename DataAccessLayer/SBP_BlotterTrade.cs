@@ -31,6 +31,7 @@ namespace DataAccessLayer
         public int CurID { get; set; }
         public string Flag { get; set; }
         public string DataType { get; set; }
+        public string BankCode { get; set; }
     
         public virtual Branches Branch { get; set; }
         public virtual SBP_LoginInfo SBP_LoginInfo { get; set; }
