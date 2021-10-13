@@ -20,6 +20,7 @@ namespace WebApiServices.Controllers
             DataAccessLayer.WebPages dalBlotterTBO = DAL.GetWebPage(id);
             Models.WebPages products = new Models.WebPages();
             products = mapObj.Translate(dalBlotterTBO);
+
             return Json<Models.WebPages>(products);
         }
         [HttpGet]

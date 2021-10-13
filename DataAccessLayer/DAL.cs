@@ -19,7 +19,7 @@ namespace DataAccessLayer
         public static List<SP_SBPBlotter_Result> GetAllBlotterData(String Br, String DataType, String CurrentDate,bool LoadData)
         {
             if (LoadData)
-                DbContextB.SP_SBPFillDumBlotterBR1("01", Convert.ToDateTime(CurrentDate));
+                DbContextB.SP_SBPFillDumBlotter(Convert.ToDateTime(CurrentDate), Convert.ToInt32(Br));
 
             var results = DbContextB.SP_SBPBlotter(Br, DataType,Convert.ToDateTime(CurrentDate)).ToList();
             return results;
@@ -114,7 +114,7 @@ namespace DataAccessLayer
         {
             try
             {
-                DbContextB.SP_SBPFillDumBlotterBR1("01", DateTime.Now);
+                DbContextB.SP_SBPFillDumBlotter(DateTime.Now,1);
                 DbContextB.SP_ReconcileOPICSManualDataFwd(2, DateTime.Now, false);
             }
             catch (Exception ex)
@@ -125,7 +125,7 @@ namespace DataAccessLayer
         {
             try
             {
-                DbContextB.SP_SBPFillDumBlotterBR1("02", DateTime.Now);
+                DbContextB.SP_SBPFillDumBlotter(DateTime.Now, 2);
                 DbContextB.SP_ReconcileOPICSManualDataFwd(2, DateTime.Now,false);
             }
             catch (Exception ex)
@@ -512,7 +512,7 @@ namespace DataAccessLayer
             bool status;
             try
             {
-
+                Item.RoleDescription = (Item.RoleDescription == null)?"":Item.RoleDescription;
                 DbContextB.UserRoles.Add(Item);
                 DbContextB.SaveChanges();
                 status = true;
@@ -2172,14 +2172,7 @@ namespace DataAccessLayer
             }
             return status;
         }
-        //*****************************************************
-        //System Current Date  Producers
-        //*****************************************************
-        public static List<SP_SBPOpicsSystemDate_Result> GetSystemDT(String BrCode)
-        {
-            var results = DbContextB.SP_SBPOpicsSystemDate(BrCode).ToList();
-            return results;
-        }
+       
         //*****************************************************
         //Manual DTL Producers
         //*****************************************************
@@ -2419,185 +2412,9 @@ namespace DataAccessLayer
 
 
         #region  Add by Shakir
-        //*****************************************************
-        //CRD Producers
-        //*****************************************************
-
-        public static List<SP_GetSBPBlotterCRD_Result> GetAllBlotterCRD(int UserID, int BranchID, int CurID, int BR)
-        {
-            var CurrentDate = DateTime.Now;
-            return DbContextB.SP_GetSBPBlotterCRD(UserID, BranchID, CurID, BR).ToList();
-        }
-        public static SBP_BlotterCRD GetCRDItem(int CRDId)
-        {
-            return DbContextB.SBP_BlotterCRD.Where(p => p.SNo == CRDId).FirstOrDefault();
-        }
-
-        public static bool InsertCRD(SBP_BlotterCRD CRDItem)
-        {
-            bool status;
-            try
-            {
-                DbContextB.SBP_BlotterCRD.Add(CRDItem);
-                DbContextB.SaveChanges();
-                //DbContextB.SP_AddDaysInBlotterReport(CRRFINCONItem.DemandTimeLiablitiesTotalForCRR, CRRFINCONItem.StartDate, CRRFINCONItem.EndDate, CRRFINCONItem.BR);
-                status = true;
-            }
-            catch (Exception ex)
-            {
-                System.Console.WriteLine(ex.Message.ToString());
-                status = false;
-            }
-            return status;
-        }
-
-        public static bool UpdateCRD(SBP_BlotterCRD CRDItem)
-        {
-            bool status;
-            try
-            {
-                List<SBP_BlotterCRD> GetCount = DbContextB.SBP_BlotterCRD.Where(p => p.SNo == CRDItem.SNo).ToList();
-                if (GetCount.Count > 0)
-                {
-                    SBP_BlotterCRD prodItem = DbContextB.SBP_BlotterCRD.Where(p => p.SNo == CRDItem.SNo).FirstOrDefault();
-                    if (prodItem != null)
-                    {
-                        prodItem.Nostro_Account = CRDItem.Nostro_Account;
-                        prodItem.ValueDate = CRDItem.ValueDate;
-                        prodItem.CurID = CRDItem.CurID;
-                        prodItem.CRD_InFlow = CRDItem.CRD_InFlow;
-                        prodItem.CRD_OutFlow = CRDItem.CRD_OutFlow;
-                        prodItem.UpdateDate = CRDItem.UpdateDate;
-                        DbContextB.SaveChanges();
-                        //DbContextB.SP_UpdateDaysInBlotterReport(CRRFINCONItem.DemandTimeLiablitiesTotalForCRR, CRRFINCONItem.StartDate, CRRFINCONItem.EndDate, CRRFINCONItem.BR);
-                    }
-                    status = true;
-                }
-                else
-                {
-                    status = false;
-                }
-            }
-            catch (Exception ex)
-            {
-                status = false;
-            }
-            return status;
-        }
-
-        public static bool DeleteCRD(int id)
-        {
-            bool status;
-            try
-            {
-                SBP_BlotterCRD CRDItem = DbContextB.SBP_BlotterCRD.Where(p => p.SNo == id).FirstOrDefault();
-                if (CRDItem != null)
-                {
-                    DbContextB.SBP_BlotterCRD.Remove(CRDItem);
-                    DbContextB.SaveChanges();
-                }
-                status = true;
-            }
-            catch (Exception ex)
-            {
-                status = false;
-            }
-            return status;
-        }
+       
 
 
-
-        //*****************************************************
-        //RECON Producers
-        //*****************************************************
-
-        public static List<SP_GetSBPBlotterRECON_Result> GetAllBlotterRECON(int UserID, int BranchID, int CurID, int BR)
-        {
-            var CurrentDate = DateTime.Now;
-            return DbContextB.SP_GetSBPBlotterRECON(UserID, BranchID, CurID, BR).ToList();
-        }
-        public static SBP_BlotterRECON GetRECONItem(int CRDId)
-        {
-            return DbContextB.SBP_BlotterRECON.Where(p => p.ID == CRDId).FirstOrDefault();
-        }
-
-        public static bool InsertRECON(SBP_BlotterRECON CRDItem)
-        {
-            bool status;
-            try
-            {
-                DbContextB.SBP_BlotterRECON.Add(CRDItem);
-                DbContextB.SaveChanges();
-                //DbContextB.SP_AddDaysInBlotterReport(CRRFINCONItem.DemandTimeLiablitiesTotalForCRR, CRRFINCONItem.StartDate, CRRFINCONItem.EndDate, CRRFINCONItem.BR);
-                status = true;
-            }
-            catch (Exception ex)
-            {
-                System.Console.WriteLine(ex.Message.ToString());
-                status = false;
-            }
-            return status;
-        }
-
-        public static bool UpdateRECON(SBP_BlotterRECON CRDItem)
-        {
-            bool status;
-            try
-            {
-                List<SBP_BlotterRECON> GetCount = DbContextB.SBP_BlotterRECON.Where(p => p.ID == CRDItem.ID).ToList();
-                if (GetCount.Count > 0)
-                {
-                    SBP_BlotterRECON prodItem = DbContextB.SBP_BlotterRECON.Where(p => p.ID == CRDItem.ID).FirstOrDefault();
-                    if (prodItem != null)
-                    {
-                        //prodItem.NostroBank = CRDItem.NostroBank;
-                        prodItem.NostroBankId = CRDItem.NostroBankId;
-                        prodItem.CurID = CRDItem.CurID;
-                        prodItem.LastStatementDate = CRDItem.LastStatementDate;
-                        prodItem.OurBooks = CRDItem.OurBooks;
-                        prodItem.TheirBooks = CRDItem.TheirBooks;
-                        prodItem.ConversionRate = CRDItem.ConversionRate;
-                        prodItem.EquivalentUSD = CRDItem.EquivalentUSD;
-                        prodItem.ConversionRate = CRDItem.ConversionRate;
-                        prodItem.LimitAvailable = CRDItem.LimitAvailable;
-                        prodItem.UpdateDate = CRDItem.UpdateDate;
-
-                        DbContextB.SaveChanges();
-                        //DbContextB.SP_UpdateDaysInBlotterReport(CRRFINCONItem.DemandTimeLiablitiesTotalForCRR, CRRFINCONItem.StartDate, CRRFINCONItem.EndDate, CRRFINCONItem.BR);
-                    }
-                    status = true;
-                }
-                else
-                {
-                    status = false;
-                }
-            }
-            catch (Exception ex)
-            {
-                status = false;
-            }
-            return status;
-        }
-
-        public static bool DeleteRECON(int id)
-        {
-            bool status;
-            try
-            {
-                SBP_BlotterRECON CRDItem = DbContextB.SBP_BlotterRECON.Where(p => p.ID == id).FirstOrDefault();
-                if (CRDItem != null)
-                {
-                    DbContextB.SBP_BlotterRECON.Remove(CRDItem);
-                    DbContextB.SaveChanges();
-                }
-                status = true;
-            }
-            catch (Exception ex)
-            {
-                status = false;
-            }
-            return status;
-        }
 
         //*****************************************************
         //Opening Closing Balance Differential Repo Producers

@@ -49,8 +49,6 @@ namespace DataAccessLayer
         public virtual DbSet<SBP_BlotterManualData> SBP_BlotterManualData { get; set; }
         public virtual DbSet<SBP_BlotterOpeningClosingBalanceDIfferential> SBP_BlotterOpeningClosingBalanceDIfferential { get; set; }
         public virtual DbSet<NostroBank> NostroBanks { get; set; }
-        public virtual DbSet<SBP_BlotterCRD> SBP_BlotterCRD { get; set; }
-        public virtual DbSet<SBP_BlotterRECON> SBP_BlotterRECON { get; set; }
         public virtual DbSet<SBP_BlotterCRRReportDaysWiseBal> SBP_BlotterCRRReportDaysWiseBal { get; set; }
         public virtual DbSet<SBP_BlotterFundingRepo> SBP_BlotterFundingRepo { get; set; }
         public virtual DbSet<SBP_BlotterDMMO> SBP_BlotterDMMO { get; set; }
@@ -58,15 +56,6 @@ namespace DataAccessLayer
         public virtual DbSet<SBP_BlotterTBO> SBP_BlotterTBO { get; set; }
         public virtual DbSet<SBP_BlotterTrade> SBP_BlotterTrade { get; set; }
         public virtual DbSet<WebPages> WebPages { get; set; }
-    
-        public virtual ObjectResult<SP_SBPOpicsSystemDate_Result> SP_SBPOpicsSystemDate(string brCode)
-        {
-            var brCodeParameter = brCode != null ?
-                new ObjectParameter("BrCode", brCode) :
-                new ObjectParameter("BrCode", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_SBPOpicsSystemDate_Result>("SP_SBPOpicsSystemDate", brCodeParameter);
-        }
     
         public virtual ObjectResult<SP_GETAllClearingTransactionTitles_Result> SP_GETAllClearingTransactionTitles()
         {
@@ -890,36 +879,6 @@ namespace DataAccessLayer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ReconcileOPICSManualDataFwd", bRParameter, dateParameter, fillDumpBlotterParameter);
         }
     
-        public virtual int SP_SBPFillDumBlotterBR1(string br, Nullable<System.DateTime> currentDT)
-        {
-            var brParameter = br != null ?
-                new ObjectParameter("Br", br) :
-                new ObjectParameter("Br", typeof(string));
-    
-            var currentDTParameter = currentDT.HasValue ?
-                new ObjectParameter("CurrentDT", currentDT) :
-                new ObjectParameter("CurrentDT", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SBPFillDumBlotterBR1", brParameter, currentDTParameter);
-        }
-    
-        public virtual int SP_SBPFillDumBlotterBR2(string br, Nullable<System.DateTime> currentDT, string dataType)
-        {
-            var brParameter = br != null ?
-                new ObjectParameter("Br", br) :
-                new ObjectParameter("Br", typeof(string));
-    
-            var currentDTParameter = currentDT.HasValue ?
-                new ObjectParameter("CurrentDT", currentDT) :
-                new ObjectParameter("CurrentDT", typeof(System.DateTime));
-    
-            var dataTypeParameter = dataType != null ?
-                new ObjectParameter("DataType", dataType) :
-                new ObjectParameter("DataType", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SBPFillDumBlotterBR2", brParameter, currentDTParameter, dataTypeParameter);
-        }
-    
         public virtual ObjectResult<SP_GetSBP_DMMO_Result> SP_GetSBP_DMMO(Nullable<int> userID, Nullable<int> branchID, Nullable<int> bR, string dateVal)
         {
             var userIDParameter = userID.HasValue ?
@@ -990,6 +949,19 @@ namespace DataAccessLayer
                 new ObjectParameter("enddate", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GETLatestBlotterDTLReportDayWise_Result>("SP_GETLatestBlotterDTLReportDayWise", bRParameter, startdateParameter, enddateParameter);
+        }
+    
+        public virtual int SP_SBPFillDumBlotter(Nullable<System.DateTime> currentDT, Nullable<int> br)
+        {
+            var currentDTParameter = currentDT.HasValue ?
+                new ObjectParameter("CurrentDT", currentDT) :
+                new ObjectParameter("CurrentDT", typeof(System.DateTime));
+    
+            var brParameter = br.HasValue ?
+                new ObjectParameter("Br", br) :
+                new ObjectParameter("Br", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SBPFillDumBlotter", currentDTParameter, brParameter);
         }
     }
 }

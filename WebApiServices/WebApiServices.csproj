@@ -151,17 +151,16 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Classes\DAL.cs" />
     <Compile Include="Controllers\BlotterBai_MuajjalController.cs" />
     <Compile Include="Controllers\BlotterBalanceDIfferentialController.cs" />
     <Compile Include="Controllers\BlotterBreakupsController.cs" />
     <Compile Include="Controllers\BlotterCashFlowController.cs" />
     <Compile Include="Controllers\BlotterClearingController.cs" />
     <Compile Include="Controllers\BlotterController.cs" />
-    <Compile Include="Controllers\BlotterCRDController.cs" />
     <Compile Include="Controllers\BlotterCRRFINCONController.cs" />
     <Compile Include="Controllers\BlotterCurrencyController.cs" />
     <Compile Include="Controllers\BlotterDMMOController.cs" />
-    <Compile Include="Controllers\BlotterDTController.cs" />
     <Compile Include="Controllers\BlotterDTLController.cs" />
     <Compile Include="Controllers\BlotterDTLDBController.cs" />
     <Compile Include="Controllers\BlotterFundingRepoController.cs" />
@@ -170,7 +169,6 @@
     <Compile Include="Controllers\BlotterManualDealsController.cs" />
     <Compile Include="Controllers\BlotterOpenBalController.cs" />
     <Compile Include="Controllers\BlotterOpeningController.cs" />
-    <Compile Include="Controllers\BlotterRECONController.cs" />
     <Compile Include="Controllers\BlotterReservedDiffController.cs" />
     <Compile Include="Controllers\BlotterRTGSController.cs" />
     <Compile Include="Controllers\BlotterSetupController.cs" />
@@ -245,11 +243,9 @@
     <Compile Include="Models\WebPages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\EntitiyMapperBlotterBalDiff.cs" />
-    <Compile Include="Repository\EntitiyMapperBlotterCRD.cs" />
     <Compile Include="Repository\EntitiyMapperBlotterCRRFINCON.cs" />
     <Compile Include="Repository\EntitiyMapperBlotterDMMO.cs" />
     <Compile Include="Repository\EntitiyMapperBlotterFR.cs" />
-    <Compile Include="Repository\EntitiyMapperBlotterRECON.cs" />
     <Compile Include="Repository\EntitiyMapperBlotterReserved.cs" />
     <Compile Include="Repository\EntitiyMapperBlotterTBO.cs" />
     <Compile Include="Repository\EntityMapperBlotterBai_Muajjal.cs" />
@@ -262,7 +258,6 @@
     <Compile Include="Repository\EntityMapperBlotter.cs" />
     <Compile Include="Repository\EntityMapperBlotterCashFlowSum.cs" />
     <Compile Include="Repository\EntityMapperBlotterClearing.cs" />
-    <Compile Include="Repository\EntityMapperBlotterCurrentDT.cs" />
     <Compile Include="Repository\EntityMapperBlotterDTL.cs" />
     <Compile Include="Repository\EntityMapperBlotterDTLDB.cs" />
     <Compile Include="Repository\EntityMapperBlotterEmail.cs" />
