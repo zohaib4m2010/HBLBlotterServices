@@ -16,8 +16,8 @@ namespace WebApiServices.Controllers
         [HttpGet]
         public JsonResult<Models.WebPages> GetWebPage(int id)
         {
-            EntityMapperWebPages<DataAccessLayer.WebPages, Models.WebPages> mapObj = new EntityMapperWebPages<DataAccessLayer.WebPages, Models.WebPages>();
-            DataAccessLayer.WebPages dalBlotterTBO = DAL.GetWebPage(id);
+            EntityMapperWebPages<DataAccessLayer.SP_GetAllWebPages_Result, Models.WebPages> mapObj = new EntityMapperWebPages<DataAccessLayer.SP_GetAllWebPages_Result, Models.WebPages>();
+            DataAccessLayer.SP_GetAllWebPages_Result dalBlotterTBO = DAL.GetWebPage(id);
             Models.WebPages products = new Models.WebPages();
             products = mapObj.Translate(dalBlotterTBO);
 
@@ -26,9 +26,9 @@ namespace WebApiServices.Controllers
         [HttpGet]
         public JsonResult<List<Models.WebPages>> GetAllWebPage()
         {
-            EntityMapperWebPages<DataAccessLayer.WebPages, Models.WebPages> mapObj = new EntityMapperWebPages<DataAccessLayer.WebPages, Models.WebPages>();
+            EntityMapperWebPages<DataAccessLayer.SP_GetAllWebPages_Result, Models.WebPages> mapObj = new EntityMapperWebPages<DataAccessLayer.SP_GetAllWebPages_Result, Models.WebPages>();
 
-            List<DataAccessLayer.WebPages> WebPageList = DAL.GetAllWebPages();
+            List<DataAccessLayer.SP_GetAllWebPages_Result> WebPageList = DAL.GetAllWebPages();
             List<Models.WebPages> blotterWebPage = new List<Models.WebPages>();
             foreach (var item in WebPageList)
             {
@@ -42,10 +42,7 @@ namespace WebApiServices.Controllers
             bool status = false;
             if (ModelState.IsValid)
             {
-                EntityMapperWebPages<Models.WebPages, DataAccessLayer.WebPages> mapObj = new EntityMapperWebPages<Models.WebPages, DataAccessLayer.WebPages>();
-                DataAccessLayer.WebPages WebPageObj = new DataAccessLayer.WebPages();
-                WebPageObj = mapObj.Translate(item);
-                status = DAL.InsertWebPages(WebPageObj);
+                status = DAL.InsertWebPages(item.PageName,item.ControllerName,item.DisplayName,item.PageDescription,item.BlotterType,item.isActive);
             }
             return status;
 
@@ -58,10 +55,7 @@ namespace WebApiServices.Controllers
             bool status = false;
             if (ModelState.IsValid)
             {
-                EntityMapperWebPages<Models.WebPages, DataAccessLayer.WebPages> mapObj = new EntityMapperWebPages<Models.WebPages, DataAccessLayer.WebPages>();
-                DataAccessLayer.WebPages WebPageObj = new DataAccessLayer.WebPages();
-                WebPageObj = mapObj.Translate(item);
-                status = DAL.UpdateWebPages(WebPageObj);
+                status = DAL.UpdateWebPages(item.WPID,item.PageName, item.ControllerName, item.DisplayName, item.PageDescription, item.BlotterType, item.isActive);
             }
             return status;
 

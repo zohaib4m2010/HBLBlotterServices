@@ -32,9 +32,6 @@ namespace DataAccessLayer
         public virtual DbSet<SBP_BlotterOpening> SBP_BlotterOpening { get; set; }
         public virtual DbSet<SBP_BlotterDTL> SBP_BlotterDTL { get; set; }
         public virtual DbSet<Branches> Branches { get; set; }
-        public virtual DbSet<UserRole> UserRoles { get; set; }
-        public virtual DbSet<UserRoleRelation> UserRoleRelations { get; set; }
-        public virtual DbSet<UserPageRelation> UserPageRelations { get; set; }
         public virtual DbSet<SBP_BlotterDTLDaysWiseBal> SBP_BlotterDTLDaysWiseBal { get; set; }
         public virtual DbSet<SBP_BlotterCRRReportCalcSetup> SBP_BlotterCRRReportCalcSetup { get; set; }
         public virtual DbSet<SBP_BlotterCRRFINCON> SBP_BlotterCRRFINCON { get; set; }
@@ -55,7 +52,6 @@ namespace DataAccessLayer
         public virtual DbSet<SBP_BlotterReserved> SBP_BlotterReserved { get; set; }
         public virtual DbSet<SBP_BlotterTBO> SBP_BlotterTBO { get; set; }
         public virtual DbSet<SBP_BlotterTrade> SBP_BlotterTrade { get; set; }
-        public virtual DbSet<WebPages> WebPages { get; set; }
     
         public virtual ObjectResult<SP_GETAllClearingTransactionTitles_Result> SP_GETAllClearingTransactionTitles()
         {
@@ -962,6 +958,261 @@ namespace DataAccessLayer
                 new ObjectParameter("Br", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SBPFillDumBlotter", currentDTParameter, brParameter);
+        }
+    
+        public virtual int SP_DELETEUserPageRelation(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_DELETEUserPageRelation", idParameter);
+        }
+    
+        public virtual int SP_INSERTUserPageRelation(Nullable<int> uRID, Nullable<int> wPID, Nullable<bool> dateChangeAccess, Nullable<bool> editAccess, Nullable<bool> deleteAccess)
+        {
+            var uRIDParameter = uRID.HasValue ?
+                new ObjectParameter("URID", uRID) :
+                new ObjectParameter("URID", typeof(int));
+    
+            var wPIDParameter = wPID.HasValue ?
+                new ObjectParameter("WPID", wPID) :
+                new ObjectParameter("WPID", typeof(int));
+    
+            var dateChangeAccessParameter = dateChangeAccess.HasValue ?
+                new ObjectParameter("DateChangeAccess", dateChangeAccess) :
+                new ObjectParameter("DateChangeAccess", typeof(bool));
+    
+            var editAccessParameter = editAccess.HasValue ?
+                new ObjectParameter("EditAccess", editAccess) :
+                new ObjectParameter("EditAccess", typeof(bool));
+    
+            var deleteAccessParameter = deleteAccess.HasValue ?
+                new ObjectParameter("DeleteAccess", deleteAccess) :
+                new ObjectParameter("DeleteAccess", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_INSERTUserPageRelation", uRIDParameter, wPIDParameter, dateChangeAccessParameter, editAccessParameter, deleteAccessParameter);
+        }
+    
+        public virtual int SP_UPDATEUserPageRelation(Nullable<int> id, Nullable<int> uRID, Nullable<int> wPID, Nullable<bool> dateChangeAccess, Nullable<bool> editAccess, Nullable<bool> deleteAccess)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var uRIDParameter = uRID.HasValue ?
+                new ObjectParameter("URID", uRID) :
+                new ObjectParameter("URID", typeof(int));
+    
+            var wPIDParameter = wPID.HasValue ?
+                new ObjectParameter("WPID", wPID) :
+                new ObjectParameter("WPID", typeof(int));
+    
+            var dateChangeAccessParameter = dateChangeAccess.HasValue ?
+                new ObjectParameter("DateChangeAccess", dateChangeAccess) :
+                new ObjectParameter("DateChangeAccess", typeof(bool));
+    
+            var editAccessParameter = editAccess.HasValue ?
+                new ObjectParameter("EditAccess", editAccess) :
+                new ObjectParameter("EditAccess", typeof(bool));
+    
+            var deleteAccessParameter = deleteAccess.HasValue ?
+                new ObjectParameter("DeleteAccess", deleteAccess) :
+                new ObjectParameter("DeleteAccess", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_UPDATEUserPageRelation", idParameter, uRIDParameter, wPIDParameter, dateChangeAccessParameter, editAccessParameter, deleteAccessParameter);
+        }
+    
+        public virtual ObjectResult<SP_GETUserRoles_Result> SP_GETUserRoles(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GETUserRoles_Result>("SP_GETUserRoles", idParameter);
+        }
+    
+        public virtual int SP_InsertUserRole(string roleName, Nullable<bool> isActive)
+        {
+            var roleNameParameter = roleName != null ?
+                new ObjectParameter("RoleName", roleName) :
+                new ObjectParameter("RoleName", typeof(string));
+    
+            var isActiveParameter = isActive.HasValue ?
+                new ObjectParameter("isActive", isActive) :
+                new ObjectParameter("isActive", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_InsertUserRole", roleNameParameter, isActiveParameter);
+        }
+    
+        public virtual int SP_UPDATEUserRole(Nullable<int> uRID, string roleName, Nullable<bool> isActive)
+        {
+            var uRIDParameter = uRID.HasValue ?
+                new ObjectParameter("URID", uRID) :
+                new ObjectParameter("URID", typeof(int));
+    
+            var roleNameParameter = roleName != null ?
+                new ObjectParameter("RoleName", roleName) :
+                new ObjectParameter("RoleName", typeof(string));
+    
+            var isActiveParameter = isActive.HasValue ?
+                new ObjectParameter("isActive", isActive) :
+                new ObjectParameter("isActive", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_UPDATEUserRole", uRIDParameter, roleNameParameter, isActiveParameter);
+        }
+    
+        public virtual int SP_DeleteUserRole(Nullable<int> uRID)
+        {
+            var uRIDParameter = uRID.HasValue ?
+                new ObjectParameter("URID", uRID) :
+                new ObjectParameter("URID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_DeleteUserRole", uRIDParameter);
+        }
+    
+        public virtual int SP_DeleteWebPages(Nullable<int> wPID)
+        {
+            var wPIDParameter = wPID.HasValue ?
+                new ObjectParameter("WPID", wPID) :
+                new ObjectParameter("WPID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_DeleteWebPages", wPIDParameter);
+        }
+    
+        public virtual ObjectResult<SP_GetAllWebPages_Result> SP_GetAllWebPages(Nullable<int> wPID)
+        {
+            var wPIDParameter = wPID.HasValue ?
+                new ObjectParameter("WPID", wPID) :
+                new ObjectParameter("WPID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetAllWebPages_Result>("SP_GetAllWebPages", wPIDParameter);
+        }
+    
+        public virtual int SP_InsertWebPages(string pageName, string controllerName, string displayName, string pageDescription, Nullable<bool> isActive, Nullable<int> blotterType)
+        {
+            var pageNameParameter = pageName != null ?
+                new ObjectParameter("PageName", pageName) :
+                new ObjectParameter("PageName", typeof(string));
+    
+            var controllerNameParameter = controllerName != null ?
+                new ObjectParameter("ControllerName", controllerName) :
+                new ObjectParameter("ControllerName", typeof(string));
+    
+            var displayNameParameter = displayName != null ?
+                new ObjectParameter("DisplayName", displayName) :
+                new ObjectParameter("DisplayName", typeof(string));
+    
+            var pageDescriptionParameter = pageDescription != null ?
+                new ObjectParameter("PageDescription", pageDescription) :
+                new ObjectParameter("PageDescription", typeof(string));
+    
+            var isActiveParameter = isActive.HasValue ?
+                new ObjectParameter("isActive", isActive) :
+                new ObjectParameter("isActive", typeof(bool));
+    
+            var blotterTypeParameter = blotterType.HasValue ?
+                new ObjectParameter("BlotterType", blotterType) :
+                new ObjectParameter("BlotterType", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_InsertWebPages", pageNameParameter, controllerNameParameter, displayNameParameter, pageDescriptionParameter, isActiveParameter, blotterTypeParameter);
+        }
+    
+        public virtual int SP_UpdateWebPages(Nullable<int> wPID, string pageName, string controllerName, string displayName, string pageDescription, Nullable<bool> isActive, Nullable<int> blotterType)
+        {
+            var wPIDParameter = wPID.HasValue ?
+                new ObjectParameter("WPID", wPID) :
+                new ObjectParameter("WPID", typeof(int));
+    
+            var pageNameParameter = pageName != null ?
+                new ObjectParameter("PageName", pageName) :
+                new ObjectParameter("PageName", typeof(string));
+    
+            var controllerNameParameter = controllerName != null ?
+                new ObjectParameter("ControllerName", controllerName) :
+                new ObjectParameter("ControllerName", typeof(string));
+    
+            var displayNameParameter = displayName != null ?
+                new ObjectParameter("DisplayName", displayName) :
+                new ObjectParameter("DisplayName", typeof(string));
+    
+            var pageDescriptionParameter = pageDescription != null ?
+                new ObjectParameter("PageDescription", pageDescription) :
+                new ObjectParameter("PageDescription", typeof(string));
+    
+            var isActiveParameter = isActive.HasValue ?
+                new ObjectParameter("isActive", isActive) :
+                new ObjectParameter("isActive", typeof(bool));
+    
+            var blotterTypeParameter = blotterType.HasValue ?
+                new ObjectParameter("BlotterType", blotterType) :
+                new ObjectParameter("BlotterType", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_UpdateWebPages", wPIDParameter, pageNameParameter, controllerNameParameter, displayNameParameter, pageDescriptionParameter, isActiveParameter, blotterTypeParameter);
+        }
+    
+        public virtual ObjectResult<SP_GetSBPBlotterGH_Result> SP_GetSBPBlotterGH(Nullable<int> gHID)
+        {
+            var gHIDParameter = gHID.HasValue ?
+                new ObjectParameter("GHID", gHID) :
+                new ObjectParameter("GHID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetSBPBlotterGH_Result>("SP_GetSBPBlotterGH", gHIDParameter);
+        }
+    
+        public virtual int SP_InsertHolidays(string holidayTitle, string gHDescription, Nullable<System.DateTime> gHDate, Nullable<int> userID)
+        {
+            var holidayTitleParameter = holidayTitle != null ?
+                new ObjectParameter("HolidayTitle", holidayTitle) :
+                new ObjectParameter("HolidayTitle", typeof(string));
+    
+            var gHDescriptionParameter = gHDescription != null ?
+                new ObjectParameter("GHDescription", gHDescription) :
+                new ObjectParameter("GHDescription", typeof(string));
+    
+            var gHDateParameter = gHDate.HasValue ?
+                new ObjectParameter("GHDate", gHDate) :
+                new ObjectParameter("GHDate", typeof(System.DateTime));
+    
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_InsertHolidays", holidayTitleParameter, gHDescriptionParameter, gHDateParameter, userIDParameter);
+        }
+    
+        public virtual int SP_UpdateHolidays(Nullable<int> gHID, string holidayTitle, string gHDescription, Nullable<System.DateTime> gHDate, Nullable<int> userID)
+        {
+            var gHIDParameter = gHID.HasValue ?
+                new ObjectParameter("GHID", gHID) :
+                new ObjectParameter("GHID", typeof(int));
+    
+            var holidayTitleParameter = holidayTitle != null ?
+                new ObjectParameter("HolidayTitle", holidayTitle) :
+                new ObjectParameter("HolidayTitle", typeof(string));
+    
+            var gHDescriptionParameter = gHDescription != null ?
+                new ObjectParameter("GHDescription", gHDescription) :
+                new ObjectParameter("GHDescription", typeof(string));
+    
+            var gHDateParameter = gHDate.HasValue ?
+                new ObjectParameter("GHDate", gHDate) :
+                new ObjectParameter("GHDate", typeof(System.DateTime));
+    
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_UpdateHolidays", gHIDParameter, holidayTitleParameter, gHDescriptionParameter, gHDateParameter, userIDParameter);
+        }
+    
+        public virtual int SP_DeleteHolidays(Nullable<int> gHID)
+        {
+            var gHIDParameter = gHID.HasValue ?
+                new ObjectParameter("GHID", gHID) :
+                new ObjectParameter("GHID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_DeleteHolidays", gHIDParameter);
         }
     }
 }

@@ -433,8 +433,6 @@
           <Property Name="Flag" Type="varchar" MaxLength="2" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterRECON' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="SBP_BlotterReserved">
           <Key>
@@ -556,50 +554,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Property Name="isLoggedIn" Type="bit" />
           <Property Name="Department" Type="nvarchar" MaxLength="120" />
           <Property Name="ChangePassword" Type="bit" />
-        </EntityType>
-        <EntityType Name="UserPageRelation">
-          <Key>
-            <PropertyRef Name="UPRID" />
-          </Key>
-          <Property Name="UPRID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="URID" Type="int" Nullable="false" />
-          <Property Name="WPID" Type="int" Nullable="false" />
-          <Property Name="DateChangeAccess" Type="bit" />
-          <Property Name="EditAccess" Type="bit" />
-          <Property Name="DeleteAccess" Type="bit" />
-        </EntityType>
-        <EntityType Name="UserRole">
-          <Key>
-            <PropertyRef Name="URID" />
-          </Key>
-          <Property Name="URID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RoleName" Type="nvarchar" MaxLength="20" />
-          <Property Name="RoleDescription" Type="nvarchar" MaxLength="250" />
-          <Property Name="isActive" Type="bit" />
-          <Property Name="CreateDate" Type="datetime" />
-          <Property Name="UpdateDate" Type="datetime" />
-        </EntityType>
-        <EntityType Name="UserRoleRelation">
-          <Key>
-            <PropertyRef Name="URRID" />
-          </Key>
-          <Property Name="URRID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="URID" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="WebPages">
-          <Key>
-            <PropertyRef Name="WPID" />
-          </Key>
-          <Property Name="WPID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PageName" Type="varchar" MaxLength="100" />
-          <Property Name="ControllerName" Type="varchar" MaxLength="100" />
-          <Property Name="DisplayName" Type="varchar" MaxLength="100" />
-          <Property Name="PageDescription" Type="nvarchar" MaxLength="250" />
-          <Property Name="isActive" Type="bit" />
-          <Property Name="CreateDate" Type="datetime" />
-          <Property Name="UpdateDate" Type="datetime" />
-          <Property Name="BlotterType" Type="int" />
         </EntityType>
         <Association Name="FK_BlotterCRRFINCON_BranchID">
           <End Role="Branches" Type="Self.Branches" Multiplicity="1" />
@@ -901,54 +855,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UPRUserRoleID">
-          <End Role="UserRole" Type="Self.UserRole" Multiplicity="1" />
-          <End Role="UserPageRelation" Type="Self.UserPageRelation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserRole">
-              <PropertyRef Name="URID" />
-            </Principal>
-            <Dependent Role="UserPageRelation">
-              <PropertyRef Name="URID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_URRUserID">
-          <End Role="SBP_LoginInfo" Type="Self.SBP_LoginInfo" Multiplicity="1" />
-          <End Role="UserRoleRelation" Type="Self.UserRoleRelation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SBP_LoginInfo">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserRoleRelation">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_URRWPID">
-          <End Role="WebPages" Type="Self.WebPages" Multiplicity="1" />
-          <End Role="UserPageRelation" Type="Self.UserPageRelation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="WebPages">
-              <PropertyRef Name="WPID" />
-            </Principal>
-            <Dependent Role="UserPageRelation">
-              <PropertyRef Name="WPID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_URURID">
-          <End Role="UserRole" Type="Self.UserRole" Multiplicity="1" />
-          <End Role="UserRoleRelation" Type="Self.UserRoleRelation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserRole">
-              <PropertyRef Name="URID" />
-            </Principal>
-            <Dependent Role="UserRoleRelation">
-              <PropertyRef Name="URID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Function Name="SP_ADD_ActivityMonitor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pSessionID" Type="varchar" Mode="In" />
           <Parameter Name="pUserID" Type="int" Mode="In" />
@@ -971,6 +877,18 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Parameter Name="StartDate" Type="datetime" Mode="In" />
           <Parameter Name="EndDate" Type="datetime" Mode="In" />
           <Parameter Name="BR" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_DeleteHolidays" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="GHID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_DELETEUserPageRelation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_DeleteUserRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="URID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_DeleteWebPages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="WPID" Type="int" Mode="In" />
         </Function>
         <Function Name="SP_GetAll_SBPBlotterClearing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
@@ -1018,6 +936,9 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Parameter Name="Roleid" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_GetAllUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_GetAllWebPages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="WPID" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_GETLatestBlotterDTLReportDayWise" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BR" Type="int" Mode="In" />
           <Parameter Name="startdate" Type="varchar" Mode="In" />
@@ -1070,6 +991,9 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Parameter Name="BR" Type="int" Mode="In" />
           <Parameter Name="DateVal" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_GetSBPBlotterGH" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="GHID" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_GetSBPBlotterOpeningClosingBalanceDIfferential" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BranchID" Type="int" Mode="In" />
           <Parameter Name="CurID" Type="int" Mode="In" />
@@ -1081,6 +1005,15 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
         </Function>
         <Function Name="SP_GetUserPageRelationById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UPRID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_GETUserRoles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_InsertHolidays" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="HolidayTitle" Type="varchar" Mode="In" />
+          <Parameter Name="GHDescription" Type="varchar" Mode="In" />
+          <Parameter Name="GHDate" Type="date" Mode="In" />
+          <Parameter Name="UserID" Type="int" Mode="In" />
         </Function>
         <Function Name="SP_InsertLoginInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserName" Type="nvarchar" Mode="In" />
@@ -1109,6 +1042,25 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Parameter Name="CurID" Type="int" Mode="In" />
           <Parameter Name="Flag" Type="varchar" Mode="In" />
           <Parameter Name="EstimatedOpenBal" Type="numeric" Mode="In" />
+        </Function>
+        <Function Name="SP_INSERTUserPageRelation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="URID" Type="int" Mode="In" />
+          <Parameter Name="WPID" Type="int" Mode="In" />
+          <Parameter Name="DateChangeAccess" Type="bit" Mode="In" />
+          <Parameter Name="EditAccess" Type="bit" Mode="In" />
+          <Parameter Name="DeleteAccess" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="SP_InsertUserRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="RoleName" Type="varchar" Mode="In" />
+          <Parameter Name="isActive" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="SP_InsertWebPages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PageName" Type="varchar" Mode="In" />
+          <Parameter Name="ControllerName" Type="varchar" Mode="In" />
+          <Parameter Name="DisplayName" Type="varchar" Mode="In" />
+          <Parameter Name="PageDescription" Type="varchar" Mode="In" />
+          <Parameter Name="isActive" Type="bit" Mode="In" />
+          <Parameter Name="BlotterType" Type="int" Mode="In" />
         </Function>
         <Function Name="SP_ReconcileOPICSManualData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BR" Type="int" Mode="In" />
@@ -1150,6 +1102,13 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Parameter Name="EndDate" Type="datetime" Mode="In" />
           <Parameter Name="BR" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_UpdateHolidays" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="GHID" Type="int" Mode="In" />
+          <Parameter Name="HolidayTitle" Type="varchar" Mode="In" />
+          <Parameter Name="GHDescription" Type="varchar" Mode="In" />
+          <Parameter Name="GHDate" Type="date" Mode="In" />
+          <Parameter Name="UserID" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_UpdateLoginInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="UserName" Type="nvarchar" Mode="In" />
@@ -1180,10 +1139,32 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Parameter Name="Flag" Type="varchar" Mode="In" />
           <Parameter Name="EstimatedOpenBal" Type="numeric" Mode="In" />
         </Function>
+        <Function Name="SP_UPDATEUserPageRelation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="URID" Type="int" Mode="In" />
+          <Parameter Name="WPID" Type="int" Mode="In" />
+          <Parameter Name="DateChangeAccess" Type="bit" Mode="In" />
+          <Parameter Name="EditAccess" Type="bit" Mode="In" />
+          <Parameter Name="DeleteAccess" Type="bit" Mode="In" />
+        </Function>
         <Function Name="SP_UpdateUserPassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userId" Type="int" Mode="In" />
           <Parameter Name="OldPassword" Type="varchar" Mode="In" />
           <Parameter Name="NewPassword" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_UPDATEUserRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="URID" Type="int" Mode="In" />
+          <Parameter Name="RoleName" Type="varchar" Mode="In" />
+          <Parameter Name="isActive" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="SP_UpdateWebPages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="WPID" Type="int" Mode="In" />
+          <Parameter Name="PageName" Type="varchar" Mode="In" />
+          <Parameter Name="ControllerName" Type="varchar" Mode="In" />
+          <Parameter Name="DisplayName" Type="varchar" Mode="In" />
+          <Parameter Name="PageDescription" Type="varchar" Mode="In" />
+          <Parameter Name="isActive" Type="bit" Mode="In" />
+          <Parameter Name="BlotterType" Type="int" Mode="In" />
         </Function>
         <Function Name="UDF_RETURN_FEDEALNO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
           <Parameter Name="BR" Type="char" Mode="In" />
@@ -1214,10 +1195,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <EntitySet Name="SBP_BlotterTBO" EntityType="Self.SBP_BlotterTBO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterTrade" EntityType="Self.SBP_BlotterTrade" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_LoginInfo" EntityType="Self.SBP_LoginInfo" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserPageRelation" EntityType="Self.UserPageRelation" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserRoleRelation" EntityType="Self.UserRoleRelation" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="WebPages" EntityType="Self.WebPages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterReserved" EntityType="Self.SBP_BlotterReserved" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [SBP_BlotterReserved].[SNo] AS [SNo], 
@@ -1336,22 +1313,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             <End Role="SBP_LoginInfo" EntitySet="SBP_LoginInfo" />
             <End Role="SBP_BlotterFundsTransfer" EntitySet="SBP_BlotterFundsTransfer" />
           </AssociationSet>
-          <AssociationSet Name="FK_UPRUserRoleID" Association="Self.FK_UPRUserRoleID">
-            <End Role="UserRole" EntitySet="UserRole" />
-            <End Role="UserPageRelation" EntitySet="UserPageRelation" />
-          </AssociationSet>
-          <AssociationSet Name="FK_URRUserID" Association="Self.FK_URRUserID">
-            <End Role="SBP_LoginInfo" EntitySet="SBP_LoginInfo" />
-            <End Role="UserRoleRelation" EntitySet="UserRoleRelation" />
-          </AssociationSet>
-          <AssociationSet Name="FK_URRWPID" Association="Self.FK_URRWPID">
-            <End Role="WebPages" EntitySet="WebPages" />
-            <End Role="UserPageRelation" EntitySet="UserPageRelation" />
-          </AssociationSet>
-          <AssociationSet Name="FK_URURID" Association="Self.FK_URURID">
-            <End Role="UserRole" EntitySet="UserRole" />
-            <End Role="UserRoleRelation" EntitySet="UserRoleRelation" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -1366,23 +1327,12 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <FunctionImport Name="SP_GETAllTBOTransactionTitles" ReturnType="Collection(BlotterEF.SP_GETAllTBOTransactionTitles_Result)" />
           <FunctionImport Name="SP_GETAllTradeTransactionTitles" ReturnType="Collection(BlotterEF.SP_GETAllTradeTransactionTitles_Result)" />
           <EntitySet Name="Branches" EntityType="BlotterEF.Branches" />
-          <EntitySet Name="UserRoles" EntityType="BlotterEF.UserRole" />
-          <EntitySet Name="UserRoleRelations" EntityType="BlotterEF.UserRoleRelation" />
-          <AssociationSet Name="FK_URURID" Association="BlotterEF.FK_URURID">
-            <End Role="UserRole" EntitySet="UserRoles" />
-            <End Role="UserRoleRelation" EntitySet="UserRoleRelations" />
-          </AssociationSet>
           <FunctionImport Name="SP_GetAllUserPageRelations" ReturnType="Collection(BlotterEF.SP_GetAllUserPageRelations_Result)">
           <Parameter Name="Roleid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_GetNotListedUserPageRelations" ReturnType="Collection(BlotterEF.SP_GetNotListedUserPageRelations_Result)">
           <Parameter Name="Roleid" Mode="In" Type="Int32" />
           </FunctionImport>
-          <EntitySet Name="UserPageRelations" EntityType="BlotterEF.UserPageRelation" />
-          <AssociationSet Name="FK_UPRUserRoleID" Association="BlotterEF.FK_UPRUserRoleID">
-            <End Role="UserRole" EntitySet="UserRoles" />
-            <End Role="UserPageRelation" EntitySet="UserPageRelations" />
-          </AssociationSet>
           <FunctionImport Name="SP_GetUserPageRelationById" ReturnType="Collection(BlotterEF.SP_GetUserPageRelationById_Result)">
           <Parameter Name="UPRID" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -1493,10 +1443,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <AssociationSet Name="FK_SBP_BlotterCRRReportCalcSetup_UserID" Association="BlotterEF.FK_SBP_BlotterCRRReportCalcSetup_UserID">
             <End Role="SBP_LoginInfo" EntitySet="SBP_LoginInfo" />
             <End Role="SBP_BlotterCRRReportCalcSetup" EntitySet="SBP_BlotterCRRReportCalcSetup" />
-          </AssociationSet>
-          <AssociationSet Name="FK_URRUserID" Association="BlotterEF.FK_URRUserID">
-            <End Role="SBP_LoginInfo" EntitySet="SBP_LoginInfo" />
-            <End Role="UserRoleRelation" EntitySet="UserRoleRelations" />
           </AssociationSet>
           <EntitySet Name="SBP_BlotterOpeningBalance" EntityType="BlotterEF.SBP_BlotterOpeningBalance" />
           <AssociationSet Name="FK_SBP_BlotterOpeningBalance_BranchID" Association="BlotterEF.FK_SBP_BlotterOpeningBalance_BranchID">
@@ -1750,14 +1696,84 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             <Parameter Name="startdate" Mode="In" Type="String" />
             <Parameter Name="enddate" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="WebPages" EntityType="BlotterEF.WebPages" />
-          <AssociationSet Name="FK_URRWPID" Association="BlotterEF.FK_URRWPID">
-            <End Role="WebPage" EntitySet="WebPages" />
-            <End Role="UserPageRelation" EntitySet="UserPageRelations" />
-          </AssociationSet>
           <FunctionImport Name="SP_SBPFillDumBlotter">
             <Parameter Name="CurrentDT" Mode="In" Type="DateTime" />
             <Parameter Name="Br" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_DELETEUserPageRelation">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_INSERTUserPageRelation">
+            <Parameter Name="URID" Mode="In" Type="Int32" />
+            <Parameter Name="WPID" Mode="In" Type="Int32" />
+            <Parameter Name="DateChangeAccess" Mode="In" Type="Boolean" />
+            <Parameter Name="EditAccess" Mode="In" Type="Boolean" />
+            <Parameter Name="DeleteAccess" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SP_UPDATEUserPageRelation">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="URID" Mode="In" Type="Int32" />
+            <Parameter Name="WPID" Mode="In" Type="Int32" />
+            <Parameter Name="DateChangeAccess" Mode="In" Type="Boolean" />
+            <Parameter Name="EditAccess" Mode="In" Type="Boolean" />
+            <Parameter Name="DeleteAccess" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SP_GETUserRoles" ReturnType="Collection(BlotterEF.SP_GETUserRoles_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_InsertUserRole">
+            <Parameter Name="RoleName" Mode="In" Type="String" />
+            <Parameter Name="isActive" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SP_UPDATEUserRole">
+            <Parameter Name="URID" Mode="In" Type="Int32" />
+            <Parameter Name="RoleName" Mode="In" Type="String" />
+            <Parameter Name="isActive" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SP_DeleteUserRole">
+          <Parameter Name="URID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_DeleteWebPages">
+          <Parameter Name="WPID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_GetAllWebPages" ReturnType="Collection(BlotterEF.SP_GetAllWebPages_Result)">
+          <Parameter Name="WPID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_InsertWebPages">
+            <Parameter Name="PageName" Mode="In" Type="String" />
+            <Parameter Name="ControllerName" Mode="In" Type="String" />
+            <Parameter Name="DisplayName" Mode="In" Type="String" />
+            <Parameter Name="PageDescription" Mode="In" Type="String" />
+            <Parameter Name="isActive" Mode="In" Type="Boolean" />
+            <Parameter Name="BlotterType" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_UpdateWebPages">
+            <Parameter Name="WPID" Mode="In" Type="Int32" />
+            <Parameter Name="PageName" Mode="In" Type="String" />
+            <Parameter Name="ControllerName" Mode="In" Type="String" />
+            <Parameter Name="DisplayName" Mode="In" Type="String" />
+            <Parameter Name="PageDescription" Mode="In" Type="String" />
+            <Parameter Name="isActive" Mode="In" Type="Boolean" />
+            <Parameter Name="BlotterType" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_GetSBPBlotterGH" ReturnType="Collection(BlotterEF.SP_GetSBPBlotterGH_Result)">
+          <Parameter Name="GHID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_InsertHolidays">
+            <Parameter Name="HolidayTitle" Mode="In" Type="String" />
+            <Parameter Name="GHDescription" Mode="In" Type="String" />
+            <Parameter Name="GHDate" Mode="In" Type="DateTime" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_UpdateHolidays">
+            <Parameter Name="GHID" Mode="In" Type="Int32" />
+            <Parameter Name="HolidayTitle" Mode="In" Type="String" />
+            <Parameter Name="GHDescription" Mode="In" Type="String" />
+            <Parameter Name="GHDate" Mode="In" Type="DateTime" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_DeleteHolidays">
+            <Parameter Name="GHID" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <EntityType  Name="SBP_BlotterManualDeals">
@@ -1841,41 +1857,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <NavigationProperty Name="SBP_BlotterTBO" Relationship="BlotterEF.FK_SBP_BlotterTBO_BranchID" FromRole="Branches" ToRole="SBP_BlotterTBO" />
           <NavigationProperty Name="SBP_BlotterTrade" Relationship="BlotterEF.FK_SBP_BlotterTrade_BranchID" FromRole="Branches" ToRole="SBP_BlotterTrade" />
         </EntityType>
-        <EntityType Name="UserRole">
-          <Key>
-            <PropertyRef Name="URID" />
-          </Key>
-          <Property Name="URID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoleName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="RoleDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="isActive" Type="Boolean" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="UserRoleRelations" Relationship="BlotterEF.FK_URURID" FromRole="UserRole" ToRole="UserRoleRelation" />
-          <NavigationProperty Name="UserPageRelations" Relationship="BlotterEF.FK_UPRUserRoleID" FromRole="UserRole" ToRole="UserPageRelation" />
-        </EntityType>
-        <EntityType Name="UserRoleRelation">
-          <Key>
-            <PropertyRef Name="URRID" />
-          </Key>
-          <Property Name="URRID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="URID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="UserRole" Relationship="BlotterEF.FK_URURID" FromRole="UserRoleRelation" ToRole="UserRole" />
-          <NavigationProperty Name="SBP_LoginInfo" Relationship="BlotterEF.FK_URRUserID" FromRole="UserRoleRelation" ToRole="SBP_LoginInfo" />
-        </EntityType>
-        <Association Name="FK_URURID">
-          <End Type="BlotterEF.UserRole" Role="UserRole" Multiplicity="1" />
-          <End Type="BlotterEF.UserRoleRelation" Role="UserRoleRelation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserRole">
-              <PropertyRef Name="URID" />
-            </Principal>
-            <Dependent Role="UserRoleRelation">
-              <PropertyRef Name="URID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <ComplexType Name="SP_GetAllUserPageRelations_Result">
           <Property Type="Int32" Name="URID" Nullable="false" />
           <Property Type="Int32" Name="UPRID" Nullable="false" />
@@ -1898,31 +1879,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="UpdateDate" Nullable="true" Precision="23" />
         </ComplexType>
-        <EntityType Name="UserPageRelation">
-          <Key>
-            <PropertyRef Name="UPRID" />
-          </Key>
-          <Property Name="UPRID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="URID" Type="Int32" Nullable="false" />
-          <Property Name="WPID" Type="Int32" Nullable="false" />
-          <Property Name="DateChangeAccess" Type="Boolean" />
-          <Property Name="EditAccess" Type="Boolean" />
-          <Property Name="DeleteAccess" Type="Boolean" />
-          <NavigationProperty Name="UserRole" Relationship="BlotterEF.FK_UPRUserRoleID" FromRole="UserPageRelation" ToRole="UserRole" />
-          <NavigationProperty Name="WebPage" Relationship="BlotterEF.FK_URRWPID" FromRole="UserPageRelation" ToRole="WebPage" />
-        </EntityType>
-        <Association Name="FK_UPRUserRoleID">
-          <End Type="BlotterEF.UserRole" Role="UserRole" Multiplicity="1" />
-          <End Type="BlotterEF.UserPageRelation" Role="UserPageRelation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserRole">
-              <PropertyRef Name="URID" />
-            </Principal>
-            <Dependent Role="UserPageRelation">
-              <PropertyRef Name="URID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <ComplexType Name="SP_GetUserPageRelationById_Result">
           <Property Type="Int32" Name="URID" Nullable="false" />
           <Property Type="Int32" Name="UPRID" Nullable="false" />
@@ -2317,7 +2273,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <NavigationProperty Name="SBP_BlotterBreakups" Relationship="BlotterEF.FK_SBP_BlotterBreakups_UserID" FromRole="SBP_LoginInfo" ToRole="SBP_BlotterBreakups" />
           <NavigationProperty Name="SBP_BlotterCRRFINCON" Relationship="BlotterEF.FK_SBP_BlotterCRRFINCON_UserID" FromRole="SBP_LoginInfo" ToRole="SBP_BlotterCRRFINCON" />
           <NavigationProperty Name="SBP_BlotterCRRReportCalcSetup" Relationship="BlotterEF.FK_SBP_BlotterCRRReportCalcSetup_UserID" FromRole="SBP_LoginInfo" ToRole="SBP_BlotterCRRReportCalcSetup" />
-          <NavigationProperty Name="UserRoleRelations" Relationship="BlotterEF.FK_URRUserID" FromRole="SBP_LoginInfo" ToRole="UserRoleRelation" />
           <NavigationProperty Name="SBP_BlotterOpeningBalance" Relationship="BlotterEF.FK_SBP_BlotterOpeningBalance_UserID" FromRole="SBP_LoginInfo" ToRole="SBP_BlotterOpeningBalance" />
           <NavigationProperty Name="SBP_BlotterManualEstBalance" Relationship="BlotterEF.FK_SBP_BlotterManualEstBalance_UserID" FromRole="SBP_LoginInfo" ToRole="SBP_BlotterManualEstBalance" />
           <NavigationProperty Name="SBP_BlotterClearing" Relationship="BlotterEF.FK_SBP_BlotterClearing_UserID" FromRole="SBP_LoginInfo" ToRole="SBP_BlotterClearing" />
@@ -2362,18 +2317,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             </Principal>
             <Dependent Role="SBP_BlotterCRRReportCalcSetup">
               <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_URRUserID">
-          <End Type="BlotterEF.SBP_LoginInfo" Role="SBP_LoginInfo" Multiplicity="1" />
-          <End Type="BlotterEF.UserRoleRelation" Role="UserRoleRelation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SBP_LoginInfo">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserRoleRelation">
-              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3213,33 +3156,34 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Property Type="DateTime" Name="createDate" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="UpdateDate" Nullable="true" Precision="23" />
         </ComplexType>
-        <EntityType Name="WebPages">
-          <Key>
-            <PropertyRef Name="WPID" />
-          </Key>
-          <Property Name="WPID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PageName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ControllerName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="DisplayName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="PageDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="isActive" Type="Boolean" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
-          <Property Name="BlotterType" Type="Int32" />
-          <NavigationProperty Name="UserPageRelations" Relationship="BlotterEF.FK_URRWPID" FromRole="WebPage" ToRole="UserPageRelation" />
-        </EntityType>
-        <Association Name="FK_URRWPID">
-          <End Type="BlotterEF.WebPages" Role="WebPage" Multiplicity="1" />
-          <End Type="BlotterEF.UserPageRelation" Role="UserPageRelation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="WebPage">
-              <PropertyRef Name="WPID" />
-            </Principal>
-            <Dependent Role="UserPageRelation">
-              <PropertyRef Name="WPID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <ComplexType Name="SP_GETUserRoles_Result">
+          <Property Type="Int32" Name="URID" Nullable="false" />
+          <Property Type="String" Name="RoleName" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="RoleDescription" Nullable="true" MaxLength="250" />
+          <Property Type="Boolean" Name="isActive" Nullable="true" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="UpdateDate" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="SP_GetAllWebPages_Result">
+          <Property Type="Int32" Name="WPID" Nullable="false" />
+          <Property Type="String" Name="PageName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ControllerName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="DisplayName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="PageDescription" Nullable="true" MaxLength="250" />
+          <Property Type="Boolean" Name="isActive" Nullable="true" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="UpdateDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="BlotterType" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_GetSBPBlotterGH_Result">
+          <Property Type="Int32" Name="GHID" Nullable="false" />
+          <Property Type="String" Name="HolidayTitle" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="GHDescription" Nullable="true" MaxLength="250" />
+          <Property Type="DateTime" Name="GHDate" Nullable="false" />
+          <Property Type="DateTime" Name="createDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="UpdateDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3333,27 +3277,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UserRoles">
-            <EntityTypeMapping TypeName="BlotterEF.UserRole">
-              <MappingFragment StoreEntitySet="UserRole">
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="isActive" ColumnName="isActive" />
-                <ScalarProperty Name="RoleDescription" ColumnName="RoleDescription" />
-                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
-                <ScalarProperty Name="URID" ColumnName="URID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserRoleRelations">
-            <EntityTypeMapping TypeName="BlotterEF.UserRoleRelation">
-              <MappingFragment StoreEntitySet="UserRoleRelation">
-                <ScalarProperty Name="URID" ColumnName="URID" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="URRID" ColumnName="URRID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SP_GetAllUserPageRelations" FunctionName="BlotterEF.Store.SP_GetAllUserPageRelations">
             <ResultMapping>
               <ComplexTypeMapping TypeName="BlotterEF.SP_GetAllUserPageRelations_Result">
@@ -3384,18 +3307,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="UserPageRelations">
-            <EntityTypeMapping TypeName="BlotterEF.UserPageRelation">
-              <MappingFragment StoreEntitySet="UserPageRelation">
-                <ScalarProperty Name="DeleteAccess" ColumnName="DeleteAccess" />
-                <ScalarProperty Name="EditAccess" ColumnName="EditAccess" />
-                <ScalarProperty Name="DateChangeAccess" ColumnName="DateChangeAccess" />
-                <ScalarProperty Name="WPID" ColumnName="WPID" />
-                <ScalarProperty Name="URID" ColumnName="URID" />
-                <ScalarProperty Name="UPRID" ColumnName="UPRID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SP_GetUserPageRelationById" FunctionName="BlotterEF.Store.SP_GetUserPageRelationById">
             <ResultMapping>
               <ComplexTypeMapping TypeName="BlotterEF.SP_GetUserPageRelationById_Result">
@@ -4398,22 +4309,59 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="WebPages">
-            <EntityTypeMapping TypeName="BlotterEF.WebPages">
-              <MappingFragment StoreEntitySet="WebPages">
-                <ScalarProperty Name="BlotterType" ColumnName="BlotterType" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="isActive" ColumnName="isActive" />
-                <ScalarProperty Name="PageDescription" ColumnName="PageDescription" />
-                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
-                <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
-                <ScalarProperty Name="PageName" ColumnName="PageName" />
-                <ScalarProperty Name="WPID" ColumnName="WPID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SP_SBPFillDumBlotter" FunctionName="BlotterEF.Store.SP_SBPFillDumBlotter" />
+          <FunctionImportMapping FunctionImportName="SP_DELETEUserPageRelation" FunctionName="BlotterEF.Store.SP_DELETEUserPageRelation" />
+          <FunctionImportMapping FunctionImportName="SP_INSERTUserPageRelation" FunctionName="BlotterEF.Store.SP_INSERTUserPageRelation" />
+          <FunctionImportMapping FunctionImportName="SP_UPDATEUserPageRelation" FunctionName="BlotterEF.Store.SP_UPDATEUserPageRelation" />
+          <FunctionImportMapping FunctionImportName="SP_GETUserRoles" FunctionName="BlotterEF.Store.SP_GETUserRoles">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BlotterEF.SP_GETUserRoles_Result">
+                <ScalarProperty Name="URID" ColumnName="URID" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleDescription" ColumnName="RoleDescription" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_InsertUserRole" FunctionName="BlotterEF.Store.SP_InsertUserRole" />
+          <FunctionImportMapping FunctionImportName="SP_UPDATEUserRole" FunctionName="BlotterEF.Store.SP_UPDATEUserRole" />
+          <FunctionImportMapping FunctionImportName="SP_DeleteUserRole" FunctionName="BlotterEF.Store.SP_DeleteUserRole" />
+          <FunctionImportMapping FunctionImportName="SP_DeleteWebPages" FunctionName="BlotterEF.Store.SP_DeleteWebPages" />
+          <FunctionImportMapping FunctionImportName="SP_GetAllWebPages" FunctionName="BlotterEF.Store.SP_GetAllWebPages">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BlotterEF.SP_GetAllWebPages_Result">
+                <ScalarProperty Name="WPID" ColumnName="WPID" />
+                <ScalarProperty Name="PageName" ColumnName="PageName" />
+                <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="PageDescription" ColumnName="PageDescription" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="BlotterType" ColumnName="BlotterType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_InsertWebPages" FunctionName="BlotterEF.Store.SP_InsertWebPages" />
+          <FunctionImportMapping FunctionImportName="SP_UpdateWebPages" FunctionName="BlotterEF.Store.SP_UpdateWebPages" />
+          <FunctionImportMapping FunctionImportName="SP_GetSBPBlotterGH" FunctionName="BlotterEF.Store.SP_GetSBPBlotterGH">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BlotterEF.SP_GetSBPBlotterGH_Result">
+                <ScalarProperty Name="GHID" ColumnName="GHID" />
+                <ScalarProperty Name="HolidayTitle" ColumnName="HolidayTitle" />
+                <ScalarProperty Name="GHDescription" ColumnName="GHDescription" />
+                <ScalarProperty Name="GHDate" ColumnName="GHDate" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_InsertHolidays" FunctionName="BlotterEF.Store.SP_InsertHolidays" />
+          <FunctionImportMapping FunctionImportName="SP_UpdateHolidays" FunctionName="BlotterEF.Store.SP_UpdateHolidays" />
+          <FunctionImportMapping FunctionImportName="SP_DeleteHolidays" FunctionName="BlotterEF.Store.SP_DeleteHolidays" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

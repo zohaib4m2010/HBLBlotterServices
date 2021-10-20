@@ -195,6 +195,9 @@
     <Compile Include="sp_GetAllUsers_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="SP_GetAllWebPages_Result.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="SP_GetAll_SBPBlotterClearing_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
@@ -234,6 +237,9 @@
     <Compile Include="SP_GetSBPBlotterFR_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="SP_GetSBPBlotterGH_Result.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="SP_GetSBPBlotterOpeningClosingBalanceDIfferential_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
@@ -252,6 +258,9 @@
     <Compile Include="SP_GetUserPageRelationById_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="SP_GETUserRoles_Result.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="SP_ReconcileOPICSManualData_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
@@ -268,18 +277,6 @@
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_SBPGetLoginInfo_Result.cs">
-      <DependentUpon>BlotterEF.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UserPageRelation.cs">
-      <DependentUpon>BlotterEF.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UserRole.cs">
-      <DependentUpon>BlotterEF.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UserRoleRelation.cs">
-      <DependentUpon>BlotterEF.tt</DependentUpon>
-    </Compile>
-    <Compile Include="WebPages.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
   </ItemGroup>

@@ -10,18 +10,14 @@
 namespace DataAccessLayer
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class UserPageRelation
+    public partial class SP_GETUserRoles_Result
     {
-        public int UPRID { get; set; }
         public int URID { get; set; }
-        public int WPID { get; set; }
-        public Nullable<bool> DateChangeAccess { get; set; }
-        public Nullable<bool> EditAccess { get; set; }
-        public Nullable<bool> DeleteAccess { get; set; }
-    
-        public virtual UserRole UserRole { get; set; }
-        public virtual WebPages WebPage { get; set; }
+        public string RoleName { get; set; }
+        public string RoleDescription { get; set; }
+        public Nullable<bool> isActive { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
+        public Nullable<System.DateTime> UpdateDate { get; set; }
     }
 }

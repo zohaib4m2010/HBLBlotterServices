@@ -12,9 +12,9 @@ namespace WebApiServices.Models
         public string ControllerName { get; set; }
         public string DisplayName { get; set; }
         public string PageDescription { get; set; }
-        public Nullable<bool> isActive { get; set; }
+        public bool isActive { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
-        public Nullable<int> BlotterType { get; set; }
+        public int BlotterType { get; set; }
     }
 }

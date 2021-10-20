@@ -108,6 +108,68 @@ namespace DataAccessLayer
         }
 
         //*****************************************************
+        //GazettedHolidays Producers
+        //*****************************************************
+
+        public static List<SP_GetSBPBlotterGH_Result> GetAllBlotterGH()
+        {
+            var CurrentDate = DateTime.Now;
+            return DbContextB.SP_GetSBPBlotterGH(null).ToList();
+        }
+        public static SP_GetSBPBlotterGH_Result GetGHItem(int GHId)
+        {
+            return DbContextB.SP_GetSBPBlotterGH(GHId).FirstOrDefault();
+        }
+
+        public static bool InsertGH(string HolidayTitle,string GHDescription,DateTime GHDate, int UserID)
+        {
+            bool status;
+            try
+            {
+                DbContextB.SP_InsertHolidays(HolidayTitle,GHDescription,GHDate,UserID);
+                status = true;
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine(ex.Message.ToString());
+                status = false;
+            }
+            return status;
+        }
+
+        public static bool UpdateGH(int GHID,string HolidayTitle, string GHDescription, DateTime GHDate, int UserID)
+        {
+            bool status;
+            try
+            {
+
+                DbContextB.SP_UpdateHolidays(GHID,HolidayTitle, GHDescription, GHDate, UserID);
+                status = true;
+            }
+            catch (Exception ex)
+            {
+                status = false;
+            }
+            return status;
+        }
+
+        public static bool DeleteGH(int GHID)
+        {
+            bool status;
+            try
+            {
+                DbContextB.SP_DeleteHolidays(GHID);
+                status = true;
+            }
+            catch (Exception ex)
+            {
+                status = false;
+            }
+            return status;
+        }
+
+
+        //*****************************************************
         //Fill Reg Dump Blotter Producers
         //*****************************************************
         public static void FillRegDumBlotterBR1()
@@ -498,46 +560,36 @@ namespace DataAccessLayer
         //UserRole Producers
         //*****************************************************
 
-        public static List<UserRole> GetAllUserRole()
+        public static List<SP_GETUserRoles_Result> GetAllUserRole()
         {
-            return DbContextB.UserRoles.ToList();
+            return DbContextB.SP_GETUserRoles(null).ToList();
         }
-        public static UserRole GetUserRole(int Id)
+        public static SP_GETUserRoles_Result GetUserRole(int Id)
         {
-            return DbContextB.UserRoles.Where(p => p.URID == Id).FirstOrDefault();
+            return DbContextB.SP_GETUserRoles(Id).FirstOrDefault();
         }
 
-        public static bool InsertUserRole(UserRole Item)
+        public static bool InsertUserRole(string RoleName,bool isActive)
         {
             bool status;
             try
             {
-                Item.RoleDescription = (Item.RoleDescription == null)?"":Item.RoleDescription;
-                DbContextB.UserRoles.Add(Item);
-                DbContextB.SaveChanges();
+                DbContextB.SP_InsertUserRole(RoleName,isActive);
                 status = true;
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message.ToString());
                 status = false;
             }
             return status;
         }
 
-        public static bool UpdateUserRole(UserRole Item)
+        public static bool UpdateUserRole(int URID,string RoleName, bool isActive)
         {
             bool status;
             try
             {
-                UserRole Items = DbContextB.UserRoles.Where(p => p.URID == Item.URID).FirstOrDefault();
-                if (Items != null)
-                {
-                    Items.RoleName = Item.RoleName;
-                    Items.isActive = Item.isActive;
-                    Items.UpdateDate = Item.UpdateDate;
-                    DbContextB.SaveChanges();
-                }
+                DbContextB.SP_UPDATEUserRole(URID,RoleName, isActive);
                 status = true;
             }
             catch (Exception ex)
@@ -552,12 +604,7 @@ namespace DataAccessLayer
             bool status;
             try
             {
-                UserRole Item = DbContextB.UserRoles.Where(p => p.URID == id).FirstOrDefault();
-                if (Item != null)
-                {
-                    DbContextB.UserRoles.Remove(Item);
-                    DbContextB.SaveChanges();
-                }
+                DbContextB.SP_DeleteUserRole(id);
                 status = true;
             }
             catch (Exception ex)
@@ -571,14 +618,14 @@ namespace DataAccessLayer
         //UserPageRelation Producers
         //*****************************************************
 
-        public static List<UserRole> GetActiveUserRoles()
+        public static List<SP_GETUserRoles_Result> GetActiveUserRoles()
         {
-            return DbContextB.UserRoles.Where(p => p.isActive == true).ToList();
+            return DbContextB.SP_GETUserRoles(null).ToList();
         }
 
-        public static WebPages GetWebPageById(int ID)
+        public static SP_GetAllWebPages_Result GetWebPageById(int ID)
         {
-            return DbContextB.WebPages.Where(p => p.WPID == ID).FirstOrDefault();
+            return DbContextB.SP_GetAllWebPages(ID).FirstOrDefault();
         }
         public static List<SP_GetNotListedUserPageRelations_Result> GetActiveWebPages(int URID)
         {
@@ -593,14 +640,13 @@ namespace DataAccessLayer
         {
             return DbContextB.SP_GetUserPageRelationById(UPRID).FirstOrDefault();
         }
-        public static bool InsertUserPageRelation(UserPageRelation Item)
+        public static bool InsertUserPageRelation(int URID, int WPID, bool DateChangeAccess, bool EditAccess, bool DeleteAccess)
         {
             bool status;
             try
             {
 
-                DbContextB.UserPageRelations.Add(Item);
-                DbContextB.SaveChanges();
+                DbContextB.SP_INSERTUserPageRelation(URID, WPID, DateChangeAccess, EditAccess, DeleteAccess);
                 status = true;
             }
             catch (Exception ex)
@@ -610,19 +656,12 @@ namespace DataAccessLayer
             }
             return status;
         }
-        public static bool UpdateUserPageRelation(UserPageRelation Item)
+        public static bool UpdateUserPageRelation(int UPRID,int URID, int WPID, bool DateChangeAccess, bool EditAccess, bool DeleteAccess)
         {
             bool status;
             try
             {
-                UserPageRelation Items = DbContextB.UserPageRelations.Where(p => p.UPRID == Item.UPRID).FirstOrDefault();
-                if (Items != null)
-                {
-                    Items.DateChangeAccess = Item.DateChangeAccess;
-                    Items.EditAccess = Item.EditAccess;
-                    Items.DeleteAccess = Item.DeleteAccess;
-                    DbContextB.SaveChanges();
-                }
+                DbContextB.SP_UPDATEUserPageRelation(UPRID,URID,WPID,DateChangeAccess,EditAccess,DeleteAccess);
                 status = true;
             }
             catch (Exception ex)
@@ -636,12 +675,7 @@ namespace DataAccessLayer
             bool status;
             try
             {
-                UserPageRelation Item = DbContextB.UserPageRelations.Where(p => p.UPRID == id).FirstOrDefault();
-                if (Item != null)
-                {
-                    DbContextB.UserPageRelations.Remove(Item);
-                    DbContextB.SaveChanges();
-                }
+                DbContextB.SP_DELETEUserPageRelation(id);
                 status = true;
             }
             catch (Exception ex)
@@ -654,23 +688,22 @@ namespace DataAccessLayer
         //WebPage Producers
         //*****************************************************
 
-        public static List<WebPages> GetAllWebPages()
+        public static List<SP_GetAllWebPages_Result> GetAllWebPages()
         {
-            return DbContextB.WebPages.ToList();
+            return DbContextB.SP_GetAllWebPages(null).ToList();
         }
-        public static WebPages GetWebPage(int Id)
+        public static SP_GetAllWebPages_Result GetWebPage(int Id)
         {
-            return DbContextB.WebPages.Where(p => p.WPID == Id).FirstOrDefault();
+            return DbContextB.SP_GetAllWebPages(Id).FirstOrDefault();
         }
 
-        public static bool InsertWebPages(WebPages Item)
+        public static bool InsertWebPages(string PageName,string ControllerName,string DisplayName,string PageDescription, int BlotterType,bool isActive)
         {
             bool status;
             try
             {
 
-                DbContextB.WebPages.Add(Item);
-                DbContextB.SaveChanges();
+                DbContextB.SP_InsertWebPages(PageName, ControllerName, DisplayName, PageDescription, isActive, BlotterType);
                 status = true;
             }
             catch (Exception ex)
@@ -681,23 +714,13 @@ namespace DataAccessLayer
             return status;
         }
 
-        public static bool UpdateWebPages(WebPages Item)
+        public static bool UpdateWebPages(int WPID,string PageName, string ControllerName, string DisplayName, string PageDescription, int BlotterType, bool isActive)
         {
             bool status;
             try
             {
-                WebPages Items = DbContextB.WebPages.Where(p => p.WPID == Item.WPID).FirstOrDefault();
-                if (Items != null)
-                {
-                    Items.PageName = Item.PageName;
-                    Items.BlotterType = Item.BlotterType;
-                    Items.PageDescription = Item.PageDescription;
-                    Items.ControllerName = Item.ControllerName;
-                    Items.DisplayName = Item.DisplayName;
-                    Items.isActive = Item.isActive;
-                    Items.UpdateDate = Item.UpdateDate;
-                    DbContextB.SaveChanges();
-                }
+
+                DbContextB.SP_UpdateWebPages(WPID,PageName, ControllerName, DisplayName, PageDescription, isActive, BlotterType);
                 status = true;
             }
             catch (Exception ex)
@@ -712,12 +735,7 @@ namespace DataAccessLayer
             bool status;
             try
             {
-                WebPages Item = DbContextB.WebPages.Where(p => p.WPID == id).FirstOrDefault();
-                if (Item != null)
-                {
-                    DbContextB.WebPages.Remove(Item);
-                    DbContextB.SaveChanges();
-                }
+                DbContextB.SP_DeleteWebPages(id);
                 status = true;
             }
             catch (Exception ex)
@@ -812,9 +830,9 @@ namespace DataAccessLayer
         {
             return DbContextB.sp_GetAllUsers().ToList();
         }
-        public static List<UserRole> GetUserRoles()
+        public static List<SP_GETUserRoles_Result> GetUserRoles()
         {
-            return DbContextB.UserRoles.Where(p => p.isActive == true).ToList();
+            return DbContextB.SP_GETUserRoles(null).ToList();
         }
         public static sp_GetUserById_Result GetUser(int Id)
         {

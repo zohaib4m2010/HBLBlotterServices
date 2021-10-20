@@ -79,9 +79,9 @@ namespace WebApiServices.Controllers
         [HttpGet]
         public JsonResult<List<Models.UserRole>> GetUserRoles()
         {
-            EntityMapperUsersProfile<DataAccessLayer.UserRole, Models.UserRole> mapObj = new EntityMapperUsersProfile<DataAccessLayer.UserRole, Models.UserRole>();
+            EntityMapperUsersProfile<DataAccessLayer.SP_GETUserRoles_Result, Models.UserRole> mapObj = new EntityMapperUsersProfile<DataAccessLayer.SP_GETUserRoles_Result, Models.UserRole>();
 
-            List<DataAccessLayer.UserRole> BranchesList = DAL.GetUserRoles();
+            List<DataAccessLayer.SP_GETUserRoles_Result> BranchesList = DAL.GetUserRoles();
             List<Models.UserRole> blotterBranches = new List<Models.UserRole>();
             foreach (var item in BranchesList)
             {

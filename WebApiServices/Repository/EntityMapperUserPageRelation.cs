@@ -13,8 +13,8 @@ namespace WebApiServices.Repository
         public EntityMapperUserPageRelation()
         {
 
-            Mapper.CreateMap<Models.UserPageRelation, DataAccessLayer.UserPageRelation>();
-            Mapper.CreateMap<DataAccessLayer.UserPageRelation, Models.UserPageRelation>();
+            Mapper.CreateMap<Models.UserPageRelation, DataAccessLayer.SP_GetAllUserPageRelations_Result>();
+            Mapper.CreateMap<DataAccessLayer.SP_GetAllUserPageRelations_Result, Models.UserPageRelation>();
 
             
 

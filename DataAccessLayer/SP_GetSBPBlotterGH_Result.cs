@@ -10,15 +10,15 @@
 namespace DataAccessLayer
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class UserRoleRelation
+    public partial class SP_GetSBPBlotterGH_Result
     {
-        public int URRID { get; set; }
-        public int UserId { get; set; }
-        public int URID { get; set; }
-    
-        public virtual UserRole UserRole { get; set; }
-        public virtual SBP_LoginInfo SBP_LoginInfo { get; set; }
+        public int GHID { get; set; }
+        public string HolidayTitle { get; set; }
+        public string GHDescription { get; set; }
+        public System.DateTime GHDate { get; set; }
+        public Nullable<System.DateTime> createDate { get; set; }
+        public Nullable<System.DateTime> UpdateDate { get; set; }
+        public int UserID { get; set; }
     }
 }

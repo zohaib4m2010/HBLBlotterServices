@@ -151,7 +151,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Classes\DAL.cs" />
+    <Compile Include="Classes\SBP_WebApiResponse.cs" />
     <Compile Include="Controllers\BlotterBai_MuajjalController.cs" />
     <Compile Include="Controllers\BlotterBalanceDIfferentialController.cs" />
     <Compile Include="Controllers\BlotterBreakupsController.cs" />
@@ -175,6 +175,7 @@
     <Compile Include="Controllers\BlotterTBOController.cs" />
     <Compile Include="Controllers\BlotterTradeController.cs" />
     <Compile Include="Controllers\ChangePasswordController.cs" />
+    <Compile Include="Controllers\GazettedHolidaysController.cs" />
     <Compile Include="Controllers\UserPageRelationController.cs" />
     <Compile Include="Controllers\UserRoleController.cs" />
     <Compile Include="Controllers\UsersProfileController.cs" />
@@ -184,6 +185,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\GazettedHoliday.cs" />
     <Compile Include="Models\SBP_BlotterReserved.cs" />
     <Compile Include="Models\BlotterSumEmail.cs" />
     <Compile Include="Models\Branches.cs" />
@@ -229,6 +231,7 @@
     <Compile Include="Models\SP_GetOPICSManualData_Result.cs" />
     <Compile Include="Models\SP_GetSBPBlotterCRD_Result.cs" />
     <Compile Include="Models\SP_GetSBPBlotterFR_Result.cs" />
+    <Compile Include="Models\SP_GetSBPBlotterGH_Result.cs" />
     <Compile Include="Models\SP_GetSBPBlotterOpeningClosingBalanceDIfferential_Result.cs" />
     <Compile Include="Models\SP_GetSBPBlotterRECON_Result.cs" />
     <Compile Include="Models\SP_GetSBP_DMMO_Result.cs" />
@@ -246,6 +249,7 @@
     <Compile Include="Repository\EntitiyMapperBlotterCRRFINCON.cs" />
     <Compile Include="Repository\EntitiyMapperBlotterDMMO.cs" />
     <Compile Include="Repository\EntitiyMapperBlotterFR.cs" />
+    <Compile Include="Repository\EntitiyMapperBlotterGazettedHolidays.cs" />
     <Compile Include="Repository\EntitiyMapperBlotterReserved.cs" />
     <Compile Include="Repository\EntitiyMapperBlotterTBO.cs" />
     <Compile Include="Repository\EntityMapperBlotterBai_Muajjal.cs" />

@@ -11,8 +11,8 @@ namespace WebApiServices.Repository
         public EntityMapperUserRole()
         {
 
-            Mapper.CreateMap<Models.UserRole, DataAccessLayer.UserRole>();
-            Mapper.CreateMap<DataAccessLayer.UserRole, Models.UserRole>();
+            Mapper.CreateMap<Models.UserRole, DataAccessLayer.SP_GETUserRoles_Result>();
+            Mapper.CreateMap<DataAccessLayer.SP_GETUserRoles_Result, Models.UserRole>();
         }
         public TDestination Translate(TSource obj)
         {

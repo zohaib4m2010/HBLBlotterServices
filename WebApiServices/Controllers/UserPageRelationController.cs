@@ -16,9 +16,9 @@ namespace WebApiServices.Controllers
         [HttpGet]
         public JsonResult<List<Models.UserRole>> GetAllActiveUserRole()
         {
-            EntityMapperUserRole<DataAccessLayer.UserRole, Models.UserRole> mapObj = new EntityMapperUserRole<DataAccessLayer.UserRole, Models.UserRole>();
+            EntityMapperUserRole<DataAccessLayer.SP_GETUserRoles_Result, Models.UserRole> mapObj = new EntityMapperUserRole<DataAccessLayer.SP_GETUserRoles_Result, Models.UserRole>();
 
-            List<DataAccessLayer.UserRole> UserRoleList = DAL.GetActiveUserRoles();
+            List<DataAccessLayer.SP_GETUserRoles_Result> UserRoleList = DAL.GetActiveUserRoles();
             List<Models.UserRole> blotterUserRole = new List<Models.UserRole>();
             foreach (var item in UserRoleList)
             {
@@ -72,9 +72,9 @@ namespace WebApiServices.Controllers
         [HttpGet]
         public JsonResult<Models.WebPages> GetWebPageById(int WPID)
         {
-            EntityMapperWebPages<DataAccessLayer.WebPages, Models.WebPages> mapObj = new EntityMapperWebPages<DataAccessLayer.WebPages, Models.WebPages>();
+            EntityMapperWebPages<DataAccessLayer.SP_GetAllWebPages_Result, Models.WebPages> mapObj = new EntityMapperWebPages<DataAccessLayer.SP_GetAllWebPages_Result, Models.WebPages>();
 
-            DataAccessLayer.WebPages WebPageList = DAL.GetWebPageById(WPID);
+            DataAccessLayer.SP_GetAllWebPages_Result WebPageList = DAL.GetWebPageById(WPID);
             Models.WebPages Webpage = new Models.WebPages();
             Webpage = mapObj.Translate(WebPageList);
 
@@ -87,11 +87,7 @@ namespace WebApiServices.Controllers
             bool status = false;
             if (ModelState.IsValid)
             {
-                EntityMapperUserPageRelation<Models.UserPageRelation, DataAccessLayer.UserPageRelation> mapObj = new EntityMapperUserPageRelation<Models.UserPageRelation, DataAccessLayer.UserPageRelation>();
-
-                DataAccessLayer.UserPageRelation UserRoleObj = new DataAccessLayer.UserPageRelation();
-                UserRoleObj = mapObj.Translate(item);
-                status = DAL.InsertUserPageRelation(UserRoleObj);
+                status = DAL.InsertUserPageRelation(item.URID,item.WPID,item.DateChangeAccess,item.EditAccess,item.DeleteAccess);
             }
             return status;
 
@@ -105,11 +101,7 @@ namespace WebApiServices.Controllers
             bool status = false;
             if (ModelState.IsValid)
             {
-                EntityMapperUserPageRelation<Models.UserPageRelation, DataAccessLayer.UserPageRelation> mapObj = new EntityMapperUserPageRelation<Models.UserPageRelation, DataAccessLayer.UserPageRelation>();
-
-                DataAccessLayer.UserPageRelation UserRoleObj = new DataAccessLayer.UserPageRelation();
-                UserRoleObj = mapObj.Translate(item);
-                status = DAL.UpdateUserPageRelation(UserRoleObj);
+                status = DAL.UpdateUserPageRelation(item.UPRID,item.URID, item.WPID, item.DateChangeAccess, item.EditAccess, item.DeleteAccess);
             }
             return status;
 
