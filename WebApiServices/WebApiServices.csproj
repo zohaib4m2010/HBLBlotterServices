@@ -171,6 +171,7 @@
     <Compile Include="Controllers\BlotterOpenBalController.cs" />
     <Compile Include="Controllers\BlotterOpeningController.cs" />
     <Compile Include="Controllers\BlotterReservedDiffController.cs" />
+    <Compile Include="Controllers\BlotterRSFController.cs" />
     <Compile Include="Controllers\BlotterRTGSController.cs" />
     <Compile Include="Controllers\BlotterSetupController.cs" />
     <Compile Include="Controllers\BlotterTBOController.cs" />
@@ -185,6 +186,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BlotterRSFTT.cs" />
     <Compile Include="Models\SBP_BlotterReserved.cs" />
     <Compile Include="Models\BlotterSumEmail.cs" />
     <Compile Include="Models\Branches.cs" />
@@ -254,6 +256,7 @@
     <Compile Include="Repository\EntityMapperBlotterFCY.cs" />
     <Compile Include="Repository\EntityMapperBlotterFundsTransfer.cs" />
     <Compile Include="Repository\EntityMapperBlotterOpenBal.cs" />
+    <Compile Include="Repository\EntityMapperBlotterRSF.cs" />
     <Compile Include="Repository\EntityMapperBlotterRTGS.cs" />
     <Compile Include="Repository\EntityMapperBlotterTrade.cs" />
     <Compile Include="Repository\EntityMapperBlotter.cs" />

@@ -57,6 +57,10 @@ namespace DataAccessLayer
         public virtual DbSet<SBP_BlotterTrade> SBP_BlotterTrade { get; set; }
         public virtual DbSet<WebPages> WebPages { get; set; }
     
+        public virtual ObjectResult<SP_GetAllRsfTTTBO_Result> SP_GetAllRsfTTTBO_s()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetAllRsfTTTBO_Result>("SP_GetAllRsfTTTBO");
+        }
         public virtual ObjectResult<SP_GETAllClearingTransactionTitles_Result> SP_GETAllClearingTransactionTitles()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GETAllClearingTransactionTitles_Result>("SP_GETAllClearingTransactionTitles");
@@ -962,6 +966,11 @@ namespace DataAccessLayer
                 new ObjectParameter("DateVal", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetAll_SBPBlotterTrade_Result>("SP_GetAll_SBPBlotterTrade", userIDParameter, branchIDParameter, curIDParameter, bRParameter, dateValParameter);
+        }
+    
+        public virtual ObjectResult<SP_GetAllRsfTTTBO_Result> SP_GetAllRsfTTTBO()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetAllRsfTTTBO_Result>("SP_GetAllRsfTTTBO");
         }
     }
 }

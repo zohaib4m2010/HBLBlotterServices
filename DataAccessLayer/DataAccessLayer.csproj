@@ -180,6 +180,9 @@
     <Compile Include="SP_GetAllOpeningBalance_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="SP_GetAllRsfTTTBO_Result.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="SP_GETAllRTGSTransactionTitles_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>

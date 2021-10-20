@@ -2408,11 +2408,16 @@ namespace DataAccessLayer
 
 
         }
-
-
+        //*****************************************************
+        //RSF/TT Procedures
+        //*****************************************************
+        public static List<SP_GetAllRsfTTTBO_Result> GetAllRSFTT()
+        {
+            return DbContextB.SP_GetAllRsfTTTBO_s().ToList();
+        }
 
         #region  Add by Shakir
-       
+
 
 
 
