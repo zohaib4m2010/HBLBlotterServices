@@ -11,5 +11,6 @@ namespace WebApiServices.Models
         public Nullable<System.DateTime> TBO_Date { get; set; }
         public Nullable<decimal> TBO_InFlow { get; set; }
         public Nullable<decimal> TBO_OutFlow { get; set; }
+        public long SNo { get; set; }
     }
 }

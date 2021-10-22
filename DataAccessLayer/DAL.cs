@@ -2413,7 +2413,7 @@ namespace DataAccessLayer
         //*****************************************************
         public static List<SP_GetAllRsfTTTBO_Result> GetAllRSFTT()
         {
-            return DbContextB.SP_GetAllRsfTTTBO_s().ToList();
+            return DbContextB.SP_GetAllRsfTTTBO().ToList();
         }
 
         #region  Add by Shakir

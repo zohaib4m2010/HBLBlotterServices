@@ -17,5 +17,6 @@ namespace DataAccessLayer
         public Nullable<System.DateTime> TBO_Date { get; set; }
         public Nullable<decimal> Inflow { get; set; }
         public Nullable<decimal> Outflow { get; set; }
+        public long SNo { get; set; }
     }
 }
