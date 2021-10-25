@@ -10,13 +10,13 @@
 namespace DataAccessLayer
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class SBP_BlotterSetup
+    public partial class SP_GetSBPBlotterCRRReportFCY_Result
     {
-        public int SNo { get; set; }
-        public string Description { get; set; }
-        public string status { get; set; }
-        public string BR { get; set; }
+        public int CRRID { get; set; }
+        public Nullable<System.DateTime> StartDate { get; set; }
+        public Nullable<System.DateTime> EndDate { get; set; }
+        public Nullable<decimal> PreWeek5PcrReq { get; set; }
+        public Nullable<decimal> PreWeek10PcrReq { get; set; }
     }
 }

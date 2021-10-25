@@ -12,26 +12,22 @@ namespace DataAccessLayer
     using System;
     using System.Collections.Generic;
     
-    public partial class SBP_BlotterTBO
+    public partial class SBP_BlotterCRRReportingCurrencyWise
     {
-        public long SNo { get; set; }
-        public int TTID { get; set; }
-        public Nullable<System.DateTime> TBO_Date { get; set; }
-        public string TBOCOde { get; set; }
-        public Nullable<decimal> TBO_InFlow { get; set; }
-        public Nullable<decimal> AdjTBO_InFlow { get; set; }
-        public Nullable<decimal> TBO_OutFLow { get; set; }
-        public Nullable<decimal> AdjTBO_OutFLow { get; set; }
-        public string Note { get; set; }
-        public int UserID { get; set; }
+        public int SNo { get; set; }
+        public Nullable<int> CRRID { get; set; }
+        public string CCY { get; set; }
+        public Nullable<int> CurID { get; set; }
+        public Nullable<decimal> Deposit { get; set; }
+        public Nullable<decimal> CRRBal5PcrReq { get; set; }
+        public Nullable<decimal> CRRBal10PcrReq { get; set; }
+        public Nullable<decimal> EquivalentUSD { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
-        public int BR { get; set; }
-        public int BID { get; set; }
-        public int CurID { get; set; }
+        public Nullable<int> BR { get; set; }
+        public Nullable<int> BID { get; set; }
+        public Nullable<int> UserID { get; set; }
         public string Flag { get; set; }
-        public string DataType { get; set; }
-        public string BankCode { get; set; }
     
         public virtual Branches Branch { get; set; }
         public virtual Currency Currency { get; set; }

@@ -21,7 +21,6 @@ namespace DataAccessLayer
         }
     
         public long Id { get; set; }
-        public Nullable<decimal> EstimatedOpenBal { get; set; }
         public Nullable<decimal> OpenBalActual { get; set; }
         public Nullable<decimal> AdjOpenBal { get; set; }
         public Nullable<System.DateTime> BalDate { get; set; }
@@ -33,8 +32,10 @@ namespace DataAccessLayer
         public int BID { get; set; }
         public int CurID { get; set; }
         public string Flag { get; set; }
+        public Nullable<decimal> EstimatedOpenBal { get; set; }
     
         public virtual Branches Branch { get; set; }
+        public virtual Currency Currency { get; set; }
         public virtual SBP_LoginInfo SBP_LoginInfo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SBP_BlotterOpeningClosingBalanceDIfferential> SBP_BlotterOpeningClosingBalanceDIfferential { get; set; }

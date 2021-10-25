@@ -12,16 +12,14 @@ namespace DataAccessLayer
     using System;
     using System.Collections.Generic;
     
-    public partial class SBP_BlotterCRRReportCalcSetup
+    public partial class GazettedHoliday
     {
-        public int ID { get; set; }
-        public Nullable<double> CalcVal1 { get; set; }
-        public Nullable<double> CalcVal2 { get; set; }
-        public Nullable<bool> isActive { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public int GHID { get; set; }
+        public string HolidayTitle { get; set; }
+        public string GHDescription { get; set; }
+        public System.DateTime GHDate { get; set; }
+        public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
         public int UserID { get; set; }
-    
-        public virtual SBP_LoginInfo SBP_LoginInfo { get; set; }
     }
 }

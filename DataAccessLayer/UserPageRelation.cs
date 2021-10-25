@@ -10,11 +10,18 @@
 namespace DataAccessLayer
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class SP_SBPBlotterRunningBal
+    public partial class UserPageRelation
     {
-        public string BranchCode { get; set; }
-        public System.DateTime StartDate { get; set; }
-        public System.DateTime EndDate { get; set; }
+        public int UPRID { get; set; }
+        public int URID { get; set; }
+        public int WPID { get; set; }
+        public Nullable<bool> DateChangeAccess { get; set; }
+        public Nullable<bool> EditAccess { get; set; }
+        public Nullable<bool> DeleteAccess { get; set; }
+    
+        public virtual UserRole UserRole { get; set; }
+        public virtual WebPage WebPage { get; set; }
     }
 }

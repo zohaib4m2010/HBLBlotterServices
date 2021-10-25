@@ -12,23 +12,26 @@ namespace DataAccessLayer
     using System;
     using System.Collections.Generic;
     
-    public partial class SBP_BlotterManualData
+    public partial class SBP_BlotterImportExport
     {
-        public long SNo { get; set; }
-        public string DataType { get; set; }
+        public int SNo { get; set; }
+        public string BlotterType { get; set; }
+        public Nullable<System.DateTime> Date { get; set; }
+        public string BankCode { get; set; }
+        public Nullable<int> CurId { get; set; }
+        public string Branch { get; set; }
+        public string Customer { get; set; }
         public Nullable<decimal> Inflow { get; set; }
-        public Nullable<decimal> OutFlow { get; set; }
-        public Nullable<decimal> NetBalance { get; set; }
-        public Nullable<System.DateTime> DateFor { get; set; }
-        public int UserID { get; set; }
-        public Nullable<System.DateTime> CreateDate { get; set; }
+        public Nullable<int> AgainstCurId { get; set; }
+        public string AgainstBankCode { get; set; }
+        public Nullable<decimal> Outflow { get; set; }
+        public string Note { get; set; }
+        public Nullable<System.DateTime> Createdate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
-        public Nullable<int> BR { get; set; }
-        public int CurID { get; set; }
         public string Flag { get; set; }
-        public Nullable<decimal> AdjBalance { get; set; }
-        public Nullable<bool> isAdjusted { get; set; }
-        public string NostroCode { get; set; }
+        public Nullable<int> BID { get; set; }
+        public Nullable<int> BR { get; set; }
+        public Nullable<int> UserId { get; set; }
     
         public virtual Currency Currency { get; set; }
         public virtual SBP_LoginInfo SBP_LoginInfo { get; set; }

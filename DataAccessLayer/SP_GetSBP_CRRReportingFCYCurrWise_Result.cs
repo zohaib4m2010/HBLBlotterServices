@@ -11,9 +11,14 @@ namespace DataAccessLayer
 {
     using System;
     
-    public partial class SP_GETAllNostroBanks_Result
+    public partial class SP_GetSBP_CRRReportingFCYCurrWise_Result
     {
-        public long ID { get; set; }
-        public string BankName { get; set; }
+        public string CCY { get; set; }
+        public Nullable<decimal> Deposit { get; set; }
+        public Nullable<decimal> EquivalentUSD { get; set; }
+        public Nullable<decimal> CRRBal5PcrReq { get; set; }
+        public Nullable<decimal> CRRBal10PcrReq { get; set; }
+        public Nullable<decimal> PreWeek5PcrReq { get; set; }
+        public Nullable<decimal> PreWeek10PcrReq { get; set; }
     }
 }

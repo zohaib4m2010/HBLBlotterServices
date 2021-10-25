@@ -10,9 +10,16 @@
 namespace DataAccessLayer
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class SP_GetNotListedUserPageRelations_Result
+    public partial class WebPage
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public WebPage()
+        {
+            this.UserPageRelations = new HashSet<UserPageRelation>();
+        }
+    
         public int WPID { get; set; }
         public string PageName { get; set; }
         public string ControllerName { get; set; }
@@ -22,5 +29,8 @@ namespace DataAccessLayer
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
         public Nullable<int> BlotterType { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserPageRelation> UserPageRelations { get; set; }
     }
 }

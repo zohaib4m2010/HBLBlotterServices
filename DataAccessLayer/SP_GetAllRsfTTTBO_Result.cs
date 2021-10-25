@@ -11,17 +11,12 @@ namespace DataAccessLayer
 {
     using System;
     
-    public partial class SP_SBPBlotter_FCY_Result
+    public partial class SP_GetAllRsfTTTBO_Result
     {
-        public int DealNo { get; set; }
         public string Description { get; set; }
-        public string Status { get; set; }
-        public Nullable<System.DateTime> DealDate { get; set; }
-        public Nullable<System.DateTime> ValueDate { get; set; }
-        public Nullable<System.DateTime> MaturityDate { get; set; }
-        public string Currency { get; set; }
+        public long SNo { get; set; }
+        public Nullable<System.DateTime> TBO_Date { get; set; }
         public Nullable<decimal> Inflow { get; set; }
         public Nullable<decimal> Outflow { get; set; }
-        public decimal OpeningBalance { get; set; }
     }
 }

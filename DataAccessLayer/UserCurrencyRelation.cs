@@ -12,15 +12,13 @@ namespace DataAccessLayer
     using System;
     using System.Collections.Generic;
     
-    public partial class SBP_BlotterManualDeals
+    public partial class UserCurrencyRelation
     {
-        public int SNo { get; set; }
-        public Nullable<System.DateTime> DealDate { get; set; }
-        public Nullable<decimal> InFlow { get; set; }
-        public Nullable<decimal> OutFlow { get; set; }
-        public Nullable<System.DateTime> CurrentDate { get; set; }
-        public string DealStatus { get; set; }
-        public string Description { get; set; }
-        public string BR { get; set; }
+        public int UCRID { get; set; }
+        public int UserID { get; set; }
+        public int CID { get; set; }
+    
+        public virtual Currency Currency { get; set; }
+        public virtual SBP_LoginInfo SBP_LoginInfo { get; set; }
     }
 }

@@ -11,12 +11,15 @@ namespace DataAccessLayer
 {
     using System;
     
-    public partial class SP_GetSBP_DMMO_Result
+    public partial class SP_InsertOpeningBalance_Result
     {
-        public int sno { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
-        public decimal PakistanBalance { get; set; }
-        public decimal SBPBalanace { get; set; }
-        public decimal BalanceDifference { get; set; }
+        public long SNo { get; set; }
+        public string DataType { get; set; }
+        public decimal Inflow { get; set; }
+        public decimal OutFlow { get; set; }
+        public decimal NetBalance { get; set; }
+        public Nullable<decimal> AdjBalance { get; set; }
+        public Nullable<bool> isAdjusted { get; set; }
+        public Nullable<System.DateTime> DateFor { get; set; }
     }
 }

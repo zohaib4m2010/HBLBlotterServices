@@ -26,6 +26,7 @@ namespace DataAccessLayer
         public int CurID { get; set; }
         public string Flag { get; set; }
     
+        public virtual Currency Currency { get; set; }
         public virtual SBP_BlotterOpeningBalance SBP_BlotterOpeningBalance { get; set; }
     }
 }

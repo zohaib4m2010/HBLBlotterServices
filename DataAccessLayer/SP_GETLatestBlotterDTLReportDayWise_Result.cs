@@ -46,8 +46,8 @@ namespace DataAccessLayer
         public decimal CRR5PcrReqWithoutEB { get; set; }
         public Nullable<double> BalMaintAgainstExtBenft { get; set; }
         public Nullable<double> BalMaintAgainstPenalty { get; set; }
-        public Nullable<decimal> ReservedSBP { get; set; }
-        public Nullable<decimal> ReservedSBPDif { get; set; }
+        public decimal ReservedSBP { get; set; }
+        public decimal ReservedSBPDif { get; set; }
         public string Remarks { get; set; }
         public int BR { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }

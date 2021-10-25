@@ -9,11 +9,11 @@ namespace DataAccessLayer
     public static class DAL
     {
 
-        static BlotterEntities DbContextB;
+        static BlotterEntity DbContextB;
         static DAL()
         {
 
-            DbContextB = new BlotterEntities();
+            DbContextB = new BlotterEntity();
 
         }
         public static List<SP_SBPBlotter_Result> GetAllBlotterData(String Br, String DataType, String CurrentDate,bool LoadData)
@@ -55,30 +55,6 @@ namespace DataAccessLayer
         {
             var results = DbContextB.SP_ReconcileOPICSManualData(BR, Date).ToList();
             return results;
-        }
-        public static BlotterSumEmail GetAllBlotterDataSum(String BrCode)
-        {
-            //var results = DbContextB.SP_SBPBlotter(BrCode);
-            //decimal TotalAmount=0;
-            //decimal inAmt1 = 0;
-            //decimal inAmt2 = 0;
-            //decimal inAmt3 = 0;
-            //decimal TInflow = 0;
-            //decimal TOutFlow = 0;
-            BlotterSumEmail Bmail = new BlotterSumEmail();
-            //foreach (var Amt in results)
-            //{
-            //    inAmt1 = Convert.ToDecimal(Amt.Inflow);
-            //    inAmt2 = Convert.ToDecimal(Amt.Outflow);
-            //    inAmt3 = Convert.ToDecimal(Amt.OpeningBalance);
-            //    TInflow = TInflow + inAmt1;
-            //    TOutFlow = TOutFlow + inAmt2;
-            //    TotalAmount = TotalAmount + inAmt1 + inAmt2 + inAmt3;                      
-            //}
-            //Bmail.Balance = TotalAmount/1000000;
-            //Bmail.InFlow = TInflow/1000000;
-            //Bmail.OutFlow = TOutFlow/1000000;
-            return Bmail;
         }
 
         //*****************************************************
@@ -195,86 +171,6 @@ namespace DataAccessLayer
             }
         }
 
-        //*****************************************************
-        //Manual Deals Producers
-        //*****************************************************
-        public static List<SBP_BlotterManualDeals> GetAllDeals(String BrCode)
-        {
-            return DbContextB.SBP_BlotterManualDeals.Where(p => p.BR == BrCode).ToList();
-        }
-        public static SBP_BlotterManualDeals GetManualDeal(int ManualDealId)
-        {
-            return DbContextB.SBP_BlotterManualDeals.Where(p => p.SNo == ManualDealId).FirstOrDefault();
-        }
-        public static bool InsertManualDeals(SBP_BlotterManualDeals ManualDealsItem)
-        {
-            bool status;
-            try
-            {
-                DbContextB.SBP_BlotterManualDeals.Add(ManualDealsItem);
-                DbContextB.SaveChanges();
-                status = true;
-            }
-            catch (Exception ex)
-            {
-                System.Console.WriteLine(ex.Message.ToString());
-                status = false;
-            }
-            return status;
-        }
-        public static bool UpdateManualDeals(SBP_BlotterManualDeals ManualDealsItem)
-        {
-            bool status;
-            try
-            {
-                SBP_BlotterManualDeals prodItem = DbContextB.SBP_BlotterManualDeals.Where(p => p.SNo == ManualDealsItem.SNo).FirstOrDefault();
-                if (prodItem != null)
-                {
-
-                    prodItem.Description = ManualDealsItem.Description;
-                    prodItem.DealDate = ManualDealsItem.DealDate;
-                    prodItem.InFlow = ManualDealsItem.InFlow;
-                    prodItem.OutFlow = ManualDealsItem.OutFlow;
-                    prodItem.CurrentDate = ManualDealsItem.CurrentDate;
-                    prodItem.DealStatus = ManualDealsItem.DealStatus;
-                    DbContextB.SaveChanges();
-                }
-                status = true;
-            }
-            catch (Exception ex)
-            {
-                status = false;
-            }
-            return status;
-        }
-
-
-        public static bool DeleteManualDeals(int id)
-        {
-            bool status;
-            try
-            {
-                SBP_BlotterManualDeals prodItem = DbContextB.SBP_BlotterManualDeals.Where(p => p.SNo == id).FirstOrDefault();
-                if (prodItem != null)
-                {
-                    DbContextB.SBP_BlotterManualDeals.Remove(prodItem);
-                    DbContextB.SaveChanges();
-                }
-                status = true;
-            }
-            catch (Exception ex)
-            {
-                status = false;
-            }
-            return status;
-        }
-        //*****************************************************
-        //Setup Producers
-        //*****************************************************
-        public static List<SBP_BlotterSetup> GetAllSetUpItems()
-        {
-            return DbContextB.SBP_BlotterSetup.ToList();
-        }
 
 
 
@@ -1932,79 +1828,6 @@ namespace DataAccessLayer
         }
 
 
-
-
-
-
-
-        public static SBP_BlotterSetup GetSetUpItem(int SetupId)
-        {
-            return DbContextB.SBP_BlotterSetup.Where(p => p.SNo == SetupId).FirstOrDefault();
-        }
-        public static bool InsertSetUp(SBP_BlotterSetup SetupItem)
-        {
-            bool status;
-            try
-            {
-                DbContextB.SBP_BlotterSetup.Add(SetupItem);
-                DbContextB.SaveChanges();
-                status = true;
-            }
-            catch (Exception ex)
-            {
-                status = false;
-            }
-            return status;
-        }
-        public static bool UpdateSetUp(SBP_BlotterSetup SetupItem)
-        {
-            bool status;
-            try
-            {
-                SBP_BlotterSetup setupItem = DbContextB.SBP_BlotterSetup.Where(p => p.SNo == SetupItem.SNo).FirstOrDefault();
-                if (setupItem != null)
-                {
-                    setupItem.Description = SetupItem.Description;
-                    setupItem.status = SetupItem.status;
-                    DbContextB.SaveChanges();
-                }
-                status = true;
-            }
-            catch (Exception ex)
-            {
-                status = false;
-            }
-            return status;
-        }
-        public static bool DeleteSetUp(int id)
-        {
-            bool status;
-            try
-            {
-                SBP_BlotterSetup setupItem = DbContextB.SBP_BlotterSetup.Where(p => p.SNo == id).FirstOrDefault();
-                if (setupItem != null)
-                {
-                    DbContextB.SBP_BlotterSetup.Remove(setupItem);
-                    DbContextB.SaveChanges();
-                }
-                status = true;
-            }
-            catch (Exception ex)
-            {
-                status = false;
-            }
-            return status;
-        }
-
-
-
-
-
-
-
-
-
-
         //*****************************************************
         //Blotter DMMO Producers
         //*****************************************************
@@ -2121,153 +1944,6 @@ namespace DataAccessLayer
             }
             return status;
         }
-
-
-        //*****************************************************
-        //Opening Deals Producers
-        //*****************************************************
-        public static List<SBP_BlotterOpening> GetAllOpeningAmount(String BrCode)
-        {
-            return DbContextB.SBP_BlotterOpening.Where(p => p.BR == BrCode).ToList();
-        }
-        public static SBP_BlotterOpening GetOpeningDeal(int Id)
-        {
-            return DbContextB.SBP_BlotterOpening.Where(p => p.SNo == Id).FirstOrDefault();
-        }
-        public static bool InsertOpeningDeals(SBP_BlotterOpening OpeningDealsItem)
-        {
-            bool status;
-            try
-            {
-                DbContextB.SBP_BlotterOpening.Add(OpeningDealsItem);
-                DbContextB.SaveChanges();
-                status = true;
-            }
-            catch (Exception ex)
-            {
-                System.Console.WriteLine(ex.Message.ToString());
-                status = false;
-            }
-            return status;
-        }
-        public static bool UpdateOpeningDeals(SBP_BlotterOpening OpeningDealsItem)
-        {
-            bool status;
-            try
-            {
-                SBP_BlotterOpening prodItem = DbContextB.SBP_BlotterOpening.Where(p => p.SNo == OpeningDealsItem.SNo).FirstOrDefault();
-                if (prodItem != null)
-                {
-
-                    prodItem.CurrentDate = OpeningDealsItem.CurrentDate;
-                    prodItem.TodayAmount = OpeningDealsItem.TodayAmount;
-                    DbContextB.SaveChanges();
-                }
-                status = true;
-            }
-            catch (Exception ex)
-            {
-                status = false;
-            }
-            return status;
-        }
-        public static bool DeleteOpeningDeals(int id)
-        {
-            bool status;
-            try
-            {
-                SBP_BlotterOpening prodItem = DbContextB.SBP_BlotterOpening.Where(p => p.SNo == id).FirstOrDefault();
-                if (prodItem != null)
-                {
-                    DbContextB.SBP_BlotterOpening.Remove(prodItem);
-                    DbContextB.SaveChanges();
-                }
-                status = true;
-            }
-            catch (Exception ex)
-            {
-                status = false;
-            }
-            return status;
-        }
-       
-        //*****************************************************
-        //Manual DTL Producers
-        //*****************************************************
-        public static List<SBP_BlotterDTL> GetAllDTLDeals(String BrCode)
-        {
-            return DbContextB.SBP_BlotterDTL.Where(p => p.BR == BrCode).ToList();
-        }
-
-        public static SBP_BlotterDTL GetDTLDeal(int DTLDealId)
-        {
-            return DbContextB.SBP_BlotterDTL.Where(p => p.SNo == DTLDealId).FirstOrDefault();
-        }
-        public static bool InsertDTLDeals(SBP_BlotterDTL DTLDealsItem)
-        {
-            bool status;
-            bool status1;
-            try
-            {
-
-                DbContextB.SBP_BlotterDTL.Add(DTLDealsItem);
-                DbContextB.SaveChanges();
-                status1 = UpdateRunningBal(DTLDealsItem.BR, DTLDealsItem.DTL_Date, DTLDealsItem.DTL_Date.AddDays(DTLDealsItem.NO_OF_Days));
-                status = true;
-            }
-            catch (Exception ex)
-            {
-                System.Console.WriteLine(ex.Message.ToString());
-                status = false;
-            }
-            return status;
-        }
-        public static bool UpdateDTLDeals(SBP_BlotterDTL DTLDealsItem)
-        {
-            bool status;
-            try
-            {
-                SBP_BlotterDTL prodItem = DbContextB.SBP_BlotterDTL.Where(p => p.SNo == DTLDealsItem.SNo).FirstOrDefault();
-                if (prodItem != null)
-                {
-                    prodItem.DTL_Date = DTLDealsItem.DTL_Date;
-                    prodItem.DTL_Code = DTLDealsItem.DTL_Code;
-                    prodItem.NO_OF_Days = DTLDealsItem.NO_OF_Days;
-                    prodItem.DTL_Amount = DTLDealsItem.DTL_Amount;
-                    prodItem.T_User_Id = DTLDealsItem.T_User_Id;
-                    prodItem.T_Date = DTLDealsItem.T_Date;
-                    prodItem.Flag = DTLDealsItem.Flag;
-
-                    DbContextB.SaveChanges();
-                }
-                status = true;
-            }
-            catch (Exception ex)
-            {
-                status = false;
-            }
-            return status;
-        }
-        public static bool DeleteDTLDeals(int id)
-        {
-            bool status;
-            try
-            {
-                SBP_BlotterDTL prodItem = DbContextB.SBP_BlotterDTL.Where(p => p.SNo == id).FirstOrDefault();
-                if (prodItem != null)
-                {
-                    DbContextB.SBP_BlotterDTL.Remove(prodItem);
-                    DbContextB.SaveChanges();
-                }
-                status = true;
-            }
-            catch (Exception ex)
-            {
-                status = false;
-            }
-            return status;
-        }
-
         //*****************************************************
         //DTL DeskBoard Producers
         //*****************************************************
@@ -2403,29 +2079,6 @@ namespace DataAccessLayer
             DbContextB.SP_SBPSessionStop(pSessionID, pUserID);
 
         }
-        //*****************************************************
-        //USER Login Producers
-        //*****************************************************
-        public static bool UpdateRunningBal(String BrCode, DateTime StartDate, DateTime Enddate)
-        {
-            bool status;
-            try
-            {
-                int i = DbContextB.SP_SBPBlotterRunningBal(BrCode, StartDate, Enddate);
-                DbContextB.SaveChanges();
-                status = true;
-            }
-            catch (Exception ex)
-            {
-                System.Console.WriteLine(ex.Message.ToString());
-                status = false;
-            }
-            return status;
-
-
-
-
-        }
 
 
 
@@ -2493,11 +2146,6 @@ namespace DataAccessLayer
             return DbContextB.SP_GetAllNostroBankList(currId).ToList();
         }
 
-        public static List<SP_SBPBlotter_FCY_Result> GetAllBlotterData_FCY(String Br, int CurrId)
-        {
-            var results = DbContextB.SP_SBPBlotter_FCY(Br, CurrId).ToList();
-            return results;
-        }
         #endregion
     }
 }

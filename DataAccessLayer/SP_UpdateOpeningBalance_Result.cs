@@ -10,13 +10,16 @@
 namespace DataAccessLayer
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class SBP_BlotterOpening
+    public partial class SP_UpdateOpeningBalance_Result
     {
-        public int SNo { get; set; }
-        public Nullable<System.DateTime> CurrentDate { get; set; }
-        public Nullable<decimal> TodayAmount { get; set; }
-        public string BR { get; set; }
+        public long SNo { get; set; }
+        public string DataType { get; set; }
+        public decimal Inflow { get; set; }
+        public decimal OutFlow { get; set; }
+        public decimal NetBalance { get; set; }
+        public Nullable<decimal> AdjBalance { get; set; }
+        public Nullable<bool> isAdjusted { get; set; }
+        public Nullable<System.DateTime> DateFor { get; set; }
     }
 }

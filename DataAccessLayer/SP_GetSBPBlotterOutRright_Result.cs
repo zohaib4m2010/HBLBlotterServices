@@ -10,18 +10,18 @@
 namespace DataAccessLayer
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class SBP_BlotterTBO
+    public partial class SP_GetSBPBlotterOutRright_Result
     {
         public long SNo { get; set; }
-        public int TTID { get; set; }
-        public Nullable<System.DateTime> TBO_Date { get; set; }
-        public string TBOCOde { get; set; }
-        public Nullable<decimal> TBO_InFlow { get; set; }
-        public Nullable<decimal> AdjTBO_InFlow { get; set; }
-        public Nullable<decimal> TBO_OutFLow { get; set; }
-        public Nullable<decimal> AdjTBO_OutFLow { get; set; }
+        public string DataType { get; set; }
+        public string Bank { get; set; }
+        public Nullable<double> Rate { get; set; }
+        public Nullable<System.DateTime> Issue_Date { get; set; }
+        public string IssueType { get; set; }
+        public string Broker { get; set; }
+        public Nullable<decimal> InFlow { get; set; }
+        public Nullable<decimal> OutFLow { get; set; }
         public string Note { get; set; }
         public int UserID { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
@@ -30,11 +30,7 @@ namespace DataAccessLayer
         public int BID { get; set; }
         public int CurID { get; set; }
         public string Flag { get; set; }
-        public string DataType { get; set; }
-        public string BankCode { get; set; }
-    
-        public virtual Branches Branch { get; set; }
-        public virtual Currency Currency { get; set; }
-        public virtual SBP_LoginInfo SBP_LoginInfo { get; set; }
+        public Nullable<System.DateTime> Date { get; set; }
+        public Nullable<bool> Status { get; set; }
     }
 }
