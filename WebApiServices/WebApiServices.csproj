@@ -131,6 +131,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Classes\DAL.cs" />
     <Compile Include="Classes\SBP_WebApiResponse.cs" />
     <Compile Include="Controllers\BlotterBai_MuajjalController.cs" />
     <Compile Include="Controllers\BlotterBalanceDIfferentialController.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="Controllers\BlotterLoginController.cs" />
     <Compile Include="Controllers\BlotterOpenBalController.cs" />
     <Compile Include="Controllers\BlotterReservedDiffController.cs" />
+    <Compile Include="Controllers\BlotterRSFController.cs" />
     <Compile Include="Controllers\BlotterRTGSController.cs" />
     <Compile Include="Controllers\BlotterTBOController.cs" />
     <Compile Include="Controllers\BlotterTradeController.cs" />
@@ -159,6 +161,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BlotterRSFTT.cs" />
     <Compile Include="Models\GazettedHoliday.cs" />
     <Compile Include="Models\SBP_BlotterReserved.cs" />
     <Compile Include="Models\BlotterSumEmail.cs" />
@@ -231,6 +234,7 @@
     <Compile Include="Repository\EntityMapperBlotterFCY.cs" />
     <Compile Include="Repository\EntityMapperBlotterFundsTransfer.cs" />
     <Compile Include="Repository\EntityMapperBlotterOpenBal.cs" />
+    <Compile Include="Repository\EntityMapperBlotterRSF.cs" />
     <Compile Include="Repository\EntityMapperBlotterRTGS.cs" />
     <Compile Include="Repository\EntityMapperBlotterTrade.cs" />
     <Compile Include="Repository\EntityMapperBlotter.cs" />

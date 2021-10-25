@@ -196,7 +196,10 @@ namespace DataAccessLayer
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_DeleteWebPages", wPIDParameter);
         }
-    
+        public virtual ObjectResult<SP_GetAllRsfTTTBO_Result> SP_GetAllRsfTTTBO_s()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetAllRsfTTTBO_Result>("SP_GetAllRsfTTTBO");
+        }
         public virtual ObjectResult<SP_GetAll_SBPBlotterClearing_Result> SP_GetAll_SBPBlotterClearing(Nullable<int> userID, Nullable<int> branchID, Nullable<int> curID, Nullable<int> bR, string dateVal)
         {
             var userIDParameter = userID.HasValue ?
