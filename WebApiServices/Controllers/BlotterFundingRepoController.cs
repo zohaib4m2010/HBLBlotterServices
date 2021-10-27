@@ -169,7 +169,7 @@ namespace WebApiServices.Controllers
         {
             EntitiyMapperBlotterFR<DataAccessLayer.SP_GetSBPBlotterFR_Result, Models.SP_GetSBPBlotterFR_Result> mapObj = new EntitiyMapperBlotterFR<DataAccessLayer.SP_GetSBPBlotterFR_Result, Models.SP_GetSBPBlotterFR_Result>();
 
-            List<DataAccessLayer.SP_GetSBPBlotterFR_Result> blotterFRList = DAL.GetAllBlotterFundingRepo(UserID, BranchID, CurID, BR,DateVal);
+            List<DataAccessLayer.SP_GetSBPBlotterFR_Result> blotterFRList = DAL.GetAllBlotterFundingRepo(UserID, BranchID, CurID, BR, DateVal);
             List<Models.SP_GetSBPBlotterFR_Result> blotterFR = new List<Models.SP_GetSBPBlotterFR_Result>();
             foreach (var item in blotterFRList)
             {
@@ -199,6 +199,32 @@ namespace WebApiServices.Controllers
             return status;
         }
 
+        [HttpPost]
+        public bool AddFundingRepo(Models.SBP_BlotterFundingRepo blotterFR)
+        {
+            bool status = false;
+            EntitiyMapperBlotterFR<Models.SBP_BlotterFundingRepo, DataAccessLayer.SBP_BlotterFundingRepo> mapObj = new EntitiyMapperBlotterFR<Models.SBP_BlotterFundingRepo, DataAccessLayer.SBP_BlotterFundingRepo>();
+            DataAccessLayer.SBP_BlotterFundingRepo FRObj = new DataAccessLayer.SBP_BlotterFundingRepo();
+            FRObj = mapObj.Translate(blotterFR);
+            status = DAL.InsertFundingRepo(FRObj);
+            return status;
+        }
+
+        [HttpPut]
+        public bool UpdateFundingRepo(Models.SBP_BlotterFundingRepo fundingRepo)
+        {
+            bool status = false;
+            if (ModelState.IsValid)
+            {
+                EntitiyMapperBlotterFR<Models.SBP_BlotterFundingRepo, DataAccessLayer.SBP_BlotterFundingRepo> mapObj = new EntitiyMapperBlotterFR<Models.SBP_BlotterFundingRepo, DataAccessLayer.SBP_BlotterFundingRepo>();
+                DataAccessLayer.SBP_BlotterFundingRepo FundingRepo = new DataAccessLayer.SBP_BlotterFundingRepo();
+                FundingRepo = mapObj.Translate(fundingRepo);
+                status = DAL.UpdateFundingRepo(FundingRepo);
+            }
+            return status;
+
+
+        }
         [HttpPost]
         public bool DeleteFundingRepo(IEnumerable<int> Ids)
         {
