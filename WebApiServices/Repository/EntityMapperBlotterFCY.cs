@@ -10,8 +10,8 @@ namespace WebApiServices.Repository
     {
         public EntityMapperBlotterFCY()
         {
-            Mapper.CreateMap<Models.SP_SBPBlotter_FCY_Result, DataAccessLayer.SP_SBPBlotter_FCY_Result>();
-            Mapper.CreateMap<DataAccessLayer.SP_SBPBlotter_FCY_Result, Models.SP_SBPBlotter_FCY_Result>();
+            //Mapper.CreateMap<Models.SP_SBPBlotter_FCY_Result, DataAccessLayer.SP_SBPBlotter_FCY_Result>();
+            //Mapper.CreateMap<DataAccessLayer.SP_SBPBlotter_FCY_Result, Models.SP_SBPBlotter_FCY_Result>();
         }
 
         public TDestination Translate(TSource obj)

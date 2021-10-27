@@ -11,9 +11,14 @@ namespace DataAccessLayer
 {
     using System;
     
-    public partial class SP_GETAllNostroBanks_Result
+    public partial class SP_GetSBPBlotterGH_Result
     {
-        public long ID { get; set; }
-        public string BankName { get; set; }
+        public int GHID { get; set; }
+        public string HolidayTitle { get; set; }
+        public string GHDescription { get; set; }
+        public System.DateTime GHDate { get; set; }
+        public Nullable<System.DateTime> createDate { get; set; }
+        public Nullable<System.DateTime> UpdateDate { get; set; }
+        public int UserID { get; set; }
     }
 }

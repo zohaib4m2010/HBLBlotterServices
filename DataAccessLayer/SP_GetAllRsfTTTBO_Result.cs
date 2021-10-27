@@ -14,9 +14,9 @@ namespace DataAccessLayer
     public partial class SP_GetAllRsfTTTBO_Result
     {
         public string Description { get; set; }
+        public long SNo { get; set; }
         public Nullable<System.DateTime> TBO_Date { get; set; }
         public Nullable<decimal> Inflow { get; set; }
         public Nullable<decimal> Outflow { get; set; }
-        public long SNo { get; set; }
     }
 }

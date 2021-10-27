@@ -11,10 +11,12 @@ namespace DataAccessLayer
 {
     using System;
     
-    public partial class SP_SBPBlotterRunningBal
+    public partial class SP_GetSBPBlotterCRRReportFCY_Result
     {
-        public string BranchCode { get; set; }
-        public System.DateTime StartDate { get; set; }
-        public System.DateTime EndDate { get; set; }
+        public int CRRID { get; set; }
+        public Nullable<System.DateTime> StartDate { get; set; }
+        public Nullable<System.DateTime> EndDate { get; set; }
+        public Nullable<decimal> PreWeek5PcrReq { get; set; }
+        public Nullable<decimal> PreWeek10PcrReq { get; set; }
     }
 }

@@ -17,8 +17,8 @@ namespace WebApiServices.Repository
             Mapper.CreateMap<Models.sp_GetAllUsers_Result, DataAccessLayer.sp_GetAllUsers_Result>();
             Mapper.CreateMap<DataAccessLayer.sp_GetAllUsers_Result, Models.sp_GetAllUsers_Result>();
 
-            Mapper.CreateMap<Models.UserRole, DataAccessLayer.UserRole>();
-            Mapper.CreateMap<DataAccessLayer.UserRole, Models.UserRole>();
+            Mapper.CreateMap<Models.UserRole, DataAccessLayer.SP_GETUserRoles_Result>();
+            Mapper.CreateMap<DataAccessLayer.SP_GETUserRoles_Result, Models.UserRole>();
 
 
             Mapper.CreateMap<Models.SBP_LoginInfoWithRoleId, DataAccessLayer.sp_GetUserById_Result>();

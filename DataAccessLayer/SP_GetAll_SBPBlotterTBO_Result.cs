@@ -21,11 +21,13 @@ namespace DataAccessLayer
         public string TBOCOde { get; set; }
         public Nullable<decimal> TBO_InFlow { get; set; }
         public Nullable<decimal> TBO_OutFLow { get; set; }
+        public string BankName { get; set; }
         public string Note { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
         public int BR { get; set; }
         public int CurID { get; set; }
         public string Flag { get; set; }
+        public string BankCode { get; set; }
     }
 }

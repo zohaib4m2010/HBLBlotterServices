@@ -22,6 +22,6 @@ namespace DataAccessLayer
         public Nullable<bool> DeleteAccess { get; set; }
     
         public virtual UserRole UserRole { get; set; }
-        public virtual WebPages WebPage { get; set; }
+        public virtual WebPage WebPage { get; set; }
     }
 }

@@ -16,8 +16,8 @@ namespace WebApiServices.Controllers
         [HttpGet]
         public JsonResult<Models.UserRole> GetUserRole(int id)
         {
-            EntityMapperUserRole<DataAccessLayer.UserRole, Models.UserRole> mapObj = new EntityMapperUserRole<DataAccessLayer.UserRole, Models.UserRole>();
-            DataAccessLayer.UserRole dalBlotterTBO = DAL.GetUserRole(id);
+            EntityMapperUserRole<DataAccessLayer.SP_GETUserRoles_Result, Models.UserRole> mapObj = new EntityMapperUserRole<DataAccessLayer.SP_GETUserRoles_Result, Models.UserRole>();
+            DataAccessLayer.SP_GETUserRoles_Result dalBlotterTBO = DAL.GetUserRole(id);
             Models.UserRole products = new Models.UserRole();
             products = mapObj.Translate(dalBlotterTBO);
             return Json<Models.UserRole>(products);
@@ -25,9 +25,9 @@ namespace WebApiServices.Controllers
         [HttpGet]
         public JsonResult<List<Models.UserRole>> GetAllUserRole()
         {
-            EntityMapperUserRole<DataAccessLayer.UserRole, Models.UserRole> mapObj = new EntityMapperUserRole<DataAccessLayer.UserRole, Models.UserRole>();
+            EntityMapperUserRole<DataAccessLayer.SP_GETUserRoles_Result, Models.UserRole> mapObj = new EntityMapperUserRole<DataAccessLayer.SP_GETUserRoles_Result, Models.UserRole>();
 
-            List<DataAccessLayer.UserRole> UserRoleList = DAL.GetAllUserRole();
+            List<DataAccessLayer.SP_GETUserRoles_Result> UserRoleList = DAL.GetAllUserRole();
             List<Models.UserRole> blotterUserRole = new List<Models.UserRole>();
             foreach (var item in UserRoleList)
             {
@@ -41,10 +41,7 @@ namespace WebApiServices.Controllers
             bool status = false;
             if (ModelState.IsValid)
             {
-                EntityMapperUserRole<Models.UserRole, DataAccessLayer.UserRole> mapObj = new EntityMapperUserRole<Models.UserRole, DataAccessLayer.UserRole>();
-                DataAccessLayer.UserRole UserRoleObj = new DataAccessLayer.UserRole();
-                UserRoleObj = mapObj.Translate(item);
-                status = DAL.InsertUserRole(UserRoleObj);
+                status = DAL.InsertUserRole(item.RoleName,item.isActive);
             }
             return status;
 
@@ -57,10 +54,7 @@ namespace WebApiServices.Controllers
             bool status = false;
             if (ModelState.IsValid)
             {
-                EntityMapperUserRole<Models.UserRole, DataAccessLayer.UserRole> mapObj = new EntityMapperUserRole<Models.UserRole, DataAccessLayer.UserRole>();
-                DataAccessLayer.UserRole UserRoleObj = new DataAccessLayer.UserRole();
-                UserRoleObj = mapObj.Translate(item);
-                status = DAL.UpdateUserRole(UserRoleObj);
+                status = DAL.UpdateUserRole(item.URID,item.RoleName, item.isActive);
             }
             return status;
 

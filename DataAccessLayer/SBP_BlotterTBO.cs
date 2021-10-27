@@ -34,6 +34,7 @@ namespace DataAccessLayer
         public string BankCode { get; set; }
     
         public virtual Branches Branch { get; set; }
+        public virtual Currency Currency { get; set; }
         public virtual SBP_LoginInfo SBP_LoginInfo { get; set; }
     }
 }

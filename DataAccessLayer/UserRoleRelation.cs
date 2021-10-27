@@ -18,7 +18,7 @@ namespace DataAccessLayer
         public int UserId { get; set; }
         public int URID { get; set; }
     
-        public virtual UserRole UserRole { get; set; }
         public virtual SBP_LoginInfo SBP_LoginInfo { get; set; }
+        public virtual UserRole UserRole { get; set; }
     }
 }

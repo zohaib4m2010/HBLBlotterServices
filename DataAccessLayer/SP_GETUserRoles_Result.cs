@@ -10,13 +10,14 @@
 namespace DataAccessLayer
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class SBP_BlotterOpening
+    public partial class SP_GETUserRoles_Result
     {
-        public int SNo { get; set; }
-        public Nullable<System.DateTime> CurrentDate { get; set; }
-        public Nullable<decimal> TodayAmount { get; set; }
-        public string BR { get; set; }
+        public int URID { get; set; }
+        public string RoleName { get; set; }
+        public string RoleDescription { get; set; }
+        public Nullable<bool> isActive { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
+        public Nullable<System.DateTime> UpdateDate { get; set; }
     }
 }

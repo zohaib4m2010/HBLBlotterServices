@@ -12,10 +12,10 @@ namespace DataAccessLayer
     using System;
     using System.Collections.Generic;
     
-    public partial class WebPages
+    public partial class WebPage
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public WebPages()
+        public WebPage()
         {
             this.UserPageRelations = new HashSet<UserPageRelation>();
         }

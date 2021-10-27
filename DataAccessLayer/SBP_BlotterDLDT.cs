@@ -10,18 +10,23 @@
 namespace DataAccessLayer
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class SP_SBPBlotter_FCY_Result
+    public partial class SBP_BlotterDLDT
     {
-        public int DealNo { get; set; }
+        public long Sno { get; set; }
+        public string DataType { get; set; }
+        public string DealType { get; set; }
+        public Nullable<long> DealNo { get; set; }
+        public Nullable<System.DateTime> VDate { get; set; }
+        public Nullable<System.DateTime> MDate { get; set; }
         public string Description { get; set; }
         public string Status { get; set; }
-        public Nullable<System.DateTime> DealDate { get; set; }
-        public Nullable<System.DateTime> ValueDate { get; set; }
-        public Nullable<System.DateTime> MaturityDate { get; set; }
-        public string Currency { get; set; }
         public Nullable<decimal> Inflow { get; set; }
         public Nullable<decimal> Outflow { get; set; }
-        public decimal OpeningBalance { get; set; }
+        public Nullable<bool> Recon { get; set; }
+        public Nullable<bool> Rev { get; set; }
+        public Nullable<int> BR { get; set; }
+        public Nullable<int> CurId { get; set; }
     }
 }

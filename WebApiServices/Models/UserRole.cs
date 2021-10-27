@@ -10,7 +10,7 @@ namespace WebApiServices.Models
         public int URID { get; set; }
         public string RoleName { get; set; }
         public string RoleDescription { get; set; }
-        public Nullable<bool> isActive { get; set; }
+        public bool isActive { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
     }

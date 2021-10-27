@@ -17,8 +17,8 @@ namespace DataAccessLayer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UserRole()
         {
-            this.UserRoleRelations = new HashSet<UserRoleRelation>();
             this.UserPageRelations = new HashSet<UserPageRelation>();
+            this.UserRoleRelations = new HashSet<UserRoleRelation>();
         }
     
         public int URID { get; set; }
@@ -29,8 +29,8 @@ namespace DataAccessLayer
         public Nullable<System.DateTime> UpdateDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserRoleRelation> UserRoleRelations { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserPageRelation> UserPageRelations { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserRoleRelation> UserRoleRelations { get; set; }
     }
 }

@@ -14,8 +14,6 @@ namespace WebApiServices.Repository
             Mapper.CreateMap<Models.NostroBank, DataAccessLayer.NostroBank>();
             Mapper.CreateMap<DataAccessLayer.NostroBank, Models.NostroBank>();
 
-            Mapper.CreateMap<Models.SP_GETAllNostroBanks_Result, DataAccessLayer.SP_GETAllNostroBanks_Result>();
-            Mapper.CreateMap<DataAccessLayer.SP_GETAllNostroBanks_Result, Models.SP_GETAllNostroBanks_Result>();
 
             Mapper.CreateMap<Models.NostroBank, DataAccessLayer.SP_GetAllNostroBankList_Result>();
             Mapper.CreateMap<DataAccessLayer.SP_GetAllNostroBankList_Result, Models.NostroBank>();

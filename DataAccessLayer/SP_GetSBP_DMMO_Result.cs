@@ -15,8 +15,8 @@ namespace DataAccessLayer
     {
         public int sno { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
-        public Nullable<decimal> PakistanBalance { get; set; }
-        public Nullable<decimal> SBPBalanace { get; set; }
-        public Nullable<decimal> BalanceDifference { get; set; }
+        public decimal PakistanBalance { get; set; }
+        public decimal SBPBalanace { get; set; }
+        public decimal BalanceDifference { get; set; }
     }
 }
