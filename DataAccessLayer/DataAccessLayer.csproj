@@ -230,6 +230,9 @@
     <Compile Include="SP_GetAll_SBPBlotterTrade_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="SP_GETLatestBlotterDTLPerDayWise_Result.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="SP_GETLatestBlotterDTLReportDayWise_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>

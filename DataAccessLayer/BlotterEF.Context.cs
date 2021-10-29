@@ -196,10 +196,7 @@ namespace DataAccessLayer
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_DeleteWebPages", wPIDParameter);
         }
-        public virtual ObjectResult<SP_GetAllRsfTTTBO_Result> SP_GetAllRsfTTTBO_s()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetAllRsfTTTBO_Result>("SP_GetAllRsfTTTBO");
-        }
+    
         public virtual ObjectResult<SP_GetAll_SBPBlotterClearing_Result> SP_GetAll_SBPBlotterClearing(Nullable<int> userID, Nullable<int> branchID, Nullable<int> curID, Nullable<int> bR, string dateVal)
         {
             var userIDParameter = userID.HasValue ?
@@ -1435,6 +1432,19 @@ namespace DataAccessLayer
                 new ObjectParameter("NostroBankCode", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SBPBlotter_FCY", brParameter, currParameter, currentDTParameter, nostroBankCodeParameter);
+        }
+    
+        public virtual ObjectResult<SP_GETLatestBlotterDTLPerDayWise_Result> SP_GETLatestBlotterDTLPerDayWise(Nullable<int> bR, string startdate)
+        {
+            var bRParameter = bR.HasValue ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(int));
+    
+            var startdateParameter = startdate != null ?
+                new ObjectParameter("startdate", startdate) :
+                new ObjectParameter("startdate", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GETLatestBlotterDTLPerDayWise_Result>("SP_GETLatestBlotterDTLPerDayWise", bRParameter, startdateParameter);
         }
     }
 }

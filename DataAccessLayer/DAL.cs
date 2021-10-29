@@ -30,6 +30,11 @@ namespace DataAccessLayer
             var results = DbContextB.SP_GETLatestBlotterDTLReportDayWise(BR,StartDate,EndDate).ToList();
             return results;
         }
+        public static List<SP_GETLatestBlotterDTLPerDayWise_Result> GetLatestBlotterDTLPerDayWise(int BR, string StartDate)
+        {
+            var results = DbContextB.SP_GETLatestBlotterDTLPerDayWise(BR, StartDate).ToList();
+            return results;
+        }
         public static SP_GETLatestBlotterDTLReportForToday_Result GetLatestBlotterDTLForToday(int BR)
         {
             var results = DbContextB.SP_GETLatestBlotterDTLReportForToday(BR).FirstOrDefault();

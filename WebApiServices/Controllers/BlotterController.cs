@@ -49,6 +49,22 @@ namespace WebApiServices.Controllers
 
         }
 
+        // GET:   
+        [HttpGet]
+        public JsonResult<List<Models.SP_GETLatestBlotterDTLPerDayWise_Result>> GetLatestBlotterDTLPerDayWise(int BR, string StartDate)
+        {
+
+            EntityMapperBlotter<DataAccessLayer.SP_GETLatestBlotterDTLPerDayWise_Result, Models.SP_GETLatestBlotterDTLPerDayWise_Result> mapObj = new EntityMapperBlotter<DataAccessLayer.SP_GETLatestBlotterDTLPerDayWise_Result, Models.SP_GETLatestBlotterDTLPerDayWise_Result>();
+            List<DataAccessLayer.SP_GETLatestBlotterDTLPerDayWise_Result> dalEmail = DAL.GetLatestBlotterDTLPerDayWise(BR, StartDate);
+            List<Models.SP_GETLatestBlotterDTLPerDayWise_Result> SumForEmail = new List<Models.SP_GETLatestBlotterDTLPerDayWise_Result>();
+            foreach (var item in dalEmail)
+            {
+                SumForEmail.Add(mapObj.Translate(item));
+            }
+            return Json<List<Models.SP_GETLatestBlotterDTLPerDayWise_Result>>(SumForEmail);
+
+        }
+
 
         // GET:   
         [HttpGet]
