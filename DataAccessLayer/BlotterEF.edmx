@@ -523,6 +523,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
           <Property Name="Flag" Type="varchar" MaxLength="2" />
           <Property Name="AdjBalance" Type="numeric" Precision="18" Scale="0" />
           <Property Name="isAdjusted" Type="bit" />
+          <Property Name="NostroCode" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="SBP_BlotterManualEstBalance">
           <Key>
@@ -575,6 +576,30 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
           <Property Name="BR" Type="int" Nullable="false" />
           <Property Name="CurID" Type="int" Nullable="false" />
           <Property Name="Flag" Type="varchar" MaxLength="2" />
+        </EntityType>
+        <EntityType Name="SBP_BlotterOutrights">
+          <Key>
+            <PropertyRef Name="SNo" />
+          </Key>
+          <Property Name="SNo" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DataType" Type="varchar" MaxLength="50" />
+          <Property Name="Bank" Type="varchar" MaxLength="50" />
+          <Property Name="Rate" Type="float" />
+          <Property Name="Issue_Date" Type="date" />
+          <Property Name="IssueType" Type="varchar" MaxLength="50" />
+          <Property Name="Broker" Type="varchar" MaxLength="50" />
+          <Property Name="InFlow" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="OutFLow" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Note" Type="nvarchar" MaxLength="250" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="BR" Type="int" Nullable="false" />
+          <Property Name="BID" Type="int" Nullable="false" />
+          <Property Name="CurID" Type="int" Nullable="false" />
+          <Property Name="Flag" Type="varchar" MaxLength="2" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Status" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterRECON' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1408,6 +1433,10 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <Parameter Name="EndDate" Type="datetime" Mode="In" />
           <Parameter Name="BR" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_DeleteBlotterOutright" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="bigint" Mode="In" />
+          <Parameter Name="UserID" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_DeleteHolidays" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="GHID" Type="int" Mode="In" />
         </Function>
@@ -1563,6 +1592,10 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <Parameter Name="BR" Type="int" Mode="In" />
           <Parameter Name="DateVal" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_GetSBPBlotterOutRright" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BR" Type="int" Mode="In" />
+          <Parameter Name="DateVal" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_GetSBPBlotterRECON" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
           <Parameter Name="BranchID" Type="int" Mode="In" />
@@ -1578,6 +1611,19 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
         </Function>
         <Function Name="SP_GETUserRoles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_InsertBlotterOutright" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DataType" Type="varchar" Mode="In" />
+          <Parameter Name="Bank" Type="varchar" Mode="In" />
+          <Parameter Name="Rate" Type="float" Mode="In" />
+          <Parameter Name="Issue_Date" Type="date" Mode="In" />
+          <Parameter Name="IssueType" Type="varchar" Mode="In" />
+          <Parameter Name="Broker" Type="varchar" Mode="In" />
+          <Parameter Name="InFlow" Type="numeric" Mode="In" />
+          <Parameter Name="OutFLow" Type="numeric" Mode="In" />
+          <Parameter Name="Note" Type="nvarchar" Mode="In" />
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="BR" Type="int" Mode="In" />
         </Function>
         <Function Name="SP_InsertHolidays" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="HolidayTitle" Type="varchar" Mode="In" />
@@ -1671,6 +1717,20 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
         <Function Name="SP_SBPSessionStop" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pSessionID" Type="varchar" Mode="In" />
           <Parameter Name="pUserID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_UpdateBlotterOutright" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="bigint" Mode="In" />
+          <Parameter Name="DataType" Type="varchar" Mode="In" />
+          <Parameter Name="Bank" Type="varchar" Mode="In" />
+          <Parameter Name="Rate" Type="float" Mode="In" />
+          <Parameter Name="Issue_Date" Type="date" Mode="In" />
+          <Parameter Name="IssueType" Type="varchar" Mode="In" />
+          <Parameter Name="Broker" Type="varchar" Mode="In" />
+          <Parameter Name="InFlow" Type="numeric" Mode="In" />
+          <Parameter Name="OutFLow" Type="numeric" Mode="In" />
+          <Parameter Name="Note" Type="nvarchar" Mode="In" />
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="BR" Type="int" Mode="In" />
         </Function>
         <Function Name="SP_UpdateDaysInBlotterReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DTLValue" Type="numeric" Mode="In" />
@@ -1766,6 +1826,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <EntitySet Name="SBP_BlotterManualEstBalance" EntityType="Self.SBP_BlotterManualEstBalance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterOpeningBalance" EntityType="Self.SBP_BlotterOpeningBalance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterOpeningClosingBalanceDIfferential" EntityType="Self.SBP_BlotterOpeningClosingBalanceDIfferential" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SBP_BlotterOutrights" EntityType="Self.SBP_BlotterOutrights" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterRTGS" EntityType="Self.SBP_BlotterRTGS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterTBO" EntityType="Self.SBP_BlotterTBO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterTrade" EntityType="Self.SBP_BlotterTrade" Schema="dbo" store:Type="Tables" />
@@ -5316,6 +5377,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
                 <ScalarProperty Name="Flag" ColumnName="Flag" />
                 <ScalarProperty Name="AdjBalance" ColumnName="AdjBalance" />
                 <ScalarProperty Name="isAdjusted" ColumnName="isAdjusted" />
+                <ScalarProperty Name="NostroCode" ColumnName="NostroCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5352,6 +5414,31 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
                 <ScalarProperty Name="BR" ColumnName="BR" />
                 <ScalarProperty Name="CurID" ColumnName="CurID" />
                 <ScalarProperty Name="Flag" ColumnName="Flag" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SBP_BlotterOutrights">
+            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterOutrights">
+              <MappingFragment StoreEntitySet="SBP_BlotterOutrights">
+                <ScalarProperty Name="SNo" ColumnName="SNo" />
+                <ScalarProperty Name="DataType" ColumnName="DataType" />
+                <ScalarProperty Name="Bank" ColumnName="Bank" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="Issue_Date" ColumnName="Issue_Date" />
+                <ScalarProperty Name="IssueType" ColumnName="IssueType" />
+                <ScalarProperty Name="Broker" ColumnName="Broker" />
+                <ScalarProperty Name="InFlow" ColumnName="InFlow" />
+                <ScalarProperty Name="OutFLow" ColumnName="OutFLow" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="BID" ColumnName="BID" />
+                <ScalarProperty Name="CurID" ColumnName="CurID" />
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5608,6 +5695,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <FunctionImportMapping FunctionImportName="SP_ADD_ActivityMonitor" FunctionName="OPICSWEBModel.Store.SP_ADD_ActivityMonitor" />
           <FunctionImportMapping FunctionImportName="SP_ADD_SessionStart" FunctionName="OPICSWEBModel.Store.SP_ADD_SessionStart" />
           <FunctionImportMapping FunctionImportName="SP_AddDaysInBlotterReport" FunctionName="OPICSWEBModel.Store.SP_AddDaysInBlotterReport" />
+          <FunctionImportMapping FunctionImportName="SP_DeleteBlotterOutright" FunctionName="OPICSWEBModel.Store.SP_DeleteBlotterOutright" />
           <FunctionImportMapping FunctionImportName="SP_DeleteHolidays" FunctionName="OPICSWEBModel.Store.SP_DeleteHolidays" />
           <FunctionImportMapping FunctionImportName="SP_DELETEUserPageRelation" FunctionName="OPICSWEBModel.Store.SP_DELETEUserPageRelation" />
           <FunctionImportMapping FunctionImportName="SP_DeleteUserRole" FunctionName="OPICSWEBModel.Store.SP_DeleteUserRole" />
@@ -6161,6 +6249,31 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_GetSBPBlotterOutRright" FunctionName="OPICSWEBModel.Store.SP_GetSBPBlotterOutRright">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BlotterEF.SP_GetSBPBlotterOutRright_Result">
+                <ScalarProperty Name="SNo" ColumnName="SNo" />
+                <ScalarProperty Name="DataType" ColumnName="DataType" />
+                <ScalarProperty Name="Bank" ColumnName="Bank" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="Issue_Date" ColumnName="Issue_Date" />
+                <ScalarProperty Name="IssueType" ColumnName="IssueType" />
+                <ScalarProperty Name="Broker" ColumnName="Broker" />
+                <ScalarProperty Name="InFlow" ColumnName="InFlow" />
+                <ScalarProperty Name="OutFLow" ColumnName="OutFLow" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="BID" ColumnName="BID" />
+                <ScalarProperty Name="CurID" ColumnName="CurID" />
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_GetSBPBlotterRECON" FunctionName="OPICSWEBModel.Store.SP_GetSBPBlotterRECON">
             <ResultMapping>
               <ComplexTypeMapping TypeName="BlotterEF.SP_GetSBPBlotterRECON_Result">
@@ -6211,6 +6324,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_InsertBlotterOutright" FunctionName="OPICSWEBModel.Store.SP_InsertBlotterOutright" />
           <FunctionImportMapping FunctionImportName="SP_InsertHolidays" FunctionName="OPICSWEBModel.Store.SP_InsertHolidays" />
           <FunctionImportMapping FunctionImportName="SP_InsertLoginInfo" FunctionName="OPICSWEBModel.Store.SP_InsertLoginInfo" />
           <FunctionImportMapping FunctionImportName="SP_InsertOpeningBalance" FunctionName="OPICSWEBModel.Store.SP_InsertOpeningBalance">
@@ -6303,6 +6417,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_SBPSessionStop" FunctionName="OPICSWEBModel.Store.SP_SBPSessionStop" />
+          <FunctionImportMapping FunctionImportName="SP_UpdateBlotterOutright" FunctionName="OPICSWEBModel.Store.SP_UpdateBlotterOutright" />
           <FunctionImportMapping FunctionImportName="SP_UpdateDaysInBlotterReport" FunctionName="OPICSWEBModel.Store.SP_UpdateDaysInBlotterReport" />
           <FunctionImportMapping FunctionImportName="SP_UpdateHolidays" FunctionName="OPICSWEBModel.Store.SP_UpdateHolidays" />
           <FunctionImportMapping FunctionImportName="SP_UpdateLoginInfo" FunctionName="OPICSWEBModel.Store.SP_UpdateLoginInfo" />
