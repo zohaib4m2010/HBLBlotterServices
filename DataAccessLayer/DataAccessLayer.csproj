@@ -72,6 +72,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlotterDataColor.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="BlotterEF.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -97,20 +100,41 @@
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL.cs" />
+    <Compile Include="fxacuphbl1.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fx_maturity_profile.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="GazettedHoliday.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="NostroBank.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="OW_AUTH.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OW_dblink.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OW_USERS.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SBP_BlotterBai_Muajjal.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SBP_BlotterBranchBalances.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="SBP_BlotterBreakups.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="SBP_BlotterClearing.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SBP_BlotterConversionRate.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="SBP_BlotterCRD.cs">
@@ -140,7 +164,13 @@
     <Compile Include="SBP_BlotterDMMO.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="SBP_BlotterDTL.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="SBP_BlotterDTLDaysWiseBal.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SBP_BlotterFixedIncome.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="SBP_BlotterFundingRepo.cs">
@@ -149,13 +179,25 @@
     <Compile Include="SBP_BlotterFundsTransfer.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="SBP_BlotterFXDH.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SBP_BlotterFXDHSWAP.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="SBP_BlotterImportExport.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="SBP_BlotterManualData.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="SBP_BlotterManualDeals.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="SBP_BlotterManualEstBalance.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SBP_BlotterOpening.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="SBP_BlotterOpeningBalance.cs">
@@ -170,16 +212,43 @@
     <Compile Include="SBP_BlotterRECON.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="SBP_BlotterReconBreakups.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="SBP_BlotterReserved.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SBP_BlotterRPRH.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="SBP_BlotterRTGS.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="SBP_BlotterRTGS1.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SBP_BlotterSessionDetails.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SBP_BlotterSetup.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SBP_BlotterSPSH.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="SBP_BlotterTBO.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="SBP_BlotterTPOS.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="SBP_BlotterTrade.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SBP_BlotterTransactionsTotal.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SBP_BlotterTransactionTitles.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="SBP_LoginInfo.cs">
@@ -230,6 +299,9 @@
     <Compile Include="SP_GetAll_SBPBlotterTrade_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="SP_GetCRRFINCONPeriods_Result.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="SP_GETLatestBlotterDTLPerDayWise_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
@@ -240,6 +312,9 @@
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_GetLatestBreakup_Result.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SP_GetNostroBankFromOPICS_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_GetNotListedUserPageRelations_Result.cs">
@@ -296,10 +371,22 @@
     <Compile Include="SP_GETUserRoles_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="SP_Get_SBPBlotterConversionRate_Result.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="SP_InsertOpeningBalance_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_ReconcileOPICSManualData_Result.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SP_SBPBlotterBR1_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_SBPBlotter_Result.cs">
@@ -312,6 +399,15 @@
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_UpdateOpeningBalance_Result.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TEMPRECONCHECK.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TEMPRECONTEST.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="UserCurrencyRelation.cs">
@@ -327,6 +423,9 @@
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="WebPage.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WeekEnd.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
   </ItemGroup>

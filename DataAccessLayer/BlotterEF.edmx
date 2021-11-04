@@ -5,6 +5,22 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="OPICSWEBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BlotterDataColor">
+          <Key>
+            <PropertyRef Name="Sno" />
+          </Key>
+          <Property Name="Sno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DealNo" Type="int" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Status" Type="varchar" MaxLength="10" />
+          <Property Name="Inflow" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Outflow" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Balance" Type="numeric" Precision="18" Scale="1" />
+          <Property Name="Recon_isActive" Type="bit" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="UserId" Type="int" />
+        </EntityType>
         <EntityType Name="BlotterSBP_Reserved">
           <Key>
             <PropertyRef Name="SNo" />
@@ -49,6 +65,85 @@
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'OPICSWEB.dbo.fx_hblnostrtradingpur' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="fx_hblnostrtradingpur">
+          <Property Name="cost" Type="char" MaxLength="11" />
+          <Property Name="port" Type="char" MaxLength="4" />
+          <Property Name="product" Type="char" MaxLength="6" />
+          <Property Name="vdate" Type="datetime" />
+          <Property Name="currency" Type="char" MaxLength="3" />
+          <Property Name="purchaseamt" Type="numeric" Precision="38" Scale="4" />
+          <Property Name="period" Type="varchar" MaxLength="2" />
+        </EntityType>-->
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'OPICSWEB.dbo.fx_hblnostrtradingsal' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="fx_hblnostrtradingsal">
+          <Property Name="cost" Type="char" MaxLength="11" />
+          <Property Name="port" Type="char" MaxLength="4" />
+          <Property Name="product" Type="char" MaxLength="6" />
+          <Property Name="vdate" Type="datetime" />
+          <Property Name="currency" Type="char" MaxLength="3" />
+          <Property Name="saleamt" Type="numeric" Precision="38" Scale="4" />
+          <Property Name="period" Type="varchar" MaxLength="2" />
+        </EntityType>-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OPICSWEB.dbo.fx_maturity_profile' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="fx_maturity_profile">
+          <Key>
+            <PropertyRef Name="br" />
+            <PropertyRef Name="dealno" />
+            <PropertyRef Name="seq" />
+            <PropertyRef Name="brok_desc" />
+            <PropertyRef Name="nostro_desc" />
+          </Key>
+          <Property Name="br" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="dealno" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="seq" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="dealdate" Type="datetime" />
+          <Property Name="vdate" Type="datetime" />
+          <Property Name="ps" Type="varchar" MaxLength="1" />
+          <Property Name="ccy" Type="char" MaxLength="3" />
+          <Property Name="swapdeal" Type="char" MaxLength="8" />
+          <Property Name="ccyamt" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="pkramt" Type="numeric" Precision="38" Scale="12" />
+          <Property Name="ccyrate_8" Type="numeric" Precision="18" Scale="8" />
+          <Property Name="acct" Type="char" MaxLength="15" />
+          <Property Name="sn" Type="nchar" MaxLength="40" />
+          <Property Name="prodcode" Type="char" MaxLength="6" />
+          <Property Name="prodtype" Type="char" MaxLength="2" />
+          <Property Name="brok" Type="char" MaxLength="11" />
+          <Property Name="means" Type="char" MaxLength="7" />
+          <Property Name="cost" Type="char" MaxLength="11" />
+          <Property Name="port" Type="char" MaxLength="4" />
+          <Property Name="brok_desc" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="nostro" Type="varchar" MaxLength="15" />
+          <Property Name="nostro_desc" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OPICSWEB.dbo.fxacuphbl1' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="fxacuphbl1">
+          <Key>
+            <PropertyRef Name="Period" />
+            <PropertyRef Name="CCY" />
+          </Key>
+          <Property Name="postdate" Type="int" />
+          <Property Name="Period" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="CCY" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="AmountCR" Type="numeric" Precision="38" Scale="4" />
+          <Property Name="AmountDR" Type="numeric" Precision="38" Scale="4" />
+          <Property Name="Net" Type="numeric" Precision="38" Scale="4" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'OPICSWEB.dbo.FXBaseCurrency' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="FXBaseCurrency">
+          <Property Name="DI" Type="nvarchar(max)" />
+          <Property Name="BaseCCY" Type="nvarchar(max)" />
+          <Property Name="QuotedCCY" Type="nvarchar(max)" />
+          <Property Name="Base01" Type="float" />
+          <Property Name="Base02" Type="float" />
+          <Property Name="MD" Type="nvarchar(max)" />
+        </EntityType>-->
         <EntityType Name="GazettedHolidays">
           <Key>
             <PropertyRef Name="GHID" />
@@ -76,6 +171,128 @@
           <Property Name="NOSCode" Type="varchar" MaxLength="20" />
           <Property Name="BankCode" Type="varchar" MaxLength="20" />
         </EntityType>
+        <EntityType Name="OW_AUTH">
+          <Key>
+            <PropertyRef Name="AUTH_ID" />
+          </Key>
+          <Property Name="AUTH_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AUTH_NAME" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OPICSWEB.dbo.OW_dblink' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="OW_dblink">
+          <Key>
+            <PropertyRef Name="dblink" />
+          </Key>
+          <Property Name="dblink" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OW_USERS">
+          <Key>
+            <PropertyRef Name="USER_ID" />
+          </Key>
+          <Property Name="USER_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EMP_NO" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="USER_NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PASSWORD" Type="nvarchar" MaxLength="50" />
+          <Property Name="FULL_NAME" Type="nvarchar" MaxLength="250" />
+          <Property Name="EMAIL_ID" Type="nvarchar" MaxLength="100" />
+          <Property Name="AUTH_LEVEL" Type="nvarchar" MaxLength="10" />
+          <Property Name="REGION_CODE" Type="nvarchar" MaxLength="250" />
+          <Property Name="USER_TYPE" Type="nvarchar" MaxLength="50" />
+          <Property Name="CREATED_BY" Type="nvarchar" MaxLength="50" />
+          <Property Name="CREATION_TIME" Type="datetime" />
+          <Property Name="LAST_UPDATED_BY" Type="nvarchar" MaxLength="50" />
+          <Property Name="LAST_UPDATED_TIME" Type="datetime" />
+          <Property Name="STATUS" Type="bit" />
+          <Property Name="IS_ADMIN" Type="bit" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'OPICSWEB.dbo.REVP_HBL' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="REVP_HBL">
+          <Property Name="BR" Type="nvarchar" MaxLength="255" />
+          <Property Name="CCY" Type="nvarchar" MaxLength="255" />
+          <Property Name="SPOTRATE_8" Type="float" />
+          <Property Name="TERMS" Type="nvarchar" MaxLength="255" />
+          <Property Name="PERIOD1" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE1_8" Type="float" />
+          <Property Name="PERIOD2" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE2_8" Type="float" />
+          <Property Name="PERIOD3" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE3_8" Type="float" />
+          <Property Name="PERIOD4" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE4_8" Type="float" />
+          <Property Name="PERIOD5" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE5_8" Type="float" />
+          <Property Name="PERIOD6" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE6_8" Type="float" />
+          <Property Name="PERIOD7" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE7_8" Type="float" />
+          <Property Name="PERIOD8" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE8_8" Type="float" />
+          <Property Name="PERIOD9" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE9_8" Type="float" />
+          <Property Name="PERIOD10" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE10_8" Type="float" />
+          <Property Name="PERIOD11" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE11_8" Type="float" />
+          <Property Name="PERIOD12" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE12_8" Type="float" />
+          <Property Name="PERIOD13" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE13_8" Type="float" />
+          <Property Name="PERIOD14" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE14_8" Type="float" />
+          <Property Name="PERIOD15" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE15_8" Type="float" />
+          <Property Name="PERIOD16" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE16_8" Type="float" />
+          <Property Name="PERIOD17" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE17_8" Type="float" />
+          <Property Name="PERIOD18" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE18_8" Type="float" />
+          <Property Name="PERIOD19" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE19_8" Type="float" />
+          <Property Name="PERIOD20" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE20_8" Type="float" />
+          <Property Name="PERIOD21" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE21_8" Type="float" />
+          <Property Name="PERIOD22" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE22_8" Type="float" />
+          <Property Name="PERIOD23" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE23_8" Type="float" />
+          <Property Name="PERIOD24" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE24_8" Type="float" />
+          <Property Name="PERIOD25" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE25_8" Type="float" />
+          <Property Name="PERIOD26" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE26_8" Type="float" />
+          <Property Name="PERIOD27" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE27_8" Type="float" />
+          <Property Name="PERIOD28" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE28_8" Type="float" />
+          <Property Name="PERIOD29" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE29_8" Type="float" />
+          <Property Name="PERIOD30" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE30_8" Type="float" />
+          <Property Name="PERIOD31" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE31_8" Type="float" />
+          <Property Name="PERIOD32" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE32_8" Type="float" />
+          <Property Name="PERIOD33" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE33_8" Type="float" />
+          <Property Name="PERIOD34" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE34_8" Type="float" />
+          <Property Name="PERIOD35" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE35_8" Type="float" />
+          <Property Name="PERIOD36" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE36_8" Type="float" />
+          <Property Name="PERIOD37" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE37_8" Type="float" />
+          <Property Name="PERIOD38" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE38_8" Type="float" />
+          <Property Name="PERIOD39" Type="nvarchar" MaxLength="255" />
+          <Property Name="RATE39_8" Type="float" />
+          <Property Name="LSTMNTDATE" Type="datetime" />
+        </EntityType>-->
         <EntityType Name="SBP_BlotterBai_Muajjal">
           <Key>
             <PropertyRef Name="SNo" />
@@ -87,6 +304,23 @@
           <Property Name="BMCOde" Type="nvarchar" MaxLength="20" />
           <Property Name="BM_InFlow" Type="numeric" Precision="18" Scale="0" />
           <Property Name="BM_OutFLow" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Note" Type="nvarchar" MaxLength="250" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="BR" Type="int" Nullable="false" />
+          <Property Name="BID" Type="int" Nullable="false" />
+          <Property Name="CurID" Type="int" Nullable="false" />
+          <Property Name="Flag" Type="varchar" MaxLength="2" />
+        </EntityType>
+        <EntityType Name="SBP_BlotterBranchBalances">
+          <Key>
+            <PropertyRef Name="SNo" />
+          </Key>
+          <Property Name="SNo" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Branch_Date" Type="date" />
+          <Property Name="Branch_InFlow" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Branch_OutFLow" Type="numeric" Precision="18" Scale="0" />
           <Property Name="Note" Type="nvarchar" MaxLength="250" />
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" />
@@ -153,6 +387,24 @@
           <Property Name="CurID" Type="int" Nullable="false" />
           <Property Name="Flag" Type="varchar" MaxLength="2" />
           <Property Name="DataType" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterConversionRate' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="SBP_BlotterConversionRate">
+          <Key>
+            <PropertyRef Name="SNo" />
+          </Key>
+          <Property Name="SNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CCY" Type="varchar" MaxLength="20" />
+          <Property Name="SPOTRATE_8" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="Date" Type="date" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="CurID" Type="int" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="BR" Type="int" />
+          <Property Name="BID" Type="int" />
+          <Property Name="Flag" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="SBP_BlotterCRD">
           <Key>
@@ -368,6 +620,20 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
           <Property Name="BID" Type="int" />
           <Property Name="Flag" Type="nchar" MaxLength="10" />
         </EntityType>
+        <EntityType Name="SBP_BlotterDTL">
+          <Key>
+            <PropertyRef Name="SNo" />
+          </Key>
+          <Property Name="SNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DTL_Date" Type="datetime" Nullable="false" />
+          <Property Name="DTL_Code" Type="varchar" MaxLength="50" />
+          <Property Name="NO_OF_Days" Type="int" Nullable="false" />
+          <Property Name="DTL_Amount" Type="float" Nullable="false" />
+          <Property Name="T_User_Id" Type="varchar" MaxLength="10" />
+          <Property Name="T_Date" Type="datetime" Nullable="false" />
+          <Property Name="Flag" Type="varchar" MaxLength="1" />
+          <Property Name="BR" Type="varchar" MaxLength="2" />
+        </EntityType>
         <EntityType Name="SBP_BlotterDTLDaysWiseBal">
           <Key>
             <PropertyRef Name="Id" />
@@ -437,6 +703,25 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
           <Property Name="CashOutFlow-14" Type="numeric" Precision="19" Scale="4" />
           <Property Name="BR" Type="varchar" MaxLength="2" />
         </EntityType>
+        <EntityType Name="SBP_BlotterFixedIncome">
+          <Key>
+            <PropertyRef Name="Sno" />
+          </Key>
+          <Property Name="Sno" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DataType" Type="varchar" MaxLength="20" />
+          <Property Name="DealType" Type="varchar" MaxLength="20" />
+          <Property Name="DealNo" Type="bigint" />
+          <Property Name="VDate" Type="date" />
+          <Property Name="MDate" Type="date" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Status" Type="varchar" MaxLength="10" />
+          <Property Name="Inflow" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Outflow" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Recon" Type="bit" />
+          <Property Name="Rev" Type="bit" />
+          <Property Name="BR" Type="int" />
+          <Property Name="CurId" Type="int" />
+        </EntityType>
         <EntityType Name="SBP_BlotterFundingRepo">
           <Key>
             <PropertyRef Name="SNo" />
@@ -482,6 +767,44 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
           <Property Name="CurID" Type="int" Nullable="false" />
           <Property Name="Flag" Type="varchar" MaxLength="2" />
         </EntityType>
+        <EntityType Name="SBP_BlotterFXDH">
+          <Key>
+            <PropertyRef Name="Sno" />
+          </Key>
+          <Property Name="Sno" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DataType" Type="varchar" MaxLength="20" />
+          <Property Name="DealType" Type="varchar" MaxLength="20" />
+          <Property Name="DealNo" Type="bigint" />
+          <Property Name="VDate" Type="date" />
+          <Property Name="MDate" Type="date" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Status" Type="varchar" MaxLength="10" />
+          <Property Name="Inflow" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Outflow" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Recon" Type="bit" />
+          <Property Name="Rev" Type="bit" />
+          <Property Name="BR" Type="int" />
+          <Property Name="CurId" Type="int" />
+        </EntityType>
+        <EntityType Name="SBP_BlotterFXDHSWAP">
+          <Key>
+            <PropertyRef Name="Sno" />
+          </Key>
+          <Property Name="Sno" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DataType" Type="varchar" MaxLength="20" />
+          <Property Name="DealType" Type="varchar" MaxLength="20" />
+          <Property Name="DealNo" Type="bigint" />
+          <Property Name="VDate" Type="date" />
+          <Property Name="MDate" Type="date" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Status" Type="varchar" MaxLength="10" />
+          <Property Name="Inflow" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Outflow" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Recon" Type="bit" />
+          <Property Name="Rev" Type="bit" />
+          <Property Name="BR" Type="int" />
+          <Property Name="CurId" Type="int" />
+        </EntityType>
         <EntityType Name="SBP_BlotterImportExport">
           <Key>
             <PropertyRef Name="SNo" />
@@ -523,7 +846,20 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
           <Property Name="Flag" Type="varchar" MaxLength="2" />
           <Property Name="AdjBalance" Type="numeric" Precision="18" Scale="0" />
           <Property Name="isAdjusted" Type="bit" />
-          <Property Name="NostroCode" Type="varchar" MaxLength="50" />
+          <Property Name="NostroBank" Type="bigint" />
+        </EntityType>
+        <EntityType Name="SBP_BlotterManualDeals">
+          <Key>
+            <PropertyRef Name="SNo" />
+          </Key>
+          <Property Name="SNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="250" />
+          <Property Name="DealDate" Type="date" />
+          <Property Name="InFlow" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="OutFlow" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="CurrentDate" Type="datetime" />
+          <Property Name="DealStatus" Type="nchar" MaxLength="1" />
+          <Property Name="BR" Type="varchar" MaxLength="2" />
         </EntityType>
         <EntityType Name="SBP_BlotterManualEstBalance">
           <Key>
@@ -542,6 +878,15 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
           <Property Name="BID" Type="int" Nullable="false" />
           <Property Name="CurID" Type="int" Nullable="false" />
           <Property Name="Flag" Type="varchar" MaxLength="2" />
+        </EntityType>
+        <EntityType Name="SBP_BlotterOpening">
+          <Key>
+            <PropertyRef Name="SNo" />
+          </Key>
+          <Property Name="SNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CurrentDate" Type="datetime" />
+          <Property Name="TodayAmount" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="BR" Type="varchar" MaxLength="2" />
         </EntityType>
         <EntityType Name="SBP_BlotterOpeningBalance">
           <Key>
@@ -628,6 +973,26 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterRECON' does not have a pri
           <Property Name="CurID" Type="int" Nullable="false" />
           <Property Name="Flag" Type="varchar" MaxLength="2" />
         </EntityType>
+        <EntityType Name="SBP_BlotterReconBreakups">
+          <Key>
+            <PropertyRef Name="SNo" />
+          </Key>
+          <Property Name="SNo" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TTID" Type="int" Nullable="false" />
+          <Property Name="RECON_Date" Type="date" />
+          <Property Name="RECONCOde" Type="nvarchar" MaxLength="20" />
+          <Property Name="RECON_InFlow" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="RECON_OutFLow" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Note" Type="nvarchar" MaxLength="250" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="BR" Type="int" Nullable="false" />
+          <Property Name="BID" Type="int" Nullable="false" />
+          <Property Name="CurID" Type="int" Nullable="false" />
+          <Property Name="Flag" Type="varchar" MaxLength="2" />
+          <Property Name="DataType" Type="varchar" MaxLength="50" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="SBP_BlotterReserved">
@@ -649,6 +1014,25 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Property Name="BID" Type="int" />
           <Property Name="Flag" Type="nchar" MaxLength="10" />
         </EntityType>
+        <EntityType Name="SBP_BlotterRPRH">
+          <Key>
+            <PropertyRef Name="Sno" />
+          </Key>
+          <Property Name="Sno" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DataType" Type="varchar" MaxLength="20" />
+          <Property Name="DealType" Type="varchar" MaxLength="20" />
+          <Property Name="DealNo" Type="bigint" />
+          <Property Name="VDate" Type="date" />
+          <Property Name="MDate" Type="date" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Status" Type="varchar" MaxLength="10" />
+          <Property Name="Inflow" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Outflow" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Recon" Type="bit" />
+          <Property Name="Rev" Type="bit" />
+          <Property Name="BR" Type="int" />
+          <Property Name="CurId" Type="int" />
+        </EntityType>
         <EntityType Name="SBP_BlotterRTGS">
           <Key>
             <PropertyRef Name="SNo" />
@@ -668,6 +1052,74 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Property Name="CurID" Type="int" Nullable="false" />
           <Property Name="Flag" Type="varchar" MaxLength="2" />
           <Property Name="DataType" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterRTGS1' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="SBP_BlotterRTGS1">
+          <Key>
+            <PropertyRef Name="Sno" />
+            <PropertyRef Name="ACCT_Description" />
+            <PropertyRef Name="Inflow" />
+            <PropertyRef Name="Outflow" />
+            <PropertyRef Name="BatchCount" />
+            <PropertyRef Name="Br" />
+          </Key>
+          <Property Name="Sno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TXN_DTE_TME" Type="datetime" />
+          <Property Name="ACCT_Description" Type="varchar" MaxLength="513" Nullable="false" />
+          <Property Name="Inflow" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Outflow" Type="numeric" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="BatchCount" Type="int" Nullable="false" />
+          <Property Name="Br" Type="varchar" MaxLength="2" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterSessionDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="SBP_BlotterSessionDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SessionID" Type="varchar" MaxLength="500" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="IP" Type="nvarchar" MaxLength="100" />
+          <Property Name="Status" Type="varchar" MaxLength="50" />
+          <Property Name="URL" Type="nvarchar" MaxLength="100" />
+          <Property Name="Activity" Type="nvarchar" MaxLength="100" />
+          <Property Name="ActivityTime" Type="datetime" />
+          <Property Name="Data" Type="nvarchar(max)" />
+          <Property Name="SessionStart" Type="datetime" />
+          <Property Name="SessionEnd" Type="datetime" />
+          <Property Name="LoginStatus" Type="bit" />
+          <Property Name="LoginGUID" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="SBP_BlotterSetup">
+          <Key>
+            <PropertyRef Name="SNo" />
+          </Key>
+          <Property Name="SNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nchar" MaxLength="250" />
+          <Property Name="status" Type="nchar" MaxLength="1" />
+          <Property Name="BR" Type="varchar" MaxLength="2" />
+        </EntityType>
+        <EntityType Name="SBP_BlotterSPSH">
+          <Key>
+            <PropertyRef Name="Sno" />
+          </Key>
+          <Property Name="Sno" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DataType" Type="varchar" MaxLength="20" />
+          <Property Name="DealType" Type="varchar" MaxLength="20" />
+          <Property Name="DealNo" Type="bigint" />
+          <Property Name="VDate" Type="date" />
+          <Property Name="MDate" Type="date" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Status" Type="varchar" MaxLength="10" />
+          <Property Name="Inflow" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Outflow" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Recon" Type="bit" />
+          <Property Name="Rev" Type="bit" />
+          <Property Name="BR" Type="int" />
+          <Property Name="CurId" Type="int" />
         </EntityType>
         <EntityType Name="SBP_BlotterTBO">
           <Key>
@@ -692,6 +1144,25 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Property Name="DataType" Type="varchar" MaxLength="50" />
           <Property Name="BankCode" Type="varchar" MaxLength="20" />
         </EntityType>
+        <EntityType Name="SBP_BlotterTPOS">
+          <Key>
+            <PropertyRef Name="Sno" />
+          </Key>
+          <Property Name="Sno" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DataType" Type="varchar" MaxLength="20" />
+          <Property Name="DealType" Type="varchar" MaxLength="20" />
+          <Property Name="DealNo" Type="bigint" />
+          <Property Name="VDate" Type="date" />
+          <Property Name="MDate" Type="date" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Status" Type="varchar" MaxLength="10" />
+          <Property Name="Inflow" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Outflow" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Recon" Type="bit" />
+          <Property Name="Rev" Type="bit" />
+          <Property Name="BR" Type="int" />
+          <Property Name="CurId" Type="int" />
+        </EntityType>
         <EntityType Name="SBP_BlotterTrade">
           <Key>
             <PropertyRef Name="SNo" />
@@ -714,6 +1185,29 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Property Name="Flag" Type="varchar" MaxLength="2" />
           <Property Name="DataType" Type="varchar" MaxLength="50" />
           <Property Name="BankCode" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="SBP_BlotterTransactionsTotal">
+          <Key>
+            <PropertyRef Name="SNo" />
+          </Key>
+          <Property Name="SNo" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InFlow" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="OutFlow" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="ClosingBal" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="DateFor" Type="datetime" />
+          <Property Name="BR" Type="int" />
+        </EntityType>
+        <EntityType Name="SBP_BlotterTransactionTitles">
+          <Key>
+            <PropertyRef Name="TTID" />
+          </Key>
+          <Property Name="TTID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TranctionTitle" Type="nvarchar" MaxLength="50" />
+          <Property Name="TranctionDescription" Type="nvarchar" MaxLength="50" />
+          <Property Name="Transactionfor" Type="nvarchar" MaxLength="50" />
+          <Property Name="isActive" Type="bit" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
         <EntityType Name="SBP_LoginInfo">
           <Key>
@@ -742,6 +1236,36 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Property Name="Department" Type="nvarchar" MaxLength="120" />
           <Property Name="ChangePassword" Type="bit" />
         </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TEMPRECONCHECK">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tdatetime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TEMPRECONTEST">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tdatetime" Type="datetime" />
+          <Property Name="val" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'OPICSWEB.dbo.USD_RATE' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="USD_RATE">
+          <Property Name="SPOTRATE_8" Type="numeric" Precision="18" Scale="8" />
+        </EntityType>-->
         <!--Errors Found During Generation:
 warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="UserCurrencyRelation">
@@ -797,6 +1321,14 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="UpdateDate" Type="datetime" />
           <Property Name="BlotterType" Type="int" />
+        </EntityType>
+        <EntityType Name="WeekEnds">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WeekDay" Type="varchar" MaxLength="10" />
+          <Property Name="Status" Type="bit" />
         </EntityType>
         <Association Name="FK_BlotterCRRFINCON_BranchID">
           <End Role="Branches" Type="Self.Branches" Multiplicity="1" />
@@ -858,6 +1390,42 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SBP_BlotterBranchBalances_BranchID">
+          <End Role="Branches" Type="Self.Branches" Multiplicity="1" />
+          <End Role="SBP_BlotterBranchBalances" Type="Self.SBP_BlotterBranchBalances" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branches">
+              <PropertyRef Name="BID" />
+            </Principal>
+            <Dependent Role="SBP_BlotterBranchBalances">
+              <PropertyRef Name="BID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SBP_BlotterBranchBalances_CurID">
+          <End Role="Currencies" Type="Self.Currencies" Multiplicity="1" />
+          <End Role="SBP_BlotterBranchBalances" Type="Self.SBP_BlotterBranchBalances" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Currencies">
+              <PropertyRef Name="CID" />
+            </Principal>
+            <Dependent Role="SBP_BlotterBranchBalances">
+              <PropertyRef Name="CurID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SBP_BlotterBranchBalances_UserID">
+          <End Role="SBP_LoginInfo" Type="Self.SBP_LoginInfo" Multiplicity="1" />
+          <End Role="SBP_BlotterBranchBalances" Type="Self.SBP_BlotterBranchBalances" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SBP_LoginInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SBP_BlotterBranchBalances">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SBP_BlotterBreakups_BranchID">
           <End Role="Branches" Type="Self.Branches" Multiplicity="1" />
           <End Role="SBP_BlotterBreakups" Type="Self.SBP_BlotterBreakups" Multiplicity="*" />
@@ -915,6 +1483,18 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
             </Principal>
             <Dependent Role="SBP_BlotterClearing">
               <PropertyRef Name="CurID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SBP_BlotterClearing_TID">
+          <End Role="SBP_BlotterTransactionTitles" Type="Self.SBP_BlotterTransactionTitles" Multiplicity="1" />
+          <End Role="SBP_BlotterClearing" Type="Self.SBP_BlotterClearing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SBP_BlotterTransactionTitles">
+              <PropertyRef Name="TTID" />
+            </Principal>
+            <Dependent Role="SBP_BlotterClearing">
+              <PropertyRef Name="TTID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1206,6 +1786,18 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SBP_BlotterRTGS_TID">
+          <End Role="SBP_BlotterTransactionTitles" Type="Self.SBP_BlotterTransactionTitles" Multiplicity="1" />
+          <End Role="SBP_BlotterRTGS" Type="Self.SBP_BlotterRTGS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SBP_BlotterTransactionTitles">
+              <PropertyRef Name="TTID" />
+            </Principal>
+            <Dependent Role="SBP_BlotterRTGS">
+              <PropertyRef Name="TTID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SBP_BlotterRTGS_UserID">
           <End Role="SBP_LoginInfo" Type="Self.SBP_LoginInfo" Multiplicity="1" />
           <End Role="SBP_BlotterRTGS" Type="Self.SBP_BlotterRTGS" Multiplicity="*" />
@@ -1214,6 +1806,18 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="SBP_BlotterRTGS">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SBP_BlotterSessionDetails_UserID">
+          <End Role="SBP_LoginInfo" Type="Self.SBP_LoginInfo" Multiplicity="1" />
+          <End Role="SBP_BlotterSessionDetails" Type="Self.SBP_BlotterSessionDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SBP_LoginInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SBP_BlotterSessionDetails">
               <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1239,6 +1843,18 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
             </Principal>
             <Dependent Role="SBP_BlotterTBO">
               <PropertyRef Name="CurID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SBP_BlotterTBO_TTID">
+          <End Role="SBP_BlotterTransactionTitles" Type="Self.SBP_BlotterTransactionTitles" Multiplicity="1" />
+          <End Role="SBP_BlotterTBO" Type="Self.SBP_BlotterTBO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SBP_BlotterTransactionTitles">
+              <PropertyRef Name="TTID" />
+            </Principal>
+            <Dependent Role="SBP_BlotterTBO">
+              <PropertyRef Name="TTID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1275,6 +1891,18 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
             </Principal>
             <Dependent Role="SBP_BlotterTrade">
               <PropertyRef Name="CurID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SBP_BlotterTrade_TID">
+          <End Role="SBP_BlotterTransactionTitles" Type="Self.SBP_BlotterTransactionTitles" Multiplicity="1" />
+          <End Role="SBP_BlotterTrade" Type="Self.SBP_BlotterTrade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SBP_BlotterTransactionTitles">
+              <PropertyRef Name="TTID" />
+            </Principal>
+            <Dependent Role="SBP_BlotterTrade">
+              <PropertyRef Name="TTID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1410,6 +2038,78 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="f_SP_FXGapPovitHBL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="~SP_FXGapPovitHBL">
+          <Parameter Name="Product" Type="varchar" Mode="In" />
+          <Parameter Name="cost" Type="varchar" Mode="In" />
+          <Parameter Name="port" Type="varchar" Mode="In" />
+          <Parameter Name="ccy" Type="varchar" Mode="In" />
+          <Parameter Name="ConditionStr" Type="varchar" Mode="In" />
+          <Parameter Name="fromDt" Type="datetime" Mode="In" />
+          <Parameter Name="toDt" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="fn_FxGetBroker" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+          <Parameter Name="BrokerID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="fn_FxGetInterpoltionRates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="float">
+          <Parameter Name="VDate" Type="datetime" Mode="In" />
+          <Parameter Name="BRANPRCDATE" Type="datetime" Mode="In" />
+          <Parameter Name="br" Type="varchar" Mode="In" />
+          <Parameter Name="Currency" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="fn_FxGetInterpoltionRatesOld" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="float">
+          <Parameter Name="VDate" Type="datetime" Mode="In" />
+          <Parameter Name="BRANPRCDATE" Type="datetime" Mode="In" />
+          <Parameter Name="br" Type="varchar" Mode="In" />
+          <Parameter Name="Currency" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="fn_FxGetInterRatesOld" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="float">
+          <Parameter Name="VDate" Type="datetime" Mode="In" />
+          <Parameter Name="BRANPRCDATE" Type="datetime" Mode="In" />
+          <Parameter Name="br" Type="varchar" Mode="In" />
+          <Parameter Name="Currency" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="fn_FxGetNOSTRODesc" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+          <Parameter Name="NostroCode" Type="varchar" Mode="In" />
+          <Parameter Name="Br" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="fn_FxGetPeriod" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+          <Parameter Name="VDate" Type="datetime" Mode="In" />
+          <Parameter Name="BRANPRCDATE" Type="datetime" Mode="In" />
+          <Parameter Name="br" Type="varchar" Mode="In" />
+          <Parameter Name="Currency" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="fn_FxGetPRevRates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="float">
+          <Parameter Name="VDate" Type="datetime" Mode="In" />
+          <Parameter Name="BRANPRCDATE" Type="datetime" Mode="In" />
+          <Parameter Name="br" Type="varchar" Mode="In" />
+          <Parameter Name="Currency" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="fn_FxGetPRevRatesOld" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="float">
+          <Parameter Name="VDate" Type="datetime" Mode="In" />
+          <Parameter Name="BRANPRCDATE" Type="datetime" Mode="In" />
+          <Parameter Name="br" Type="varchar" Mode="In" />
+          <Parameter Name="Currency" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="fn_FxGetSpotRate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="float">
+          <Parameter Name="Currency" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="FN_GET_DEALSTATUS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+          <Parameter Name="BR" Type="char" Mode="In" />
+          <Parameter Name="SYSTEM" Type="char" Mode="In" />
+          <Parameter Name="DEALNO" Type="char" Mode="In" />
+          <Parameter Name="SEQ" Type="char" Mode="In" />
+        </Function>
+        <Function Name="FN_GET_STATUSCODE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+          <Parameter Name="V_DEALSTATUS" Type="char" Mode="In" />
+        </Function>
+        <Function Name="Fx_fnFNGetBaseCurrency" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+          <Parameter Name="BaseCCY" Type="varchar" Mode="In" />
+          <Parameter Name="QuotedCCY" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetFinalDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="date">
+          <Parameter Name="CurrentDT" Type="date" Mode="In" />
+        </Function>
         <Function Name="SP_ADD_ActivityMonitor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pSessionID" Type="varchar" Mode="In" />
           <Parameter Name="pUserID" Type="int" Mode="In" />
@@ -1418,6 +2118,10 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <Parameter Name="pData" Type="varchar(max)" Mode="In" />
           <Parameter Name="pActivity" Type="varchar" Mode="In" />
           <Parameter Name="pURL" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADD_ECRRCarryForwardData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Date" Type="datetime" Mode="In" />
+          <Parameter Name="BR" Type="int" Mode="In" />
         </Function>
         <Function Name="SP_ADD_SessionStart" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pSessionID" Type="varchar" Mode="In" />
@@ -1432,6 +2136,18 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <Parameter Name="StartDate" Type="datetime" Mode="In" />
           <Parameter Name="EndDate" Type="datetime" Mode="In" />
           <Parameter Name="BR" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
         </Function>
         <Function Name="SP_DeleteBlotterOutright" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="bigint" Mode="In" />
@@ -1448,6 +2164,89 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
         </Function>
         <Function Name="SP_DeleteWebPages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="WPID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_FillManualDealByDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_FillManualDealsBySchedule" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CurrentDT" Type="datetime" Mode="In" />
+          <Parameter Name="Br" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_FillManualDealsBySchedule1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CurrentDT" Type="datetime" Mode="In" />
+          <Parameter Name="EndDate" Type="datetime" Mode="In" />
+          <Parameter Name="Br" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_FillManualDealsByScheduleBR1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CurrentDT" Type="date" Mode="In" />
+        </Function>
+        <Function Name="SP_FillManualDealsByScheduleBR2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CurrentDT" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="SP_FXBorrowingLending" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Product1" Type="varchar" Mode="In" />
+          <Parameter Name="cost" Type="varchar" Mode="In" />
+          <Parameter Name="port" Type="varchar" Mode="In" />
+          <Parameter Name="ccy" Type="varchar" Mode="In" />
+          <Parameter Name="fromDt" Type="datetime" Mode="In" />
+          <Parameter Name="toDt" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="SP_FXMaturityProfileHBL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Product1" Type="varchar" Mode="In" />
+          <Parameter Name="cost" Type="varchar" Mode="In" />
+          <Parameter Name="port" Type="varchar" Mode="In" />
+          <Parameter Name="ccy" Type="varchar" Mode="In" />
+          <Parameter Name="fromDt" Type="datetime" Mode="In" />
+          <Parameter Name="toDt" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="SP_FXMaturityProfileHBL_AI" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Product1" Type="varchar" Mode="In" />
+          <Parameter Name="cost" Type="varchar" Mode="In" />
+          <Parameter Name="port" Type="varchar" Mode="In" />
+          <Parameter Name="ccy" Type="varchar" Mode="In" />
+          <Parameter Name="fromDt" Type="datetime" Mode="In" />
+          <Parameter Name="toDt" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="SP_FXMaturityProfileHBL01" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Product1" Type="varchar" Mode="In" />
+          <Parameter Name="cost" Type="varchar" Mode="In" />
+          <Parameter Name="port" Type="varchar" Mode="In" />
+          <Parameter Name="ccy" Type="varchar" Mode="In" />
+          <Parameter Name="fromDt" Type="datetime" Mode="In" />
+          <Parameter Name="toDt" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="SP_FXNostroBlotterHBL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Product1" Type="varchar" Mode="In" />
+          <Parameter Name="cost" Type="varchar" Mode="In" />
+          <Parameter Name="port" Type="varchar" Mode="In" />
+          <Parameter Name="ccy" Type="varchar" Mode="In" />
+          <Parameter Name="fromDt" Type="datetime" Mode="In" />
+          <Parameter Name="toDt" Type="datetime" Mode="In" />
+          <Parameter Name="flag" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_FXNostroTradingHBL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Product1" Type="varchar" Mode="In" />
+          <Parameter Name="cost" Type="varchar" Mode="In" />
+          <Parameter Name="port" Type="varchar" Mode="In" />
+          <Parameter Name="ccy" Type="varchar" Mode="In" />
+          <Parameter Name="fromDt" Type="datetime" Mode="In" />
+          <Parameter Name="toDt" Type="datetime" Mode="In" />
+          <Parameter Name="flag" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_FXNostroTradingHBL01" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Product1" Type="varchar" Mode="In" />
+          <Parameter Name="cost" Type="varchar" Mode="In" />
+          <Parameter Name="port" Type="varchar" Mode="In" />
+          <Parameter Name="ccy" Type="varchar" Mode="In" />
+          <Parameter Name="fromDt" Type="datetime" Mode="In" />
+          <Parameter Name="toDt" Type="datetime" Mode="In" />
+          <Parameter Name="flag" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_Get_SBPBlotterConversionRate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CCYID" Type="int" Mode="In" />
+          <Parameter Name="BR" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_GetAll_SBPBlotterClearing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
@@ -1502,6 +2301,9 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
         <Function Name="SP_GetAllWebPages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="WPID" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_GetCRRFINCONPeriods" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BR" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_GETLatestBlotterDTLPerDayWise" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BR" Type="int" Mode="In" />
           <Parameter Name="startdate" Type="varchar" Mode="In" />
@@ -1519,6 +2321,10 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <Parameter Name="BranchID" Type="int" Mode="In" />
           <Parameter Name="CurID" Type="int" Mode="In" />
           <Parameter Name="BR" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_GetNostroBankFromOPICS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="currencyId" Type="int" Mode="In" />
+          <Parameter Name="BR" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_GetNotListedUserPageRelations" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Roleid" Type="int" Mode="In" />
@@ -1612,18 +2418,23 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
         <Function Name="SP_GETUserRoles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
-        <Function Name="SP_InsertBlotterOutright" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="DataType" Type="varchar" Mode="In" />
-          <Parameter Name="Bank" Type="varchar" Mode="In" />
-          <Parameter Name="Rate" Type="float" Mode="In" />
-          <Parameter Name="Issue_Date" Type="date" Mode="In" />
-          <Parameter Name="IssueType" Type="varchar" Mode="In" />
-          <Parameter Name="Broker" Type="varchar" Mode="In" />
-          <Parameter Name="InFlow" Type="numeric" Mode="In" />
-          <Parameter Name="OutFLow" Type="numeric" Mode="In" />
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_InsertBranchBalances" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Branch_Date" Type="date" Mode="In" />
+          <Parameter Name="Branch_InFlow" Type="numeric" Mode="In" />
+          <Parameter Name="Branch_OutFLow" Type="numeric" Mode="In" />
           <Parameter Name="Note" Type="nvarchar" Mode="In" />
-          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="UserId" Type="int" Mode="In" />
           <Parameter Name="BR" Type="int" Mode="In" />
+          <Parameter Name="BranchName" Type="varchar" Mode="In" />
+          <Parameter Name="CurId" Type="int" Mode="In" />
         </Function>
         <Function Name="SP_InsertHolidays" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="HolidayTitle" Type="varchar" Mode="In" />
@@ -1678,6 +2489,14 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <Parameter Name="isActive" Type="bit" Mode="In" />
           <Parameter Name="BlotterType" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_MMMaturityProfileHBL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Product1" Type="varchar" Mode="In" />
+          <Parameter Name="cost" Type="varchar" Mode="In" />
+          <Parameter Name="port" Type="varchar" Mode="In" />
+          <Parameter Name="ccy" Type="varchar" Mode="In" />
+          <Parameter Name="fromDt" Type="datetime" Mode="In" />
+          <Parameter Name="toDt" Type="datetime" Mode="In" />
+        </Function>
         <Function Name="SP_ReconcileOPICSManualData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BR" Type="int" Mode="In" />
           <Parameter Name="Date" Type="datetime" Mode="In" />
@@ -1686,6 +2505,11 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <Parameter Name="BR" Type="int" Mode="In" />
           <Parameter Name="Date" Type="datetime" Mode="In" />
           <Parameter Name="FillDumpBlotter" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="SP_SBPBlotter" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Br" Type="varchar" Mode="In" />
@@ -1698,9 +2522,69 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <Parameter Name="CurrentDT" Type="varchar" Mode="In" />
           <Parameter Name="NostroBankCode" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_SBPBlotter01" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_SBPBlotter03" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Br" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_SBPBlotter55" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Br" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_SBPBlotter66" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Br" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_SBPBlotterBR1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Br" Type="varchar" Mode="In" />
+          <Parameter Name="CurrentDT" Type="date" Mode="In" />
+          <Parameter Name="DataType" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_SBPBlotterBR1_20210803" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Br" Type="varchar" Mode="In" />
+          <Parameter Name="CurrentDT" Type="date" Mode="In" />
+        </Function>
+        <Function Name="SP_SBPBlotterBR1_BAK" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Br" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_SBPBlotterBR11" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Br" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_SBPBlotterBR2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Br" Type="varchar" Mode="In" />
+          <Parameter Name="DataType" Type="varchar" Mode="In" />
+          <Parameter Name="CurrentDT" Type="date" Mode="In" />
+        </Function>
+        <Function Name="SP_SBPBlotterCRRReportGenerator" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CurrentDT" Type="datetime" Mode="In" />
+          <Parameter Name="BR" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_SBPBlotterRunningBal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Br" Type="varchar" Mode="In" />
+          <Parameter Name="StartDate" Type="datetime" Mode="In" />
+          <Parameter Name="EndDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="SP_SBPBlotterRunningBalBR1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Br" Type="varchar" Mode="In" />
+          <Parameter Name="StartDate" Type="datetime" Mode="In" />
+          <Parameter Name="EndDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="SP_SBPBlotterRunningBalBR2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Br" Type="varchar" Mode="In" />
+          <Parameter Name="StartDate" Type="datetime" Mode="In" />
+          <Parameter Name="EndDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="SP_SBPBlotterxx" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Br" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_SBPFillDumBlotter" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CurrentDT" Type="datetime" Mode="In" />
           <Parameter Name="Br" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_SBPFillDumBlotterBR1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Br" Type="varchar" Mode="In" />
+          <Parameter Name="CurrentDT" Type="date" Mode="In" />
+        </Function>
+        <Function Name="SP_SBPFillDumBlotterBR2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Br" Type="varchar" Mode="In" />
+          <Parameter Name="CurrentDT" Type="date" Mode="In" />
         </Function>
         <Function Name="SP_SBPFillDumBlotterFCY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Br" Type="varchar" Mode="In" />
@@ -1714,23 +2598,20 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
         <Function Name="SP_SBPGetLoginInfoById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_SBPOpicsSystemDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BrCode" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_SBPSessionStop" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pSessionID" Type="varchar" Mode="In" />
           <Parameter Name="pUserID" Type="int" Mode="In" />
         </Function>
-        <Function Name="SP_UpdateBlotterOutright" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="id" Type="bigint" Mode="In" />
-          <Parameter Name="DataType" Type="varchar" Mode="In" />
-          <Parameter Name="Bank" Type="varchar" Mode="In" />
-          <Parameter Name="Rate" Type="float" Mode="In" />
-          <Parameter Name="Issue_Date" Type="date" Mode="In" />
-          <Parameter Name="IssueType" Type="varchar" Mode="In" />
-          <Parameter Name="Broker" Type="varchar" Mode="In" />
-          <Parameter Name="InFlow" Type="numeric" Mode="In" />
-          <Parameter Name="OutFLow" Type="numeric" Mode="In" />
-          <Parameter Name="Note" Type="nvarchar" Mode="In" />
-          <Parameter Name="UserID" Type="int" Mode="In" />
-          <Parameter Name="BR" Type="int" Mode="In" />
+        <Function Name="SP_TMU_PORTFOLIO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PType" Type="varchar" Mode="In" />
+          <Parameter Name="cost" Type="varchar" Mode="In" />
+          <Parameter Name="port" Type="varchar" Mode="In" />
+          <Parameter Name="ccy" Type="varchar" Mode="In" />
+          <Parameter Name="fromDt" Type="datetime" Mode="In" />
+          <Parameter Name="toDt" Type="datetime" Mode="In" />
         </Function>
         <Function Name="SP_UpdateDaysInBlotterReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DTLValue" Type="numeric" Mode="In" />
@@ -1802,13 +2683,22 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <Parameter Name="isActive" Type="bit" Mode="In" />
           <Parameter Name="BlotterType" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="UDF_RETURN_FEDEALNO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+          <Parameter Name="BR" Type="char" Mode="In" />
+          <Parameter Name="SERVER" Type="char" Mode="In" />
+        </Function>
         <EntityContainer Name="OPICSWEBModelStoreContainer">
+          <EntitySet Name="BlotterDataColor" EntityType="Self.BlotterDataColor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BlotterSBP_Reserved" EntityType="Self.BlotterSBP_Reserved" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Branches" EntityType="Self.Branches" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Currencies" EntityType="Self.Currencies" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GazettedHolidays" EntityType="Self.GazettedHolidays" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NostroBanks" EntityType="Self.NostroBanks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OW_AUTH" EntityType="Self.OW_AUTH" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OW_USERS" EntityType="Self.OW_USERS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterBai_Muajjal" EntityType="Self.SBP_BlotterBai_Muajjal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SBP_BlotterBranchBalances" EntityType="Self.SBP_BlotterBranchBalances" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterBreakups" EntityType="Self.SBP_BlotterBreakups" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterClearing" EntityType="Self.SBP_BlotterClearing" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterCRD" EntityType="Self.SBP_BlotterCRD" Schema="dbo" store:Type="Tables" />
@@ -1818,23 +2708,96 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <EntitySet Name="SBP_BlotterCRRReportingCurrencyWise" EntityType="Self.SBP_BlotterCRRReportingCurrencyWise" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterDLDT" EntityType="Self.SBP_BlotterDLDT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterDMMO" EntityType="Self.SBP_BlotterDMMO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SBP_BlotterDTL" EntityType="Self.SBP_BlotterDTL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterDTLDaysWiseBal" EntityType="Self.SBP_BlotterDTLDaysWiseBal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SBP_BlotterFixedIncome" EntityType="Self.SBP_BlotterFixedIncome" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterFundingRepo" EntityType="Self.SBP_BlotterFundingRepo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterFundsTransfer" EntityType="Self.SBP_BlotterFundsTransfer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SBP_BlotterFXDH" EntityType="Self.SBP_BlotterFXDH" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SBP_BlotterFXDHSWAP" EntityType="Self.SBP_BlotterFXDHSWAP" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterImportExport" EntityType="Self.SBP_BlotterImportExport" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterManualData" EntityType="Self.SBP_BlotterManualData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SBP_BlotterManualDeals" EntityType="Self.SBP_BlotterManualDeals" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterManualEstBalance" EntityType="Self.SBP_BlotterManualEstBalance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SBP_BlotterOpening" EntityType="Self.SBP_BlotterOpening" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterOpeningBalance" EntityType="Self.SBP_BlotterOpeningBalance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterOpeningClosingBalanceDIfferential" EntityType="Self.SBP_BlotterOpeningClosingBalanceDIfferential" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterOutrights" EntityType="Self.SBP_BlotterOutrights" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SBP_BlotterReconBreakups" EntityType="Self.SBP_BlotterReconBreakups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SBP_BlotterRPRH" EntityType="Self.SBP_BlotterRPRH" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterRTGS" EntityType="Self.SBP_BlotterRTGS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SBP_BlotterSetup" EntityType="Self.SBP_BlotterSetup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SBP_BlotterSPSH" EntityType="Self.SBP_BlotterSPSH" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterTBO" EntityType="Self.SBP_BlotterTBO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SBP_BlotterTPOS" EntityType="Self.SBP_BlotterTPOS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterTrade" EntityType="Self.SBP_BlotterTrade" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SBP_BlotterTransactionsTotal" EntityType="Self.SBP_BlotterTransactionsTotal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SBP_BlotterTransactionTitles" EntityType="Self.SBP_BlotterTransactionTitles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_LoginInfo" EntityType="Self.SBP_LoginInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TEMPRECONCHECK" EntityType="Self.TEMPRECONCHECK" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TEMPRECONTEST" EntityType="Self.TEMPRECONTEST" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserPageRelation" EntityType="Self.UserPageRelation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRoleRelation" EntityType="Self.UserRoleRelation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WebPages" EntityType="Self.WebPages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WeekEnds" EntityType="Self.WeekEnds" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="fx_maturity_profile" EntityType="Self.fx_maturity_profile" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [fx_maturity_profile].[br] AS [br], 
+    [fx_maturity_profile].[dealno] AS [dealno], 
+    [fx_maturity_profile].[seq] AS [seq], 
+    [fx_maturity_profile].[dealdate] AS [dealdate], 
+    [fx_maturity_profile].[vdate] AS [vdate], 
+    [fx_maturity_profile].[ps] AS [ps], 
+    [fx_maturity_profile].[ccy] AS [ccy], 
+    [fx_maturity_profile].[swapdeal] AS [swapdeal], 
+    [fx_maturity_profile].[ccyamt] AS [ccyamt], 
+    [fx_maturity_profile].[pkramt] AS [pkramt], 
+    [fx_maturity_profile].[ccyrate_8] AS [ccyrate_8], 
+    [fx_maturity_profile].[acct] AS [acct], 
+    [fx_maturity_profile].[sn] AS [sn], 
+    [fx_maturity_profile].[prodcode] AS [prodcode], 
+    [fx_maturity_profile].[prodtype] AS [prodtype], 
+    [fx_maturity_profile].[brok] AS [brok], 
+    [fx_maturity_profile].[means] AS [means], 
+    [fx_maturity_profile].[cost] AS [cost], 
+    [fx_maturity_profile].[port] AS [port], 
+    [fx_maturity_profile].[brok_desc] AS [brok_desc], 
+    [fx_maturity_profile].[nostro] AS [nostro], 
+    [fx_maturity_profile].[nostro_desc] AS [nostro_desc]
+    FROM [dbo].[fx_maturity_profile] AS [fx_maturity_profile]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="fxacuphbl1" EntityType="Self.fxacuphbl1" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [fxacuphbl1].[postdate] AS [postdate], 
+    [fxacuphbl1].[Period] AS [Period], 
+    [fxacuphbl1].[CCY] AS [CCY], 
+    [fxacuphbl1].[AmountCR] AS [AmountCR], 
+    [fxacuphbl1].[AmountDR] AS [AmountDR], 
+    [fxacuphbl1].[Net] AS [Net]
+    FROM [dbo].[fxacuphbl1] AS [fxacuphbl1]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="OW_dblink" EntityType="Self.OW_dblink" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [OW_dblink].[dblink] AS [dblink]
+    FROM [dbo].[OW_dblink] AS [OW_dblink]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="SBP_BlotterConversionRate" EntityType="Self.SBP_BlotterConversionRate" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [SBP_BlotterConversionRate].[SNo] AS [SNo], 
+    [SBP_BlotterConversionRate].[CCY] AS [CCY], 
+    [SBP_BlotterConversionRate].[SPOTRATE_8] AS [SPOTRATE_8], 
+    [SBP_BlotterConversionRate].[Date] AS [Date], 
+    [SBP_BlotterConversionRate].[CreatedDate] AS [CreatedDate], 
+    [SBP_BlotterConversionRate].[UpdateDate] AS [UpdateDate], 
+    [SBP_BlotterConversionRate].[CurID] AS [CurID], 
+    [SBP_BlotterConversionRate].[UserID] AS [UserID], 
+    [SBP_BlotterConversionRate].[BR] AS [BR], 
+    [SBP_BlotterConversionRate].[BID] AS [BID], 
+    [SBP_BlotterConversionRate].[Flag] AS [Flag]
+    FROM [dbo].[SBP_BlotterConversionRate] AS [SBP_BlotterConversionRate]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="SBP_BlotterCRRReportDaysWiseBalTemp" EntityType="Self.SBP_BlotterCRRReportDaysWiseBalTemp" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [SBP_BlotterCRRReportDaysWiseBalTemp].[Id] AS [Id], 
@@ -1923,6 +2886,34 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
     [SBP_BlotterReserved].[Flag] AS [Flag]
     FROM [dbo].[SBP_BlotterReserved] AS [SBP_BlotterReserved]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="SBP_BlotterRTGS1" EntityType="Self.SBP_BlotterRTGS1" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [SBP_BlotterRTGS1].[Sno] AS [Sno], 
+    [SBP_BlotterRTGS1].[TXN_DTE_TME] AS [TXN_DTE_TME], 
+    [SBP_BlotterRTGS1].[ACCT_Description] AS [ACCT_Description], 
+    [SBP_BlotterRTGS1].[Inflow] AS [Inflow], 
+    [SBP_BlotterRTGS1].[Outflow] AS [Outflow], 
+    [SBP_BlotterRTGS1].[BatchCount] AS [BatchCount], 
+    [SBP_BlotterRTGS1].[Br] AS [Br]
+    FROM [dbo].[SBP_BlotterRTGS1] AS [SBP_BlotterRTGS1]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="SBP_BlotterSessionDetails" EntityType="Self.SBP_BlotterSessionDetails" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [SBP_BlotterSessionDetails].[ID] AS [ID], 
+    [SBP_BlotterSessionDetails].[SessionID] AS [SessionID], 
+    [SBP_BlotterSessionDetails].[UserID] AS [UserID], 
+    [SBP_BlotterSessionDetails].[IP] AS [IP], 
+    [SBP_BlotterSessionDetails].[Status] AS [Status], 
+    [SBP_BlotterSessionDetails].[URL] AS [URL], 
+    [SBP_BlotterSessionDetails].[Activity] AS [Activity], 
+    [SBP_BlotterSessionDetails].[ActivityTime] AS [ActivityTime], 
+    [SBP_BlotterSessionDetails].[Data] AS [Data], 
+    [SBP_BlotterSessionDetails].[SessionStart] AS [SessionStart], 
+    [SBP_BlotterSessionDetails].[SessionEnd] AS [SessionEnd], 
+    [SBP_BlotterSessionDetails].[LoginStatus] AS [LoginStatus], 
+    [SBP_BlotterSessionDetails].[LoginGUID] AS [LoginGUID]
+    FROM [dbo].[SBP_BlotterSessionDetails] AS [SBP_BlotterSessionDetails]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="UserCurrencyRelation" EntityType="Self.UserCurrencyRelation" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [UserCurrencyRelation].[UCRID] AS [UCRID], 
@@ -1950,6 +2941,18 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
             <End Role="SBP_LoginInfo" EntitySet="SBP_LoginInfo" />
             <End Role="SBP_BlotterBai_Muajjal" EntitySet="SBP_BlotterBai_Muajjal" />
           </AssociationSet>
+          <AssociationSet Name="FK_SBP_BlotterBranchBalances_BranchID" Association="Self.FK_SBP_BlotterBranchBalances_BranchID">
+            <End Role="Branches" EntitySet="Branches" />
+            <End Role="SBP_BlotterBranchBalances" EntitySet="SBP_BlotterBranchBalances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SBP_BlotterBranchBalances_CurID" Association="Self.FK_SBP_BlotterBranchBalances_CurID">
+            <End Role="Currencies" EntitySet="Currencies" />
+            <End Role="SBP_BlotterBranchBalances" EntitySet="SBP_BlotterBranchBalances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SBP_BlotterBranchBalances_UserID" Association="Self.FK_SBP_BlotterBranchBalances_UserID">
+            <End Role="SBP_LoginInfo" EntitySet="SBP_LoginInfo" />
+            <End Role="SBP_BlotterBranchBalances" EntitySet="SBP_BlotterBranchBalances" />
+          </AssociationSet>
           <AssociationSet Name="FK_SBP_BlotterBreakups_BranchID" Association="Self.FK_SBP_BlotterBreakups_BranchID">
             <End Role="Branches" EntitySet="Branches" />
             <End Role="SBP_BlotterBreakups" EntitySet="SBP_BlotterBreakups" />
@@ -1968,6 +2971,10 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           </AssociationSet>
           <AssociationSet Name="FK_SBP_BlotterClearing_CurID" Association="Self.FK_SBP_BlotterClearing_CurID">
             <End Role="Currencies" EntitySet="Currencies" />
+            <End Role="SBP_BlotterClearing" EntitySet="SBP_BlotterClearing" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SBP_BlotterClearing_TID" Association="Self.FK_SBP_BlotterClearing_TID">
+            <End Role="SBP_BlotterTransactionTitles" EntitySet="SBP_BlotterTransactionTitles" />
             <End Role="SBP_BlotterClearing" EntitySet="SBP_BlotterClearing" />
           </AssociationSet>
           <AssociationSet Name="FK_SBP_BlotterClearing_UserID" Association="Self.FK_SBP_BlotterClearing_UserID">
@@ -2066,9 +3073,17 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
             <End Role="Currencies" EntitySet="Currencies" />
             <End Role="SBP_BlotterRTGS" EntitySet="SBP_BlotterRTGS" />
           </AssociationSet>
+          <AssociationSet Name="FK_SBP_BlotterRTGS_TID" Association="Self.FK_SBP_BlotterRTGS_TID">
+            <End Role="SBP_BlotterTransactionTitles" EntitySet="SBP_BlotterTransactionTitles" />
+            <End Role="SBP_BlotterRTGS" EntitySet="SBP_BlotterRTGS" />
+          </AssociationSet>
           <AssociationSet Name="FK_SBP_BlotterRTGS_UserID" Association="Self.FK_SBP_BlotterRTGS_UserID">
             <End Role="SBP_LoginInfo" EntitySet="SBP_LoginInfo" />
             <End Role="SBP_BlotterRTGS" EntitySet="SBP_BlotterRTGS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SBP_BlotterSessionDetails_UserID" Association="Self.FK_SBP_BlotterSessionDetails_UserID">
+            <End Role="SBP_LoginInfo" EntitySet="SBP_LoginInfo" />
+            <End Role="SBP_BlotterSessionDetails" EntitySet="SBP_BlotterSessionDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_SBP_BlotterTBO_BranchID" Association="Self.FK_SBP_BlotterTBO_BranchID">
             <End Role="Branches" EntitySet="Branches" />
@@ -2076,6 +3091,10 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           </AssociationSet>
           <AssociationSet Name="FK_SBP_BlotterTBO_CurID" Association="Self.FK_SBP_BlotterTBO_CurID">
             <End Role="Currencies" EntitySet="Currencies" />
+            <End Role="SBP_BlotterTBO" EntitySet="SBP_BlotterTBO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SBP_BlotterTBO_TTID" Association="Self.FK_SBP_BlotterTBO_TTID">
+            <End Role="SBP_BlotterTransactionTitles" EntitySet="SBP_BlotterTransactionTitles" />
             <End Role="SBP_BlotterTBO" EntitySet="SBP_BlotterTBO" />
           </AssociationSet>
           <AssociationSet Name="FK_SBP_BlotterTBO_UserID" Association="Self.FK_SBP_BlotterTBO_UserID">
@@ -2088,6 +3107,10 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           </AssociationSet>
           <AssociationSet Name="FK_SBP_BlotterTrade_CurID" Association="Self.FK_SBP_BlotterTrade_CurID">
             <End Role="Currencies" EntitySet="Currencies" />
+            <End Role="SBP_BlotterTrade" EntitySet="SBP_BlotterTrade" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SBP_BlotterTrade_TID" Association="Self.FK_SBP_BlotterTrade_TID">
+            <End Role="SBP_BlotterTransactionTitles" EntitySet="SBP_BlotterTransactionTitles" />
             <End Role="SBP_BlotterTrade" EntitySet="SBP_BlotterTrade" />
           </AssociationSet>
           <AssociationSet Name="FK_SBP_BlotterTrade_UserID" Association="Self.FK_SBP_BlotterTrade_UserID">
@@ -2183,6 +3206,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <NavigationProperty Name="SBP_BlotterTrade" Relationship="Self.FK_SBP_BlotterTrade_BranchID" FromRole="Branches" ToRole="SBP_BlotterTrade" />
           <NavigationProperty Name="SBP_BlotterFundsTransfer" Relationship="Self.FK_SBP_SBP_BlotterFundsTransfer_BranchID" FromRole="Branches" ToRole="SBP_BlotterFundsTransfer" />
           <NavigationProperty Name="SBP_BlotterManualEstBalance" Relationship="BlotterEF.FK_SBP_BlotterManualEstBalance_BranchID" FromRole="Branches" ToRole="SBP_BlotterManualEstBalance" />
+          <NavigationProperty Name="SBP_BlotterBranchBalances" Relationship="BlotterEF.FK_SBP_BlotterBranchBalances_BranchID" FromRole="Branches" ToRole="SBP_BlotterBranchBalances" />
         </EntityType>
         <EntityType Name="Currency">
           <Key>
@@ -2211,6 +3235,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <NavigationProperty Name="SBP_BlotterFundsTransfer" Relationship="Self.FK_SBP_SBP_BlotterFundsTransfer_CurID" FromRole="Currencies" ToRole="SBP_BlotterFundsTransfer" />
           <NavigationProperty Name="UserCurrencyRelations" Relationship="Self.FK_UserCurrencyRelation_CID" FromRole="Currencies" ToRole="UserCurrencyRelation" />
           <NavigationProperty Name="SBP_BlotterManualEstBalance" Relationship="BlotterEF.FK_SBP_SBP_BlotterManualEstBalance_CurID" FromRole="Currency" ToRole="SBP_BlotterManualEstBalance" />
+          <NavigationProperty Name="SBP_BlotterBranchBalances" Relationship="BlotterEF.FK_SBP_BlotterBranchBalances_CurID" FromRole="Currency" ToRole="SBP_BlotterBranchBalances" />
         </EntityType>
         <EntityType Name="GazettedHoliday">
           <Key>
@@ -2325,6 +3350,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <NavigationProperty Name="Branch" Relationship="Self.FK_SBP_BlotterClearing_BranchID" FromRole="SBP_BlotterClearing" ToRole="Branches" />
           <NavigationProperty Name="Currency" Relationship="Self.FK_SBP_BlotterClearing_CurID" FromRole="SBP_BlotterClearing" ToRole="Currencies" />
           <NavigationProperty Name="SBP_LoginInfo" Relationship="Self.FK_SBP_BlotterClearing_UserID" FromRole="SBP_BlotterClearing" ToRole="SBP_LoginInfo" />
+          <NavigationProperty Name="SBP_BlotterTransactionTitles" Relationship="BlotterEF.FK_SBP_BlotterClearing_TID" FromRole="SBP_BlotterClearing" ToRole="SBP_BlotterTransactionTitles" />
         </EntityType>
         <EntityType Name="SBP_BlotterCRD">
           <Key>
@@ -2654,6 +3680,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <Property Name="NostroCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Currency" Relationship="Self.FK_SBP_BlotterManualData_CurID" FromRole="SBP_BlotterManualData" ToRole="Currencies" />
           <NavigationProperty Name="SBP_LoginInfo" Relationship="Self.FK_SBP_BlotterManualData_UserID" FromRole="SBP_BlotterManualData" ToRole="SBP_LoginInfo" />
+          <Property Name="NostroBank" Type="Int64" />
         </EntityType>
         <EntityType Name="SBP_BlotterOpeningBalance">
           <Key>
@@ -2741,6 +3768,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <NavigationProperty Name="Branch" Relationship="Self.FK_SBP_BlotterRTGS_BranchID" FromRole="SBP_BlotterRTGS" ToRole="Branches" />
           <NavigationProperty Name="Currency" Relationship="Self.FK_SBP_BlotterRTGS_CurID" FromRole="SBP_BlotterRTGS" ToRole="Currencies" />
           <NavigationProperty Name="SBP_LoginInfo" Relationship="Self.FK_SBP_BlotterRTGS_UserID" FromRole="SBP_BlotterRTGS" ToRole="SBP_LoginInfo" />
+          <NavigationProperty Name="SBP_BlotterTransactionTitles" Relationship="BlotterEF.FK_SBP_BlotterRTGS_TID" FromRole="SBP_BlotterRTGS" ToRole="SBP_BlotterTransactionTitles" />
         </EntityType>
         <EntityType Name="SBP_BlotterTBO">
           <Key>
@@ -2767,6 +3795,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <NavigationProperty Name="Branch" Relationship="Self.FK_SBP_BlotterTBO_BranchID" FromRole="SBP_BlotterTBO" ToRole="Branches" />
           <NavigationProperty Name="Currency" Relationship="Self.FK_SBP_BlotterTBO_CurID" FromRole="SBP_BlotterTBO" ToRole="Currencies" />
           <NavigationProperty Name="SBP_LoginInfo" Relationship="Self.FK_SBP_BlotterTBO_UserID" FromRole="SBP_BlotterTBO" ToRole="SBP_LoginInfo" />
+          <NavigationProperty Name="SBP_BlotterTransactionTitles" Relationship="BlotterEF.FK_SBP_BlotterTBO_TTID" FromRole="SBP_BlotterTBO" ToRole="SBP_BlotterTransactionTitles" />
         </EntityType>
         <EntityType Name="SBP_BlotterTrade">
           <Key>
@@ -2793,6 +3822,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <NavigationProperty Name="Branch" Relationship="Self.FK_SBP_BlotterTrade_BranchID" FromRole="SBP_BlotterTrade" ToRole="Branches" />
           <NavigationProperty Name="Currency" Relationship="Self.FK_SBP_BlotterTrade_CurID" FromRole="SBP_BlotterTrade" ToRole="Currencies" />
           <NavigationProperty Name="SBP_LoginInfo" Relationship="Self.FK_SBP_BlotterTrade_UserID" FromRole="SBP_BlotterTrade" ToRole="SBP_LoginInfo" />
+          <NavigationProperty Name="SBP_BlotterTransactionTitles" Relationship="BlotterEF.FK_SBP_BlotterTrade_TID" FromRole="SBP_BlotterTrade" ToRole="SBP_BlotterTransactionTitles" />
         </EntityType>
         <EntityType Name="SBP_LoginInfo">
           <Key>
@@ -2838,6 +3868,8 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <NavigationProperty Name="UserRoleRelations" Relationship="Self.FK_URRUserID" FromRole="SBP_LoginInfo" ToRole="UserRoleRelation" />
           <NavigationProperty Name="UserCurrencyRelations" Relationship="Self.FK_UserCurrencyRelation_UserID" FromRole="SBP_LoginInfo" ToRole="UserCurrencyRelation" />
           <NavigationProperty Name="SBP_BlotterManualEstBalance" Relationship="BlotterEF.FK_SBP_BlotterManualEstBalance_UserID" FromRole="SBP_LoginInfo" ToRole="SBP_BlotterManualEstBalance" />
+          <NavigationProperty Name="SBP_BlotterBranchBalances" Relationship="BlotterEF.FK_SBP_BlotterBranchBalances_UserID" FromRole="SBP_LoginInfo" ToRole="SBP_BlotterBranchBalances" />
+          <NavigationProperty Name="SBP_BlotterSessionDetails" Relationship="BlotterEF.FK_SBP_BlotterSessionDetails_UserID" FromRole="SBP_LoginInfo" ToRole="SBP_BlotterSessionDetails" />
         </EntityType>
         <EntityType Name="UserPageRelation">
           <Key>
@@ -4213,6 +5245,283 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
             <Parameter Name="BR" Mode="In" Type="Int32" />
             <Parameter Name="startdate" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="BlotterDataColors" EntityType="BlotterEF.BlotterDataColor" />
+          <EntitySet Name="OW_AUTH" EntityType="BlotterEF.OW_AUTH" />
+          <EntitySet Name="OW_USERS" EntityType="BlotterEF.OW_USERS" />
+          <EntitySet Name="SBP_BlotterBranchBalances" EntityType="BlotterEF.SBP_BlotterBranchBalances" />
+          <EntitySet Name="SBP_BlotterDTL" EntityType="BlotterEF.SBP_BlotterDTL" />
+          <EntitySet Name="SBP_BlotterFixedIncome" EntityType="BlotterEF.SBP_BlotterFixedIncome" />
+          <EntitySet Name="SBP_BlotterFXDH" EntityType="BlotterEF.SBP_BlotterFXDH" />
+          <EntitySet Name="SBP_BlotterFXDHSWAP" EntityType="BlotterEF.SBP_BlotterFXDHSWAP" />
+          <EntitySet Name="SBP_BlotterManualDeals" EntityType="BlotterEF.SBP_BlotterManualDeals" />
+          <EntitySet Name="SBP_BlotterOpening" EntityType="BlotterEF.SBP_BlotterOpening" />
+          <EntitySet Name="SBP_BlotterReconBreakups" EntityType="BlotterEF.SBP_BlotterReconBreakups" />
+          <EntitySet Name="SBP_BlotterRPRH" EntityType="BlotterEF.SBP_BlotterRPRH" />
+          <EntitySet Name="SBP_BlotterSetup" EntityType="BlotterEF.SBP_BlotterSetup" />
+          <EntitySet Name="SBP_BlotterSPSH" EntityType="BlotterEF.SBP_BlotterSPSH" />
+          <EntitySet Name="SBP_BlotterTPOS" EntityType="BlotterEF.SBP_BlotterTPOS" />
+          <EntitySet Name="SBP_BlotterTransactionsTotal" EntityType="BlotterEF.SBP_BlotterTransactionsTotal" />
+          <EntitySet Name="SBP_BlotterTransactionTitles" EntityType="BlotterEF.SBP_BlotterTransactionTitles" />
+          <EntitySet Name="sysdiagrams" EntityType="BlotterEF.sysdiagram" />
+          <EntitySet Name="TEMPRECONCHECKs" EntityType="BlotterEF.TEMPRECONCHECK" />
+          <EntitySet Name="TEMPRECONTESTs" EntityType="BlotterEF.TEMPRECONTEST" />
+          <EntitySet Name="WeekEnds" EntityType="BlotterEF.WeekEnd" />
+          <EntitySet Name="fx_maturity_profile" EntityType="BlotterEF.fx_maturity_profile" />
+          <EntitySet Name="fxacuphbl1" EntityType="BlotterEF.fxacuphbl1" />
+          <EntitySet Name="OW_dblink" EntityType="BlotterEF.OW_dblink" />
+          <EntitySet Name="SBP_BlotterConversionRate" EntityType="BlotterEF.SBP_BlotterConversionRate" />
+          <EntitySet Name="SBP_BlotterRTGS1" EntityType="BlotterEF.SBP_BlotterRTGS1" />
+          <EntitySet Name="SBP_BlotterSessionDetails" EntityType="BlotterEF.SBP_BlotterSessionDetails" />
+          <AssociationSet Name="FK_SBP_BlotterBranchBalances_BranchID" Association="BlotterEF.FK_SBP_BlotterBranchBalances_BranchID">
+            <End Role="Branches" EntitySet="Branches" />
+            <End Role="SBP_BlotterBranchBalances" EntitySet="SBP_BlotterBranchBalances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SBP_BlotterBranchBalances_CurID" Association="BlotterEF.FK_SBP_BlotterBranchBalances_CurID">
+            <End Role="Currency" EntitySet="Currencies" />
+            <End Role="SBP_BlotterBranchBalances" EntitySet="SBP_BlotterBranchBalances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SBP_BlotterBranchBalances_UserID" Association="BlotterEF.FK_SBP_BlotterBranchBalances_UserID">
+            <End Role="SBP_LoginInfo" EntitySet="SBP_LoginInfo" />
+            <End Role="SBP_BlotterBranchBalances" EntitySet="SBP_BlotterBranchBalances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SBP_BlotterClearing_TID" Association="BlotterEF.FK_SBP_BlotterClearing_TID">
+            <End Role="SBP_BlotterTransactionTitles" EntitySet="SBP_BlotterTransactionTitles" />
+            <End Role="SBP_BlotterClearing" EntitySet="SBP_BlotterClearing" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SBP_BlotterRTGS_TID" Association="BlotterEF.FK_SBP_BlotterRTGS_TID">
+            <End Role="SBP_BlotterTransactionTitles" EntitySet="SBP_BlotterTransactionTitles" />
+            <End Role="SBP_BlotterRTGS" EntitySet="SBP_BlotterRTGS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SBP_BlotterTBO_TTID" Association="BlotterEF.FK_SBP_BlotterTBO_TTID">
+            <End Role="SBP_BlotterTransactionTitles" EntitySet="SBP_BlotterTransactionTitles" />
+            <End Role="SBP_BlotterTBO" EntitySet="SBP_BlotterTBO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SBP_BlotterTrade_TID" Association="BlotterEF.FK_SBP_BlotterTrade_TID">
+            <End Role="SBP_BlotterTransactionTitles" EntitySet="SBP_BlotterTransactionTitles" />
+            <End Role="SBP_BlotterTrade" EntitySet="SBP_BlotterTrade" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SBP_BlotterSessionDetails_UserID" Association="BlotterEF.FK_SBP_BlotterSessionDetails_UserID">
+            <End Role="SBP_LoginInfo" EntitySet="SBP_LoginInfo" />
+            <End Role="SBP_BlotterSessionDetails" EntitySet="SBP_BlotterSessionDetails" />
+          </AssociationSet>
+          <FunctionImport Name="f_SP_FXGapPovitHBL">
+            <Parameter Name="Product" Mode="In" Type="String" />
+            <Parameter Name="cost" Mode="In" Type="String" />
+            <Parameter Name="port" Mode="In" Type="String" />
+            <Parameter Name="ccy" Mode="In" Type="String" />
+            <Parameter Name="ConditionStr" Mode="In" Type="String" />
+            <Parameter Name="fromDt" Mode="In" Type="DateTime" />
+            <Parameter Name="toDt" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADD_ECRRCarryForwardData">
+            <Parameter Name="Date" Mode="In" Type="DateTime" />
+            <Parameter Name="BR" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_FillManualDealByDate" />
+          <FunctionImport Name="SP_FillManualDealsBySchedule">
+            <Parameter Name="CurrentDT" Mode="In" Type="DateTime" />
+            <Parameter Name="Br" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_FillManualDealsBySchedule1">
+            <Parameter Name="CurrentDT" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+            <Parameter Name="Br" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_FillManualDealsByScheduleBR1">
+            <Parameter Name="CurrentDT" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SP_FillManualDealsByScheduleBR2">
+            <Parameter Name="CurrentDT" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SP_FXBorrowingLending">
+            <Parameter Name="Product1" Mode="In" Type="String" />
+            <Parameter Name="cost" Mode="In" Type="String" />
+            <Parameter Name="port" Mode="In" Type="String" />
+            <Parameter Name="ccy" Mode="In" Type="String" />
+            <Parameter Name="fromDt" Mode="In" Type="DateTime" />
+            <Parameter Name="toDt" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SP_FXMaturityProfileHBL">
+            <Parameter Name="Product1" Mode="In" Type="String" />
+            <Parameter Name="cost" Mode="In" Type="String" />
+            <Parameter Name="port" Mode="In" Type="String" />
+            <Parameter Name="ccy" Mode="In" Type="String" />
+            <Parameter Name="fromDt" Mode="In" Type="DateTime" />
+            <Parameter Name="toDt" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SP_FXMaturityProfileHBL_AI">
+            <Parameter Name="Product1" Mode="In" Type="String" />
+            <Parameter Name="cost" Mode="In" Type="String" />
+            <Parameter Name="port" Mode="In" Type="String" />
+            <Parameter Name="ccy" Mode="In" Type="String" />
+            <Parameter Name="fromDt" Mode="In" Type="DateTime" />
+            <Parameter Name="toDt" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SP_FXMaturityProfileHBL01">
+            <Parameter Name="Product1" Mode="In" Type="String" />
+            <Parameter Name="cost" Mode="In" Type="String" />
+            <Parameter Name="port" Mode="In" Type="String" />
+            <Parameter Name="ccy" Mode="In" Type="String" />
+            <Parameter Name="fromDt" Mode="In" Type="DateTime" />
+            <Parameter Name="toDt" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SP_FXNostroBlotterHBL">
+            <Parameter Name="Product1" Mode="In" Type="String" />
+            <Parameter Name="cost" Mode="In" Type="String" />
+            <Parameter Name="port" Mode="In" Type="String" />
+            <Parameter Name="ccy" Mode="In" Type="String" />
+            <Parameter Name="fromDt" Mode="In" Type="DateTime" />
+            <Parameter Name="toDt" Mode="In" Type="DateTime" />
+            <Parameter Name="flag" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_FXNostroTradingHBL">
+            <Parameter Name="Product1" Mode="In" Type="String" />
+            <Parameter Name="cost" Mode="In" Type="String" />
+            <Parameter Name="port" Mode="In" Type="String" />
+            <Parameter Name="ccy" Mode="In" Type="String" />
+            <Parameter Name="fromDt" Mode="In" Type="DateTime" />
+            <Parameter Name="toDt" Mode="In" Type="DateTime" />
+            <Parameter Name="flag" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_FXNostroTradingHBL01">
+            <Parameter Name="Product1" Mode="In" Type="String" />
+            <Parameter Name="cost" Mode="In" Type="String" />
+            <Parameter Name="port" Mode="In" Type="String" />
+            <Parameter Name="ccy" Mode="In" Type="String" />
+            <Parameter Name="fromDt" Mode="In" Type="DateTime" />
+            <Parameter Name="toDt" Mode="In" Type="DateTime" />
+            <Parameter Name="flag" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Get_SBPBlotterConversionRate" ReturnType="Collection(BlotterEF.SP_Get_SBPBlotterConversionRate_Result)">
+            <Parameter Name="CCYID" Mode="In" Type="Int32" />
+            <Parameter Name="BR" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_GetCRRFINCONPeriods" ReturnType="Collection(BlotterEF.SP_GetCRRFINCONPeriods_Result)">
+            <Parameter Name="BR" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_GetNostroBankFromOPICS" ReturnType="Collection(BlotterEF.SP_GetNostroBankFromOPICS_Result)">
+            <Parameter Name="currencyId" Mode="In" Type="Int32" />
+            <Parameter Name="BR" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(BlotterEF.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(BlotterEF.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_InsertBranchBalances">
+            <Parameter Name="Branch_Date" Mode="In" Type="DateTime" />
+            <Parameter Name="Branch_InFlow" Mode="In" Type="Decimal" />
+            <Parameter Name="Branch_OutFLow" Mode="In" Type="Decimal" />
+            <Parameter Name="Note" Mode="In" Type="String" />
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+            <Parameter Name="BR" Mode="In" Type="Int32" />
+            <Parameter Name="BranchName" Mode="In" Type="String" />
+            <Parameter Name="CurId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_MMMaturityProfileHBL">
+            <Parameter Name="Product1" Mode="In" Type="String" />
+            <Parameter Name="cost" Mode="In" Type="String" />
+            <Parameter Name="port" Mode="In" Type="String" />
+            <Parameter Name="ccy" Mode="In" Type="String" />
+            <Parameter Name="fromDt" Mode="In" Type="DateTime" />
+            <Parameter Name="toDt" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SBPBlotter01" />
+          <FunctionImport Name="SP_SBPBlotter03">
+            <Parameter Name="Br" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SBPBlotter55">
+            <Parameter Name="Br" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SBPBlotter66">
+            <Parameter Name="Br" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SBPBlotterBR1" ReturnType="Collection(BlotterEF.SP_SBPBlotterBR1_Result)">
+            <Parameter Name="Br" Mode="In" Type="String" />
+            <Parameter Name="CurrentDT" Mode="In" Type="DateTime" />
+            <Parameter Name="DataType" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SBPBlotterBR1_20210803">
+            <Parameter Name="Br" Mode="In" Type="String" />
+            <Parameter Name="CurrentDT" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SBPBlotterBR1_BAK">
+            <Parameter Name="Br" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SBPBlotterBR11">
+            <Parameter Name="Br" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SBPBlotterBR2">
+            <Parameter Name="Br" Mode="In" Type="String" />
+            <Parameter Name="DataType" Mode="In" Type="String" />
+            <Parameter Name="CurrentDT" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SBPBlotterCRRReportGenerator">
+            <Parameter Name="CurrentDT" Mode="In" Type="DateTime" />
+            <Parameter Name="BR" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SBPBlotterRunningBal">
+            <Parameter Name="Br" Mode="In" Type="String" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SBPBlotterRunningBalBR1">
+            <Parameter Name="Br" Mode="In" Type="String" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SBPBlotterRunningBalBR2">
+            <Parameter Name="Br" Mode="In" Type="String" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SBPBlotterxx">
+            <Parameter Name="Br" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SBPFillDumBlotterBR1">
+            <Parameter Name="Br" Mode="In" Type="String" />
+            <Parameter Name="CurrentDT" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SBPFillDumBlotterBR2">
+            <Parameter Name="Br" Mode="In" Type="String" />
+            <Parameter Name="CurrentDT" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SBPOpicsSystemDate">
+            <Parameter Name="BrCode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_TMU_PORTFOLIO">
+            <Parameter Name="PType" Mode="In" Type="String" />
+            <Parameter Name="cost" Mode="In" Type="String" />
+            <Parameter Name="port" Mode="In" Type="String" />
+            <Parameter Name="ccy" Mode="In" Type="String" />
+            <Parameter Name="fromDt" Mode="In" Type="DateTime" />
+            <Parameter Name="toDt" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
         </EntityContainer>
         <ComplexType Name="SP_GetAll_SBPBlotterClearing_Result">
           <Property Type="Int64" Name="SNo" Nullable="false" />
@@ -4894,6 +6203,543 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <Property Type="DateTime" Name="createDate" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="UpdateDate" Nullable="true" Precision="23" />
         </ComplexType>
+        <EntityType Name="BlotterDataColor">
+          <Key>
+            <PropertyRef Name="Sno" />
+          </Key>
+          <Property Name="Sno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DealNo" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Inflow" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Outflow" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Balance" Type="Decimal" Precision="18" Scale="1" />
+          <Property Name="Recon_isActive" Type="Boolean" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="UserId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="OW_AUTH">
+          <Key>
+            <PropertyRef Name="AUTH_ID" />
+          </Key>
+          <Property Name="AUTH_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AUTH_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="OW_USERS">
+          <Key>
+            <PropertyRef Name="USER_ID" />
+          </Key>
+          <Property Name="USER_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EMP_NO" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="USER_NAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PASSWORD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FULL_NAME" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="EMAIL_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AUTH_LEVEL" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="REGION_CODE" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="USER_TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CREATED_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CREATION_TIME" Type="DateTime" Precision="3" />
+          <Property Name="LAST_UPDATED_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LAST_UPDATED_TIME" Type="DateTime" Precision="3" />
+          <Property Name="STATUS" Type="Boolean" />
+          <Property Name="IS_ADMIN" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="SBP_BlotterBranchBalances">
+          <Key>
+            <PropertyRef Name="SNo" />
+          </Key>
+          <Property Name="SNo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Branch_Date" Type="DateTime" Precision="0" />
+          <Property Name="Branch_InFlow" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Branch_OutFLow" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Note" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="BR" Type="Int32" Nullable="false" />
+          <Property Name="BID" Type="Int32" Nullable="false" />
+          <Property Name="CurID" Type="Int32" Nullable="false" />
+          <Property Name="Flag" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Branch" Relationship="BlotterEF.FK_SBP_BlotterBranchBalances_BranchID" FromRole="SBP_BlotterBranchBalances" ToRole="Branches" />
+          <NavigationProperty Name="Currency" Relationship="BlotterEF.FK_SBP_BlotterBranchBalances_CurID" FromRole="SBP_BlotterBranchBalances" ToRole="Currency" />
+          <NavigationProperty Name="SBP_LoginInfo" Relationship="BlotterEF.FK_SBP_BlotterBranchBalances_UserID" FromRole="SBP_BlotterBranchBalances" ToRole="SBP_LoginInfo" />
+        </EntityType>
+        <EntityType Name="SBP_BlotterDTL">
+          <Key>
+            <PropertyRef Name="SNo" />
+          </Key>
+          <Property Name="SNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DTL_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DTL_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NO_OF_Days" Type="Int32" Nullable="false" />
+          <Property Name="DTL_Amount" Type="Double" Nullable="false" />
+          <Property Name="T_User_Id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="T_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Flag" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="BR" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="SBP_BlotterFixedIncome">
+          <Key>
+            <PropertyRef Name="Sno" />
+          </Key>
+          <Property Name="Sno" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DataType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DealType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DealNo" Type="Int64" />
+          <Property Name="VDate" Type="DateTime" Precision="0" />
+          <Property Name="MDate" Type="DateTime" Precision="0" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Inflow" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Outflow" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Recon" Type="Boolean" />
+          <Property Name="Rev" Type="Boolean" />
+          <Property Name="BR" Type="Int32" />
+          <Property Name="CurId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="SBP_BlotterFXDH">
+          <Key>
+            <PropertyRef Name="Sno" />
+          </Key>
+          <Property Name="Sno" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DataType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DealType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DealNo" Type="Int64" />
+          <Property Name="VDate" Type="DateTime" Precision="0" />
+          <Property Name="MDate" Type="DateTime" Precision="0" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Inflow" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Outflow" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Recon" Type="Boolean" />
+          <Property Name="Rev" Type="Boolean" />
+          <Property Name="BR" Type="Int32" />
+          <Property Name="CurId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="SBP_BlotterFXDHSWAP">
+          <Key>
+            <PropertyRef Name="Sno" />
+          </Key>
+          <Property Name="Sno" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DataType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DealType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DealNo" Type="Int64" />
+          <Property Name="VDate" Type="DateTime" Precision="0" />
+          <Property Name="MDate" Type="DateTime" Precision="0" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Inflow" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Outflow" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Recon" Type="Boolean" />
+          <Property Name="Rev" Type="Boolean" />
+          <Property Name="BR" Type="Int32" />
+          <Property Name="CurId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="SBP_BlotterManualDeals">
+          <Key>
+            <PropertyRef Name="SNo" />
+          </Key>
+          <Property Name="SNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="DealDate" Type="DateTime" Precision="0" />
+          <Property Name="InFlow" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="OutFlow" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CurrentDate" Type="DateTime" Precision="3" />
+          <Property Name="DealStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="BR" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="SBP_BlotterOpening">
+          <Key>
+            <PropertyRef Name="SNo" />
+          </Key>
+          <Property Name="SNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CurrentDate" Type="DateTime" Precision="3" />
+          <Property Name="TodayAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="BR" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="SBP_BlotterReconBreakups">
+          <Key>
+            <PropertyRef Name="SNo" />
+          </Key>
+          <Property Name="SNo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TTID" Type="Int32" Nullable="false" />
+          <Property Name="RECON_Date" Type="DateTime" Precision="0" />
+          <Property Name="RECONCOde" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="RECON_InFlow" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="RECON_OutFLow" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Note" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="BR" Type="Int32" Nullable="false" />
+          <Property Name="BID" Type="Int32" Nullable="false" />
+          <Property Name="CurID" Type="Int32" Nullable="false" />
+          <Property Name="Flag" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="DataType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="SBP_BlotterRPRH">
+          <Key>
+            <PropertyRef Name="Sno" />
+          </Key>
+          <Property Name="Sno" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DataType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DealType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DealNo" Type="Int64" />
+          <Property Name="VDate" Type="DateTime" Precision="0" />
+          <Property Name="MDate" Type="DateTime" Precision="0" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Inflow" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Outflow" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Recon" Type="Boolean" />
+          <Property Name="Rev" Type="Boolean" />
+          <Property Name="BR" Type="Int32" />
+          <Property Name="CurId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="SBP_BlotterSetup">
+          <Key>
+            <PropertyRef Name="SNo" />
+          </Key>
+          <Property Name="SNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="true" Unicode="true" />
+          <Property Name="status" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="BR" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="SBP_BlotterSPSH">
+          <Key>
+            <PropertyRef Name="Sno" />
+          </Key>
+          <Property Name="Sno" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DataType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DealType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DealNo" Type="Int64" />
+          <Property Name="VDate" Type="DateTime" Precision="0" />
+          <Property Name="MDate" Type="DateTime" Precision="0" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Inflow" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Outflow" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Recon" Type="Boolean" />
+          <Property Name="Rev" Type="Boolean" />
+          <Property Name="BR" Type="Int32" />
+          <Property Name="CurId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="SBP_BlotterTPOS">
+          <Key>
+            <PropertyRef Name="Sno" />
+          </Key>
+          <Property Name="Sno" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DataType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DealType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DealNo" Type="Int64" />
+          <Property Name="VDate" Type="DateTime" Precision="0" />
+          <Property Name="MDate" Type="DateTime" Precision="0" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Inflow" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Outflow" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Recon" Type="Boolean" />
+          <Property Name="Rev" Type="Boolean" />
+          <Property Name="BR" Type="Int32" />
+          <Property Name="CurId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="SBP_BlotterTransactionsTotal">
+          <Key>
+            <PropertyRef Name="SNo" />
+          </Key>
+          <Property Name="SNo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InFlow" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="OutFlow" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ClosingBal" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="DateFor" Type="DateTime" Precision="3" />
+          <Property Name="BR" Type="Int32" />
+        </EntityType>
+        <EntityType Name="SBP_BlotterTransactionTitles">
+          <Key>
+            <PropertyRef Name="TTID" />
+          </Key>
+          <Property Name="TTID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TranctionTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TranctionDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Transactionfor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="SBP_BlotterClearing" Relationship="BlotterEF.FK_SBP_BlotterClearing_TID" FromRole="SBP_BlotterTransactionTitles" ToRole="SBP_BlotterClearing" />
+          <NavigationProperty Name="SBP_BlotterRTGS" Relationship="BlotterEF.FK_SBP_BlotterRTGS_TID" FromRole="SBP_BlotterTransactionTitles" ToRole="SBP_BlotterRTGS" />
+          <NavigationProperty Name="SBP_BlotterTBO" Relationship="BlotterEF.FK_SBP_BlotterTBO_TTID" FromRole="SBP_BlotterTransactionTitles" ToRole="SBP_BlotterTBO" />
+          <NavigationProperty Name="SBP_BlotterTrade" Relationship="BlotterEF.FK_SBP_BlotterTrade_TID" FromRole="SBP_BlotterTransactionTitles" ToRole="SBP_BlotterTrade" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TEMPRECONCHECK">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tdatetime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="TEMPRECONTEST">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tdatetime" Type="DateTime" Precision="3" />
+          <Property Name="val" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="WeekEnd">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WeekDay" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="fx_maturity_profile">
+          <Key>
+            <PropertyRef Name="br" />
+            <PropertyRef Name="dealno" />
+            <PropertyRef Name="seq" />
+            <PropertyRef Name="brok_desc" />
+            <PropertyRef Name="nostro_desc" />
+          </Key>
+          <Property Name="br" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="dealno" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="seq" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="dealdate" Type="DateTime" Precision="3" />
+          <Property Name="vdate" Type="DateTime" Precision="3" />
+          <Property Name="ps" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="ccy" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="swapdeal" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="ccyamt" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="pkramt" Type="Decimal" Precision="38" Scale="12" />
+          <Property Name="ccyrate_8" Type="Decimal" Precision="18" Scale="8" />
+          <Property Name="acct" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="sn" Type="String" MaxLength="40" FixedLength="true" Unicode="true" />
+          <Property Name="prodcode" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="prodtype" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="brok" Type="String" MaxLength="11" FixedLength="true" Unicode="false" />
+          <Property Name="means" Type="String" MaxLength="7" FixedLength="true" Unicode="false" />
+          <Property Name="cost" Type="String" MaxLength="11" FixedLength="true" Unicode="false" />
+          <Property Name="port" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="brok_desc" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="nostro" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="nostro_desc" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="fxacuphbl1">
+          <Key>
+            <PropertyRef Name="Period" />
+            <PropertyRef Name="CCY" />
+          </Key>
+          <Property Name="postdate" Type="Int32" />
+          <Property Name="Period" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="CCY" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="AmountCR" Type="Decimal" Precision="38" Scale="4" />
+          <Property Name="AmountDR" Type="Decimal" Precision="38" Scale="4" />
+          <Property Name="Net" Type="Decimal" Precision="38" Scale="4" />
+        </EntityType>
+        <EntityType Name="OW_dblink">
+          <Key>
+            <PropertyRef Name="dblink" />
+          </Key>
+          <Property Name="dblink" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="SBP_BlotterConversionRate">
+          <Key>
+            <PropertyRef Name="SNo" />
+          </Key>
+          <Property Name="SNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CCY" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SPOTRATE_8" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="CurID" Type="Int32" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="BR" Type="Int32" />
+          <Property Name="BID" Type="Int32" />
+          <Property Name="Flag" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="SBP_BlotterRTGS1">
+          <Key>
+            <PropertyRef Name="Sno" />
+            <PropertyRef Name="ACCT_Description" />
+            <PropertyRef Name="Inflow" />
+            <PropertyRef Name="Outflow" />
+            <PropertyRef Name="BatchCount" />
+            <PropertyRef Name="Br" />
+          </Key>
+          <Property Name="Sno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TXN_DTE_TME" Type="DateTime" Precision="3" />
+          <Property Name="ACCT_Description" Type="String" Nullable="false" MaxLength="513" FixedLength="false" Unicode="false" />
+          <Property Name="Inflow" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="Outflow" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="BatchCount" Type="Int32" Nullable="false" />
+          <Property Name="Br" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="SBP_BlotterSessionDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SessionID" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="IP" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="URL" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Activity" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ActivityTime" Type="DateTime" Precision="3" />
+          <Property Name="Data" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SessionStart" Type="DateTime" Precision="3" />
+          <Property Name="SessionEnd" Type="DateTime" Precision="3" />
+          <Property Name="LoginStatus" Type="Boolean" />
+          <Property Name="LoginGUID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SBP_LoginInfo" Relationship="BlotterEF.FK_SBP_BlotterSessionDetails_UserID" FromRole="SBP_BlotterSessionDetails" ToRole="SBP_LoginInfo" />
+        </EntityType>
+        <Association Name="FK_SBP_BlotterBranchBalances_BranchID">
+          <End Type="BlotterEF.Branches" Role="Branches" Multiplicity="1" />
+          <End Type="BlotterEF.SBP_BlotterBranchBalances" Role="SBP_BlotterBranchBalances" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branches">
+              <PropertyRef Name="BID" />
+            </Principal>
+            <Dependent Role="SBP_BlotterBranchBalances">
+              <PropertyRef Name="BID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SBP_BlotterBranchBalances_CurID">
+          <End Type="BlotterEF.Currency" Role="Currency" Multiplicity="1" />
+          <End Type="BlotterEF.SBP_BlotterBranchBalances" Role="SBP_BlotterBranchBalances" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Currency">
+              <PropertyRef Name="CID" />
+            </Principal>
+            <Dependent Role="SBP_BlotterBranchBalances">
+              <PropertyRef Name="CurID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SBP_BlotterBranchBalances_UserID">
+          <End Type="BlotterEF.SBP_LoginInfo" Role="SBP_LoginInfo" Multiplicity="1" />
+          <End Type="BlotterEF.SBP_BlotterBranchBalances" Role="SBP_BlotterBranchBalances" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SBP_LoginInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SBP_BlotterBranchBalances">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SBP_BlotterClearing_TID">
+          <End Type="BlotterEF.SBP_BlotterTransactionTitles" Role="SBP_BlotterTransactionTitles" Multiplicity="1" />
+          <End Type="BlotterEF.SBP_BlotterClearing" Role="SBP_BlotterClearing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SBP_BlotterTransactionTitles">
+              <PropertyRef Name="TTID" />
+            </Principal>
+            <Dependent Role="SBP_BlotterClearing">
+              <PropertyRef Name="TTID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SBP_BlotterRTGS_TID">
+          <End Type="BlotterEF.SBP_BlotterTransactionTitles" Role="SBP_BlotterTransactionTitles" Multiplicity="1" />
+          <End Type="BlotterEF.SBP_BlotterRTGS" Role="SBP_BlotterRTGS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SBP_BlotterTransactionTitles">
+              <PropertyRef Name="TTID" />
+            </Principal>
+            <Dependent Role="SBP_BlotterRTGS">
+              <PropertyRef Name="TTID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SBP_BlotterTBO_TTID">
+          <End Type="BlotterEF.SBP_BlotterTransactionTitles" Role="SBP_BlotterTransactionTitles" Multiplicity="1" />
+          <End Type="BlotterEF.SBP_BlotterTBO" Role="SBP_BlotterTBO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SBP_BlotterTransactionTitles">
+              <PropertyRef Name="TTID" />
+            </Principal>
+            <Dependent Role="SBP_BlotterTBO">
+              <PropertyRef Name="TTID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SBP_BlotterTrade_TID">
+          <End Type="BlotterEF.SBP_BlotterTransactionTitles" Role="SBP_BlotterTransactionTitles" Multiplicity="1" />
+          <End Type="BlotterEF.SBP_BlotterTrade" Role="SBP_BlotterTrade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SBP_BlotterTransactionTitles">
+              <PropertyRef Name="TTID" />
+            </Principal>
+            <Dependent Role="SBP_BlotterTrade">
+              <PropertyRef Name="TTID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SBP_BlotterSessionDetails_UserID">
+          <End Type="BlotterEF.SBP_LoginInfo" Role="SBP_LoginInfo" Multiplicity="1" />
+          <End Type="BlotterEF.SBP_BlotterSessionDetails" Role="SBP_BlotterSessionDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SBP_LoginInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SBP_BlotterSessionDetails">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="SP_Get_SBPBlotterConversionRate_Result">
+          <Property Type="String" Name="CCY" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="CurrencyID" Nullable="true" />
+          <Property Type="Decimal" Name="SPOTRATE_8" Nullable="true" Precision="18" Scale="4" />
+          <Property Type="Decimal" Name="USDRate" Nullable="true" Precision="18" Scale="4" />
+          <Property Type="Decimal" Name="ExchangeRate" Nullable="true" Precision="18" Scale="4" />
+        </ComplexType>
+        <ComplexType Name="SP_GetCRRFINCONPeriods_Result">
+          <Property Type="DateTime" Name="StartDate" Nullable="true" />
+          <Property Type="DateTime" Name="EndDate" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_GetNostroBankFromOPICS_Result">
+          <Property Type="String" Name="BankName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="BankCode" Nullable="true" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_SBPBlotterBR1_Result">
+          <Property Type="Int64" Name="DealNo" Nullable="true" />
+          <Property Type="String" Name="DataType" Nullable="true" MaxLength="23" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="10" />
+          <Property Type="DateTime" Name="DealDate" Nullable="true" Precision="23" />
+          <Property Type="Decimal" Name="Inflow" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="Outflow" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="OpeningBalance" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Int32" Name="Recon" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5363,6 +7209,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <EntitySetMapping Name="SBP_BlotterManualData">
             <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterManualData">
               <MappingFragment StoreEntitySet="SBP_BlotterManualData">
+                <ScalarProperty Name="NostroBank" ColumnName="NostroBank" />
                 <ScalarProperty Name="SNo" ColumnName="SNo" />
                 <ScalarProperty Name="DataType" ColumnName="DataType" />
                 <ScalarProperty Name="Inflow" ColumnName="Inflow" />
@@ -5377,7 +7224,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
                 <ScalarProperty Name="Flag" ColumnName="Flag" />
                 <ScalarProperty Name="AdjBalance" ColumnName="AdjBalance" />
                 <ScalarProperty Name="isAdjusted" ColumnName="isAdjusted" />
-                <ScalarProperty Name="NostroCode" ColumnName="NostroCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -6324,7 +8170,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_InsertBlotterOutright" FunctionName="OPICSWEBModel.Store.SP_InsertBlotterOutright" />
           <FunctionImportMapping FunctionImportName="SP_InsertHolidays" FunctionName="OPICSWEBModel.Store.SP_InsertHolidays" />
           <FunctionImportMapping FunctionImportName="SP_InsertLoginInfo" FunctionName="OPICSWEBModel.Store.SP_InsertLoginInfo" />
           <FunctionImportMapping FunctionImportName="SP_InsertOpeningBalance" FunctionName="OPICSWEBModel.Store.SP_InsertOpeningBalance">
@@ -6417,7 +8262,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_SBPSessionStop" FunctionName="OPICSWEBModel.Store.SP_SBPSessionStop" />
-          <FunctionImportMapping FunctionImportName="SP_UpdateBlotterOutright" FunctionName="OPICSWEBModel.Store.SP_UpdateBlotterOutright" />
           <FunctionImportMapping FunctionImportName="SP_UpdateDaysInBlotterReport" FunctionName="OPICSWEBModel.Store.SP_UpdateDaysInBlotterReport" />
           <FunctionImportMapping FunctionImportName="SP_UpdateHolidays" FunctionName="OPICSWEBModel.Store.SP_UpdateHolidays" />
           <FunctionImportMapping FunctionImportName="SP_UpdateLoginInfo" FunctionName="OPICSWEBModel.Store.SP_UpdateLoginInfo" />
@@ -6533,6 +8377,517 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="BlotterDataColors">
+            <EntityTypeMapping TypeName="BlotterEF.BlotterDataColor">
+              <MappingFragment StoreEntitySet="BlotterDataColor">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Recon_isActive" ColumnName="Recon_isActive" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Outflow" ColumnName="Outflow" />
+                <ScalarProperty Name="Inflow" ColumnName="Inflow" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DealNo" ColumnName="DealNo" />
+                <ScalarProperty Name="Sno" ColumnName="Sno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OW_AUTH">
+            <EntityTypeMapping TypeName="BlotterEF.OW_AUTH">
+              <MappingFragment StoreEntitySet="OW_AUTH">
+                <ScalarProperty Name="AUTH_NAME" ColumnName="AUTH_NAME" />
+                <ScalarProperty Name="AUTH_ID" ColumnName="AUTH_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OW_USERS">
+            <EntityTypeMapping TypeName="BlotterEF.OW_USERS">
+              <MappingFragment StoreEntitySet="OW_USERS">
+                <ScalarProperty Name="IS_ADMIN" ColumnName="IS_ADMIN" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="LAST_UPDATED_TIME" ColumnName="LAST_UPDATED_TIME" />
+                <ScalarProperty Name="LAST_UPDATED_BY" ColumnName="LAST_UPDATED_BY" />
+                <ScalarProperty Name="CREATION_TIME" ColumnName="CREATION_TIME" />
+                <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+                <ScalarProperty Name="USER_TYPE" ColumnName="USER_TYPE" />
+                <ScalarProperty Name="REGION_CODE" ColumnName="REGION_CODE" />
+                <ScalarProperty Name="AUTH_LEVEL" ColumnName="AUTH_LEVEL" />
+                <ScalarProperty Name="EMAIL_ID" ColumnName="EMAIL_ID" />
+                <ScalarProperty Name="FULL_NAME" ColumnName="FULL_NAME" />
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+                <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
+                <ScalarProperty Name="EMP_NO" ColumnName="EMP_NO" />
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SBP_BlotterBranchBalances">
+            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterBranchBalances">
+              <MappingFragment StoreEntitySet="SBP_BlotterBranchBalances">
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+                <ScalarProperty Name="CurID" ColumnName="CurID" />
+                <ScalarProperty Name="BID" ColumnName="BID" />
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Branch_OutFLow" ColumnName="Branch_OutFLow" />
+                <ScalarProperty Name="Branch_InFlow" ColumnName="Branch_InFlow" />
+                <ScalarProperty Name="Branch_Date" ColumnName="Branch_Date" />
+                <ScalarProperty Name="SNo" ColumnName="SNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SBP_BlotterDTL">
+            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterDTL">
+              <MappingFragment StoreEntitySet="SBP_BlotterDTL">
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+                <ScalarProperty Name="T_Date" ColumnName="T_Date" />
+                <ScalarProperty Name="T_User_Id" ColumnName="T_User_Id" />
+                <ScalarProperty Name="DTL_Amount" ColumnName="DTL_Amount" />
+                <ScalarProperty Name="NO_OF_Days" ColumnName="NO_OF_Days" />
+                <ScalarProperty Name="DTL_Code" ColumnName="DTL_Code" />
+                <ScalarProperty Name="DTL_Date" ColumnName="DTL_Date" />
+                <ScalarProperty Name="SNo" ColumnName="SNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SBP_BlotterFixedIncome">
+            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterFixedIncome">
+              <MappingFragment StoreEntitySet="SBP_BlotterFixedIncome">
+                <ScalarProperty Name="CurId" ColumnName="CurId" />
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="Rev" ColumnName="Rev" />
+                <ScalarProperty Name="Recon" ColumnName="Recon" />
+                <ScalarProperty Name="Outflow" ColumnName="Outflow" />
+                <ScalarProperty Name="Inflow" ColumnName="Inflow" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="MDate" ColumnName="MDate" />
+                <ScalarProperty Name="VDate" ColumnName="VDate" />
+                <ScalarProperty Name="DealNo" ColumnName="DealNo" />
+                <ScalarProperty Name="DealType" ColumnName="DealType" />
+                <ScalarProperty Name="DataType" ColumnName="DataType" />
+                <ScalarProperty Name="Sno" ColumnName="Sno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SBP_BlotterFXDH">
+            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterFXDH">
+              <MappingFragment StoreEntitySet="SBP_BlotterFXDH">
+                <ScalarProperty Name="CurId" ColumnName="CurId" />
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="Rev" ColumnName="Rev" />
+                <ScalarProperty Name="Recon" ColumnName="Recon" />
+                <ScalarProperty Name="Outflow" ColumnName="Outflow" />
+                <ScalarProperty Name="Inflow" ColumnName="Inflow" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="MDate" ColumnName="MDate" />
+                <ScalarProperty Name="VDate" ColumnName="VDate" />
+                <ScalarProperty Name="DealNo" ColumnName="DealNo" />
+                <ScalarProperty Name="DealType" ColumnName="DealType" />
+                <ScalarProperty Name="DataType" ColumnName="DataType" />
+                <ScalarProperty Name="Sno" ColumnName="Sno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SBP_BlotterFXDHSWAP">
+            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterFXDHSWAP">
+              <MappingFragment StoreEntitySet="SBP_BlotterFXDHSWAP">
+                <ScalarProperty Name="CurId" ColumnName="CurId" />
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="Rev" ColumnName="Rev" />
+                <ScalarProperty Name="Recon" ColumnName="Recon" />
+                <ScalarProperty Name="Outflow" ColumnName="Outflow" />
+                <ScalarProperty Name="Inflow" ColumnName="Inflow" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="MDate" ColumnName="MDate" />
+                <ScalarProperty Name="VDate" ColumnName="VDate" />
+                <ScalarProperty Name="DealNo" ColumnName="DealNo" />
+                <ScalarProperty Name="DealType" ColumnName="DealType" />
+                <ScalarProperty Name="DataType" ColumnName="DataType" />
+                <ScalarProperty Name="Sno" ColumnName="Sno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SBP_BlotterManualDeals">
+            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterManualDeals">
+              <MappingFragment StoreEntitySet="SBP_BlotterManualDeals">
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="DealStatus" ColumnName="DealStatus" />
+                <ScalarProperty Name="CurrentDate" ColumnName="CurrentDate" />
+                <ScalarProperty Name="OutFlow" ColumnName="OutFlow" />
+                <ScalarProperty Name="InFlow" ColumnName="InFlow" />
+                <ScalarProperty Name="DealDate" ColumnName="DealDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="SNo" ColumnName="SNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SBP_BlotterOpening">
+            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterOpening">
+              <MappingFragment StoreEntitySet="SBP_BlotterOpening">
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="TodayAmount" ColumnName="TodayAmount" />
+                <ScalarProperty Name="CurrentDate" ColumnName="CurrentDate" />
+                <ScalarProperty Name="SNo" ColumnName="SNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SBP_BlotterReconBreakups">
+            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterReconBreakups">
+              <MappingFragment StoreEntitySet="SBP_BlotterReconBreakups">
+                <ScalarProperty Name="DataType" ColumnName="DataType" />
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+                <ScalarProperty Name="CurID" ColumnName="CurID" />
+                <ScalarProperty Name="BID" ColumnName="BID" />
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="RECON_OutFLow" ColumnName="RECON_OutFLow" />
+                <ScalarProperty Name="RECON_InFlow" ColumnName="RECON_InFlow" />
+                <ScalarProperty Name="RECONCOde" ColumnName="RECONCOde" />
+                <ScalarProperty Name="RECON_Date" ColumnName="RECON_Date" />
+                <ScalarProperty Name="TTID" ColumnName="TTID" />
+                <ScalarProperty Name="SNo" ColumnName="SNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SBP_BlotterRPRH">
+            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterRPRH">
+              <MappingFragment StoreEntitySet="SBP_BlotterRPRH">
+                <ScalarProperty Name="CurId" ColumnName="CurId" />
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="Rev" ColumnName="Rev" />
+                <ScalarProperty Name="Recon" ColumnName="Recon" />
+                <ScalarProperty Name="Outflow" ColumnName="Outflow" />
+                <ScalarProperty Name="Inflow" ColumnName="Inflow" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="MDate" ColumnName="MDate" />
+                <ScalarProperty Name="VDate" ColumnName="VDate" />
+                <ScalarProperty Name="DealNo" ColumnName="DealNo" />
+                <ScalarProperty Name="DealType" ColumnName="DealType" />
+                <ScalarProperty Name="DataType" ColumnName="DataType" />
+                <ScalarProperty Name="Sno" ColumnName="Sno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SBP_BlotterSetup">
+            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterSetup">
+              <MappingFragment StoreEntitySet="SBP_BlotterSetup">
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="SNo" ColumnName="SNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SBP_BlotterSPSH">
+            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterSPSH">
+              <MappingFragment StoreEntitySet="SBP_BlotterSPSH">
+                <ScalarProperty Name="CurId" ColumnName="CurId" />
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="Rev" ColumnName="Rev" />
+                <ScalarProperty Name="Recon" ColumnName="Recon" />
+                <ScalarProperty Name="Outflow" ColumnName="Outflow" />
+                <ScalarProperty Name="Inflow" ColumnName="Inflow" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="MDate" ColumnName="MDate" />
+                <ScalarProperty Name="VDate" ColumnName="VDate" />
+                <ScalarProperty Name="DealNo" ColumnName="DealNo" />
+                <ScalarProperty Name="DealType" ColumnName="DealType" />
+                <ScalarProperty Name="DataType" ColumnName="DataType" />
+                <ScalarProperty Name="Sno" ColumnName="Sno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SBP_BlotterTPOS">
+            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterTPOS">
+              <MappingFragment StoreEntitySet="SBP_BlotterTPOS">
+                <ScalarProperty Name="CurId" ColumnName="CurId" />
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="Rev" ColumnName="Rev" />
+                <ScalarProperty Name="Recon" ColumnName="Recon" />
+                <ScalarProperty Name="Outflow" ColumnName="Outflow" />
+                <ScalarProperty Name="Inflow" ColumnName="Inflow" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="MDate" ColumnName="MDate" />
+                <ScalarProperty Name="VDate" ColumnName="VDate" />
+                <ScalarProperty Name="DealNo" ColumnName="DealNo" />
+                <ScalarProperty Name="DealType" ColumnName="DealType" />
+                <ScalarProperty Name="DataType" ColumnName="DataType" />
+                <ScalarProperty Name="Sno" ColumnName="Sno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SBP_BlotterTransactionsTotal">
+            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterTransactionsTotal">
+              <MappingFragment StoreEntitySet="SBP_BlotterTransactionsTotal">
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="DateFor" ColumnName="DateFor" />
+                <ScalarProperty Name="ClosingBal" ColumnName="ClosingBal" />
+                <ScalarProperty Name="OutFlow" ColumnName="OutFlow" />
+                <ScalarProperty Name="InFlow" ColumnName="InFlow" />
+                <ScalarProperty Name="SNo" ColumnName="SNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SBP_BlotterTransactionTitles">
+            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterTransactionTitles">
+              <MappingFragment StoreEntitySet="SBP_BlotterTransactionTitles">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="Transactionfor" ColumnName="Transactionfor" />
+                <ScalarProperty Name="TranctionDescription" ColumnName="TranctionDescription" />
+                <ScalarProperty Name="TranctionTitle" ColumnName="TranctionTitle" />
+                <ScalarProperty Name="TTID" ColumnName="TTID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="BlotterEF.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TEMPRECONCHECKs">
+            <EntityTypeMapping TypeName="BlotterEF.TEMPRECONCHECK">
+              <MappingFragment StoreEntitySet="TEMPRECONCHECK">
+                <ScalarProperty Name="tdatetime" ColumnName="tdatetime" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TEMPRECONTESTs">
+            <EntityTypeMapping TypeName="BlotterEF.TEMPRECONTEST">
+              <MappingFragment StoreEntitySet="TEMPRECONTEST">
+                <ScalarProperty Name="val" ColumnName="val" />
+                <ScalarProperty Name="tdatetime" ColumnName="tdatetime" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WeekEnds">
+            <EntityTypeMapping TypeName="BlotterEF.WeekEnd">
+              <MappingFragment StoreEntitySet="WeekEnds">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="WeekDay" ColumnName="WeekDay" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fx_maturity_profile">
+            <EntityTypeMapping TypeName="BlotterEF.fx_maturity_profile">
+              <MappingFragment StoreEntitySet="fx_maturity_profile">
+                <ScalarProperty Name="nostro_desc" ColumnName="nostro_desc" />
+                <ScalarProperty Name="nostro" ColumnName="nostro" />
+                <ScalarProperty Name="brok_desc" ColumnName="brok_desc" />
+                <ScalarProperty Name="port" ColumnName="port" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="means" ColumnName="means" />
+                <ScalarProperty Name="brok" ColumnName="brok" />
+                <ScalarProperty Name="prodtype" ColumnName="prodtype" />
+                <ScalarProperty Name="prodcode" ColumnName="prodcode" />
+                <ScalarProperty Name="sn" ColumnName="sn" />
+                <ScalarProperty Name="acct" ColumnName="acct" />
+                <ScalarProperty Name="ccyrate_8" ColumnName="ccyrate_8" />
+                <ScalarProperty Name="pkramt" ColumnName="pkramt" />
+                <ScalarProperty Name="ccyamt" ColumnName="ccyamt" />
+                <ScalarProperty Name="swapdeal" ColumnName="swapdeal" />
+                <ScalarProperty Name="ccy" ColumnName="ccy" />
+                <ScalarProperty Name="ps" ColumnName="ps" />
+                <ScalarProperty Name="vdate" ColumnName="vdate" />
+                <ScalarProperty Name="dealdate" ColumnName="dealdate" />
+                <ScalarProperty Name="seq" ColumnName="seq" />
+                <ScalarProperty Name="dealno" ColumnName="dealno" />
+                <ScalarProperty Name="br" ColumnName="br" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fxacuphbl1">
+            <EntityTypeMapping TypeName="BlotterEF.fxacuphbl1">
+              <MappingFragment StoreEntitySet="fxacuphbl1">
+                <ScalarProperty Name="Net" ColumnName="Net" />
+                <ScalarProperty Name="AmountDR" ColumnName="AmountDR" />
+                <ScalarProperty Name="AmountCR" ColumnName="AmountCR" />
+                <ScalarProperty Name="CCY" ColumnName="CCY" />
+                <ScalarProperty Name="Period" ColumnName="Period" />
+                <ScalarProperty Name="postdate" ColumnName="postdate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OW_dblink">
+            <EntityTypeMapping TypeName="BlotterEF.OW_dblink">
+              <MappingFragment StoreEntitySet="OW_dblink">
+                <ScalarProperty Name="dblink" ColumnName="dblink" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SBP_BlotterConversionRate">
+            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterConversionRate">
+              <MappingFragment StoreEntitySet="SBP_BlotterConversionRate">
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+                <ScalarProperty Name="BID" ColumnName="BID" />
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="CurID" ColumnName="CurID" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="SPOTRATE_8" ColumnName="SPOTRATE_8" />
+                <ScalarProperty Name="CCY" ColumnName="CCY" />
+                <ScalarProperty Name="SNo" ColumnName="SNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SBP_BlotterRTGS1">
+            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterRTGS1">
+              <MappingFragment StoreEntitySet="SBP_BlotterRTGS1">
+                <ScalarProperty Name="Br" ColumnName="Br" />
+                <ScalarProperty Name="BatchCount" ColumnName="BatchCount" />
+                <ScalarProperty Name="Outflow" ColumnName="Outflow" />
+                <ScalarProperty Name="Inflow" ColumnName="Inflow" />
+                <ScalarProperty Name="ACCT_Description" ColumnName="ACCT_Description" />
+                <ScalarProperty Name="TXN_DTE_TME" ColumnName="TXN_DTE_TME" />
+                <ScalarProperty Name="Sno" ColumnName="Sno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SBP_BlotterSessionDetails">
+            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterSessionDetails">
+              <MappingFragment StoreEntitySet="SBP_BlotterSessionDetails">
+                <ScalarProperty Name="LoginGUID" ColumnName="LoginGUID" />
+                <ScalarProperty Name="LoginStatus" ColumnName="LoginStatus" />
+                <ScalarProperty Name="SessionEnd" ColumnName="SessionEnd" />
+                <ScalarProperty Name="SessionStart" ColumnName="SessionStart" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="ActivityTime" ColumnName="ActivityTime" />
+                <ScalarProperty Name="Activity" ColumnName="Activity" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IP" ColumnName="IP" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="SessionID" ColumnName="SessionID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="f_SP_FXGapPovitHBL" FunctionName="OPICSWEBModel.Store.f_SP_FXGapPovitHBL" />
+          <FunctionImportMapping FunctionImportName="SP_ADD_ECRRCarryForwardData" FunctionName="OPICSWEBModel.Store.SP_ADD_ECRRCarryForwardData" />
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="OPICSWEBModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="OPICSWEBModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="OPICSWEBModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="SP_FillManualDealByDate" FunctionName="OPICSWEBModel.Store.SP_FillManualDealByDate" />
+          <FunctionImportMapping FunctionImportName="SP_FillManualDealsBySchedule" FunctionName="OPICSWEBModel.Store.SP_FillManualDealsBySchedule" />
+          <FunctionImportMapping FunctionImportName="SP_FillManualDealsBySchedule1" FunctionName="OPICSWEBModel.Store.SP_FillManualDealsBySchedule1" />
+          <FunctionImportMapping FunctionImportName="SP_FillManualDealsByScheduleBR1" FunctionName="OPICSWEBModel.Store.SP_FillManualDealsByScheduleBR1" />
+          <FunctionImportMapping FunctionImportName="SP_FillManualDealsByScheduleBR2" FunctionName="OPICSWEBModel.Store.SP_FillManualDealsByScheduleBR2" />
+          <FunctionImportMapping FunctionImportName="SP_FXBorrowingLending" FunctionName="OPICSWEBModel.Store.SP_FXBorrowingLending" />
+          <FunctionImportMapping FunctionImportName="SP_FXMaturityProfileHBL" FunctionName="OPICSWEBModel.Store.SP_FXMaturityProfileHBL" />
+          <FunctionImportMapping FunctionImportName="SP_FXMaturityProfileHBL_AI" FunctionName="OPICSWEBModel.Store.SP_FXMaturityProfileHBL_AI" />
+          <FunctionImportMapping FunctionImportName="SP_FXMaturityProfileHBL01" FunctionName="OPICSWEBModel.Store.SP_FXMaturityProfileHBL01" />
+          <FunctionImportMapping FunctionImportName="SP_FXNostroBlotterHBL" FunctionName="OPICSWEBModel.Store.SP_FXNostroBlotterHBL" />
+          <FunctionImportMapping FunctionImportName="SP_FXNostroTradingHBL" FunctionName="OPICSWEBModel.Store.SP_FXNostroTradingHBL" />
+          <FunctionImportMapping FunctionImportName="SP_FXNostroTradingHBL01" FunctionName="OPICSWEBModel.Store.SP_FXNostroTradingHBL01" />
+          <FunctionImportMapping FunctionImportName="SP_Get_SBPBlotterConversionRate" FunctionName="OPICSWEBModel.Store.SP_Get_SBPBlotterConversionRate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BlotterEF.SP_Get_SBPBlotterConversionRate_Result">
+                <ScalarProperty Name="CCY" ColumnName="CCY" />
+                <ScalarProperty Name="CurrencyID" ColumnName="CurrencyID" />
+                <ScalarProperty Name="SPOTRATE_8" ColumnName="SPOTRATE_8" />
+                <ScalarProperty Name="USDRate" ColumnName="USDRate" />
+                <ScalarProperty Name="ExchangeRate" ColumnName="ExchangeRate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_GetCRRFINCONPeriods" FunctionName="OPICSWEBModel.Store.SP_GetCRRFINCONPeriods">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BlotterEF.SP_GetCRRFINCONPeriods_Result">
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_GetNostroBankFromOPICS" FunctionName="OPICSWEBModel.Store.SP_GetNostroBankFromOPICS">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BlotterEF.SP_GetNostroBankFromOPICS_Result">
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="BankCode" ColumnName="BankCode" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="OPICSWEBModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BlotterEF.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="OPICSWEBModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BlotterEF.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_InsertBranchBalances" FunctionName="OPICSWEBModel.Store.SP_InsertBranchBalances" />
+          <FunctionImportMapping FunctionImportName="SP_MMMaturityProfileHBL" FunctionName="OPICSWEBModel.Store.SP_MMMaturityProfileHBL" />
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="OPICSWEBModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="SP_SBPBlotter01" FunctionName="OPICSWEBModel.Store.SP_SBPBlotter01" />
+          <FunctionImportMapping FunctionImportName="SP_SBPBlotter03" FunctionName="OPICSWEBModel.Store.SP_SBPBlotter03" />
+          <FunctionImportMapping FunctionImportName="SP_SBPBlotter55" FunctionName="OPICSWEBModel.Store.SP_SBPBlotter55" />
+          <FunctionImportMapping FunctionImportName="SP_SBPBlotter66" FunctionName="OPICSWEBModel.Store.SP_SBPBlotter66" />
+          <FunctionImportMapping FunctionImportName="SP_SBPBlotterBR1" FunctionName="OPICSWEBModel.Store.SP_SBPBlotterBR1">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BlotterEF.SP_SBPBlotterBR1_Result">
+                <ScalarProperty Name="DealNo" ColumnName="DealNo" />
+                <ScalarProperty Name="DataType" ColumnName="DataType" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DealDate" ColumnName="DealDate" />
+                <ScalarProperty Name="Inflow" ColumnName="Inflow" />
+                <ScalarProperty Name="Outflow" ColumnName="Outflow" />
+                <ScalarProperty Name="OpeningBalance" ColumnName="OpeningBalance" />
+                <ScalarProperty Name="Recon" ColumnName="Recon" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_SBPBlotterBR1_20210803" FunctionName="OPICSWEBModel.Store.SP_SBPBlotterBR1_20210803" />
+          <FunctionImportMapping FunctionImportName="SP_SBPBlotterBR1_BAK" FunctionName="OPICSWEBModel.Store.SP_SBPBlotterBR1_BAK" />
+          <FunctionImportMapping FunctionImportName="SP_SBPBlotterBR11" FunctionName="OPICSWEBModel.Store.SP_SBPBlotterBR11" />
+          <FunctionImportMapping FunctionImportName="SP_SBPBlotterBR2" FunctionName="OPICSWEBModel.Store.SP_SBPBlotterBR2" />
+          <FunctionImportMapping FunctionImportName="SP_SBPBlotterCRRReportGenerator" FunctionName="OPICSWEBModel.Store.SP_SBPBlotterCRRReportGenerator" />
+          <FunctionImportMapping FunctionImportName="SP_SBPBlotterRunningBal" FunctionName="OPICSWEBModel.Store.SP_SBPBlotterRunningBal" />
+          <FunctionImportMapping FunctionImportName="SP_SBPBlotterRunningBalBR1" FunctionName="OPICSWEBModel.Store.SP_SBPBlotterRunningBalBR1" />
+          <FunctionImportMapping FunctionImportName="SP_SBPBlotterRunningBalBR2" FunctionName="OPICSWEBModel.Store.SP_SBPBlotterRunningBalBR2" />
+          <FunctionImportMapping FunctionImportName="SP_SBPBlotterxx" FunctionName="OPICSWEBModel.Store.SP_SBPBlotterxx" />
+          <FunctionImportMapping FunctionImportName="SP_SBPFillDumBlotterBR1" FunctionName="OPICSWEBModel.Store.SP_SBPFillDumBlotterBR1" />
+          <FunctionImportMapping FunctionImportName="SP_SBPFillDumBlotterBR2" FunctionName="OPICSWEBModel.Store.SP_SBPFillDumBlotterBR2" />
+          <FunctionImportMapping FunctionImportName="SP_SBPOpicsSystemDate" FunctionName="OPICSWEBModel.Store.SP_SBPOpicsSystemDate" />
+          <FunctionImportMapping FunctionImportName="SP_TMU_PORTFOLIO" FunctionName="OPICSWEBModel.Store.SP_TMU_PORTFOLIO" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="OPICSWEBModel.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
