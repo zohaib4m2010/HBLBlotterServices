@@ -145,6 +145,7 @@
     <Compile Include="Controllers\BlotterFundsTransferController.cs" />
     <Compile Include="Controllers\BlotterLoginController.cs" />
     <Compile Include="Controllers\BlotterOpenBalController.cs" />
+    <Compile Include="Controllers\BlotterOutRightController.cs" />
     <Compile Include="Controllers\BlotterReservedDiffController.cs" />
     <Compile Include="Controllers\BlotterRSFController.cs" />
     <Compile Include="Controllers\BlotterRTGSController.cs" />
@@ -163,6 +164,7 @@
     </Compile>
     <Compile Include="Models\BlotterRSFTT.cs" />
     <Compile Include="Models\GazettedHoliday.cs" />
+    <Compile Include="Models\SBP_BlotterOutRight.cs" />
     <Compile Include="Models\SBP_BlotterReserved.cs" />
     <Compile Include="Models\BlotterSumEmail.cs" />
     <Compile Include="Models\Branches.cs" />
@@ -211,6 +213,7 @@
     <Compile Include="Models\SP_GetSBPBlotterFR_Result.cs" />
     <Compile Include="Models\SP_GetSBPBlotterGH_Result.cs" />
     <Compile Include="Models\SP_GetSBPBlotterOpeningClosingBalanceDIfferential_Result.cs" />
+    <Compile Include="Models\SP_GetSBPBlotterOR_Result.cs" />
     <Compile Include="Models\SP_GetSBPBlotterRECON_Result.cs" />
     <Compile Include="Models\SP_GetSBP_DMMO_Result.cs" />
     <Compile Include="Models\SP_GetSBP_Reserved_Result.cs" />
@@ -235,6 +238,7 @@
     <Compile Include="Repository\EntityMapperBlotterFCY.cs" />
     <Compile Include="Repository\EntityMapperBlotterFundsTransfer.cs" />
     <Compile Include="Repository\EntityMapperBlotterOpenBal.cs" />
+    <Compile Include="Repository\EntityMapperBlotterOR.cs" />
     <Compile Include="Repository\EntityMapperBlotterRSF.cs" />
     <Compile Include="Repository\EntityMapperBlotterRTGS.cs" />
     <Compile Include="Repository\EntityMapperBlotterTrade.cs" />
@@ -266,6 +270,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\BlotterOutRight\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">
