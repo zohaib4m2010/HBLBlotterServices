@@ -63,9 +63,97 @@ namespace DataAccessLayer
         }
 
         //*****************************************************
+        //OutRight Producers
+        //*****************************************************
+
+        public static List<SP_GetSBPBlotterOutRright_Result> GetAllBlotterOutRight(int UserID, int BranchID, int CurID, int BR, string DateVal)
+        {
+            return DbContextB.SP_GetSBPBlotterOutRright( BR, DateVal).ToList();
+        }
+        public static SBP_BlotterOutrights GetSBP_BlotterOutRightById(int OutRightId)
+        {
+            return DbContextB.SBP_BlotterOutrights.Where(p => p.SNo == OutRightId).FirstOrDefault();
+        }
+
+        public static bool InsertOutRight(SBP_BlotterOutrights OutRightIdItem)
+        {
+            bool status;
+            try
+            {
+                DbContextB.SBP_BlotterOutrights.Add(OutRightIdItem);
+                DbContextB.SaveChanges();
+                status = true;
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine(ex.Message.ToString());
+                status = false;
+            }
+            return status;
+        }
+
+        public static bool UpdateOutRight(SBP_BlotterOutrights OutRightIdItem)
+        {
+            bool status;
+            try
+            {
+                List<SBP_BlotterOutrights> GetCount = DbContextB.SBP_BlotterOutrights.Where(p => p.SNo == OutRightIdItem.SNo).ToList();
+                if (GetCount.Count > 0)
+                {
+                    SBP_BlotterOutrights prodItem = DbContextB.SBP_BlotterOutrights.Where(p => p.SNo == OutRightIdItem.SNo).FirstOrDefault();
+                    if (prodItem != null)
+                    {
+                        prodItem.DataType = OutRightIdItem.DataType;
+                        prodItem.Bank = OutRightIdItem.Bank;
+                        prodItem.Rate = OutRightIdItem.Rate;
+                        prodItem.Issue_Date = OutRightIdItem.Issue_Date;
+                        prodItem.Broker = OutRightIdItem.Broker;
+                        prodItem.IssueType = OutRightIdItem.IssueType;
+                        prodItem.InFlow = OutRightIdItem.InFlow;
+                        prodItem.OutFLow = OutRightIdItem.OutFLow;
+                        prodItem.Note = OutRightIdItem.Note;
+                        prodItem.CurID = OutRightIdItem.CurID;
+                        prodItem.UpdateDate = OutRightIdItem.UpdateDate;
+                        DbContextB.SaveChanges();
+                    }
+                    status = true;
+                }
+                else
+                {
+                    status = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                status = false;
+            }
+            return status;
+        }
+
+        public static bool DeleteOutRight(int id)
+        {
+            bool status;
+            try
+            {
+                SBP_BlotterOutrights OutRightIdItem = DbContextB.SBP_BlotterOutrights.Where(p => p.SNo == id).FirstOrDefault();
+                if (OutRightIdItem != null)
+                {
+                    OutRightIdItem.Status = false;
+                    DbContextB.SaveChanges();
+                }
+                status = true;
+            }
+            catch (Exception ex)
+            {
+                status = false;
+            }
+            return status;
+        }
+
+        //*****************************************************
         //Fill Forward Dump Blotter Producers
         //*****************************************************
-        
+
 
 
         public static void FillFwdDumBlotterBR1()
