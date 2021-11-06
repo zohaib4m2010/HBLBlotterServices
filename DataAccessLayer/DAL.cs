@@ -278,6 +278,11 @@ namespace DataAccessLayer
             var CurrentDate = DateTime.Now;
             return DbContextB.SP_GetSBPBlotterCRRFINCON(UserID, BranchID, CurID, BR,Convert.ToDateTime(StartDate),Convert.ToDateTime(EndDate)).ToList();
         }
+        public static List<SP_GetCRRFINCONPeriods_Result> GetAllBlotterCRRFINCONPeriods(int BR)
+        {
+            var CurrentDate = DateTime.Now;
+            return DbContextB.SP_GetCRRFINCONPeriods(BR).ToList();
+        }
         public static SBP_BlotterCRRFINCON GetCRRFINCONItem(int CRRFINCONId)
         {
             return DbContextB.SBP_BlotterCRRFINCON.Where(p => p.SNo == CRRFINCONId).FirstOrDefault();

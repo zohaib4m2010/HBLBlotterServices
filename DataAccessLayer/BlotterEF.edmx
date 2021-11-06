@@ -66,28 +66,6 @@
           <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6013: The table/view 'OPICSWEB.dbo.fx_hblnostrtradingpur' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="fx_hblnostrtradingpur">
-          <Property Name="cost" Type="char" MaxLength="11" />
-          <Property Name="port" Type="char" MaxLength="4" />
-          <Property Name="product" Type="char" MaxLength="6" />
-          <Property Name="vdate" Type="datetime" />
-          <Property Name="currency" Type="char" MaxLength="3" />
-          <Property Name="purchaseamt" Type="numeric" Precision="38" Scale="4" />
-          <Property Name="period" Type="varchar" MaxLength="2" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'OPICSWEB.dbo.fx_hblnostrtradingsal' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="fx_hblnostrtradingsal">
-          <Property Name="cost" Type="char" MaxLength="11" />
-          <Property Name="port" Type="char" MaxLength="4" />
-          <Property Name="product" Type="char" MaxLength="6" />
-          <Property Name="vdate" Type="datetime" />
-          <Property Name="currency" Type="char" MaxLength="3" />
-          <Property Name="saleamt" Type="numeric" Precision="38" Scale="4" />
-          <Property Name="period" Type="varchar" MaxLength="2" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'OPICSWEB.dbo.fx_maturity_profile' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="fx_maturity_profile">
           <Key>
@@ -134,16 +112,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.fxacuphbl1' does not have a primary k
           <Property Name="AmountDR" Type="numeric" Precision="38" Scale="4" />
           <Property Name="Net" Type="numeric" Precision="38" Scale="4" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'OPICSWEB.dbo.FXBaseCurrency' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="FXBaseCurrency">
-          <Property Name="DI" Type="nvarchar(max)" />
-          <Property Name="BaseCCY" Type="nvarchar(max)" />
-          <Property Name="QuotedCCY" Type="nvarchar(max)" />
-          <Property Name="Base01" Type="float" />
-          <Property Name="Base02" Type="float" />
-          <Property Name="MD" Type="nvarchar(max)" />
-        </EntityType>-->
         <EntityType Name="GazettedHolidays">
           <Key>
             <PropertyRef Name="GHID" />
@@ -206,93 +174,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.OW_dblink' does not have a primary ke
           <Property Name="STATUS" Type="bit" />
           <Property Name="IS_ADMIN" Type="bit" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'OPICSWEB.dbo.REVP_HBL' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="REVP_HBL">
-          <Property Name="BR" Type="nvarchar" MaxLength="255" />
-          <Property Name="CCY" Type="nvarchar" MaxLength="255" />
-          <Property Name="SPOTRATE_8" Type="float" />
-          <Property Name="TERMS" Type="nvarchar" MaxLength="255" />
-          <Property Name="PERIOD1" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE1_8" Type="float" />
-          <Property Name="PERIOD2" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE2_8" Type="float" />
-          <Property Name="PERIOD3" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE3_8" Type="float" />
-          <Property Name="PERIOD4" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE4_8" Type="float" />
-          <Property Name="PERIOD5" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE5_8" Type="float" />
-          <Property Name="PERIOD6" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE6_8" Type="float" />
-          <Property Name="PERIOD7" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE7_8" Type="float" />
-          <Property Name="PERIOD8" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE8_8" Type="float" />
-          <Property Name="PERIOD9" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE9_8" Type="float" />
-          <Property Name="PERIOD10" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE10_8" Type="float" />
-          <Property Name="PERIOD11" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE11_8" Type="float" />
-          <Property Name="PERIOD12" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE12_8" Type="float" />
-          <Property Name="PERIOD13" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE13_8" Type="float" />
-          <Property Name="PERIOD14" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE14_8" Type="float" />
-          <Property Name="PERIOD15" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE15_8" Type="float" />
-          <Property Name="PERIOD16" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE16_8" Type="float" />
-          <Property Name="PERIOD17" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE17_8" Type="float" />
-          <Property Name="PERIOD18" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE18_8" Type="float" />
-          <Property Name="PERIOD19" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE19_8" Type="float" />
-          <Property Name="PERIOD20" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE20_8" Type="float" />
-          <Property Name="PERIOD21" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE21_8" Type="float" />
-          <Property Name="PERIOD22" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE22_8" Type="float" />
-          <Property Name="PERIOD23" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE23_8" Type="float" />
-          <Property Name="PERIOD24" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE24_8" Type="float" />
-          <Property Name="PERIOD25" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE25_8" Type="float" />
-          <Property Name="PERIOD26" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE26_8" Type="float" />
-          <Property Name="PERIOD27" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE27_8" Type="float" />
-          <Property Name="PERIOD28" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE28_8" Type="float" />
-          <Property Name="PERIOD29" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE29_8" Type="float" />
-          <Property Name="PERIOD30" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE30_8" Type="float" />
-          <Property Name="PERIOD31" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE31_8" Type="float" />
-          <Property Name="PERIOD32" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE32_8" Type="float" />
-          <Property Name="PERIOD33" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE33_8" Type="float" />
-          <Property Name="PERIOD34" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE34_8" Type="float" />
-          <Property Name="PERIOD35" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE35_8" Type="float" />
-          <Property Name="PERIOD36" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE36_8" Type="float" />
-          <Property Name="PERIOD37" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE37_8" Type="float" />
-          <Property Name="PERIOD38" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE38_8" Type="float" />
-          <Property Name="PERIOD39" Type="nvarchar" MaxLength="255" />
-          <Property Name="RATE39_8" Type="float" />
-          <Property Name="LSTMNTDATE" Type="datetime" />
-        </EntityType>-->
         <EntityType Name="SBP_BlotterBai_Muajjal">
           <Key>
             <PropertyRef Name="SNo" />
@@ -847,6 +728,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
           <Property Name="AdjBalance" Type="numeric" Precision="18" Scale="0" />
           <Property Name="isAdjusted" Type="bit" />
           <Property Name="NostroBank" Type="bigint" />
+          <Property Name="NostroCode" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="SBP_BlotterManualDeals">
           <Key>
@@ -1261,11 +1143,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterSessionDetails' does not h
           <Property Name="tdatetime" Type="datetime" />
           <Property Name="val" Type="varchar" MaxLength="30" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'OPICSWEB.dbo.USD_RATE' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="USD_RATE">
-          <Property Name="SPOTRATE_8" Type="numeric" Precision="18" Scale="8" />
-        </EntityType>-->
         <!--Errors Found During Generation:
 warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="UserCurrencyRelation">
@@ -5344,10 +5221,10 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
             <Parameter Name="Br" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_FillManualDealsByScheduleBR1">
-            <Parameter Name="CurrentDT" Mode="In" Type="DateTime" />
+          <Parameter Name="CurrentDT" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="SP_FillManualDealsByScheduleBR2">
-            <Parameter Name="CurrentDT" Mode="In" Type="DateTime" />
+          <Parameter Name="CurrentDT" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="SP_FXBorrowingLending">
             <Parameter Name="Product1" Mode="In" Type="String" />
@@ -5413,7 +5290,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
             <Parameter Name="BR" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_GetCRRFINCONPeriods" ReturnType="Collection(BlotterEF.SP_GetCRRFINCONPeriods_Result)">
-            <Parameter Name="BR" Mode="In" Type="Int32" />
+          <Parameter Name="BR" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_GetNostroBankFromOPICS" ReturnType="Collection(BlotterEF.SP_GetNostroBankFromOPICS_Result)">
             <Parameter Name="currencyId" Mode="In" Type="Int32" />
@@ -5452,13 +5329,13 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           </FunctionImport>
           <FunctionImport Name="SP_SBPBlotter01" />
           <FunctionImport Name="SP_SBPBlotter03">
-            <Parameter Name="Br" Mode="In" Type="String" />
+          <Parameter Name="Br" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_SBPBlotter55">
-            <Parameter Name="Br" Mode="In" Type="String" />
+          <Parameter Name="Br" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_SBPBlotter66">
-            <Parameter Name="Br" Mode="In" Type="String" />
+          <Parameter Name="Br" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_SBPBlotterBR1" ReturnType="Collection(BlotterEF.SP_SBPBlotterBR1_Result)">
             <Parameter Name="Br" Mode="In" Type="String" />
@@ -5470,10 +5347,10 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
             <Parameter Name="CurrentDT" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="SP_SBPBlotterBR1_BAK">
-            <Parameter Name="Br" Mode="In" Type="String" />
+          <Parameter Name="Br" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_SBPBlotterBR11">
-            <Parameter Name="Br" Mode="In" Type="String" />
+          <Parameter Name="Br" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_SBPBlotterBR2">
             <Parameter Name="Br" Mode="In" Type="String" />
@@ -5500,7 +5377,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
             <Parameter Name="EndDate" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="SP_SBPBlotterxx">
-            <Parameter Name="Br" Mode="In" Type="String" />
+          <Parameter Name="Br" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_SBPFillDumBlotterBR1">
             <Parameter Name="Br" Mode="In" Type="String" />
@@ -5511,7 +5388,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
             <Parameter Name="CurrentDT" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="SP_SBPOpicsSystemDate">
-            <Parameter Name="BrCode" Mode="In" Type="String" />
+          <Parameter Name="BrCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_TMU_PORTFOLIO">
             <Parameter Name="PType" Mode="In" Type="String" />
@@ -7209,6 +7086,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <EntitySetMapping Name="SBP_BlotterManualData">
             <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterManualData">
               <MappingFragment StoreEntitySet="SBP_BlotterManualData">
+                <ScalarProperty Name="NostroCode" ColumnName="NostroCode" />
                 <ScalarProperty Name="NostroBank" ColumnName="NostroBank" />
                 <ScalarProperty Name="SNo" ColumnName="SNo" />
                 <ScalarProperty Name="DataType" ColumnName="DataType" />

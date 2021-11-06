@@ -164,6 +164,7 @@
     </Compile>
     <Compile Include="Models\BlotterRSFTT.cs" />
     <Compile Include="Models\GazettedHoliday.cs" />
+    <Compile Include="Models\SBP_BlotterCRRFINCONPeriods.cs" />
     <Compile Include="Models\SBP_BlotterOutRight.cs" />
     <Compile Include="Models\SBP_BlotterReserved.cs" />
     <Compile Include="Models\BlotterSumEmail.cs" />
@@ -227,6 +228,7 @@
     <Compile Include="Models\WebPages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\EntitiyMapperBlotterBalDiff.cs" />
+    <Compile Include="Repository\EntitiyMapperBlotterCRRFINCONPeriods.cs" />
     <Compile Include="Repository\EntitiyMapperBlotterCRRFINCON.cs" />
     <Compile Include="Repository\EntitiyMapperBlotterDMMO.cs" />
     <Compile Include="Repository\EntitiyMapperBlotterFR.cs" />
