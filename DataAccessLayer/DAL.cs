@@ -84,8 +84,7 @@ namespace DataAccessLayer
             try
             {
 
-                DbContextB.SBP_BlotterReconBreakups.Add(RBItem);
-                DbContextB.SaveChanges();
+                DbContextB.SP_InsertBlotterReconBreakups(RBItem.DataType,RBItem.TTID,RBItem.RECON_Date,RBItem.RECONCOde,RBItem.RECON_InFlow,RBItem.RECON_OutFLow,RBItem.Note,RBItem.UserID,RBItem.BR,RBItem.BID);
                 status = true;
 
             }
@@ -102,21 +101,8 @@ namespace DataAccessLayer
             try
             {
 
-                SBP_BlotterReconBreakups CLRItems = DbContextB.SBP_BlotterReconBreakups.Where(p => p.SNo == RBItem.SNo).FirstOrDefault();
-                if (CLRItems != null)
-                {
 
-                    CLRItems.DataType = RBItem.DataType;
-                    CLRItems.TTID = RBItem.TTID;
-                    CLRItems.RECON_Date = RBItem.RECON_Date;
-                    CLRItems.RECON_InFlow = RBItem.RECON_InFlow;
-                    CLRItems.RECON_OutFLow = RBItem.RECON_OutFLow;
-
-                    CLRItems.Note = RBItem.Note;
-                    CLRItems.CurID = RBItem.CurID;
-                    CLRItems.UpdateDate = RBItem.UpdateDate;
-                    DbContextB.SaveChanges();
-                }
+                DbContextB.SP_UpdateBlotterReconBreakups(RBItem.SNo,RBItem.DataType, RBItem.TTID, RBItem.RECON_Date, RBItem.RECONCOde, RBItem.RECON_InFlow, RBItem.RECON_OutFLow, RBItem.Note, RBItem.UserID, RBItem.BR, RBItem.BID);
                 status = true;
 
             }

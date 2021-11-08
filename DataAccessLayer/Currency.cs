@@ -21,9 +21,7 @@ namespace DataAccessLayer
             this.SBP_BlotterBai_Muajjal = new HashSet<SBP_BlotterBai_Muajjal>();
             this.SBP_BlotterBreakups = new HashSet<SBP_BlotterBreakups>();
             this.SBP_BlotterClearing = new HashSet<SBP_BlotterClearing>();
-            this.SBP_BlotterCRRReportingCurrencyWise = new HashSet<SBP_BlotterCRRReportingCurrencyWise>();
             this.SBP_BlotterFundingRepo = new HashSet<SBP_BlotterFundingRepo>();
-            this.SBP_BlotterImportExport = new HashSet<SBP_BlotterImportExport>();
             this.SBP_BlotterManualData = new HashSet<SBP_BlotterManualData>();
             this.SBP_BlotterOpeningBalance = new HashSet<SBP_BlotterOpeningBalance>();
             this.SBP_BlotterOpeningClosingBalanceDIfferential = new HashSet<SBP_BlotterOpeningClosingBalanceDIfferential>();
@@ -31,9 +29,7 @@ namespace DataAccessLayer
             this.SBP_BlotterTBO = new HashSet<SBP_BlotterTBO>();
             this.SBP_BlotterTrade = new HashSet<SBP_BlotterTrade>();
             this.SBP_BlotterFundsTransfer = new HashSet<SBP_BlotterFundsTransfer>();
-            this.UserCurrencyRelations = new HashSet<UserCurrencyRelation>();
             this.SBP_BlotterManualEstBalance = new HashSet<SBP_BlotterManualEstBalance>();
-            this.SBP_BlotterBranchBalances = new HashSet<SBP_BlotterBranchBalances>();
         }
     
         public int CID { get; set; }
@@ -53,11 +49,7 @@ namespace DataAccessLayer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SBP_BlotterClearing> SBP_BlotterClearing { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SBP_BlotterCRRReportingCurrencyWise> SBP_BlotterCRRReportingCurrencyWise { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SBP_BlotterFundingRepo> SBP_BlotterFundingRepo { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SBP_BlotterImportExport> SBP_BlotterImportExport { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SBP_BlotterManualData> SBP_BlotterManualData { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -73,10 +65,6 @@ namespace DataAccessLayer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SBP_BlotterFundsTransfer> SBP_BlotterFundsTransfer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserCurrencyRelation> UserCurrencyRelations { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SBP_BlotterManualEstBalance> SBP_BlotterManualEstBalance { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SBP_BlotterBranchBalances> SBP_BlotterBranchBalances { get; set; }
     }
 }

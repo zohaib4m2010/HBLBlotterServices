@@ -22,7 +22,6 @@ namespace DataAccessLayer
             this.SBP_BlotterBreakups = new HashSet<SBP_BlotterBreakups>();
             this.SBP_BlotterClearing = new HashSet<SBP_BlotterClearing>();
             this.SBP_BlotterCRRReportFCY = new HashSet<SBP_BlotterCRRReportFCY>();
-            this.SBP_BlotterCRRReportingCurrencyWise = new HashSet<SBP_BlotterCRRReportingCurrencyWise>();
             this.SBP_BlotterFundingRepo = new HashSet<SBP_BlotterFundingRepo>();
             this.SBP_BlotterOpeningBalance = new HashSet<SBP_BlotterOpeningBalance>();
             this.SBP_BlotterRTGS = new HashSet<SBP_BlotterRTGS>();
@@ -30,7 +29,6 @@ namespace DataAccessLayer
             this.SBP_BlotterTrade = new HashSet<SBP_BlotterTrade>();
             this.SBP_BlotterFundsTransfer = new HashSet<SBP_BlotterFundsTransfer>();
             this.SBP_BlotterManualEstBalance = new HashSet<SBP_BlotterManualEstBalance>();
-            this.SBP_BlotterBranchBalances = new HashSet<SBP_BlotterBranchBalances>();
         }
     
         public int BID { get; set; }
@@ -53,8 +51,6 @@ namespace DataAccessLayer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SBP_BlotterCRRReportFCY> SBP_BlotterCRRReportFCY { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SBP_BlotterCRRReportingCurrencyWise> SBP_BlotterCRRReportingCurrencyWise { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SBP_BlotterFundingRepo> SBP_BlotterFundingRepo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SBP_BlotterOpeningBalance> SBP_BlotterOpeningBalance { get; set; }
@@ -68,7 +64,5 @@ namespace DataAccessLayer
         public virtual ICollection<SBP_BlotterFundsTransfer> SBP_BlotterFundsTransfer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SBP_BlotterManualEstBalance> SBP_BlotterManualEstBalance { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SBP_BlotterBranchBalances> SBP_BlotterBranchBalances { get; set; }
     }
 }

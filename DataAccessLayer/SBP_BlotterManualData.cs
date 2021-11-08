@@ -29,7 +29,6 @@ namespace DataAccessLayer
         public Nullable<decimal> AdjBalance { get; set; }
         public Nullable<bool> isAdjusted { get; set; }
         public string NostroCode { get; set; }
-        public Nullable<long> NostroBank { get; set; }
     
         public virtual Currency Currency { get; set; }
         public virtual SBP_LoginInfo SBP_LoginInfo { get; set; }

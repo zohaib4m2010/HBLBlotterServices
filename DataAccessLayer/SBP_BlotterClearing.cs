@@ -34,7 +34,7 @@ namespace DataAccessLayer
     
         public virtual Branches Branch { get; set; }
         public virtual Currency Currency { get; set; }
-        public virtual SBP_LoginInfo SBP_LoginInfo { get; set; }
         public virtual SBP_BlotterTransactionTitles SBP_BlotterTransactionTitles { get; set; }
+        public virtual SBP_LoginInfo SBP_LoginInfo { get; set; }
     }
 }

@@ -9,6 +9,7 @@ namespace WebApiServices.Models
     {
         public long SNo { get; set; }
         public int TTID { get; set; }
+        public string BranchName { get; set; }
         public string TransactionType { get; set; }
         public Nullable<System.DateTime> RECON_Date { get; set; }
         public string RECONCOde { get; set; }
