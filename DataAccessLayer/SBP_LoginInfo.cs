@@ -35,6 +35,8 @@ namespace DataAccessLayer
             this.UserRoleRelations = new HashSet<UserRoleRelation>();
             this.UserCurrencyRelations = new HashSet<UserCurrencyRelation>();
             this.SBP_BlotterManualEstBalance = new HashSet<SBP_BlotterManualEstBalance>();
+            this.SBP_BlotterBranchBalances = new HashSet<SBP_BlotterBranchBalances>();
+            this.SBP_BlotterSessionDetails = new HashSet<SBP_BlotterSessionDetails>();
         }
     
         public int Id { get; set; }
@@ -96,5 +98,9 @@ namespace DataAccessLayer
         public virtual ICollection<UserCurrencyRelation> UserCurrencyRelations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SBP_BlotterManualEstBalance> SBP_BlotterManualEstBalance { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SBP_BlotterBranchBalances> SBP_BlotterBranchBalances { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SBP_BlotterSessionDetails> SBP_BlotterSessionDetails { get; set; }
     }
 }

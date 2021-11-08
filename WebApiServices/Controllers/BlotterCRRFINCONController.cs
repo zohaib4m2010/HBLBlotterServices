@@ -22,6 +22,20 @@ namespace WebApiServices.Controllers
             products = mapObj.Translate(dalBlotterCRRFINCON);
             return Json<Models.SBP_BlotterCRRFINCON>(products);
         }
+
+        [HttpGet]
+        public JsonResult<List<Models.SBP_BlotterCRRFINCONPeriods>> GetBlotterCRRFINCONPeriods(int BR)
+        {
+            EntitiyMapperBlotterCRRFINCONPeriods<DataAccessLayer.SP_GetCRRFINCONPeriods_Result, Models.SBP_BlotterCRRFINCONPeriods> mapObj = new EntitiyMapperBlotterCRRFINCONPeriods<DataAccessLayer.SP_GetCRRFINCONPeriods_Result, Models.SBP_BlotterCRRFINCONPeriods>();
+            List <DataAccessLayer.SP_GetCRRFINCONPeriods_Result> dalBlotterCRRFINCONPeriods = DAL.GetAllBlotterCRRFINCONPeriods(BR);
+            List <Models.SBP_BlotterCRRFINCONPeriods> products = new List<Models.SBP_BlotterCRRFINCONPeriods>();
+            foreach (var item in dalBlotterCRRFINCONPeriods)
+            {
+                products.Add(mapObj.Translate(item));
+            }
+            return Json<List<Models.SBP_BlotterCRRFINCONPeriods>>(products);
+        }
+
         [HttpGet]
         public JsonResult<List<Models.SBP_BlotterCRRFINCON>> GetAllBlotterCRRFINCON(int UserID, int BranchID, int CurID,int BR,string StartDate,string EndDate)
         {

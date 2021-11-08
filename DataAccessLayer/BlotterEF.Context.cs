@@ -64,7 +64,33 @@ namespace DataAccessLayer
         public virtual DbSet<SBP_BlotterReserved> SBP_BlotterReserved { get; set; }
         public virtual DbSet<UserCurrencyRelation> UserCurrencyRelations { get; set; }
         public virtual DbSet<SBP_BlotterManualEstBalance> SBP_BlotterManualEstBalance { get; set; }
+        public virtual DbSet<BlotterDataColor> BlotterDataColors { get; set; }
+        public virtual DbSet<OW_AUTH> OW_AUTH { get; set; }
+        public virtual DbSet<OW_USERS> OW_USERS { get; set; }
+        public virtual DbSet<SBP_BlotterBranchBalances> SBP_BlotterBranchBalances { get; set; }
+        public virtual DbSet<SBP_BlotterDTL> SBP_BlotterDTL { get; set; }
+        public virtual DbSet<SBP_BlotterFixedIncome> SBP_BlotterFixedIncome { get; set; }
+        public virtual DbSet<SBP_BlotterFXDH> SBP_BlotterFXDH { get; set; }
+        public virtual DbSet<SBP_BlotterFXDHSWAP> SBP_BlotterFXDHSWAP { get; set; }
+        public virtual DbSet<SBP_BlotterManualDeals> SBP_BlotterManualDeals { get; set; }
+        public virtual DbSet<SBP_BlotterOpening> SBP_BlotterOpening { get; set; }
         public virtual DbSet<SBP_BlotterReconBreakups> SBP_BlotterReconBreakups { get; set; }
+        public virtual DbSet<SBP_BlotterRPRH> SBP_BlotterRPRH { get; set; }
+        public virtual DbSet<SBP_BlotterSetup> SBP_BlotterSetup { get; set; }
+        public virtual DbSet<SBP_BlotterSPSH> SBP_BlotterSPSH { get; set; }
+        public virtual DbSet<SBP_BlotterTPOS> SBP_BlotterTPOS { get; set; }
+        public virtual DbSet<SBP_BlotterTransactionsTotal> SBP_BlotterTransactionsTotal { get; set; }
+        public virtual DbSet<SBP_BlotterTransactionTitles> SBP_BlotterTransactionTitles { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<TEMPRECONCHECK> TEMPRECONCHECKs { get; set; }
+        public virtual DbSet<TEMPRECONTEST> TEMPRECONTESTs { get; set; }
+        public virtual DbSet<WeekEnd> WeekEnds { get; set; }
+        public virtual DbSet<fx_maturity_profile> fx_maturity_profile { get; set; }
+        public virtual DbSet<fxacuphbl1> fxacuphbl1 { get; set; }
+        public virtual DbSet<OW_dblink> OW_dblink { get; set; }
+        public virtual DbSet<SBP_BlotterConversionRate> SBP_BlotterConversionRate { get; set; }
+        public virtual DbSet<SBP_BlotterRTGS1> SBP_BlotterRTGS1 { get; set; }
+        public virtual DbSet<SBP_BlotterSessionDetails> SBP_BlotterSessionDetails { get; set; }
     
         public virtual int SP_ADD_ActivityMonitor(string pSessionID, Nullable<int> pUserID, string pIP, string pLoginGUID, string pData, string pActivity, string pURL)
         {
@@ -1575,6 +1601,758 @@ namespace DataAccessLayer
                 new ObjectParameter("BR", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_UpdateBlotterReconBreakups", sNOParameter, dataTypeParameter, tTIDParameter, reconDateParameter, reconCodeParameter, reconInflowParameter, recon_OutFLowParameter, noteParameter, userIDParameter, bRParameter);
+        }
+    
+        public virtual int f_SP_FXGapPovitHBL(string product, string cost, string port, string ccy, string conditionStr, Nullable<System.DateTime> fromDt, Nullable<System.DateTime> toDt)
+        {
+            var productParameter = product != null ?
+                new ObjectParameter("Product", product) :
+                new ObjectParameter("Product", typeof(string));
+    
+            var costParameter = cost != null ?
+                new ObjectParameter("cost", cost) :
+                new ObjectParameter("cost", typeof(string));
+    
+            var portParameter = port != null ?
+                new ObjectParameter("port", port) :
+                new ObjectParameter("port", typeof(string));
+    
+            var ccyParameter = ccy != null ?
+                new ObjectParameter("ccy", ccy) :
+                new ObjectParameter("ccy", typeof(string));
+    
+            var conditionStrParameter = conditionStr != null ?
+                new ObjectParameter("ConditionStr", conditionStr) :
+                new ObjectParameter("ConditionStr", typeof(string));
+    
+            var fromDtParameter = fromDt.HasValue ?
+                new ObjectParameter("fromDt", fromDt) :
+                new ObjectParameter("fromDt", typeof(System.DateTime));
+    
+            var toDtParameter = toDt.HasValue ?
+                new ObjectParameter("toDt", toDt) :
+                new ObjectParameter("toDt", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("f_SP_FXGapPovitHBL", productParameter, costParameter, portParameter, ccyParameter, conditionStrParameter, fromDtParameter, toDtParameter);
+        }
+    
+        public virtual int SP_ADD_ECRRCarryForwardData(Nullable<System.DateTime> date, Nullable<int> bR)
+        {
+            var dateParameter = date.HasValue ?
+                new ObjectParameter("Date", date) :
+                new ObjectParameter("Date", typeof(System.DateTime));
+    
+            var bRParameter = bR.HasValue ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADD_ECRRCarryForwardData", dateParameter, bRParameter);
+        }
+    
+        public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var versionParameter = version.HasValue ?
+                new ObjectParameter("version", version) :
+                new ObjectParameter("version", typeof(int));
+    
+            var definitionParameter = definition != null ?
+                new ObjectParameter("definition", definition) :
+                new ObjectParameter("definition", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_alterdiagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+        }
+    
+        public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var versionParameter = version.HasValue ?
+                new ObjectParameter("version", version) :
+                new ObjectParameter("version", typeof(int));
+    
+            var definitionParameter = definition != null ?
+                new ObjectParameter("definition", definition) :
+                new ObjectParameter("definition", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_creatediagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+        }
+    
+        public virtual int sp_dropdiagram(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual int SP_FillManualDealByDate()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_FillManualDealByDate");
+        }
+    
+        public virtual int SP_FillManualDealsBySchedule(Nullable<System.DateTime> currentDT, Nullable<int> br)
+        {
+            var currentDTParameter = currentDT.HasValue ?
+                new ObjectParameter("CurrentDT", currentDT) :
+                new ObjectParameter("CurrentDT", typeof(System.DateTime));
+    
+            var brParameter = br.HasValue ?
+                new ObjectParameter("Br", br) :
+                new ObjectParameter("Br", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_FillManualDealsBySchedule", currentDTParameter, brParameter);
+        }
+    
+        public virtual int SP_FillManualDealsBySchedule1(Nullable<System.DateTime> currentDT, Nullable<System.DateTime> endDate, string br)
+        {
+            var currentDTParameter = currentDT.HasValue ?
+                new ObjectParameter("CurrentDT", currentDT) :
+                new ObjectParameter("CurrentDT", typeof(System.DateTime));
+    
+            var endDateParameter = endDate.HasValue ?
+                new ObjectParameter("EndDate", endDate) :
+                new ObjectParameter("EndDate", typeof(System.DateTime));
+    
+            var brParameter = br != null ?
+                new ObjectParameter("Br", br) :
+                new ObjectParameter("Br", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_FillManualDealsBySchedule1", currentDTParameter, endDateParameter, brParameter);
+        }
+    
+        public virtual int SP_FillManualDealsByScheduleBR1(Nullable<System.DateTime> currentDT)
+        {
+            var currentDTParameter = currentDT.HasValue ?
+                new ObjectParameter("CurrentDT", currentDT) :
+                new ObjectParameter("CurrentDT", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_FillManualDealsByScheduleBR1", currentDTParameter);
+        }
+    
+        public virtual int SP_FillManualDealsByScheduleBR2(Nullable<System.DateTime> currentDT)
+        {
+            var currentDTParameter = currentDT.HasValue ?
+                new ObjectParameter("CurrentDT", currentDT) :
+                new ObjectParameter("CurrentDT", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_FillManualDealsByScheduleBR2", currentDTParameter);
+        }
+    
+        public virtual int SP_FXBorrowingLending(string product1, string cost, string port, string ccy, Nullable<System.DateTime> fromDt, Nullable<System.DateTime> toDt)
+        {
+            var product1Parameter = product1 != null ?
+                new ObjectParameter("Product1", product1) :
+                new ObjectParameter("Product1", typeof(string));
+    
+            var costParameter = cost != null ?
+                new ObjectParameter("cost", cost) :
+                new ObjectParameter("cost", typeof(string));
+    
+            var portParameter = port != null ?
+                new ObjectParameter("port", port) :
+                new ObjectParameter("port", typeof(string));
+    
+            var ccyParameter = ccy != null ?
+                new ObjectParameter("ccy", ccy) :
+                new ObjectParameter("ccy", typeof(string));
+    
+            var fromDtParameter = fromDt.HasValue ?
+                new ObjectParameter("fromDt", fromDt) :
+                new ObjectParameter("fromDt", typeof(System.DateTime));
+    
+            var toDtParameter = toDt.HasValue ?
+                new ObjectParameter("toDt", toDt) :
+                new ObjectParameter("toDt", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_FXBorrowingLending", product1Parameter, costParameter, portParameter, ccyParameter, fromDtParameter, toDtParameter);
+        }
+    
+        public virtual int SP_FXMaturityProfileHBL(string product1, string cost, string port, string ccy, Nullable<System.DateTime> fromDt, Nullable<System.DateTime> toDt)
+        {
+            var product1Parameter = product1 != null ?
+                new ObjectParameter("Product1", product1) :
+                new ObjectParameter("Product1", typeof(string));
+    
+            var costParameter = cost != null ?
+                new ObjectParameter("cost", cost) :
+                new ObjectParameter("cost", typeof(string));
+    
+            var portParameter = port != null ?
+                new ObjectParameter("port", port) :
+                new ObjectParameter("port", typeof(string));
+    
+            var ccyParameter = ccy != null ?
+                new ObjectParameter("ccy", ccy) :
+                new ObjectParameter("ccy", typeof(string));
+    
+            var fromDtParameter = fromDt.HasValue ?
+                new ObjectParameter("fromDt", fromDt) :
+                new ObjectParameter("fromDt", typeof(System.DateTime));
+    
+            var toDtParameter = toDt.HasValue ?
+                new ObjectParameter("toDt", toDt) :
+                new ObjectParameter("toDt", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_FXMaturityProfileHBL", product1Parameter, costParameter, portParameter, ccyParameter, fromDtParameter, toDtParameter);
+        }
+    
+        public virtual int SP_FXMaturityProfileHBL_AI(string product1, string cost, string port, string ccy, Nullable<System.DateTime> fromDt, Nullable<System.DateTime> toDt)
+        {
+            var product1Parameter = product1 != null ?
+                new ObjectParameter("Product1", product1) :
+                new ObjectParameter("Product1", typeof(string));
+    
+            var costParameter = cost != null ?
+                new ObjectParameter("cost", cost) :
+                new ObjectParameter("cost", typeof(string));
+    
+            var portParameter = port != null ?
+                new ObjectParameter("port", port) :
+                new ObjectParameter("port", typeof(string));
+    
+            var ccyParameter = ccy != null ?
+                new ObjectParameter("ccy", ccy) :
+                new ObjectParameter("ccy", typeof(string));
+    
+            var fromDtParameter = fromDt.HasValue ?
+                new ObjectParameter("fromDt", fromDt) :
+                new ObjectParameter("fromDt", typeof(System.DateTime));
+    
+            var toDtParameter = toDt.HasValue ?
+                new ObjectParameter("toDt", toDt) :
+                new ObjectParameter("toDt", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_FXMaturityProfileHBL_AI", product1Parameter, costParameter, portParameter, ccyParameter, fromDtParameter, toDtParameter);
+        }
+    
+        public virtual int SP_FXMaturityProfileHBL01(string product1, string cost, string port, string ccy, Nullable<System.DateTime> fromDt, Nullable<System.DateTime> toDt)
+        {
+            var product1Parameter = product1 != null ?
+                new ObjectParameter("Product1", product1) :
+                new ObjectParameter("Product1", typeof(string));
+    
+            var costParameter = cost != null ?
+                new ObjectParameter("cost", cost) :
+                new ObjectParameter("cost", typeof(string));
+    
+            var portParameter = port != null ?
+                new ObjectParameter("port", port) :
+                new ObjectParameter("port", typeof(string));
+    
+            var ccyParameter = ccy != null ?
+                new ObjectParameter("ccy", ccy) :
+                new ObjectParameter("ccy", typeof(string));
+    
+            var fromDtParameter = fromDt.HasValue ?
+                new ObjectParameter("fromDt", fromDt) :
+                new ObjectParameter("fromDt", typeof(System.DateTime));
+    
+            var toDtParameter = toDt.HasValue ?
+                new ObjectParameter("toDt", toDt) :
+                new ObjectParameter("toDt", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_FXMaturityProfileHBL01", product1Parameter, costParameter, portParameter, ccyParameter, fromDtParameter, toDtParameter);
+        }
+    
+        public virtual int SP_FXNostroBlotterHBL(string product1, string cost, string port, string ccy, Nullable<System.DateTime> fromDt, Nullable<System.DateTime> toDt, string flag)
+        {
+            var product1Parameter = product1 != null ?
+                new ObjectParameter("Product1", product1) :
+                new ObjectParameter("Product1", typeof(string));
+    
+            var costParameter = cost != null ?
+                new ObjectParameter("cost", cost) :
+                new ObjectParameter("cost", typeof(string));
+    
+            var portParameter = port != null ?
+                new ObjectParameter("port", port) :
+                new ObjectParameter("port", typeof(string));
+    
+            var ccyParameter = ccy != null ?
+                new ObjectParameter("ccy", ccy) :
+                new ObjectParameter("ccy", typeof(string));
+    
+            var fromDtParameter = fromDt.HasValue ?
+                new ObjectParameter("fromDt", fromDt) :
+                new ObjectParameter("fromDt", typeof(System.DateTime));
+    
+            var toDtParameter = toDt.HasValue ?
+                new ObjectParameter("toDt", toDt) :
+                new ObjectParameter("toDt", typeof(System.DateTime));
+    
+            var flagParameter = flag != null ?
+                new ObjectParameter("flag", flag) :
+                new ObjectParameter("flag", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_FXNostroBlotterHBL", product1Parameter, costParameter, portParameter, ccyParameter, fromDtParameter, toDtParameter, flagParameter);
+        }
+    
+        public virtual int SP_FXNostroTradingHBL(string product1, string cost, string port, string ccy, Nullable<System.DateTime> fromDt, Nullable<System.DateTime> toDt, string flag)
+        {
+            var product1Parameter = product1 != null ?
+                new ObjectParameter("Product1", product1) :
+                new ObjectParameter("Product1", typeof(string));
+    
+            var costParameter = cost != null ?
+                new ObjectParameter("cost", cost) :
+                new ObjectParameter("cost", typeof(string));
+    
+            var portParameter = port != null ?
+                new ObjectParameter("port", port) :
+                new ObjectParameter("port", typeof(string));
+    
+            var ccyParameter = ccy != null ?
+                new ObjectParameter("ccy", ccy) :
+                new ObjectParameter("ccy", typeof(string));
+    
+            var fromDtParameter = fromDt.HasValue ?
+                new ObjectParameter("fromDt", fromDt) :
+                new ObjectParameter("fromDt", typeof(System.DateTime));
+    
+            var toDtParameter = toDt.HasValue ?
+                new ObjectParameter("toDt", toDt) :
+                new ObjectParameter("toDt", typeof(System.DateTime));
+    
+            var flagParameter = flag != null ?
+                new ObjectParameter("flag", flag) :
+                new ObjectParameter("flag", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_FXNostroTradingHBL", product1Parameter, costParameter, portParameter, ccyParameter, fromDtParameter, toDtParameter, flagParameter);
+        }
+    
+        public virtual int SP_FXNostroTradingHBL01(string product1, string cost, string port, string ccy, Nullable<System.DateTime> fromDt, Nullable<System.DateTime> toDt, string flag)
+        {
+            var product1Parameter = product1 != null ?
+                new ObjectParameter("Product1", product1) :
+                new ObjectParameter("Product1", typeof(string));
+    
+            var costParameter = cost != null ?
+                new ObjectParameter("cost", cost) :
+                new ObjectParameter("cost", typeof(string));
+    
+            var portParameter = port != null ?
+                new ObjectParameter("port", port) :
+                new ObjectParameter("port", typeof(string));
+    
+            var ccyParameter = ccy != null ?
+                new ObjectParameter("ccy", ccy) :
+                new ObjectParameter("ccy", typeof(string));
+    
+            var fromDtParameter = fromDt.HasValue ?
+                new ObjectParameter("fromDt", fromDt) :
+                new ObjectParameter("fromDt", typeof(System.DateTime));
+    
+            var toDtParameter = toDt.HasValue ?
+                new ObjectParameter("toDt", toDt) :
+                new ObjectParameter("toDt", typeof(System.DateTime));
+    
+            var flagParameter = flag != null ?
+                new ObjectParameter("flag", flag) :
+                new ObjectParameter("flag", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_FXNostroTradingHBL01", product1Parameter, costParameter, portParameter, ccyParameter, fromDtParameter, toDtParameter, flagParameter);
+        }
+    
+        public virtual ObjectResult<SP_Get_SBPBlotterConversionRate_Result> SP_Get_SBPBlotterConversionRate(Nullable<int> cCYID, string bR)
+        {
+            var cCYIDParameter = cCYID.HasValue ?
+                new ObjectParameter("CCYID", cCYID) :
+                new ObjectParameter("CCYID", typeof(int));
+    
+            var bRParameter = bR != null ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_Get_SBPBlotterConversionRate_Result>("SP_Get_SBPBlotterConversionRate", cCYIDParameter, bRParameter);
+        }
+    
+        public virtual ObjectResult<SP_GetCRRFINCONPeriods_Result> SP_GetCRRFINCONPeriods(Nullable<int> bR)
+        {
+            var bRParameter = bR.HasValue ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetCRRFINCONPeriods_Result>("SP_GetCRRFINCONPeriods", bRParameter);
+        }
+    
+        public virtual ObjectResult<SP_GetNostroBankFromOPICS_Result> SP_GetNostroBankFromOPICS(Nullable<int> currencyId, string bR)
+        {
+            var currencyIdParameter = currencyId.HasValue ?
+                new ObjectParameter("currencyId", currencyId) :
+                new ObjectParameter("currencyId", typeof(int));
+    
+            var bRParameter = bR != null ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetNostroBankFromOPICS_Result>("SP_GetNostroBankFromOPICS", currencyIdParameter, bRParameter);
+        }
+    
+        public virtual ObjectResult<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagramdefinition_Result>("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual ObjectResult<sp_helpdiagrams_Result> sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual int SP_InsertBranchBalances(Nullable<System.DateTime> branch_Date, Nullable<decimal> branch_InFlow, Nullable<decimal> branch_OutFLow, string note, Nullable<int> userId, Nullable<int> bR, string branchName, Nullable<int> curId)
+        {
+            var branch_DateParameter = branch_Date.HasValue ?
+                new ObjectParameter("Branch_Date", branch_Date) :
+                new ObjectParameter("Branch_Date", typeof(System.DateTime));
+    
+            var branch_InFlowParameter = branch_InFlow.HasValue ?
+                new ObjectParameter("Branch_InFlow", branch_InFlow) :
+                new ObjectParameter("Branch_InFlow", typeof(decimal));
+    
+            var branch_OutFLowParameter = branch_OutFLow.HasValue ?
+                new ObjectParameter("Branch_OutFLow", branch_OutFLow) :
+                new ObjectParameter("Branch_OutFLow", typeof(decimal));
+    
+            var noteParameter = note != null ?
+                new ObjectParameter("Note", note) :
+                new ObjectParameter("Note", typeof(string));
+    
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            var bRParameter = bR.HasValue ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(int));
+    
+            var branchNameParameter = branchName != null ?
+                new ObjectParameter("BranchName", branchName) :
+                new ObjectParameter("BranchName", typeof(string));
+    
+            var curIdParameter = curId.HasValue ?
+                new ObjectParameter("CurId", curId) :
+                new ObjectParameter("CurId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_InsertBranchBalances", branch_DateParameter, branch_InFlowParameter, branch_OutFLowParameter, noteParameter, userIdParameter, bRParameter, branchNameParameter, curIdParameter);
+        }
+    
+        public virtual int SP_MMMaturityProfileHBL(string product1, string cost, string port, string ccy, Nullable<System.DateTime> fromDt, Nullable<System.DateTime> toDt)
+        {
+            var product1Parameter = product1 != null ?
+                new ObjectParameter("Product1", product1) :
+                new ObjectParameter("Product1", typeof(string));
+    
+            var costParameter = cost != null ?
+                new ObjectParameter("cost", cost) :
+                new ObjectParameter("cost", typeof(string));
+    
+            var portParameter = port != null ?
+                new ObjectParameter("port", port) :
+                new ObjectParameter("port", typeof(string));
+    
+            var ccyParameter = ccy != null ?
+                new ObjectParameter("ccy", ccy) :
+                new ObjectParameter("ccy", typeof(string));
+    
+            var fromDtParameter = fromDt.HasValue ?
+                new ObjectParameter("fromDt", fromDt) :
+                new ObjectParameter("fromDt", typeof(System.DateTime));
+    
+            var toDtParameter = toDt.HasValue ?
+                new ObjectParameter("toDt", toDt) :
+                new ObjectParameter("toDt", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MMMaturityProfileHBL", product1Parameter, costParameter, portParameter, ccyParameter, fromDtParameter, toDtParameter);
+        }
+    
+        public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var new_diagramnameParameter = new_diagramname != null ?
+                new ObjectParameter("new_diagramname", new_diagramname) :
+                new ObjectParameter("new_diagramname", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
+        }
+    
+        public virtual int SP_SBPBlotter01()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SBPBlotter01");
+        }
+    
+        public virtual int SP_SBPBlotter03(string br)
+        {
+            var brParameter = br != null ?
+                new ObjectParameter("Br", br) :
+                new ObjectParameter("Br", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SBPBlotter03", brParameter);
+        }
+    
+        public virtual int SP_SBPBlotter55(string br)
+        {
+            var brParameter = br != null ?
+                new ObjectParameter("Br", br) :
+                new ObjectParameter("Br", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SBPBlotter55", brParameter);
+        }
+    
+        public virtual int SP_SBPBlotter66(string br)
+        {
+            var brParameter = br != null ?
+                new ObjectParameter("Br", br) :
+                new ObjectParameter("Br", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SBPBlotter66", brParameter);
+        }
+    
+        public virtual ObjectResult<SP_SBPBlotterBR1_Result> SP_SBPBlotterBR1(string br, Nullable<System.DateTime> currentDT, string dataType)
+        {
+            var brParameter = br != null ?
+                new ObjectParameter("Br", br) :
+                new ObjectParameter("Br", typeof(string));
+    
+            var currentDTParameter = currentDT.HasValue ?
+                new ObjectParameter("CurrentDT", currentDT) :
+                new ObjectParameter("CurrentDT", typeof(System.DateTime));
+    
+            var dataTypeParameter = dataType != null ?
+                new ObjectParameter("DataType", dataType) :
+                new ObjectParameter("DataType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_SBPBlotterBR1_Result>("SP_SBPBlotterBR1", brParameter, currentDTParameter, dataTypeParameter);
+        }
+    
+        public virtual int SP_SBPBlotterBR1_20210803(string br, Nullable<System.DateTime> currentDT)
+        {
+            var brParameter = br != null ?
+                new ObjectParameter("Br", br) :
+                new ObjectParameter("Br", typeof(string));
+    
+            var currentDTParameter = currentDT.HasValue ?
+                new ObjectParameter("CurrentDT", currentDT) :
+                new ObjectParameter("CurrentDT", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SBPBlotterBR1_20210803", brParameter, currentDTParameter);
+        }
+    
+        public virtual int SP_SBPBlotterBR1_BAK(string br)
+        {
+            var brParameter = br != null ?
+                new ObjectParameter("Br", br) :
+                new ObjectParameter("Br", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SBPBlotterBR1_BAK", brParameter);
+        }
+    
+        public virtual int SP_SBPBlotterBR11(string br)
+        {
+            var brParameter = br != null ?
+                new ObjectParameter("Br", br) :
+                new ObjectParameter("Br", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SBPBlotterBR11", brParameter);
+        }
+    
+        public virtual int SP_SBPBlotterBR2(string br, string dataType, Nullable<System.DateTime> currentDT)
+        {
+            var brParameter = br != null ?
+                new ObjectParameter("Br", br) :
+                new ObjectParameter("Br", typeof(string));
+    
+            var dataTypeParameter = dataType != null ?
+                new ObjectParameter("DataType", dataType) :
+                new ObjectParameter("DataType", typeof(string));
+    
+            var currentDTParameter = currentDT.HasValue ?
+                new ObjectParameter("CurrentDT", currentDT) :
+                new ObjectParameter("CurrentDT", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SBPBlotterBR2", brParameter, dataTypeParameter, currentDTParameter);
+        }
+    
+        public virtual int SP_SBPBlotterCRRReportGenerator(Nullable<System.DateTime> currentDT, Nullable<int> bR)
+        {
+            var currentDTParameter = currentDT.HasValue ?
+                new ObjectParameter("CurrentDT", currentDT) :
+                new ObjectParameter("CurrentDT", typeof(System.DateTime));
+    
+            var bRParameter = bR.HasValue ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SBPBlotterCRRReportGenerator", currentDTParameter, bRParameter);
+        }
+    
+        public virtual int SP_SBPBlotterRunningBal(string br, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        {
+            var brParameter = br != null ?
+                new ObjectParameter("Br", br) :
+                new ObjectParameter("Br", typeof(string));
+    
+            var startDateParameter = startDate.HasValue ?
+                new ObjectParameter("StartDate", startDate) :
+                new ObjectParameter("StartDate", typeof(System.DateTime));
+    
+            var endDateParameter = endDate.HasValue ?
+                new ObjectParameter("EndDate", endDate) :
+                new ObjectParameter("EndDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SBPBlotterRunningBal", brParameter, startDateParameter, endDateParameter);
+        }
+    
+        public virtual int SP_SBPBlotterRunningBalBR1(string br, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        {
+            var brParameter = br != null ?
+                new ObjectParameter("Br", br) :
+                new ObjectParameter("Br", typeof(string));
+    
+            var startDateParameter = startDate.HasValue ?
+                new ObjectParameter("StartDate", startDate) :
+                new ObjectParameter("StartDate", typeof(System.DateTime));
+    
+            var endDateParameter = endDate.HasValue ?
+                new ObjectParameter("EndDate", endDate) :
+                new ObjectParameter("EndDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SBPBlotterRunningBalBR1", brParameter, startDateParameter, endDateParameter);
+        }
+    
+        public virtual int SP_SBPBlotterRunningBalBR2(string br, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        {
+            var brParameter = br != null ?
+                new ObjectParameter("Br", br) :
+                new ObjectParameter("Br", typeof(string));
+    
+            var startDateParameter = startDate.HasValue ?
+                new ObjectParameter("StartDate", startDate) :
+                new ObjectParameter("StartDate", typeof(System.DateTime));
+    
+            var endDateParameter = endDate.HasValue ?
+                new ObjectParameter("EndDate", endDate) :
+                new ObjectParameter("EndDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SBPBlotterRunningBalBR2", brParameter, startDateParameter, endDateParameter);
+        }
+    
+        public virtual int SP_SBPBlotterxx(string br)
+        {
+            var brParameter = br != null ?
+                new ObjectParameter("Br", br) :
+                new ObjectParameter("Br", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SBPBlotterxx", brParameter);
+        }
+    
+        public virtual int SP_SBPFillDumBlotterBR1(string br, Nullable<System.DateTime> currentDT)
+        {
+            var brParameter = br != null ?
+                new ObjectParameter("Br", br) :
+                new ObjectParameter("Br", typeof(string));
+    
+            var currentDTParameter = currentDT.HasValue ?
+                new ObjectParameter("CurrentDT", currentDT) :
+                new ObjectParameter("CurrentDT", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SBPFillDumBlotterBR1", brParameter, currentDTParameter);
+        }
+    
+        public virtual int SP_SBPFillDumBlotterBR2(string br, Nullable<System.DateTime> currentDT)
+        {
+            var brParameter = br != null ?
+                new ObjectParameter("Br", br) :
+                new ObjectParameter("Br", typeof(string));
+    
+            var currentDTParameter = currentDT.HasValue ?
+                new ObjectParameter("CurrentDT", currentDT) :
+                new ObjectParameter("CurrentDT", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SBPFillDumBlotterBR2", brParameter, currentDTParameter);
+        }
+    
+        public virtual int SP_SBPOpicsSystemDate(string brCode)
+        {
+            var brCodeParameter = brCode != null ?
+                new ObjectParameter("BrCode", brCode) :
+                new ObjectParameter("BrCode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SBPOpicsSystemDate", brCodeParameter);
+        }
+    
+        public virtual int SP_TMU_PORTFOLIO(string pType, string cost, string port, string ccy, Nullable<System.DateTime> fromDt, Nullable<System.DateTime> toDt)
+        {
+            var pTypeParameter = pType != null ?
+                new ObjectParameter("PType", pType) :
+                new ObjectParameter("PType", typeof(string));
+    
+            var costParameter = cost != null ?
+                new ObjectParameter("cost", cost) :
+                new ObjectParameter("cost", typeof(string));
+    
+            var portParameter = port != null ?
+                new ObjectParameter("port", port) :
+                new ObjectParameter("port", typeof(string));
+    
+            var ccyParameter = ccy != null ?
+                new ObjectParameter("ccy", ccy) :
+                new ObjectParameter("ccy", typeof(string));
+    
+            var fromDtParameter = fromDt.HasValue ?
+                new ObjectParameter("fromDt", fromDt) :
+                new ObjectParameter("fromDt", typeof(System.DateTime));
+    
+            var toDtParameter = toDt.HasValue ?
+                new ObjectParameter("toDt", toDt) :
+                new ObjectParameter("toDt", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_TMU_PORTFOLIO", pTypeParameter, costParameter, portParameter, ccyParameter, fromDtParameter, toDtParameter);
+        }
+    
+        public virtual int sp_upgraddiagrams()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
     }
 }
