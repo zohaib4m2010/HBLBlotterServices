@@ -78,9 +78,74 @@ namespace DataAccessLayer
             var results = DbContextB.SP_GetAll_SBPBlotterReconBreakups(UserID, BranchID, CurID, BR, DateVal).ToList();
             return results;
         }
-       
+        public static bool InsertReconBreakups(SBP_BlotterReconBreakups RBItem)
+        {
+            bool status;
+            try
+            {
 
+                DbContextB.SBP_BlotterReconBreakups.Add(RBItem);
+                DbContextB.SaveChanges();
+                status = true;
 
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine(ex.Message.ToString());
+                status = false;
+            }
+            return status;
+        }
+        public static bool UpdateReconBreakups(SBP_BlotterReconBreakups RBItem)
+        {
+            bool status;
+            try
+            {
+
+                SBP_BlotterReconBreakups CLRItems = DbContextB.SBP_BlotterReconBreakups.Where(p => p.SNo == RBItem.SNo).FirstOrDefault();
+                if (CLRItems != null)
+                {
+
+                    CLRItems.DataType = RBItem.DataType;
+                    CLRItems.TTID = RBItem.TTID;
+                    CLRItems.RECON_Date = RBItem.RECON_Date;
+                    CLRItems.RECON_InFlow = RBItem.RECON_InFlow;
+                    CLRItems.RECON_OutFLow = RBItem.RECON_OutFLow;
+
+                    CLRItems.Note = RBItem.Note;
+                    CLRItems.CurID = RBItem.CurID;
+                    CLRItems.UpdateDate = RBItem.UpdateDate;
+                    DbContextB.SaveChanges();
+                }
+                status = true;
+
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine(ex.Message.ToString());
+                status = false;
+            }
+            return status;
+        }
+        public static bool DeleteReconBreakups(int id)
+        {
+            bool status;
+            try
+            {
+                SBP_BlotterReconBreakups RbItem = DbContextB.SBP_BlotterReconBreakups.Where(p => p.SNo == id).FirstOrDefault();
+                if (RbItem != null)
+                {
+                    DbContextB.SBP_BlotterReconBreakups.Remove(RbItem);
+                    DbContextB.SaveChanges();
+                }
+                status = true;
+            }
+            catch (Exception ex)
+            {
+                status = false;
+            }
+            return status;
+        }
 
 
         //*****************************************************

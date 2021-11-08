@@ -876,26 +876,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterRECON' does not have a pri
           <Property Name="Flag" Type="varchar" MaxLength="2" />
           <Property Name="DataType" Type="varchar" MaxLength="50" />
         </EntityType>
-        <EntityType Name="SBP_BlotterReconBreakups">
-          <Key>
-            <PropertyRef Name="SNo" />
-          </Key>
-          <Property Name="SNo" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TTID" Type="int" Nullable="false" />
-          <Property Name="RECON_Date" Type="date" />
-          <Property Name="RECONCOde" Type="nvarchar" MaxLength="20" />
-          <Property Name="RECON_InFlow" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="RECON_OutFLow" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="Note" Type="nvarchar" MaxLength="250" />
-          <Property Name="UserID" Type="int" Nullable="false" />
-          <Property Name="CreateDate" Type="datetime" />
-          <Property Name="UpdateDate" Type="datetime" />
-          <Property Name="BR" Type="int" Nullable="false" />
-          <Property Name="BID" Type="int" Nullable="false" />
-          <Property Name="CurID" Type="int" Nullable="false" />
-          <Property Name="Flag" Type="varchar" MaxLength="2" />
-          <Property Name="DataType" Type="varchar" MaxLength="50" />
-        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="SBP_BlotterReserved">
@@ -2658,7 +2638,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <EntitySet Name="SBP_BlotterOutrights" EntityType="Self.SBP_BlotterOutrights" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterReconBreakups" EntityType="Self.SBP_BlotterReconBreakups" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterRPRH" EntityType="Self.SBP_BlotterRPRH" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SBP_BlotterReconBreakups" EntityType="Self.SBP_BlotterReconBreakups" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterRTGS" EntityType="Self.SBP_BlotterRTGS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterSetup" EntityType="Self.SBP_BlotterSetup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterSPSH" EntityType="Self.SBP_BlotterSPSH" Schema="dbo" store:Type="Tables" />
@@ -5226,7 +5205,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <EntitySet Name="SBP_BlotterFXDHSWAP" EntityType="BlotterEF.SBP_BlotterFXDHSWAP" />
           <EntitySet Name="SBP_BlotterManualDeals" EntityType="BlotterEF.SBP_BlotterManualDeals" />
           <EntitySet Name="SBP_BlotterOpening" EntityType="BlotterEF.SBP_BlotterOpening" />
-          <EntitySet Name="SBP_BlotterReconBreakups" EntityType="BlotterEF.SBP_BlotterReconBreakups" />
           <EntitySet Name="SBP_BlotterRPRH" EntityType="BlotterEF.SBP_BlotterRPRH" />
           <EntitySet Name="SBP_BlotterSetup" EntityType="BlotterEF.SBP_BlotterSetup" />
           <EntitySet Name="SBP_BlotterSPSH" EntityType="BlotterEF.SBP_BlotterSPSH" />
@@ -6732,26 +6710,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <Property Type="Int32" Name="TTID" Nullable="false" />
           <Property Type="String" Name="TranctionTitle" Nullable="true" MaxLength="50" />
         </ComplexType>
-        <EntityType Name="SBP_BlotterReconBreakups">
-          <Key>
-            <PropertyRef Name="SNo" />
-          </Key>
-          <Property Name="SNo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TTID" Type="Int32" Nullable="false" />
-          <Property Name="RECON_Date" Type="DateTime" Precision="0" />
-          <Property Name="RECONCOde" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="RECON_InFlow" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="RECON_OutFLow" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="Note" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
-          <Property Name="BR" Type="Int32" Nullable="false" />
-          <Property Name="BID" Type="Int32" Nullable="false" />
-          <Property Name="CurID" Type="Int32" Nullable="false" />
-          <Property Name="Flag" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="DataType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
