@@ -28,5 +28,6 @@ namespace DataAccessLayer
         public Nullable<bool> Rev { get; set; }
         public Nullable<int> BR { get; set; }
         public Nullable<int> CurId { get; set; }
+        public string NostroCode { get; set; }
     }
 }

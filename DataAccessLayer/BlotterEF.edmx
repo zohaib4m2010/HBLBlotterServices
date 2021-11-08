@@ -348,6 +348,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
           <Property Name="Rev" Type="bit" />
           <Property Name="BR" Type="int" />
           <Property Name="CurId" Type="int" />
+          <Property Name="NostroCode" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="SBP_BlotterDMMO">
           <Key>
@@ -627,6 +628,26 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterRECON' does not have a pri
           <Property Name="BID" Type="int" Nullable="false" />
           <Property Name="CurID" Type="int" Nullable="false" />
           <Property Name="Flag" Type="varchar" MaxLength="2" />
+        </EntityType>
+        <EntityType Name="SBP_BlotterReconBreakups">
+          <Key>
+            <PropertyRef Name="SNo" />
+          </Key>
+          <Property Name="SNo" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TTID" Type="int" Nullable="false" />
+          <Property Name="RECON_Date" Type="date" />
+          <Property Name="RECONCOde" Type="nvarchar" MaxLength="20" />
+          <Property Name="RECON_InFlow" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="RECON_OutFLow" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Note" Type="nvarchar" MaxLength="250" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="BR" Type="int" Nullable="false" />
+          <Property Name="BID" Type="int" Nullable="false" />
+          <Property Name="CurID" Type="int" Nullable="false" />
+          <Property Name="Flag" Type="varchar" MaxLength="2" />
+          <Property Name="DataType" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1440,6 +1461,10 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
         <Function Name="SP_DeleteHolidays" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="GHID" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_DELETEReconBreakups" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="userID" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_DELETEUserPageRelation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
@@ -1450,6 +1475,13 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <Parameter Name="WPID" Type="int" Mode="In" />
         </Function>
         <Function Name="SP_GetAll_SBPBlotterClearing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="BranchID" Type="int" Mode="In" />
+          <Parameter Name="CurID" Type="int" Mode="In" />
+          <Parameter Name="BR" Type="int" Mode="In" />
+          <Parameter Name="DateVal" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_GetAll_SBPBlotterReconBreakups" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
           <Parameter Name="BranchID" Type="int" Mode="In" />
           <Parameter Name="CurID" Type="int" Mode="In" />
@@ -1491,6 +1523,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <Parameter Name="BR" Type="int" Mode="In" />
           <Parameter Name="DateVal" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_GETAllRECONBreakupsTransactionTitles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SP_GetAllRsfTTTBO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SP_GETAllRTGSTransactionTitles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SP_GETAllTBOTransactionTitles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -1625,6 +1658,17 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <Parameter Name="UserID" Type="int" Mode="In" />
           <Parameter Name="BR" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_InsertBlotterReconBreakups" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DataType" Type="varchar" Mode="In" />
+          <Parameter Name="TTID" Type="int" Mode="In" />
+          <Parameter Name="ReconDate" Type="date" Mode="In" />
+          <Parameter Name="ReconCode" Type="varchar" Mode="In" />
+          <Parameter Name="ReconInflow" Type="numeric" Mode="In" />
+          <Parameter Name="OutFLow" Type="numeric" Mode="In" />
+          <Parameter Name="Note" Type="nvarchar" Mode="In" />
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="BR" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_InsertHolidays" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="HolidayTitle" Type="varchar" Mode="In" />
           <Parameter Name="GHDescription" Type="varchar" Mode="In" />
@@ -1732,6 +1776,18 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <Parameter Name="UserID" Type="int" Mode="In" />
           <Parameter Name="BR" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_UpdateBlotterReconBreakups" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SNO" Type="bigint" Mode="In" />
+          <Parameter Name="DataType" Type="varchar" Mode="In" />
+          <Parameter Name="TTID" Type="int" Mode="In" />
+          <Parameter Name="ReconDate" Type="date" Mode="In" />
+          <Parameter Name="ReconCode" Type="varchar" Mode="In" />
+          <Parameter Name="ReconInflow" Type="numeric" Mode="In" />
+          <Parameter Name="Recon_OutFLow" Type="numeric" Mode="In" />
+          <Parameter Name="Note" Type="nvarchar" Mode="In" />
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="BR" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_UpdateDaysInBlotterReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DTLValue" Type="numeric" Mode="In" />
           <Parameter Name="StartDate" Type="datetime" Mode="In" />
@@ -1827,6 +1883,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <EntitySet Name="SBP_BlotterOpeningBalance" EntityType="Self.SBP_BlotterOpeningBalance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterOpeningClosingBalanceDIfferential" EntityType="Self.SBP_BlotterOpeningClosingBalanceDIfferential" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterOutrights" EntityType="Self.SBP_BlotterOutrights" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SBP_BlotterReconBreakups" EntityType="Self.SBP_BlotterReconBreakups" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterRTGS" EntityType="Self.SBP_BlotterRTGS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterTBO" EntityType="Self.SBP_BlotterTBO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterTrade" EntityType="Self.SBP_BlotterTrade" Schema="dbo" store:Type="Tables" />
@@ -2468,6 +2525,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <Property Name="Rev" Type="Boolean" />
           <Property Name="BR" Type="Int32" />
           <Property Name="CurId" Type="Int32" />
+          <Property Name="NostroCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="SBP_BlotterDMMO">
           <Key>
@@ -4213,6 +4271,42 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
             <Parameter Name="BR" Mode="In" Type="Int32" />
             <Parameter Name="startdate" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SP_DELETEReconBreakups">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="userID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_GetAll_SBPBlotterReconBreakups" ReturnType="Collection(BlotterEF.SP_GetAll_SBPBlotterReconBreakups_Result)">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="BranchID" Mode="In" Type="Int32" />
+            <Parameter Name="CurID" Mode="In" Type="Int32" />
+            <Parameter Name="BR" Mode="In" Type="Int32" />
+            <Parameter Name="DateVal" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_GETAllRECONBreakupsTransactionTitles" ReturnType="Collection(BlotterEF.SP_GETAllRECONBreakupsTransactionTitles_Result)" />
+          <FunctionImport Name="SP_InsertBlotterReconBreakups">
+            <Parameter Name="DataType" Mode="In" Type="String" />
+            <Parameter Name="TTID" Mode="In" Type="Int32" />
+            <Parameter Name="ReconDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ReconCode" Mode="In" Type="String" />
+            <Parameter Name="ReconInflow" Mode="In" Type="Decimal" />
+            <Parameter Name="OutFLow" Mode="In" Type="Decimal" />
+            <Parameter Name="Note" Mode="In" Type="String" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="BR" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_UpdateBlotterReconBreakups">
+            <Parameter Name="SNO" Mode="In" Type="Int64" />
+            <Parameter Name="DataType" Mode="In" Type="String" />
+            <Parameter Name="TTID" Mode="In" Type="Int32" />
+            <Parameter Name="ReconDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ReconCode" Mode="In" Type="String" />
+            <Parameter Name="ReconInflow" Mode="In" Type="Decimal" />
+            <Parameter Name="Recon_OutFLow" Mode="In" Type="Decimal" />
+            <Parameter Name="Note" Mode="In" Type="String" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="BR" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="SBP_BlotterReconBreakups" EntityType="BlotterEF.SBP_BlotterReconBreakups" />
         </EntityContainer>
         <ComplexType Name="SP_GetAll_SBPBlotterClearing_Result">
           <Property Type="Int64" Name="SNo" Nullable="false" />
@@ -4894,6 +4988,47 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <Property Type="DateTime" Name="createDate" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="UpdateDate" Nullable="true" Precision="23" />
         </ComplexType>
+        <ComplexType Name="SP_GetAll_SBPBlotterReconBreakups_Result">
+          <Property Type="Int64" Name="SNo" Nullable="false" />
+          <Property Type="String" Name="DataType" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="TTID" Nullable="false" />
+          <Property Type="String" Name="TransactionType" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="RECON_Date" Nullable="true" />
+          <Property Type="String" Name="RECONCOde" Nullable="true" MaxLength="20" />
+          <Property Type="Decimal" Name="RECON_InFlow" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="RECON_OutFLow" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="String" Name="Note" Nullable="true" MaxLength="250" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="UpdateDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="BR" Nullable="false" />
+          <Property Type="Int32" Name="BID" Nullable="false" />
+          <Property Type="Int32" Name="CurID" Nullable="false" />
+          <Property Type="String" Name="Flag" Nullable="true" MaxLength="2" />
+        </ComplexType>
+        <ComplexType Name="SP_GETAllRECONBreakupsTransactionTitles_Result">
+          <Property Type="Int32" Name="TTID" Nullable="false" />
+          <Property Type="String" Name="TranctionTitle" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <EntityType Name="SBP_BlotterReconBreakups">
+          <Key>
+            <PropertyRef Name="SNo" />
+          </Key>
+          <Property Name="SNo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TTID" Type="Int32" Nullable="false" />
+          <Property Name="RECON_Date" Type="DateTime" Precision="0" />
+          <Property Name="RECONCOde" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="RECON_InFlow" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="RECON_OutFLow" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Note" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="BR" Type="Int32" Nullable="false" />
+          <Property Name="BID" Type="Int32" Nullable="false" />
+          <Property Name="CurID" Type="Int32" Nullable="false" />
+          <Property Name="Flag" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="DataType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5182,6 +5317,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
           <EntitySetMapping Name="SBP_BlotterDLDT">
             <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterDLDT">
               <MappingFragment StoreEntitySet="SBP_BlotterDLDT">
+                <ScalarProperty Name="NostroCode" ColumnName="NostroCode" />
                 <ScalarProperty Name="Sno" ColumnName="Sno" />
                 <ScalarProperty Name="DataType" ColumnName="DataType" />
                 <ScalarProperty Name="DealType" ColumnName="DealType" />
@@ -6533,6 +6669,59 @@ warning 6002: The table/view 'OPICSWEB.dbo.UserCurrencyRelation' does not have a
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_DELETEReconBreakups" FunctionName="OPICSWEBModel.Store.SP_DELETEReconBreakups" />
+          <FunctionImportMapping FunctionImportName="SP_GetAll_SBPBlotterReconBreakups" FunctionName="OPICSWEBModel.Store.SP_GetAll_SBPBlotterReconBreakups">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BlotterEF.SP_GetAll_SBPBlotterReconBreakups_Result">
+                <ScalarProperty Name="SNo" ColumnName="SNo" />
+                <ScalarProperty Name="DataType" ColumnName="DataType" />
+                <ScalarProperty Name="TTID" ColumnName="TTID" />
+                <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
+                <ScalarProperty Name="RECON_Date" ColumnName="RECON_Date" />
+                <ScalarProperty Name="RECONCOde" ColumnName="RECONCOde" />
+                <ScalarProperty Name="RECON_InFlow" ColumnName="RECON_InFlow" />
+                <ScalarProperty Name="RECON_OutFLow" ColumnName="RECON_OutFLow" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="BID" ColumnName="BID" />
+                <ScalarProperty Name="CurID" ColumnName="CurID" />
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_GETAllRECONBreakupsTransactionTitles" FunctionName="OPICSWEBModel.Store.SP_GETAllRECONBreakupsTransactionTitles">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BlotterEF.SP_GETAllRECONBreakupsTransactionTitles_Result">
+                <ScalarProperty Name="TTID" ColumnName="TTID" />
+                <ScalarProperty Name="TranctionTitle" ColumnName="TranctionTitle" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_InsertBlotterReconBreakups" FunctionName="OPICSWEBModel.Store.SP_InsertBlotterReconBreakups" />
+          <FunctionImportMapping FunctionImportName="SP_UpdateBlotterReconBreakups" FunctionName="OPICSWEBModel.Store.SP_UpdateBlotterReconBreakups" />
+          <EntitySetMapping Name="SBP_BlotterReconBreakups">
+            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterReconBreakups">
+              <MappingFragment StoreEntitySet="SBP_BlotterReconBreakups">
+                <ScalarProperty Name="DataType" ColumnName="DataType" />
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+                <ScalarProperty Name="CurID" ColumnName="CurID" />
+                <ScalarProperty Name="BID" ColumnName="BID" />
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="RECON_OutFLow" ColumnName="RECON_OutFLow" />
+                <ScalarProperty Name="RECON_InFlow" ColumnName="RECON_InFlow" />
+                <ScalarProperty Name="RECONCOde" ColumnName="RECONCOde" />
+                <ScalarProperty Name="RECON_Date" ColumnName="RECON_Date" />
+                <ScalarProperty Name="TTID" ColumnName="TTID" />
+                <ScalarProperty Name="SNo" ColumnName="SNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

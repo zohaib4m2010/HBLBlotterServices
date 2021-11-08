@@ -64,6 +64,7 @@ namespace DataAccessLayer
         public virtual DbSet<SBP_BlotterReserved> SBP_BlotterReserved { get; set; }
         public virtual DbSet<UserCurrencyRelation> UserCurrencyRelations { get; set; }
         public virtual DbSet<SBP_BlotterManualEstBalance> SBP_BlotterManualEstBalance { get; set; }
+        public virtual DbSet<SBP_BlotterReconBreakups> SBP_BlotterReconBreakups { get; set; }
     
         public virtual int SP_ADD_ActivityMonitor(string pSessionID, Nullable<int> pUserID, string pIP, string pLoginGUID, string pData, string pActivity, string pURL)
         {
@@ -1445,6 +1446,135 @@ namespace DataAccessLayer
                 new ObjectParameter("startdate", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GETLatestBlotterDTLPerDayWise_Result>("SP_GETLatestBlotterDTLPerDayWise", bRParameter, startdateParameter);
+        }
+    
+        public virtual int SP_DELETEReconBreakups(Nullable<int> id, Nullable<int> userID)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("userID", userID) :
+                new ObjectParameter("userID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_DELETEReconBreakups", idParameter, userIDParameter);
+        }
+    
+        public virtual ObjectResult<SP_GetAll_SBPBlotterReconBreakups_Result> SP_GetAll_SBPBlotterReconBreakups(Nullable<int> userID, Nullable<int> branchID, Nullable<int> curID, Nullable<int> bR, string dateVal)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var branchIDParameter = branchID.HasValue ?
+                new ObjectParameter("BranchID", branchID) :
+                new ObjectParameter("BranchID", typeof(int));
+    
+            var curIDParameter = curID.HasValue ?
+                new ObjectParameter("CurID", curID) :
+                new ObjectParameter("CurID", typeof(int));
+    
+            var bRParameter = bR.HasValue ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(int));
+    
+            var dateValParameter = dateVal != null ?
+                new ObjectParameter("DateVal", dateVal) :
+                new ObjectParameter("DateVal", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetAll_SBPBlotterReconBreakups_Result>("SP_GetAll_SBPBlotterReconBreakups", userIDParameter, branchIDParameter, curIDParameter, bRParameter, dateValParameter);
+        }
+    
+        public virtual ObjectResult<SP_GETAllRECONBreakupsTransactionTitles_Result> SP_GETAllRECONBreakupsTransactionTitles()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GETAllRECONBreakupsTransactionTitles_Result>("SP_GETAllRECONBreakupsTransactionTitles");
+        }
+    
+        public virtual int SP_InsertBlotterReconBreakups(string dataType, Nullable<int> tTID, Nullable<System.DateTime> reconDate, string reconCode, Nullable<decimal> reconInflow, Nullable<decimal> outFLow, string note, Nullable<int> userID, Nullable<int> bR)
+        {
+            var dataTypeParameter = dataType != null ?
+                new ObjectParameter("DataType", dataType) :
+                new ObjectParameter("DataType", typeof(string));
+    
+            var tTIDParameter = tTID.HasValue ?
+                new ObjectParameter("TTID", tTID) :
+                new ObjectParameter("TTID", typeof(int));
+    
+            var reconDateParameter = reconDate.HasValue ?
+                new ObjectParameter("ReconDate", reconDate) :
+                new ObjectParameter("ReconDate", typeof(System.DateTime));
+    
+            var reconCodeParameter = reconCode != null ?
+                new ObjectParameter("ReconCode", reconCode) :
+                new ObjectParameter("ReconCode", typeof(string));
+    
+            var reconInflowParameter = reconInflow.HasValue ?
+                new ObjectParameter("ReconInflow", reconInflow) :
+                new ObjectParameter("ReconInflow", typeof(decimal));
+    
+            var outFLowParameter = outFLow.HasValue ?
+                new ObjectParameter("OutFLow", outFLow) :
+                new ObjectParameter("OutFLow", typeof(decimal));
+    
+            var noteParameter = note != null ?
+                new ObjectParameter("Note", note) :
+                new ObjectParameter("Note", typeof(string));
+    
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var bRParameter = bR.HasValue ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_InsertBlotterReconBreakups", dataTypeParameter, tTIDParameter, reconDateParameter, reconCodeParameter, reconInflowParameter, outFLowParameter, noteParameter, userIDParameter, bRParameter);
+        }
+    
+        public virtual int SP_UpdateBlotterReconBreakups(Nullable<long> sNO, string dataType, Nullable<int> tTID, Nullable<System.DateTime> reconDate, string reconCode, Nullable<decimal> reconInflow, Nullable<decimal> recon_OutFLow, string note, Nullable<int> userID, Nullable<int> bR)
+        {
+            var sNOParameter = sNO.HasValue ?
+                new ObjectParameter("SNO", sNO) :
+                new ObjectParameter("SNO", typeof(long));
+    
+            var dataTypeParameter = dataType != null ?
+                new ObjectParameter("DataType", dataType) :
+                new ObjectParameter("DataType", typeof(string));
+    
+            var tTIDParameter = tTID.HasValue ?
+                new ObjectParameter("TTID", tTID) :
+                new ObjectParameter("TTID", typeof(int));
+    
+            var reconDateParameter = reconDate.HasValue ?
+                new ObjectParameter("ReconDate", reconDate) :
+                new ObjectParameter("ReconDate", typeof(System.DateTime));
+    
+            var reconCodeParameter = reconCode != null ?
+                new ObjectParameter("ReconCode", reconCode) :
+                new ObjectParameter("ReconCode", typeof(string));
+    
+            var reconInflowParameter = reconInflow.HasValue ?
+                new ObjectParameter("ReconInflow", reconInflow) :
+                new ObjectParameter("ReconInflow", typeof(decimal));
+    
+            var recon_OutFLowParameter = recon_OutFLow.HasValue ?
+                new ObjectParameter("Recon_OutFLow", recon_OutFLow) :
+                new ObjectParameter("Recon_OutFLow", typeof(decimal));
+    
+            var noteParameter = note != null ?
+                new ObjectParameter("Note", note) :
+                new ObjectParameter("Note", typeof(string));
+    
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var bRParameter = bR.HasValue ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_UpdateBlotterReconBreakups", sNOParameter, dataTypeParameter, tTIDParameter, reconDateParameter, reconCodeParameter, reconInflowParameter, recon_OutFLowParameter, noteParameter, userIDParameter, bRParameter);
         }
     }
 }

@@ -170,6 +170,9 @@
     <Compile Include="SBP_BlotterRECON.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="SBP_BlotterReconBreakups.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="SBP_BlotterReserved.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
@@ -197,6 +200,9 @@
     <Compile Include="SP_GetAllOpeningBalance_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="SP_GETAllRECONBreakupsTransactionTitles_Result.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="SP_GetAllRsfTTTBO_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
@@ -219,6 +225,9 @@
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_GetAll_SBPBlotterClearing_Result.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SP_GetAll_SBPBlotterReconBreakups_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_GetAll_SBPBlotterRTGS_Result.cs">

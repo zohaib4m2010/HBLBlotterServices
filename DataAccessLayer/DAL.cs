@@ -61,6 +61,27 @@ namespace DataAccessLayer
             var results = DbContextB.SP_ReconcileOPICSManualData(BR, Date).ToList();
             return results;
         }
+        //*****************************************************
+        //Recon Breakups Producers
+        //*****************************************************
+        public static List<SP_GETAllRECONBreakupsTransactionTitles_Result> GetAllReconBreakupsTransactionTitles()
+        {
+            var results = DbContextB.SP_GETAllRECONBreakupsTransactionTitles().ToList();
+            return results;
+        }
+        public static SBP_BlotterReconBreakups GetRBItem(int id)
+        {
+            return DbContextB.SBP_BlotterReconBreakups.Where(p => p.SNo == id).FirstOrDefault();
+        }
+        public static List<SP_GetAll_SBPBlotterReconBreakups_Result> GetAllBlotterReconBreakups(int UserID, int BranchID, int CurID, int BR, string DateVal)
+        {
+            var results = DbContextB.SP_GetAll_SBPBlotterReconBreakups(UserID, BranchID, CurID, BR, DateVal).ToList();
+            return results;
+        }
+       
+
+
+
 
         //*****************************************************
         //OutRight Producers
