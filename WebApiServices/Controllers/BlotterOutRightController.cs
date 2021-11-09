@@ -83,7 +83,7 @@ namespace WebApiServices.Controllers
             bool status = false;
             foreach (var item in Ids)
             {
-                status = DAL.DeleteOutRight(item);
+                status = DAL.DeleteOutRight(item,0);
             }
             return status;
         }
