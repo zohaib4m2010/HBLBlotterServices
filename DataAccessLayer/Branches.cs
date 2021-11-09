@@ -29,6 +29,7 @@ namespace DataAccessLayer
             this.SBP_BlotterTrade = new HashSet<SBP_BlotterTrade>();
             this.SBP_BlotterFundsTransfer = new HashSet<SBP_BlotterFundsTransfer>();
             this.SBP_BlotterManualEstBalance = new HashSet<SBP_BlotterManualEstBalance>();
+            this.SBP_BlotterBranchBalances = new HashSet<SBP_BlotterBranchBalances>();
         }
     
         public int BID { get; set; }
@@ -64,5 +65,7 @@ namespace DataAccessLayer
         public virtual ICollection<SBP_BlotterFundsTransfer> SBP_BlotterFundsTransfer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SBP_BlotterManualEstBalance> SBP_BlotterManualEstBalance { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SBP_BlotterBranchBalances> SBP_BlotterBranchBalances { get; set; }
     }
 }

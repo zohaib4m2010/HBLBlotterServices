@@ -91,6 +91,9 @@
         <AssociationConnector Association="BlotterEF.FK_SBP_BlotterManualEstBalance_BranchID" />
         <AssociationConnector Association="BlotterEF.FK_SBP_SBP_BlotterManualEstBalance_CurID" />
         <AssociationConnector Association="BlotterEF.FK_SBP_BlotterManualEstBalance_UserID" />
+        <AssociationConnector Association="BlotterEF.FK_SBP_BlotterBranchBalances_BranchID" />
+        <AssociationConnector Association="BlotterEF.FK_SBP_BlotterBranchBalances_CurID" />
+        <AssociationConnector Association="BlotterEF.FK_SBP_BlotterBranchBalances_UserID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
