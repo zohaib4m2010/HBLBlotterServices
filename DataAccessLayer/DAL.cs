@@ -152,8 +152,7 @@ namespace DataAccessLayer
             bool status;
             try
             {
-                DbContextB.SBP_BlotterOutrights.Add(OutRightIdItem);
-                DbContextB.SaveChanges();
+                DbContextB.SP_InsertBlotterOutright(OutRightIdItem.DataType, OutRightIdItem.Bank, OutRightIdItem.Rate, OutRightIdItem.Issue_Date, OutRightIdItem.IssueType, OutRightIdItem.Broker, OutRightIdItem.InFlow, OutRightIdItem.OutFLow, OutRightIdItem.Note, OutRightIdItem.UserID, OutRightIdItem.BR);
                 status = true;
             }
             catch (Exception ex)
@@ -169,31 +168,8 @@ namespace DataAccessLayer
             bool status;
             try
             {
-                List<SBP_BlotterOutrights> GetCount = DbContextB.SBP_BlotterOutrights.Where(p => p.SNo == OutRightIdItem.SNo).ToList();
-                if (GetCount.Count > 0)
-                {
-                    SBP_BlotterOutrights prodItem = DbContextB.SBP_BlotterOutrights.Where(p => p.SNo == OutRightIdItem.SNo).FirstOrDefault();
-                    if (prodItem != null)
-                    {
-                        prodItem.DataType = OutRightIdItem.DataType;
-                        prodItem.Bank = OutRightIdItem.Bank;
-                        prodItem.Rate = OutRightIdItem.Rate;
-                        prodItem.Issue_Date = OutRightIdItem.Issue_Date;
-                        prodItem.Broker = OutRightIdItem.Broker;
-                        prodItem.IssueType = OutRightIdItem.IssueType;
-                        prodItem.InFlow = OutRightIdItem.InFlow;
-                        prodItem.OutFLow = OutRightIdItem.OutFLow;
-                        prodItem.Note = OutRightIdItem.Note;
-                        prodItem.CurID = OutRightIdItem.CurID;
-                        prodItem.UpdateDate = OutRightIdItem.UpdateDate;
-                        DbContextB.SaveChanges();
-                    }
-                    status = true;
-                }
-                else
-                {
-                    status = false;
-                }
+                DbContextB.SP_UpdateBlotterOutright(OutRightIdItem.SNo, OutRightIdItem.DataType, OutRightIdItem.Bank, OutRightIdItem.Rate, OutRightIdItem.Issue_Date, OutRightIdItem.IssueType, OutRightIdItem.Broker, OutRightIdItem.InFlow, OutRightIdItem.OutFLow, OutRightIdItem.Note, OutRightIdItem.UserID, OutRightIdItem.BR);
+                status = true;
             }
             catch (Exception ex)
             {
@@ -202,17 +178,13 @@ namespace DataAccessLayer
             return status;
         }
 
-        public static bool DeleteOutRight(int id)
+        public static bool DeleteOutRight(int id,int UserId)
         {
             bool status;
             try
             {
-                SBP_BlotterOutrights OutRightIdItem = DbContextB.SBP_BlotterOutrights.Where(p => p.SNo == id).FirstOrDefault();
-                if (OutRightIdItem != null)
-                {
-                    OutRightIdItem.Status = false;
-                    DbContextB.SaveChanges();
-                }
+                DbContextB.SP_DeleteBlotterOutright(id,UserId);
+                
                 status = true;
             }
             catch (Exception ex)
