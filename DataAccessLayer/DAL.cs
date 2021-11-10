@@ -113,6 +113,27 @@ namespace DataAccessLayer
             }
             return status;
         }
+
+
+        public static bool UpdateReconBreakupByBranchId(SBP_BlotterReconBreakups RBItem)
+        {
+            bool status;
+            try
+            {
+                SBP_BlotterReconBreakups branchbalance = DbContextB.SBP_BlotterReconBreakups.First(b => b.BID == RBItem.BID && b.CreateDate == RBItem.CreateDate);
+                branchbalance = RBItem;
+                DbContextB.SaveChanges();
+                status = true;
+
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine(ex.Message.ToString());
+                status = false;
+            }
+            return status;
+        }
+
         public static bool DeleteReconBreakups(int id)
         {
             bool status;

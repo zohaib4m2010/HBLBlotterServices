@@ -82,6 +82,21 @@ namespace WebApiServices.Controllers
 
         }
 
+        [HttpPut]
+        public bool UpdateReconBreakupByBranchId(Models.SBP_BlotterReconBreakups blotterRB)
+        {
+            bool status = false;
+            if (ModelState.IsValid)
+            {
+                EntityMapperBlotterReconBreakups<Models.SBP_BlotterReconBreakups, DataAccessLayer.SBP_BlotterReconBreakups> mapObj = new EntityMapperBlotterReconBreakups<Models.SBP_BlotterReconBreakups, DataAccessLayer.SBP_BlotterReconBreakups>();
+                DataAccessLayer.SBP_BlotterReconBreakups RBObj = new DataAccessLayer.SBP_BlotterReconBreakups();
+                RBObj = mapObj.Translate(blotterRB);
+                status = DAL.UpdateReconBreakupByBranchId(RBObj);
+            }
+            return status;
+
+        }
+
         [HttpDelete]
         public bool DeleteReconBreakups(int id)
         {
