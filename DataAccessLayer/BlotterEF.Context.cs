@@ -45,7 +45,6 @@ namespace DataAccessLayer
         public virtual DbSet<SBP_BlotterDTLDaysWiseBal> SBP_BlotterDTLDaysWiseBal { get; set; }
         public virtual DbSet<SBP_BlotterFundingRepo> SBP_BlotterFundingRepo { get; set; }
         public virtual DbSet<SBP_BlotterFundsTransfer> SBP_BlotterFundsTransfer { get; set; }
-        public virtual DbSet<SBP_BlotterManualData> SBP_BlotterManualData { get; set; }
         public virtual DbSet<SBP_BlotterManualDeals> SBP_BlotterManualDeals { get; set; }
         public virtual DbSet<SBP_BlotterOpeningBalance> SBP_BlotterOpeningBalance { get; set; }
         public virtual DbSet<SBP_BlotterOpeningClosingBalanceDIfferential> SBP_BlotterOpeningClosingBalanceDIfferential { get; set; }
@@ -65,6 +64,7 @@ namespace DataAccessLayer
         public virtual DbSet<SBP_BlotterCRRReportFCY> SBP_BlotterCRRReportFCY { get; set; }
         public virtual DbSet<SBP_BlotterReserved> SBP_BlotterReserved { get; set; }
         public virtual DbSet<SBP_BlotterManualEstBalance> SBP_BlotterManualEstBalance { get; set; }
+        public virtual DbSet<SBP_BlotterManualData> SBP_BlotterManualData { get; set; }
     
         public virtual int SP_ADD_ActivityMonitor(string pSessionID, Nullable<int> pUserID, string pIP, string pLoginGUID, string pData, string pActivity, string pURL)
         {
@@ -681,55 +681,6 @@ namespace DataAccessLayer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetUserPageRelationById_Result>("SP_GetUserPageRelationById", uPRIDParameter);
         }
     
-        public virtual int SP_InsertBlotterOutright(string dataType, string bank, Nullable<double> rate, Nullable<System.DateTime> issue_Date, string issueType, string broker, Nullable<decimal> inFlow, Nullable<decimal> outFLow, string note, Nullable<int> userID, Nullable<int> bR)
-        {
-            var dataTypeParameter = dataType != null ?
-                new ObjectParameter("DataType", dataType) :
-                new ObjectParameter("DataType", typeof(string));
-    
-            var bankParameter = bank != null ?
-                new ObjectParameter("Bank", bank) :
-                new ObjectParameter("Bank", typeof(string));
-    
-            var rateParameter = rate.HasValue ?
-                new ObjectParameter("Rate", rate) :
-                new ObjectParameter("Rate", typeof(double));
-    
-            var issue_DateParameter = issue_Date.HasValue ?
-                new ObjectParameter("Issue_Date", issue_Date) :
-                new ObjectParameter("Issue_Date", typeof(System.DateTime));
-    
-            var issueTypeParameter = issueType != null ?
-                new ObjectParameter("IssueType", issueType) :
-                new ObjectParameter("IssueType", typeof(string));
-    
-            var brokerParameter = broker != null ?
-                new ObjectParameter("Broker", broker) :
-                new ObjectParameter("Broker", typeof(string));
-    
-            var inFlowParameter = inFlow.HasValue ?
-                new ObjectParameter("InFlow", inFlow) :
-                new ObjectParameter("InFlow", typeof(decimal));
-    
-            var outFLowParameter = outFLow.HasValue ?
-                new ObjectParameter("OutFLow", outFLow) :
-                new ObjectParameter("OutFLow", typeof(decimal));
-    
-            var noteParameter = note != null ?
-                new ObjectParameter("Note", note) :
-                new ObjectParameter("Note", typeof(string));
-    
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            var bRParameter = bR.HasValue ?
-                new ObjectParameter("BR", bR) :
-                new ObjectParameter("BR", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_InsertBlotterOutright", dataTypeParameter, bankParameter, rateParameter, issue_DateParameter, issueTypeParameter, brokerParameter, inFlowParameter, outFLowParameter, noteParameter, userIDParameter, bRParameter);
-        }
-    
         public virtual int SP_InsertBranchBalances(Nullable<System.DateTime> branch_Date, Nullable<decimal> branch_InFlow, Nullable<decimal> branch_OutFLow, string note, Nullable<int> userId, Nullable<int> bR, string branchName, Nullable<int> curId)
         {
             var branch_DateParameter = branch_Date.HasValue ?
@@ -1054,59 +1005,6 @@ namespace DataAccessLayer
                 new ObjectParameter("pUserID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SBPSessionStop", pSessionIDParameter, pUserIDParameter);
-        }
-    
-        public virtual int SP_UpdateBlotterOutright(Nullable<long> id, string dataType, string bank, Nullable<double> rate, Nullable<System.DateTime> issue_Date, string issueType, string broker, Nullable<decimal> inFlow, Nullable<decimal> outFLow, string note, Nullable<int> userID, Nullable<int> bR)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(long));
-    
-            var dataTypeParameter = dataType != null ?
-                new ObjectParameter("DataType", dataType) :
-                new ObjectParameter("DataType", typeof(string));
-    
-            var bankParameter = bank != null ?
-                new ObjectParameter("Bank", bank) :
-                new ObjectParameter("Bank", typeof(string));
-    
-            var rateParameter = rate.HasValue ?
-                new ObjectParameter("Rate", rate) :
-                new ObjectParameter("Rate", typeof(double));
-    
-            var issue_DateParameter = issue_Date.HasValue ?
-                new ObjectParameter("Issue_Date", issue_Date) :
-                new ObjectParameter("Issue_Date", typeof(System.DateTime));
-    
-            var issueTypeParameter = issueType != null ?
-                new ObjectParameter("IssueType", issueType) :
-                new ObjectParameter("IssueType", typeof(string));
-    
-            var brokerParameter = broker != null ?
-                new ObjectParameter("Broker", broker) :
-                new ObjectParameter("Broker", typeof(string));
-    
-            var inFlowParameter = inFlow.HasValue ?
-                new ObjectParameter("InFlow", inFlow) :
-                new ObjectParameter("InFlow", typeof(decimal));
-    
-            var outFLowParameter = outFLow.HasValue ?
-                new ObjectParameter("OutFLow", outFLow) :
-                new ObjectParameter("OutFLow", typeof(decimal));
-    
-            var noteParameter = note != null ?
-                new ObjectParameter("Note", note) :
-                new ObjectParameter("Note", typeof(string));
-    
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            var bRParameter = bR.HasValue ?
-                new ObjectParameter("BR", bR) :
-                new ObjectParameter("BR", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_UpdateBlotterOutright", idParameter, dataTypeParameter, bankParameter, rateParameter, issue_DateParameter, issueTypeParameter, brokerParameter, inFlowParameter, outFLowParameter, noteParameter, userIDParameter, bRParameter);
         }
     
         public virtual int SP_UpdateDaysInBlotterReport(Nullable<decimal> dTLValue, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<int> bR)
@@ -1550,6 +1448,108 @@ namespace DataAccessLayer
                 new ObjectParameter("BID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_UpdateBranchBalanceByBranchId", reconDateParameter, reconInflowParameter, recon_OutFLowParameter, userIDParameter, bRParameter, bIDParameter);
+        }
+    
+        public virtual int SP_InsertBlotterOutright(string dataType, string bank, Nullable<double> rate, Nullable<System.DateTime> issue_Date, string issueType, string broker, Nullable<decimal> inFlow, Nullable<decimal> outFLow, string note, Nullable<int> userID, Nullable<int> bR)
+        {
+            var dataTypeParameter = dataType != null ?
+                new ObjectParameter("DataType", dataType) :
+                new ObjectParameter("DataType", typeof(string));
+    
+            var bankParameter = bank != null ?
+                new ObjectParameter("Bank", bank) :
+                new ObjectParameter("Bank", typeof(string));
+    
+            var rateParameter = rate.HasValue ?
+                new ObjectParameter("Rate", rate) :
+                new ObjectParameter("Rate", typeof(double));
+    
+            var issue_DateParameter = issue_Date.HasValue ?
+                new ObjectParameter("Issue_Date", issue_Date) :
+                new ObjectParameter("Issue_Date", typeof(System.DateTime));
+    
+            var issueTypeParameter = issueType != null ?
+                new ObjectParameter("IssueType", issueType) :
+                new ObjectParameter("IssueType", typeof(string));
+    
+            var brokerParameter = broker != null ?
+                new ObjectParameter("Broker", broker) :
+                new ObjectParameter("Broker", typeof(string));
+    
+            var inFlowParameter = inFlow.HasValue ?
+                new ObjectParameter("InFlow", inFlow) :
+                new ObjectParameter("InFlow", typeof(decimal));
+    
+            var outFLowParameter = outFLow.HasValue ?
+                new ObjectParameter("OutFLow", outFLow) :
+                new ObjectParameter("OutFLow", typeof(decimal));
+    
+            var noteParameter = note != null ?
+                new ObjectParameter("Note", note) :
+                new ObjectParameter("Note", typeof(string));
+    
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var bRParameter = bR.HasValue ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_InsertBlotterOutright", dataTypeParameter, bankParameter, rateParameter, issue_DateParameter, issueTypeParameter, brokerParameter, inFlowParameter, outFLowParameter, noteParameter, userIDParameter, bRParameter);
+        }
+    
+        public virtual int SP_UpdateBlotterOutright(Nullable<long> id, string dataType, string bank, Nullable<double> rate, Nullable<System.DateTime> issue_Date, string issueType, string broker, Nullable<decimal> inFlow, Nullable<decimal> outFLow, string note, Nullable<int> userID, Nullable<int> bR)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(long));
+    
+            var dataTypeParameter = dataType != null ?
+                new ObjectParameter("DataType", dataType) :
+                new ObjectParameter("DataType", typeof(string));
+    
+            var bankParameter = bank != null ?
+                new ObjectParameter("Bank", bank) :
+                new ObjectParameter("Bank", typeof(string));
+    
+            var rateParameter = rate.HasValue ?
+                new ObjectParameter("Rate", rate) :
+                new ObjectParameter("Rate", typeof(double));
+    
+            var issue_DateParameter = issue_Date.HasValue ?
+                new ObjectParameter("Issue_Date", issue_Date) :
+                new ObjectParameter("Issue_Date", typeof(System.DateTime));
+    
+            var issueTypeParameter = issueType != null ?
+                new ObjectParameter("IssueType", issueType) :
+                new ObjectParameter("IssueType", typeof(string));
+    
+            var brokerParameter = broker != null ?
+                new ObjectParameter("Broker", broker) :
+                new ObjectParameter("Broker", typeof(string));
+    
+            var inFlowParameter = inFlow.HasValue ?
+                new ObjectParameter("InFlow", inFlow) :
+                new ObjectParameter("InFlow", typeof(decimal));
+    
+            var outFLowParameter = outFLow.HasValue ?
+                new ObjectParameter("OutFLow", outFLow) :
+                new ObjectParameter("OutFLow", typeof(decimal));
+    
+            var noteParameter = note != null ?
+                new ObjectParameter("Note", note) :
+                new ObjectParameter("Note", typeof(string));
+    
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var bRParameter = bR.HasValue ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_UpdateBlotterOutright", idParameter, dataTypeParameter, bankParameter, rateParameter, issue_DateParameter, issueTypeParameter, brokerParameter, inFlowParameter, outFLowParameter, noteParameter, userIDParameter, bRParameter);
         }
     }
 }
