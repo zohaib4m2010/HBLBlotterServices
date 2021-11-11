@@ -23,8 +23,6 @@
         <EntityTypeShape EntityType="BlotterEF.SBP_BlotterDTLDaysWiseBal" Width="1.5" PointX="8.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BlotterEF.SBP_BlotterFundingRepo" Width="1.5" PointX="9" PointY="39" IsExpanded="true" />
         <EntityTypeShape EntityType="BlotterEF.SBP_BlotterFundsTransfer" Width="1.5" PointX="9" PointY="33.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BlotterEF.SBP_BlotterManualData" Width="1.5" PointX="9" PointY="45.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BlotterEF.SBP_BlotterManualDeals" Width="1.5" PointX="2.75" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BlotterEF.SBP_BlotterOpeningBalance" Width="1.5" PointX="6" PointY="32.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BlotterEF.SBP_BlotterOpeningClosingBalanceDIfferential" Width="1.5" PointX="8.25" PointY="29.125" IsExpanded="true" />
         <EntityTypeShape EntityType="BlotterEF.SBP_BlotterOutrights" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
@@ -58,7 +56,6 @@
         <AssociationConnector Association="BlotterEF.FK_SBP_BlotterBreakups_CurID" ManuallyRouted="false" />
         <AssociationConnector Association="BlotterEF.FK_SBP_BlotterClearing_CurID" ManuallyRouted="false" />
         <AssociationConnector Association="BlotterEF.FK_SBP_BlotterFundingRepo_CurID" ManuallyRouted="false" />
-        <AssociationConnector Association="BlotterEF.FK_SBP_BlotterManualData_CurID" ManuallyRouted="false" />
         <AssociationConnector Association="BlotterEF.FK_SBP_BlotterOpeningBalance_CurID" ManuallyRouted="false" />
         <AssociationConnector Association="BlotterEF.FK_SBP_BlotterOpeningClosingBalanceDIfferential_CurID" ManuallyRouted="false" />
         <AssociationConnector Association="BlotterEF.FK_SBP_BlotterRTGS_CurID" ManuallyRouted="false" />
@@ -73,7 +70,6 @@
         <AssociationConnector Association="BlotterEF.FK_SBP_BlotterCRRReportCalcSetup_UserID" ManuallyRouted="false" />
         <AssociationConnector Association="BlotterEF.FK_SBP_BlotterFundingRepo_UserID" ManuallyRouted="false" />
         <AssociationConnector Association="BlotterEF.FK_SBP_SBP_BlotterFundsTransfer_UserID" ManuallyRouted="false" />
-        <AssociationConnector Association="BlotterEF.FK_SBP_BlotterManualData_UserID" ManuallyRouted="false" />
         <AssociationConnector Association="BlotterEF.FK_SBP_BlotterOpeningBalance_UserID" ManuallyRouted="false" />
         <AssociationConnector Association="BlotterEF.FK_SBP_BlotterOpeningClosingBalanceDIfferential_OpenBalID" ManuallyRouted="false" />
         <AssociationConnector Association="BlotterEF.FK_SBP_BlotterRTGS_TID" ManuallyRouted="false" />

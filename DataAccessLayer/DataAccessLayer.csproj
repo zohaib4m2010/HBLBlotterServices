@@ -149,12 +149,6 @@
     <Compile Include="SBP_BlotterFundsTransfer.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
-    <Compile Include="SBP_BlotterManualData.cs">
-      <DependentUpon>BlotterEF.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SBP_BlotterManualDeals.cs">
-      <DependentUpon>BlotterEF.tt</DependentUpon>
-    </Compile>
     <Compile Include="SBP_BlotterManualEstBalance.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>

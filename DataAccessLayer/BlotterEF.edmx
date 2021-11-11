@@ -454,39 +454,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
           <Property Name="CurID" Type="int" Nullable="false" />
           <Property Name="Flag" Type="varchar" MaxLength="2" />
         </EntityType>
-        <EntityType Name="SBP_BlotterManualData">
-          <Key>
-            <PropertyRef Name="SNo" />
-          </Key>
-          <Property Name="SNo" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DataType" Type="varchar" MaxLength="100" />
-          <Property Name="Inflow" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="OutFlow" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="NetBalance" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="DateFor" Type="date" />
-          <Property Name="UserID" Type="int" Nullable="false" />
-          <Property Name="CreateDate" Type="datetime" />
-          <Property Name="UpdateDate" Type="datetime" />
-          <Property Name="BR" Type="int" />
-          <Property Name="CurID" Type="int" Nullable="false" />
-          <Property Name="Flag" Type="varchar" MaxLength="2" />
-          <Property Name="AdjBalance" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="isAdjusted" Type="bit" />
-          <Property Name="NostroCode" Type="varchar" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="SBP_BlotterManualDeals">
-          <Key>
-            <PropertyRef Name="SNo" />
-          </Key>
-          <Property Name="SNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Description" Type="nvarchar" MaxLength="250" />
-          <Property Name="DealDate" Type="date" />
-          <Property Name="InFlow" Type="numeric" Precision="19" Scale="4" />
-          <Property Name="OutFlow" Type="numeric" Precision="19" Scale="4" />
-          <Property Name="CurrentDate" Type="datetime" />
-          <Property Name="DealStatus" Type="nchar" MaxLength="1" />
-          <Property Name="BR" Type="varchar" MaxLength="2" />
-        </EntityType>
         <EntityType Name="SBP_BlotterManualEstBalance">
           <Key>
             <PropertyRef Name="SNo" />
@@ -988,30 +955,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="SBP_BlotterFundingRepo">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SBP_BlotterManualData_CurID">
-          <End Role="Currencies" Type="Self.Currencies" Multiplicity="1" />
-          <End Role="SBP_BlotterManualData" Type="Self.SBP_BlotterManualData" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Currencies">
-              <PropertyRef Name="CID" />
-            </Principal>
-            <Dependent Role="SBP_BlotterManualData">
-              <PropertyRef Name="CurID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SBP_BlotterManualData_UserID">
-          <End Role="SBP_LoginInfo" Type="Self.SBP_LoginInfo" Multiplicity="1" />
-          <End Role="SBP_BlotterManualData" Type="Self.SBP_BlotterManualData" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SBP_LoginInfo">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SBP_BlotterManualData">
               <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1751,8 +1694,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <EntitySet Name="SBP_BlotterDTLDaysWiseBal" EntityType="Self.SBP_BlotterDTLDaysWiseBal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterFundingRepo" EntityType="Self.SBP_BlotterFundingRepo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterFundsTransfer" EntityType="Self.SBP_BlotterFundsTransfer" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SBP_BlotterManualData" EntityType="Self.SBP_BlotterManualData" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SBP_BlotterManualDeals" EntityType="Self.SBP_BlotterManualDeals" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterManualEstBalance" EntityType="Self.SBP_BlotterManualEstBalance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterOpeningBalance" EntityType="Self.SBP_BlotterOpeningBalance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterOpeningClosingBalanceDIfferential" EntityType="Self.SBP_BlotterOpeningClosingBalanceDIfferential" Schema="dbo" store:Type="Tables" />
@@ -1891,14 +1832,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <AssociationSet Name="FK_SBP_BlotterFundingRepo_UserID" Association="Self.FK_SBP_BlotterFundingRepo_UserID">
             <End Role="SBP_LoginInfo" EntitySet="SBP_LoginInfo" />
             <End Role="SBP_BlotterFundingRepo" EntitySet="SBP_BlotterFundingRepo" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SBP_BlotterManualData_CurID" Association="Self.FK_SBP_BlotterManualData_CurID">
-            <End Role="Currencies" EntitySet="Currencies" />
-            <End Role="SBP_BlotterManualData" EntitySet="SBP_BlotterManualData" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SBP_BlotterManualData_UserID" Association="Self.FK_SBP_BlotterManualData_UserID">
-            <End Role="SBP_LoginInfo" EntitySet="SBP_LoginInfo" />
-            <End Role="SBP_BlotterManualData" EntitySet="SBP_BlotterManualData" />
           </AssociationSet>
           <AssociationSet Name="FK_SBP_BlotterManualEstBalance_BranchID" Association="Self.FK_SBP_BlotterManualEstBalance_BranchID">
             <End Role="Branches" EntitySet="Branches" />
@@ -2090,7 +2023,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <NavigationProperty Name="SBP_BlotterBreakups" Relationship="Self.FK_SBP_BlotterBreakups_CurID" FromRole="Currencies" ToRole="SBP_BlotterBreakups" />
           <NavigationProperty Name="SBP_BlotterClearing" Relationship="Self.FK_SBP_BlotterClearing_CurID" FromRole="Currencies" ToRole="SBP_BlotterClearing" />
           <NavigationProperty Name="SBP_BlotterFundingRepo" Relationship="Self.FK_SBP_BlotterFundingRepo_CurID" FromRole="Currencies" ToRole="SBP_BlotterFundingRepo" />
-          <NavigationProperty Name="SBP_BlotterManualData" Relationship="Self.FK_SBP_BlotterManualData_CurID" FromRole="Currencies" ToRole="SBP_BlotterManualData" />
           <NavigationProperty Name="SBP_BlotterOpeningBalance" Relationship="Self.FK_SBP_BlotterOpeningBalance_CurID" FromRole="Currencies" ToRole="SBP_BlotterOpeningBalance" />
           <NavigationProperty Name="SBP_BlotterOpeningClosingBalanceDIfferential" Relationship="Self.FK_SBP_BlotterOpeningClosingBalanceDIfferential_CurID" FromRole="Currencies" ToRole="SBP_BlotterOpeningClosingBalanceDIfferential" />
           <NavigationProperty Name="SBP_BlotterRTGS" Relationship="Self.FK_SBP_BlotterRTGS_CurID" FromRole="Currencies" ToRole="SBP_BlotterRTGS" />
@@ -2476,42 +2408,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <NavigationProperty Name="Currency" Relationship="Self.FK_SBP_SBP_BlotterFundsTransfer_CurID" FromRole="SBP_BlotterFundsTransfer" ToRole="Currencies" />
           <NavigationProperty Name="SBP_LoginInfo" Relationship="Self.FK_SBP_SBP_BlotterFundsTransfer_UserID" FromRole="SBP_BlotterFundsTransfer" ToRole="SBP_LoginInfo" />
         </EntityType>
-        <EntityType Name="SBP_BlotterManualData">
-          <Key>
-            <PropertyRef Name="SNo" />
-          </Key>
-          <Property Name="SNo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DataType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Inflow" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="OutFlow" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="NetBalance" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DateFor" Type="DateTime" Precision="0" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
-          <Property Name="BR" Type="Int32" />
-          <Property Name="CurID" Type="Int32" Nullable="false" />
-          <Property Name="Flag" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="AdjBalance" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="isAdjusted" Type="Boolean" />
-          <Property Name="NostroCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Currency" Relationship="Self.FK_SBP_BlotterManualData_CurID" FromRole="SBP_BlotterManualData" ToRole="Currencies" />
-          <NavigationProperty Name="SBP_LoginInfo" Relationship="Self.FK_SBP_BlotterManualData_UserID" FromRole="SBP_BlotterManualData" ToRole="SBP_LoginInfo" />
-          <Property Name="NostroBank" Type="Int64" />
-        </EntityType>
-        <EntityType Name="SBP_BlotterManualDeals">
-          <Key>
-            <PropertyRef Name="SNo" />
-          </Key>
-          <Property Name="SNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="DealDate" Type="DateTime" Precision="0" />
-          <Property Name="InFlow" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="OutFlow" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="CurrentDate" Type="DateTime" Precision="3" />
-          <Property Name="DealStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
-          <Property Name="BR" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="SBP_BlotterOpeningBalance">
           <Key>
             <PropertyRef Name="Id" />
@@ -2734,7 +2630,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <NavigationProperty Name="SBP_BlotterCRRReportCalcSetup" Relationship="Self.FK_SBP_BlotterCRRReportCalcSetup_UserID" FromRole="SBP_LoginInfo" ToRole="SBP_BlotterCRRReportCalcSetup" />
           <NavigationProperty Name="SBP_BlotterFundingRepo" Relationship="Self.FK_SBP_BlotterFundingRepo_UserID" FromRole="SBP_LoginInfo" ToRole="SBP_BlotterFundingRepo" />
           <NavigationProperty Name="SBP_BlotterFundsTransfer" Relationship="Self.FK_SBP_SBP_BlotterFundsTransfer_UserID" FromRole="SBP_LoginInfo" ToRole="SBP_BlotterFundsTransfer" />
-          <NavigationProperty Name="SBP_BlotterManualData" Relationship="Self.FK_SBP_BlotterManualData_UserID" FromRole="SBP_LoginInfo" ToRole="SBP_BlotterManualData" />
           <NavigationProperty Name="SBP_BlotterOpeningBalance" Relationship="Self.FK_SBP_BlotterOpeningBalance_UserID" FromRole="SBP_LoginInfo" ToRole="SBP_BlotterOpeningBalance" />
           <NavigationProperty Name="SBP_BlotterRTGS" Relationship="Self.FK_SBP_BlotterRTGS_UserID" FromRole="SBP_LoginInfo" ToRole="SBP_BlotterRTGS" />
           <NavigationProperty Name="SBP_BlotterTBO" Relationship="Self.FK_SBP_BlotterTBO_UserID" FromRole="SBP_LoginInfo" ToRole="SBP_BlotterTBO" />
@@ -3040,18 +2935,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SBP_BlotterManualData_CurID">
-          <End Role="Currencies" Type="Self.Currency" Multiplicity="1" />
-          <End Role="SBP_BlotterManualData" Type="Self.SBP_BlotterManualData" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Currencies">
-              <PropertyRef Name="CID" />
-            </Principal>
-            <Dependent Role="SBP_BlotterManualData">
-              <PropertyRef Name="CurID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_SBP_BlotterOpeningBalance_CurID">
           <End Role="Currencies" Type="Self.Currency" Multiplicity="1" />
           <End Role="SBP_BlotterOpeningBalance" Type="Self.SBP_BlotterOpeningBalance" Multiplicity="*" />
@@ -3216,18 +3099,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="SBP_BlotterFundsTransfer">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SBP_BlotterManualData_UserID">
-          <End Role="SBP_LoginInfo" Type="Self.SBP_LoginInfo" Multiplicity="1" />
-          <End Role="SBP_BlotterManualData" Type="Self.SBP_BlotterManualData" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SBP_LoginInfo">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SBP_BlotterManualData">
               <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
@@ -3407,8 +3278,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <EntitySet Name="SBP_BlotterDTLDaysWiseBal" EntityType="Self.SBP_BlotterDTLDaysWiseBal" />
           <EntitySet Name="SBP_BlotterFundingRepo" EntityType="Self.SBP_BlotterFundingRepo" />
           <EntitySet Name="SBP_BlotterFundsTransfer" EntityType="Self.SBP_BlotterFundsTransfer" />
-          <EntitySet Name="SBP_BlotterManualData" EntityType="Self.SBP_BlotterManualData" />
-          <EntitySet Name="SBP_BlotterManualDeals" EntityType="Self.SBP_BlotterManualDeals" />
           <EntitySet Name="SBP_BlotterOpeningBalance" EntityType="Self.SBP_BlotterOpeningBalance" />
           <EntitySet Name="SBP_BlotterOpeningClosingBalanceDIfferential" EntityType="Self.SBP_BlotterOpeningClosingBalanceDIfferential" />
           <EntitySet Name="SBP_BlotterOutrights" EntityType="Self.SBP_BlotterOutrights" />
@@ -3490,10 +3359,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             <End Role="Currencies" EntitySet="Currencies" />
             <End Role="SBP_BlotterFundingRepo" EntitySet="SBP_BlotterFundingRepo" />
           </AssociationSet>
-          <AssociationSet Name="FK_SBP_BlotterManualData_CurID" Association="Self.FK_SBP_BlotterManualData_CurID">
-            <End Role="Currencies" EntitySet="Currencies" />
-            <End Role="SBP_BlotterManualData" EntitySet="SBP_BlotterManualData" />
-          </AssociationSet>
           <AssociationSet Name="FK_SBP_BlotterOpeningBalance_CurID" Association="Self.FK_SBP_BlotterOpeningBalance_CurID">
             <End Role="Currencies" EntitySet="Currencies" />
             <End Role="SBP_BlotterOpeningBalance" EntitySet="SBP_BlotterOpeningBalance" />
@@ -3549,10 +3414,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <AssociationSet Name="FK_SBP_SBP_BlotterFundsTransfer_UserID" Association="Self.FK_SBP_SBP_BlotterFundsTransfer_UserID">
             <End Role="SBP_LoginInfo" EntitySet="SBP_LoginInfo" />
             <End Role="SBP_BlotterFundsTransfer" EntitySet="SBP_BlotterFundsTransfer" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SBP_BlotterManualData_UserID" Association="Self.FK_SBP_BlotterManualData_UserID">
-            <End Role="SBP_LoginInfo" EntitySet="SBP_LoginInfo" />
-            <End Role="SBP_BlotterManualData" EntitySet="SBP_BlotterManualData" />
           </AssociationSet>
           <AssociationSet Name="FK_SBP_BlotterOpeningBalance_UserID" Association="Self.FK_SBP_BlotterOpeningBalance_UserID">
             <End Role="SBP_LoginInfo" EntitySet="SBP_LoginInfo" />
@@ -5172,41 +5033,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
                 <ScalarProperty Name="BID" ColumnName="BID" />
                 <ScalarProperty Name="CurID" ColumnName="CurID" />
                 <ScalarProperty Name="Flag" ColumnName="Flag" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SBP_BlotterManualData">
-            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterManualData">
-              <MappingFragment StoreEntitySet="SBP_BlotterManualData">
-                <ScalarProperty Name="SNo" ColumnName="SNo" />
-                <ScalarProperty Name="DataType" ColumnName="DataType" />
-                <ScalarProperty Name="Inflow" ColumnName="Inflow" />
-                <ScalarProperty Name="OutFlow" ColumnName="OutFlow" />
-                <ScalarProperty Name="NetBalance" ColumnName="NetBalance" />
-                <ScalarProperty Name="DateFor" ColumnName="DateFor" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="BR" ColumnName="BR" />
-                <ScalarProperty Name="CurID" ColumnName="CurID" />
-                <ScalarProperty Name="Flag" ColumnName="Flag" />
-                <ScalarProperty Name="AdjBalance" ColumnName="AdjBalance" />
-                <ScalarProperty Name="isAdjusted" ColumnName="isAdjusted" />
-                <ScalarProperty Name="NostroCode" ColumnName="NostroCode" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SBP_BlotterManualDeals">
-            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterManualDeals">
-              <MappingFragment StoreEntitySet="SBP_BlotterManualDeals">
-                <ScalarProperty Name="SNo" ColumnName="SNo" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="DealDate" ColumnName="DealDate" />
-                <ScalarProperty Name="InFlow" ColumnName="InFlow" />
-                <ScalarProperty Name="OutFlow" ColumnName="OutFlow" />
-                <ScalarProperty Name="CurrentDate" ColumnName="CurrentDate" />
-                <ScalarProperty Name="DealStatus" ColumnName="DealStatus" />
-                <ScalarProperty Name="BR" ColumnName="BR" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

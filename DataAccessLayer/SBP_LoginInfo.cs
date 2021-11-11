@@ -24,7 +24,6 @@ namespace DataAccessLayer
             this.SBP_BlotterCRRReportCalcSetup = new HashSet<SBP_BlotterCRRReportCalcSetup>();
             this.SBP_BlotterFundingRepo = new HashSet<SBP_BlotterFundingRepo>();
             this.SBP_BlotterFundsTransfer = new HashSet<SBP_BlotterFundsTransfer>();
-            this.SBP_BlotterManualData = new HashSet<SBP_BlotterManualData>();
             this.SBP_BlotterOpeningBalance = new HashSet<SBP_BlotterOpeningBalance>();
             this.SBP_BlotterRTGS = new HashSet<SBP_BlotterRTGS>();
             this.SBP_BlotterTBO = new HashSet<SBP_BlotterTBO>();
@@ -72,8 +71,6 @@ namespace DataAccessLayer
         public virtual ICollection<SBP_BlotterFundingRepo> SBP_BlotterFundingRepo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SBP_BlotterFundsTransfer> SBP_BlotterFundsTransfer { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SBP_BlotterManualData> SBP_BlotterManualData { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SBP_BlotterOpeningBalance> SBP_BlotterOpeningBalance { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

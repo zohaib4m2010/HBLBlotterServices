@@ -45,8 +45,6 @@ namespace DataAccessLayer
         public virtual DbSet<SBP_BlotterDTLDaysWiseBal> SBP_BlotterDTLDaysWiseBal { get; set; }
         public virtual DbSet<SBP_BlotterFundingRepo> SBP_BlotterFundingRepo { get; set; }
         public virtual DbSet<SBP_BlotterFundsTransfer> SBP_BlotterFundsTransfer { get; set; }
-        public virtual DbSet<SBP_BlotterManualData> SBP_BlotterManualData { get; set; }
-        public virtual DbSet<SBP_BlotterManualDeals> SBP_BlotterManualDeals { get; set; }
         public virtual DbSet<SBP_BlotterOpeningBalance> SBP_BlotterOpeningBalance { get; set; }
         public virtual DbSet<SBP_BlotterOpeningClosingBalanceDIfferential> SBP_BlotterOpeningClosingBalanceDIfferential { get; set; }
         public virtual DbSet<SBP_BlotterOutrights> SBP_BlotterOutrights { get; set; }
