@@ -1522,5 +1522,34 @@ namespace DataAccessLayer
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_UpdateBlotterReconBreakups", sNOParameter, dataTypeParameter, tTIDParameter, reconDateParameter, reconCodeParameter, reconInflowParameter, recon_OutFLowParameter, noteParameter, userIDParameter, bRParameter, bIDParameter);
         }
+    
+        public virtual int SP_UpdateBranchBalanceByBranchId(Nullable<System.DateTime> reconDate, Nullable<decimal> reconInflow, Nullable<decimal> recon_OutFLow, Nullable<int> userID, Nullable<int> bR, Nullable<int> bID)
+        {
+            var reconDateParameter = reconDate.HasValue ?
+                new ObjectParameter("ReconDate", reconDate) :
+                new ObjectParameter("ReconDate", typeof(System.DateTime));
+    
+            var reconInflowParameter = reconInflow.HasValue ?
+                new ObjectParameter("ReconInflow", reconInflow) :
+                new ObjectParameter("ReconInflow", typeof(decimal));
+    
+            var recon_OutFLowParameter = recon_OutFLow.HasValue ?
+                new ObjectParameter("Recon_OutFLow", recon_OutFLow) :
+                new ObjectParameter("Recon_OutFLow", typeof(decimal));
+    
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var bRParameter = bR.HasValue ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(int));
+    
+            var bIDParameter = bID.HasValue ?
+                new ObjectParameter("BID", bID) :
+                new ObjectParameter("BID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_UpdateBranchBalanceByBranchId", reconDateParameter, reconInflowParameter, recon_OutFLowParameter, userIDParameter, bRParameter, bIDParameter);
+        }
     }
 }

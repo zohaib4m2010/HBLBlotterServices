@@ -120,9 +120,7 @@ namespace DataAccessLayer
             bool status;
             try
             {
-                SBP_BlotterReconBreakups branchbalance = DbContextB.SBP_BlotterReconBreakups.Where(b => b.BID == RBItem.BID && b.CreateDate == RBItem.CreateDate).FirstOrDefault();
-                branchbalance = RBItem;
-                DbContextB.SaveChanges();
+                 DbContextB.SP_UpdateBranchBalanceByBranchId(RBItem.RECON_Date, RBItem.RECON_InFlow, RBItem.RECON_OutFLow, RBItem.UserID, RBItem.BR, RBItem.BID);
                 status = true;
 
             }

@@ -472,8 +472,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
           <Property Name="Flag" Type="varchar" MaxLength="2" />
           <Property Name="AdjBalance" Type="numeric" Precision="18" Scale="0" />
           <Property Name="isAdjusted" Type="bit" />
-          <Property Name="NostroBank" Type="bigint" />
-          <Property Name="NostroCode" Type="varchar" MaxLength="20" />
+          <Property Name="NostroCode" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="SBP_BlotterManualDeals">
           <Key>
@@ -821,42 +820,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="SBP_BlotterBai_Muajjal">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SBP_BlotterBranchBalances_BranchID">
-          <End Role="Branches" Type="Self.Branches" Multiplicity="1" />
-          <End Role="SBP_BlotterBranchBalances" Type="Self.SBP_BlotterBranchBalances" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Branches">
-              <PropertyRef Name="BID" />
-            </Principal>
-            <Dependent Role="SBP_BlotterBranchBalances">
-              <PropertyRef Name="BID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SBP_BlotterBranchBalances_CurID">
-          <End Role="Currencies" Type="Self.Currencies" Multiplicity="1" />
-          <End Role="SBP_BlotterBranchBalances" Type="Self.SBP_BlotterBranchBalances" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Currencies">
-              <PropertyRef Name="CID" />
-            </Principal>
-            <Dependent Role="SBP_BlotterBranchBalances">
-              <PropertyRef Name="CurID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SBP_BlotterBranchBalances_UserID">
-          <End Role="SBP_LoginInfo" Type="Self.SBP_LoginInfo" Multiplicity="1" />
-          <End Role="SBP_BlotterBranchBalances" Type="Self.SBP_BlotterBranchBalances" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SBP_LoginInfo">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SBP_BlotterBranchBalances">
               <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1691,6 +1654,14 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Parameter Name="BR" Type="int" Mode="In" />
           <Parameter Name="BID" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_UpdateBranchBalanceByBranchId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ReconDate" Type="date" Mode="In" />
+          <Parameter Name="ReconInflow" Type="numeric" Mode="In" />
+          <Parameter Name="Recon_OutFLow" Type="numeric" Mode="In" />
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="BR" Type="int" Mode="In" />
+          <Parameter Name="BID" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_UpdateDaysInBlotterReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DTLValue" Type="numeric" Mode="In" />
           <Parameter Name="StartDate" Type="datetime" Mode="In" />
@@ -1864,18 +1835,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <AssociationSet Name="FK_SBP_BlotterBai_Muajjal_UserID" Association="Self.FK_SBP_BlotterBai_Muajjal_UserID">
             <End Role="SBP_LoginInfo" EntitySet="SBP_LoginInfo" />
             <End Role="SBP_BlotterBai_Muajjal" EntitySet="SBP_BlotterBai_Muajjal" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SBP_BlotterBranchBalances_BranchID" Association="Self.FK_SBP_BlotterBranchBalances_BranchID">
-            <End Role="Branches" EntitySet="Branches" />
-            <End Role="SBP_BlotterBranchBalances" EntitySet="SBP_BlotterBranchBalances" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SBP_BlotterBranchBalances_CurID" Association="Self.FK_SBP_BlotterBranchBalances_CurID">
-            <End Role="Currencies" EntitySet="Currencies" />
-            <End Role="SBP_BlotterBranchBalances" EntitySet="SBP_BlotterBranchBalances" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SBP_BlotterBranchBalances_UserID" Association="Self.FK_SBP_BlotterBranchBalances_UserID">
-            <End Role="SBP_LoginInfo" EntitySet="SBP_LoginInfo" />
-            <End Role="SBP_BlotterBranchBalances" EntitySet="SBP_BlotterBranchBalances" />
           </AssociationSet>
           <AssociationSet Name="FK_SBP_BlotterBreakups_BranchID" Association="Self.FK_SBP_BlotterBreakups_BranchID">
             <End Role="Branches" EntitySet="Branches" />
@@ -2535,7 +2494,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Property Name="Flag" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="AdjBalance" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="isAdjusted" Type="Boolean" />
-          <Property Name="NostroCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="NostroCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Currency" Relationship="Self.FK_SBP_BlotterManualData_CurID" FromRole="SBP_BlotterManualData" ToRole="Currencies" />
           <NavigationProperty Name="SBP_LoginInfo" Relationship="Self.FK_SBP_BlotterManualData_UserID" FromRole="SBP_BlotterManualData" ToRole="SBP_LoginInfo" />
           <Property Name="NostroBank" Type="Int64" />
@@ -4083,6 +4042,14 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             <Parameter Name="BR" Mode="In" Type="Int32" />
             <Parameter Name="BID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="SP_UpdateBranchBalanceByBranchId">
+            <Parameter Name="ReconDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ReconInflow" Mode="In" Type="Decimal" />
+            <Parameter Name="Recon_OutFLow" Mode="In" Type="Decimal" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="BR" Mode="In" Type="Int32" />
+            <Parameter Name="BID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_GetAll_SBPBlotterClearing_Result">
           <Property Type="Int64" Name="SNo" Nullable="false" />
@@ -5211,7 +5178,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <EntitySetMapping Name="SBP_BlotterManualData">
             <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterManualData">
               <MappingFragment StoreEntitySet="SBP_BlotterManualData">
-                <ScalarProperty Name="NostroBank" ColumnName="NostroBank" />
                 <ScalarProperty Name="SNo" ColumnName="SNo" />
                 <ScalarProperty Name="DataType" ColumnName="DataType" />
                 <ScalarProperty Name="Inflow" ColumnName="Inflow" />
@@ -6360,6 +6326,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_InsertBlotterReconBreakups" FunctionName="OPICSWEBModel.Store.SP_InsertBlotterReconBreakups" />
           <FunctionImportMapping FunctionImportName="SP_UpdateBlotterReconBreakups" FunctionName="OPICSWEBModel.Store.SP_UpdateBlotterReconBreakups" />
+          <FunctionImportMapping FunctionImportName="SP_UpdateBranchBalanceByBranchId" FunctionName="OPICSWEBModel.Store.SP_UpdateBranchBalanceByBranchId" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
