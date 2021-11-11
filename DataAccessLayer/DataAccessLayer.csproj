@@ -72,9 +72,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BlotterDataColor.cs">
-      <DependentUpon>BlotterEF.tt</DependentUpon>
-    </Compile>
     <Compile Include="BlotterEF.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -5,7 +5,6 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="4cb0d034cc1f44a685634a5d8bff8a7e" Name="Diagram1">
-        <EntityTypeShape EntityType="BlotterEF.BlotterDataColor" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BlotterEF.BlotterSBP_Reserved" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BlotterEF.Branches" Width="1.5" PointX="3.75" PointY="27.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BlotterEF.Currency" Width="1.5" PointX="3.75" PointY="22.25" IsExpanded="true" />

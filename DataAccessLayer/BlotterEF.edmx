@@ -5,22 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="OPICSWEBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="BlotterDataColor">
-          <Key>
-            <PropertyRef Name="Sno" />
-          </Key>
-          <Property Name="Sno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DealNo" Type="int" />
-          <Property Name="Description" Type="nvarchar(max)" />
-          <Property Name="Status" Type="varchar" MaxLength="10" />
-          <Property Name="Inflow" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="Outflow" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="Balance" Type="numeric" Precision="18" Scale="1" />
-          <Property Name="Recon_isActive" Type="bit" />
-          <Property Name="CreateDate" Type="datetime" />
-          <Property Name="UpdateDate" Type="datetime" />
-          <Property Name="UserId" Type="int" />
-        </EntityType>
         <EntityType Name="BlotterSBP_Reserved">
           <Key>
             <PropertyRef Name="SNo" />
@@ -1739,7 +1723,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Parameter Name="BlotterType" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="OPICSWEBModelStoreContainer">
-          <EntitySet Name="BlotterDataColor" EntityType="Self.BlotterDataColor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BlotterSBP_Reserved" EntityType="Self.BlotterSBP_Reserved" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Branches" EntityType="Self.Branches" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Currencies" EntityType="Self.Currencies" Schema="dbo" store:Type="Tables" />
@@ -2021,22 +2004,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BlotterEF" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="BlotterDataColor">
-          <Key>
-            <PropertyRef Name="Sno" />
-          </Key>
-          <Property Name="Sno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DealNo" Type="Int32" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Inflow" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="Outflow" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="Balance" Type="Decimal" Precision="18" Scale="1" />
-          <Property Name="Recon_isActive" Type="Boolean" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
-          <Property Name="UserId" Type="Int32" />
-        </EntityType>
         <EntityType Name="BlotterSBP_Reserved">
           <Key>
             <PropertyRef Name="SNo" />
@@ -2106,7 +2073,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <NavigationProperty Name="SBP_BlotterFundsTransfer" Relationship="Self.FK_SBP_SBP_BlotterFundsTransfer_CurID" FromRole="Currencies" ToRole="SBP_BlotterFundsTransfer" />
           <NavigationProperty Name="SBP_BlotterManualEstBalance" Relationship="BlotterEF.FK_SBP_SBP_BlotterManualEstBalance_CurID" FromRole="Currency" ToRole="SBP_BlotterManualEstBalance" />
           <NavigationProperty Name="SBP_BlotterBranchBalances" Relationship="BlotterEF.FK_SBP_BlotterBranchBalances_CurID" FromRole="Currency" ToRole="SBP_BlotterBranchBalances" />
-          <NavigationProperty Name="SBP_BlotterManualData1" Relationship="BlotterEF.FK_SBP_BlotterManualData_CurID1" FromRole="Currency" ToRole="SBP_BlotterManualData1" />
         </EntityType>
         <EntityType Name="GazettedHoliday">
           <Key>
@@ -2484,42 +2450,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <NavigationProperty Name="Currency" Relationship="Self.FK_SBP_SBP_BlotterFundsTransfer_CurID" FromRole="SBP_BlotterFundsTransfer" ToRole="Currencies" />
           <NavigationProperty Name="SBP_LoginInfo" Relationship="Self.FK_SBP_SBP_BlotterFundsTransfer_UserID" FromRole="SBP_BlotterFundsTransfer" ToRole="SBP_LoginInfo" />
         </EntityType>
-        <EntityType Name="SBP_BlotterManualData">
-          <Key>
-            <PropertyRef Name="SNo" />
-          </Key>
-          <Property Name="SNo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DataType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Inflow" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="OutFlow" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="NetBalance" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DateFor" Type="DateTime" Precision="0" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
-          <Property Name="BR" Type="Int32" />
-          <Property Name="CurID" Type="Int32" Nullable="false" />
-          <Property Name="Flag" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="AdjBalance" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="isAdjusted" Type="Boolean" />
-          <Property Name="NostroCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Currency" Relationship="Self.FK_SBP_BlotterManualData_CurID" FromRole="SBP_BlotterManualData" ToRole="Currencies" />
-          <NavigationProperty Name="SBP_LoginInfo" Relationship="Self.FK_SBP_BlotterManualData_UserID" FromRole="SBP_BlotterManualData" ToRole="SBP_LoginInfo" />
-          <Property Name="NostroBank" Type="Int64" />
-        </EntityType>
-        <EntityType Name="SBP_BlotterManualDeals">
-          <Key>
-            <PropertyRef Name="SNo" />
-          </Key>
-          <Property Name="SNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="DealDate" Type="DateTime" Precision="0" />
-          <Property Name="InFlow" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="OutFlow" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="CurrentDate" Type="DateTime" Precision="3" />
-          <Property Name="DealStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
-          <Property Name="BR" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="SBP_BlotterOpeningBalance">
           <Key>
             <PropertyRef Name="Id" />
@@ -2750,7 +2680,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <NavigationProperty Name="UserRoleRelations" Relationship="Self.FK_URRUserID" FromRole="SBP_LoginInfo" ToRole="UserRoleRelation" />
           <NavigationProperty Name="SBP_BlotterManualEstBalance" Relationship="BlotterEF.FK_SBP_BlotterManualEstBalance_UserID" FromRole="SBP_LoginInfo" ToRole="SBP_BlotterManualEstBalance" />
           <NavigationProperty Name="SBP_BlotterBranchBalances" Relationship="BlotterEF.FK_SBP_BlotterBranchBalances_UserID" FromRole="SBP_LoginInfo" ToRole="SBP_BlotterBranchBalances" />
-          <NavigationProperty Name="SBP_BlotterManualData1" Relationship="BlotterEF.FK_SBP_BlotterManualData_UserID1" FromRole="SBP_LoginInfo" ToRole="SBP_BlotterManualData1" />
         </EntityType>
         <EntityType Name="UserPageRelation">
           <Key>
@@ -3373,7 +3302,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="BlotterEntity" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="BlotterDataColors" EntityType="Self.BlotterDataColor" />
           <EntitySet Name="BlotterSBP_Reserved" EntityType="Self.BlotterSBP_Reserved" />
           <EntitySet Name="Branches" EntityType="BlotterEF.Branches" />
           <EntitySet Name="Currencies" EntityType="Self.Currency" />
@@ -3391,8 +3319,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <EntitySet Name="SBP_BlotterDTLDaysWiseBal" EntityType="Self.SBP_BlotterDTLDaysWiseBal" />
           <EntitySet Name="SBP_BlotterFundingRepo" EntityType="Self.SBP_BlotterFundingRepo" />
           <EntitySet Name="SBP_BlotterFundsTransfer" EntityType="Self.SBP_BlotterFundsTransfer" />
-          <EntitySet Name="SBP_BlotterManualData" EntityType="Self.SBP_BlotterManualData" />
-          <EntitySet Name="SBP_BlotterManualDeals" EntityType="Self.SBP_BlotterManualDeals" />
           <EntitySet Name="SBP_BlotterOpeningBalance" EntityType="Self.SBP_BlotterOpeningBalance" />
           <EntitySet Name="SBP_BlotterOpeningClosingBalanceDIfferential" EntityType="Self.SBP_BlotterOpeningClosingBalanceDIfferential" />
           <EntitySet Name="SBP_BlotterOutrights" EntityType="Self.SBP_BlotterOutrights" />
@@ -3999,15 +3925,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             <Parameter Name="BR" Mode="In" Type="Int32" />
             <Parameter Name="BID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <EntitySet Name="SBP_BlotterManualData" EntityType="BlotterEF.SBP_BlotterManualData" />
-          <AssociationSet Name="FK_SBP_BlotterManualData_CurID1" Association="BlotterEF.FK_SBP_BlotterManualData_CurID1">
-            <End Role="Currency" EntitySet="Currencies" />
-            <End Role="SBP_BlotterManualData1" EntitySet="SBP_BlotterManualData" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SBP_BlotterManualData_UserID1" Association="BlotterEF.FK_SBP_BlotterManualData_UserID1">
-            <End Role="SBP_LoginInfo" EntitySet="SBP_LoginInfo" />
-            <End Role="SBP_BlotterManualData1" EntitySet="SBP_BlotterManualData" />
-          </AssociationSet>
+          
           <FunctionImport Name="SP_InsertBlotterOutright">
             <Parameter Name="DataType" Mode="In" Type="String" />
             <Parameter Name="Bank" Mode="In" Type="String" />
@@ -4723,76 +4641,13 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="SBP_BlotterManualData">
-          <Key>
-            <PropertyRef Name="SNo" />
-          </Key>
-          <Property Name="SNo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DataType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Inflow" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="OutFlow" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="NetBalance" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DateFor" Type="DateTime" Precision="0" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
-          <Property Name="BR" Type="Int32" />
-          <Property Name="CurID" Type="Int32" Nullable="false" />
-          <Property Name="Flag" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="AdjBalance" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="isAdjusted" Type="Boolean" />
-          <Property Name="NostroBank" Type="Int64" />
-          <Property Name="NostroCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Currency" Relationship="BlotterEF.FK_SBP_BlotterManualData_CurID1" FromRole="SBP_BlotterManualData1" ToRole="Currency" />
-          <NavigationProperty Name="SBP_LoginInfo" Relationship="BlotterEF.FK_SBP_BlotterManualData_UserID1" FromRole="SBP_BlotterManualData1" ToRole="SBP_LoginInfo" />
-        </EntityType>
-        <Association Name="FK_SBP_BlotterManualData_CurID1">
-          <End Type="BlotterEF.Currency" Role="Currency" Multiplicity="1" />
-          <End Type="BlotterEF.SBP_BlotterManualData" Role="SBP_BlotterManualData1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Currency">
-              <PropertyRef Name="CID" />
-            </Principal>
-            <Dependent Role="SBP_BlotterManualData1">
-              <PropertyRef Name="CurID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SBP_BlotterManualData_UserID1">
-          <End Type="BlotterEF.SBP_LoginInfo" Role="SBP_LoginInfo" Multiplicity="1" />
-          <End Type="BlotterEF.SBP_BlotterManualData" Role="SBP_BlotterManualData1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SBP_LoginInfo">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SBP_BlotterManualData1">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="OPICSWEBModelStoreContainer" CdmEntityContainer="BlotterEntity">
-          <EntitySetMapping Name="BlotterDataColors">
-            <EntityTypeMapping TypeName="BlotterEF.BlotterDataColor">
-              <MappingFragment StoreEntitySet="BlotterDataColor">
-                <ScalarProperty Name="Sno" ColumnName="Sno" />
-                <ScalarProperty Name="DealNo" ColumnName="DealNo" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Inflow" ColumnName="Inflow" />
-                <ScalarProperty Name="Outflow" ColumnName="Outflow" />
-                <ScalarProperty Name="Balance" ColumnName="Balance" />
-                <ScalarProperty Name="Recon_isActive" ColumnName="Recon_isActive" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="BlotterSBP_Reserved">
             <EntityTypeMapping TypeName="BlotterEF.BlotterSBP_Reserved">
               <MappingFragment StoreEntitySet="BlotterSBP_Reserved">
@@ -5204,41 +5059,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
                 <ScalarProperty Name="BID" ColumnName="BID" />
                 <ScalarProperty Name="CurID" ColumnName="CurID" />
                 <ScalarProperty Name="Flag" ColumnName="Flag" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SBP_BlotterManualData">
-            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterManualData">
-              <MappingFragment StoreEntitySet="SBP_BlotterManualData">
-                <ScalarProperty Name="SNo" ColumnName="SNo" />
-                <ScalarProperty Name="DataType" ColumnName="DataType" />
-                <ScalarProperty Name="Inflow" ColumnName="Inflow" />
-                <ScalarProperty Name="OutFlow" ColumnName="OutFlow" />
-                <ScalarProperty Name="NetBalance" ColumnName="NetBalance" />
-                <ScalarProperty Name="DateFor" ColumnName="DateFor" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="BR" ColumnName="BR" />
-                <ScalarProperty Name="CurID" ColumnName="CurID" />
-                <ScalarProperty Name="Flag" ColumnName="Flag" />
-                <ScalarProperty Name="AdjBalance" ColumnName="AdjBalance" />
-                <ScalarProperty Name="isAdjusted" ColumnName="isAdjusted" />
-                <ScalarProperty Name="NostroCode" ColumnName="NostroCode" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SBP_BlotterManualDeals">
-            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterManualDeals">
-              <MappingFragment StoreEntitySet="SBP_BlotterManualDeals">
-                <ScalarProperty Name="SNo" ColumnName="SNo" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="DealDate" ColumnName="DealDate" />
-                <ScalarProperty Name="InFlow" ColumnName="InFlow" />
-                <ScalarProperty Name="OutFlow" ColumnName="OutFlow" />
-                <ScalarProperty Name="CurrentDate" ColumnName="CurrentDate" />
-                <ScalarProperty Name="DealStatus" ColumnName="DealStatus" />
-                <ScalarProperty Name="BR" ColumnName="BR" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -6359,28 +6179,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <FunctionImportMapping FunctionImportName="SP_InsertBlotterReconBreakups" FunctionName="OPICSWEBModel.Store.SP_InsertBlotterReconBreakups" />
           <FunctionImportMapping FunctionImportName="SP_UpdateBlotterReconBreakups" FunctionName="OPICSWEBModel.Store.SP_UpdateBlotterReconBreakups" />
           <FunctionImportMapping FunctionImportName="SP_UpdateBranchBalanceByBranchId" FunctionName="OPICSWEBModel.Store.SP_UpdateBranchBalanceByBranchId" />
-          <EntitySetMapping Name="SBP_BlotterManualData">
-            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterManualData">
-              <MappingFragment StoreEntitySet="SBP_BlotterManualData">
-                <ScalarProperty Name="NostroCode" ColumnName="NostroCode" />
-                <ScalarProperty Name="NostroBank" ColumnName="NostroBank" />
-                <ScalarProperty Name="isAdjusted" ColumnName="isAdjusted" />
-                <ScalarProperty Name="AdjBalance" ColumnName="AdjBalance" />
-                <ScalarProperty Name="Flag" ColumnName="Flag" />
-                <ScalarProperty Name="CurID" ColumnName="CurID" />
-                <ScalarProperty Name="BR" ColumnName="BR" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="DateFor" ColumnName="DateFor" />
-                <ScalarProperty Name="NetBalance" ColumnName="NetBalance" />
-                <ScalarProperty Name="OutFlow" ColumnName="OutFlow" />
-                <ScalarProperty Name="Inflow" ColumnName="Inflow" />
-                <ScalarProperty Name="DataType" ColumnName="DataType" />
-                <ScalarProperty Name="SNo" ColumnName="SNo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SP_InsertBlotterOutright" FunctionName="OPICSWEBModel.Store.SP_InsertBlotterOutright" />
           <FunctionImportMapping FunctionImportName="SP_UpdateBlotterOutright" FunctionName="OPICSWEBModel.Store.SP_UpdateBlotterOutright" />
         </EntityContainerMapping>

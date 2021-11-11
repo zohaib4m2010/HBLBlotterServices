@@ -27,7 +27,6 @@ namespace DataAccessLayer
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<BlotterDataColor> BlotterDataColors { get; set; }
         public virtual DbSet<BlotterSBP_Reserved> BlotterSBP_Reserved { get; set; }
         public virtual DbSet<Branches> Branches { get; set; }
         public virtual DbSet<Currency> Currencies { get; set; }
@@ -63,7 +62,6 @@ namespace DataAccessLayer
         public virtual DbSet<SBP_BlotterCRRReportFCY> SBP_BlotterCRRReportFCY { get; set; }
         public virtual DbSet<SBP_BlotterReserved> SBP_BlotterReserved { get; set; }
         public virtual DbSet<SBP_BlotterManualEstBalance> SBP_BlotterManualEstBalance { get; set; }
-        public virtual DbSet<SBP_BlotterManualData> SBP_BlotterManualData { get; set; }
     
         public virtual int SP_ADD_ActivityMonitor(string pSessionID, Nullable<int> pUserID, string pIP, string pLoginGUID, string pData, string pActivity, string pURL)
         {
