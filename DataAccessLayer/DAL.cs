@@ -467,6 +467,10 @@ namespace DataAccessLayer
         {
             return DbContextB.SP_GetAll_SBPBlotterTBO(UserID, BranchID, CurID, BR,DateVal).ToList();
         }
+        public static List<SP_GetAll_SBPBlotterTBO_DashBoard_Result> GetAllBlotterTBODashboard(int UserID, int BranchID, int CurID, int BR, string DateVal)
+        {
+            return DbContextB.SP_GetAll_SBPBlotterTBO_DashBoard(UserID, BranchID, CurID, BR, DateVal).ToList();
+        }
         public static SBP_BlotterTBO GetTBOItem(int TBOId)
         {
             return DbContextB.SBP_BlotterTBO.Where(p => p.SNo == TBOId).FirstOrDefault();
@@ -1072,6 +1076,10 @@ namespace DataAccessLayer
         {
             return DbContextB.SP_GetAll_SBPBlotterClearing(UserID, BranchID, CurID, BR,DateVal).ToList();
         }
+        public static List<SP_GetAll_SBPBlotterClearing_DashBoard_Result> GetAllBlotterClearingDashboard(int UserID, int BranchID, int CurID, int BR, string DateVal)
+        {
+            return DbContextB.SP_GetAll_SBPBlotterClearing_DashBoard(UserID, BranchID, CurID, BR, DateVal).ToList();
+        }
         public static SBP_BlotterClearing GetClearingItem(int ClearingId)
         {
             return DbContextB.SBP_BlotterClearing.Where(p => p.SNo == ClearingId).FirstOrDefault();
@@ -1485,6 +1493,10 @@ namespace DataAccessLayer
         public static List<SP_GetAll_SBPBlotterRTGS_Result> GetAllBlotterRTGS(int UserID, int BranchID, int CurID, int BR, string DateVal)
         {
             return DbContextB.SP_GetAll_SBPBlotterRTGS(UserID, BranchID, CurID, BR,DateVal).ToList();
+        }
+        public static List<SP_GetAll_SBPBlotterRTGS_Dashboard_Result> GetAllBlotterRTGSDashboard(int UserID, int BranchID, int CurID, int BR, string DateVal)
+        {
+            return DbContextB.SP_GetAll_SBPBlotterRTGS_Dashboard(UserID, BranchID, CurID, BR, DateVal).ToList();
         }
         public static SBP_BlotterRTGS GetRTGSItem(int RTGSId)
         {
@@ -1918,6 +1930,12 @@ namespace DataAccessLayer
         {
             // return DbContextB.SBP_BlotterTrade.Where(p => p.UserID == UserID && p.BR == BranchID && p.CurID == CurID).ToList();
             return DbContextB.SP_GetAll_SBPBlotterTrade(UserID, BranchID, CurID, BR,DateVal).ToList();
+        }
+
+        public static List<SP_GetAll_SBPBlotterTrade_Dashboard_Result> GetAllBlotterTradeDashboard(int UserID, int BranchID, int CurID, int BR, string DateVal)
+        {
+            // return DbContextB.SBP_BlotterTrade.Where(p => p.UserID == UserID && p.BR == BranchID && p.CurID == CurID).ToList();
+            return DbContextB.SP_GetAll_SBPBlotterTrade_Dashboard(UserID, BranchID, CurID, BR, DateVal).ToList();
         }
         public static SBP_BlotterTrade GetTradeItem(int TradeId)
         {
