@@ -204,10 +204,14 @@
     <Compile Include="Models\SP_FXBlotter_Result.cs" />
     <Compile Include="Models\SP_GetAllUserPageRelations_Result.cs" />
     <Compile Include="Models\sp_GetAllUsers_Result.cs" />
+    <Compile Include="Models\SP_GetAll_SBPBlotterClearing_Dashboard_Result.cs" />
     <Compile Include="Models\SP_GetAll_SBPBlotterClearing_Result.cs" />
     <Compile Include="Models\SP_GetAll_SBPBlotterReconBreakups_Results.cs" />
+    <Compile Include="Models\SP_GetAll_SBPBlotterRTGS_Dashboard_Result.cs" />
     <Compile Include="Models\SP_GetAll_SBPBlotterRTGS_Result.cs" />
+    <Compile Include="Models\SP_GetAll_SBPBlotterTBO_Dashboard_Result.cs" />
     <Compile Include="Models\SP_GetAll_SBPBlotterTBO_Result.cs" />
+    <Compile Include="Models\SP_GetAll_SBPBlotterTrade_Dashboard_Result.cs" />
     <Compile Include="Models\SP_GetAll_SBPBlotterTrade_Result.cs" />
     <Compile Include="Models\SP_GETLatestBlotterDTLPerDayWise_Result.cs" />
     <Compile Include="Models\SP_GETLatestBlotterDTLReportDayWise_Result.cs" />

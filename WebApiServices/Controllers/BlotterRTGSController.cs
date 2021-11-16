@@ -55,17 +55,17 @@ namespace WebApiServices.Controllers
 
         
              [HttpGet]
-        public JsonResult<List<Models.SP_GetAll_SBPBlotterRTGS_Result>> GetAllBlotterRTGSDashboard(int UserID, int BranchID, int CurID, int BR, string DateVal)
+        public JsonResult<List<Models.SP_GetAll_SBPBlotterRTGS_Dashboard_Result>> GetAllBlotterRTGSDashboard(int UserID, int BranchID, int CurID, int BR, string DateVal)
         {
-            EntityMapperBlotterRTGS<DataAccessLayer.SP_GetAll_SBPBlotterRTGS_Dashboard_Result, Models.SP_GetAll_SBPBlotterRTGS_Result> mapObj = new EntityMapperBlotterRTGS<DataAccessLayer.SP_GetAll_SBPBlotterRTGS_Dashboard_Result, Models.SP_GetAll_SBPBlotterRTGS_Result>();
+            EntityMapperBlotterRTGS<DataAccessLayer.SP_GetAll_SBPBlotterRTGS_Dashboard_Result, Models.SP_GetAll_SBPBlotterRTGS_Dashboard_Result> mapObj = new EntityMapperBlotterRTGS<DataAccessLayer.SP_GetAll_SBPBlotterRTGS_Dashboard_Result, Models.SP_GetAll_SBPBlotterRTGS_Dashboard_Result>();
 
             List<DataAccessLayer.SP_GetAll_SBPBlotterRTGS_Dashboard_Result> blotterRTGSList = DAL.GetAllBlotterRTGSDashboard(UserID, BranchID, CurID, BR, DateVal);
-            List<Models.SP_GetAll_SBPBlotterRTGS_Result> blotterRTGS = new List<Models.SP_GetAll_SBPBlotterRTGS_Result>();
+            List<Models.SP_GetAll_SBPBlotterRTGS_Dashboard_Result> blotterRTGS = new List<Models.SP_GetAll_SBPBlotterRTGS_Dashboard_Result>();
             foreach (var item in blotterRTGSList)
             {
                 blotterRTGS.Add(mapObj.Translate(item));
             }
-            return Json<List<Models.SP_GetAll_SBPBlotterRTGS_Result>>(blotterRTGS);
+            return Json<List<Models.SP_GetAll_SBPBlotterRTGS_Dashboard_Result>>(blotterRTGS);
         }
         [HttpPost]
         public bool InsertRTGS(Models.SBP_BlotterRTGS blotterRTGS)

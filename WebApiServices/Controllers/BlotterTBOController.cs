@@ -50,17 +50,17 @@ namespace WebApiServices.Controllers
             return Json<List<Models.SP_GetAll_SBPBlotterTBO_Result>>(blotterTBO);
         }
         [HttpGet]
-        public JsonResult<List<Models.SP_GetAll_SBPBlotterTBO_Result>> GetAllBlotterTBODashboard(int UserID, int BranchID, int CurID, int BR, string DateVal)
+        public JsonResult<List<Models.SP_GetAll_SBPBlotterTBO_Dashboard_Result>> GetAllBlotterTBODashboard(int UserID, int BranchID, int CurID, int BR, string DateVal)
         {
-            EntitiyMapperBlotterTBO<DataAccessLayer.SP_GetAll_SBPBlotterTBO_DashBoard_Result, Models.SP_GetAll_SBPBlotterTBO_Result> mapObj = new EntitiyMapperBlotterTBO<DataAccessLayer.SP_GetAll_SBPBlotterTBO_DashBoard_Result, Models.SP_GetAll_SBPBlotterTBO_Result>();
+            EntitiyMapperBlotterTBO<DataAccessLayer.SP_GetAll_SBPBlotterTBO_DashBoard_Result, Models.SP_GetAll_SBPBlotterTBO_Dashboard_Result> mapObj = new EntitiyMapperBlotterTBO<DataAccessLayer.SP_GetAll_SBPBlotterTBO_DashBoard_Result, Models.SP_GetAll_SBPBlotterTBO_Dashboard_Result>();
 
             List<DataAccessLayer.SP_GetAll_SBPBlotterTBO_DashBoard_Result> blotterTBOList = DAL.GetAllBlotterTBODashboard(UserID, BranchID, CurID, BR, DateVal);
-            List<Models.SP_GetAll_SBPBlotterTBO_Result> blotterTBO = new List<Models.SP_GetAll_SBPBlotterTBO_Result>();
+            List<Models.SP_GetAll_SBPBlotterTBO_Dashboard_Result> blotterTBO = new List<Models.SP_GetAll_SBPBlotterTBO_Dashboard_Result>();
             foreach (var item in blotterTBOList)
             {
                 blotterTBO.Add(mapObj.Translate(item));
             }
-            return Json<List<Models.SP_GetAll_SBPBlotterTBO_Result>>(blotterTBO);
+            return Json<List<Models.SP_GetAll_SBPBlotterTBO_Dashboard_Result>>(blotterTBO);
         }
       
         [HttpPost]

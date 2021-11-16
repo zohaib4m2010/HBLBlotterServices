@@ -16,6 +16,9 @@ namespace WebApiServices.Repository
             Mapper.CreateMap<Models.SP_GetAll_SBPBlotterRTGS_Result, DataAccessLayer.SP_GetAll_SBPBlotterRTGS_Result>();
             Mapper.CreateMap<DataAccessLayer.SP_GetAll_SBPBlotterRTGS_Result, Models.SP_GetAll_SBPBlotterRTGS_Result>();
 
+            Mapper.CreateMap<Models.SP_GetAll_SBPBlotterRTGS_Dashboard_Result, DataAccessLayer.SP_GetAll_SBPBlotterRTGS_Dashboard_Result>();
+            Mapper.CreateMap<DataAccessLayer.SP_GetAll_SBPBlotterRTGS_Dashboard_Result, Models.SP_GetAll_SBPBlotterRTGS_Dashboard_Result>();
+
 
             Mapper.CreateMap<Models.SBP_BlotterRTGS, DataAccessLayer.SBP_BlotterRTGS>();
             Mapper.CreateMap<DataAccessLayer.SBP_BlotterRTGS, Models.SBP_BlotterRTGS>();

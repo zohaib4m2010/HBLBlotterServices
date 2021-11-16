@@ -54,17 +54,17 @@ namespace WebApiServices.Controllers
         }
 
         [HttpGet]
-        public JsonResult<List<Models.SP_GetAll_SBPBlotterClearing_Result>> GetAllBlotterClearingDashboard(int UserID, int BranchID, int CurID, int BR, string DateVal)
+        public JsonResult<List<Models.SP_GetAll_SBPBlotterClearing_Dashboard_Result>> GetAllBlotterClearingDashboard(int UserID, int BranchID, int CurID, int BR, string DateVal)
         {
-            EntityMapperBlotterClearing<DataAccessLayer.SP_GetAll_SBPBlotterClearing_DashBoard_Result, Models.SP_GetAll_SBPBlotterClearing_Result> mapObj = new EntityMapperBlotterClearing<DataAccessLayer.SP_GetAll_SBPBlotterClearing_DashBoard_Result, Models.SP_GetAll_SBPBlotterClearing_Result>();
+            EntityMapperBlotterClearing<DataAccessLayer.SP_GetAll_SBPBlotterClearing_DashBoard_Result, Models.SP_GetAll_SBPBlotterClearing_Dashboard_Result> mapObj = new EntityMapperBlotterClearing<DataAccessLayer.SP_GetAll_SBPBlotterClearing_DashBoard_Result, Models.SP_GetAll_SBPBlotterClearing_Dashboard_Result>();
 
             List<DataAccessLayer.SP_GetAll_SBPBlotterClearing_DashBoard_Result> blotterClearingList = DAL.GetAllBlotterClearingDashboard(UserID, BranchID, CurID, BR, DateVal);
-            List<Models.SP_GetAll_SBPBlotterClearing_Result> blotterClearing = new List<Models.SP_GetAll_SBPBlotterClearing_Result>();
+            List<Models.SP_GetAll_SBPBlotterClearing_Dashboard_Result> blotterClearing = new List<Models.SP_GetAll_SBPBlotterClearing_Dashboard_Result>();
             foreach (var item in blotterClearingList)
             {
                 blotterClearing.Add(mapObj.Translate(item));
             }
-            return Json<List<Models.SP_GetAll_SBPBlotterClearing_Result>>(blotterClearing);
+            return Json<List<Models.SP_GetAll_SBPBlotterClearing_Dashboard_Result>>(blotterClearing);
         }
         [HttpPost]
         public bool InsertClearing(Models.SBP_BlotterClearing blotterClearing)
