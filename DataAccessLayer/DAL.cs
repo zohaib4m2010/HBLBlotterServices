@@ -2330,9 +2330,9 @@ namespace DataAccessLayer
         //*****************************************************
         //RSF/TT Procedures
         //*****************************************************
-        public static List<SP_GetAllRsfTTTBO_Result> GetAllRSFTT()
+        public static List<SP_GetAllRsfTTTBO_Result> GetAllRSFTT(int BR, DateTime Date)
         {
-            return DbContextB.SP_GetAllRsfTTTBO().ToList();
+            return DbContextB.SP_GetAllRsfTTTBO(BR, Date).ToList();
         }
     }
 }

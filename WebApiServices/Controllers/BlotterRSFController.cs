@@ -13,12 +13,12 @@ namespace WebApiServices.Controllers
     public class BlotterRSFController : ApiController
     {
         [HttpGet]
-        public JsonResult<List<Models.BlotterRSFTT>> GetAllRsfTT()
+        public JsonResult<List<Models.BlotterRSFTT>> GetAllRsfTT(int BR, DateTime Date)
         {
             EntityMapperBlotterRSF<DataAccessLayer.SP_GetAllRsfTTTBO_Result, Models.BlotterRSFTT>
                 mapObj = new EntityMapperBlotterRSF<DataAccessLayer.SP_GetAllRsfTTTBO_Result, Models.BlotterRSFTT>();
 
-            List<DataAccessLayer.SP_GetAllRsfTTTBO_Result> blotterRSFList = DAL.GetAllRSFTT();
+            List<DataAccessLayer.SP_GetAllRsfTTTBO_Result> blotterRSFList = DAL.GetAllRSFTT(BR,Date);
             List<Models.BlotterRSFTT> blotterRSF = new List<Models.BlotterRSFTT>();
             foreach (var item in blotterRSFList)
             {

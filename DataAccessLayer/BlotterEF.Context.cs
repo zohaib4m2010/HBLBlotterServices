@@ -373,9 +373,17 @@ namespace DataAccessLayer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GETAllRECONBreakupsTransactionTitles_Result>("SP_GETAllRECONBreakupsTransactionTitles");
         }
     
-        public virtual ObjectResult<SP_GetAllRsfTTTBO_Result> SP_GetAllRsfTTTBO()
+        public virtual ObjectResult<SP_GetAllRsfTTTBO_Result> SP_GetAllRsfTTTBO(Nullable<int> bR, Nullable<System.DateTime> curDate)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetAllRsfTTTBO_Result>("SP_GetAllRsfTTTBO");
+            var bRParameter = bR.HasValue ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(int));
+    
+            var curDateParameter = curDate.HasValue ?
+                new ObjectParameter("CurDate", curDate) :
+                new ObjectParameter("CurDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetAllRsfTTTBO_Result>("SP_GetAllRsfTTTBO", bRParameter, curDateParameter);
         }
     
         public virtual ObjectResult<SP_GETAllRTGSTransactionTitles_Result> SP_GETAllRTGSTransactionTitles()
