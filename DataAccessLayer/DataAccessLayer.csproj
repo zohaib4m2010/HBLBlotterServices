@@ -218,16 +218,28 @@
     <Compile Include="SP_GetAllWebPages_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="SP_GetAll_SBPBlotterClearing_DashBoard_Result.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="SP_GetAll_SBPBlotterClearing_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_GetAll_SBPBlotterReconBreakups_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="SP_GetAll_SBPBlotterRTGS_Dashboard_Result.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="SP_GetAll_SBPBlotterRTGS_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="SP_GetAll_SBPBlotterTBO_DashBoard_Result.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="SP_GetAll_SBPBlotterTBO_Result.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SP_GetAll_SBPBlotterTrade_Dashboard_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_GetAll_SBPBlotterTrade_Result.cs">

@@ -775,42 +775,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SBP_BlotterBranchBalances_BranchID">
-          <End Role="Branches" Type="Self.Branches" Multiplicity="1" />
-          <End Role="SBP_BlotterBranchBalances" Type="Self.SBP_BlotterBranchBalances" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Branches">
-              <PropertyRef Name="BID" />
-            </Principal>
-            <Dependent Role="SBP_BlotterBranchBalances">
-              <PropertyRef Name="BID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SBP_BlotterBranchBalances_CurID">
-          <End Role="Currencies" Type="Self.Currencies" Multiplicity="1" />
-          <End Role="SBP_BlotterBranchBalances" Type="Self.SBP_BlotterBranchBalances" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Currencies">
-              <PropertyRef Name="CID" />
-            </Principal>
-            <Dependent Role="SBP_BlotterBranchBalances">
-              <PropertyRef Name="CurID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SBP_BlotterBranchBalances_UserID">
-          <End Role="SBP_LoginInfo" Type="Self.SBP_LoginInfo" Multiplicity="1" />
-          <End Role="SBP_BlotterBranchBalances" Type="Self.SBP_BlotterBranchBalances" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SBP_LoginInfo">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SBP_BlotterBranchBalances">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_SBP_BlotterBreakups_BranchID">
           <End Role="Branches" Type="Self.Branches" Multiplicity="1" />
           <End Role="SBP_BlotterBreakups" Type="Self.SBP_BlotterBreakups" Multiplicity="*" />
@@ -6181,6 +6145,92 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <FunctionImportMapping FunctionImportName="SP_UpdateBranchBalanceByBranchId" FunctionName="OPICSWEBModel.Store.SP_UpdateBranchBalanceByBranchId" />
           <FunctionImportMapping FunctionImportName="SP_InsertBlotterOutright" FunctionName="OPICSWEBModel.Store.SP_InsertBlotterOutright" />
           <FunctionImportMapping FunctionImportName="SP_UpdateBlotterOutright" FunctionName="OPICSWEBModel.Store.SP_UpdateBlotterOutright" />
+          <FunctionImportMapping FunctionImportName="SP_GetAll_SBPBlotterClearing_DashBoard" FunctionName="OPICSWEBModel.Store.SP_GetAll_SBPBlotterClearing_DashBoard">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BlotterEF.SP_GetAll_SBPBlotterClearing_DashBoard_Result">
+                <ScalarProperty Name="SNo" ColumnName="SNo" />
+                <ScalarProperty Name="DataType" ColumnName="DataType" />
+                <ScalarProperty Name="TTID" ColumnName="TTID" />
+                <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
+                <ScalarProperty Name="Clearing_Date" ColumnName="Clearing_Date" />
+                <ScalarProperty Name="ClearingCOde" ColumnName="ClearingCOde" />
+                <ScalarProperty Name="Clearing_InFlow" ColumnName="Clearing_InFlow" />
+                <ScalarProperty Name="Clearing_OutFLow" ColumnName="Clearing_OutFLow" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="BID" ColumnName="BID" />
+                <ScalarProperty Name="CurID" ColumnName="CurID" />
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_GetAll_SBPBlotterRTGS_Dashboard" FunctionName="OPICSWEBModel.Store.SP_GetAll_SBPBlotterRTGS_Dashboard">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BlotterEF.SP_GetAll_SBPBlotterRTGS_Dashboard_Result">
+                <ScalarProperty Name="SNo" ColumnName="SNo" />
+                <ScalarProperty Name="DataType" ColumnName="DataType" />
+                <ScalarProperty Name="TTID" ColumnName="TTID" />
+                <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
+                <ScalarProperty Name="RTGS_Date" ColumnName="RTGS_Date" />
+                <ScalarProperty Name="RTGSCOde" ColumnName="RTGSCOde" />
+                <ScalarProperty Name="RTGS_InFlow" ColumnName="RTGS_InFlow" />
+                <ScalarProperty Name="RTGS_OutFLow" ColumnName="RTGS_OutFLow" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="BID" ColumnName="BID" />
+                <ScalarProperty Name="CurID" ColumnName="CurID" />
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_GetAll_SBPBlotterTBO_DashBoard" FunctionName="OPICSWEBModel.Store.SP_GetAll_SBPBlotterTBO_DashBoard">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BlotterEF.SP_GetAll_SBPBlotterTBO_DashBoard_Result">
+                <ScalarProperty Name="SNo" ColumnName="SNo" />
+                <ScalarProperty Name="DataType" ColumnName="DataType" />
+                <ScalarProperty Name="TTID" ColumnName="TTID" />
+                <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
+                <ScalarProperty Name="TBO_Date" ColumnName="TBO_Date" />
+                <ScalarProperty Name="TBOCOde" ColumnName="TBOCOde" />
+                <ScalarProperty Name="TBO_InFlow" ColumnName="TBO_InFlow" />
+                <ScalarProperty Name="TBO_OutFLow" ColumnName="TBO_OutFLow" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="CurID" ColumnName="CurID" />
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+                <ScalarProperty Name="BankCode" ColumnName="BankCode" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_GetAll_SBPBlotterTrade_Dashboard" FunctionName="OPICSWEBModel.Store.SP_GetAll_SBPBlotterTrade_Dashboard">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BlotterEF.SP_GetAll_SBPBlotterTrade_Dashboard_Result">
+                <ScalarProperty Name="SNo" ColumnName="SNo" />
+                <ScalarProperty Name="TTID" ColumnName="TTID" />
+                <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
+                <ScalarProperty Name="Trade_Date" ColumnName="Trade_Date" />
+                <ScalarProperty Name="TradeCOde" ColumnName="TradeCOde" />
+                <ScalarProperty Name="Trade_InFlow" ColumnName="Trade_InFlow" />
+                <ScalarProperty Name="Trade_OutFLow" ColumnName="Trade_OutFLow" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="BID" ColumnName="BID" />
+                <ScalarProperty Name="CurID" ColumnName="CurID" />
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+                <ScalarProperty Name="BankCode" ColumnName="BankCode" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
