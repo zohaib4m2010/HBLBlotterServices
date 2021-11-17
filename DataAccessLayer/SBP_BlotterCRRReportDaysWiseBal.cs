@@ -50,5 +50,7 @@ namespace DataAccessLayer
         public Nullable<double> Reserve { get; set; }
         public Nullable<decimal> CRR5PcrReqWithoutEB { get; set; }
         public Nullable<decimal> BlotterBalance { get; set; }
+        public Nullable<int> Calc1 { get; set; }
+        public Nullable<int> Calc2 { get; set; }
     }
 }
