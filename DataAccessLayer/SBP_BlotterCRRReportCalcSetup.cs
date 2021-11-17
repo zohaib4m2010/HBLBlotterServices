@@ -21,6 +21,9 @@ namespace DataAccessLayer
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
         public int UserID { get; set; }
+        public Nullable<System.DateTime> StartDate { get; set; }
+        public Nullable<System.DateTime> EndDate { get; set; }
+        public Nullable<int> Calc { get; set; }
     
         public virtual SBP_LoginInfo SBP_LoginInfo { get; set; }
     }

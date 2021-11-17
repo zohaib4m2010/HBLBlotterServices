@@ -17,7 +17,6 @@ namespace DataAccessLayer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Branches()
         {
-            this.SBP_BlotterCRRFINCON = new HashSet<SBP_BlotterCRRFINCON>();
             this.SBP_BlotterBai_Muajjal = new HashSet<SBP_BlotterBai_Muajjal>();
             this.SBP_BlotterBreakups = new HashSet<SBP_BlotterBreakups>();
             this.SBP_BlotterClearing = new HashSet<SBP_BlotterClearing>();
@@ -30,6 +29,7 @@ namespace DataAccessLayer
             this.SBP_BlotterFundsTransfer = new HashSet<SBP_BlotterFundsTransfer>();
             this.SBP_BlotterManualEstBalance = new HashSet<SBP_BlotterManualEstBalance>();
             this.SBP_BlotterBranchBalances = new HashSet<SBP_BlotterBranchBalances>();
+            this.SBP_BlotterCRRFINCON = new HashSet<SBP_BlotterCRRFINCON>();
         }
     
         public int BID { get; set; }
@@ -41,8 +41,6 @@ namespace DataAccessLayer
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SBP_BlotterCRRFINCON> SBP_BlotterCRRFINCON { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SBP_BlotterBai_Muajjal> SBP_BlotterBai_Muajjal { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -67,5 +65,7 @@ namespace DataAccessLayer
         public virtual ICollection<SBP_BlotterManualEstBalance> SBP_BlotterManualEstBalance { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SBP_BlotterBranchBalances> SBP_BlotterBranchBalances { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SBP_BlotterCRRFINCON> SBP_BlotterCRRFINCON { get; set; }
     }
 }

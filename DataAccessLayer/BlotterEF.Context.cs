@@ -27,7 +27,6 @@ namespace DataAccessLayer
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<BlotterDataColor> BlotterDataColors { get; set; }
         public virtual DbSet<BlotterSBP_Reserved> BlotterSBP_Reserved { get; set; }
         public virtual DbSet<Branches> Branches { get; set; }
         public virtual DbSet<Currency> Currencies { get; set; }
@@ -38,14 +37,11 @@ namespace DataAccessLayer
         public virtual DbSet<SBP_BlotterBreakups> SBP_BlotterBreakups { get; set; }
         public virtual DbSet<SBP_BlotterClearing> SBP_BlotterClearing { get; set; }
         public virtual DbSet<SBP_BlotterCRD> SBP_BlotterCRD { get; set; }
-        public virtual DbSet<SBP_BlotterCRRFINCON> SBP_BlotterCRRFINCON { get; set; }
         public virtual DbSet<SBP_BlotterCRRReportCalcSetup> SBP_BlotterCRRReportCalcSetup { get; set; }
-        public virtual DbSet<SBP_BlotterCRRReportDaysWiseBal> SBP_BlotterCRRReportDaysWiseBal { get; set; }
         public virtual DbSet<SBP_BlotterDMMO> SBP_BlotterDMMO { get; set; }
         public virtual DbSet<SBP_BlotterDTLDaysWiseBal> SBP_BlotterDTLDaysWiseBal { get; set; }
         public virtual DbSet<SBP_BlotterFundingRepo> SBP_BlotterFundingRepo { get; set; }
         public virtual DbSet<SBP_BlotterFundsTransfer> SBP_BlotterFundsTransfer { get; set; }
-        public virtual DbSet<SBP_BlotterManualDeals> SBP_BlotterManualDeals { get; set; }
         public virtual DbSet<SBP_BlotterOpeningBalance> SBP_BlotterOpeningBalance { get; set; }
         public virtual DbSet<SBP_BlotterOpeningClosingBalanceDIfferential> SBP_BlotterOpeningClosingBalanceDIfferential { get; set; }
         public virtual DbSet<SBP_BlotterOutrights> SBP_BlotterOutrights { get; set; }
@@ -64,7 +60,8 @@ namespace DataAccessLayer
         public virtual DbSet<SBP_BlotterCRRReportFCY> SBP_BlotterCRRReportFCY { get; set; }
         public virtual DbSet<SBP_BlotterReserved> SBP_BlotterReserved { get; set; }
         public virtual DbSet<SBP_BlotterManualEstBalance> SBP_BlotterManualEstBalance { get; set; }
-        public virtual DbSet<SBP_BlotterManualData> SBP_BlotterManualData { get; set; }
+        public virtual DbSet<SBP_BlotterCRRFINCON> SBP_BlotterCRRFINCON { get; set; }
+        public virtual DbSet<SBP_BlotterCRRReportDaysWiseBal> SBP_BlotterCRRReportDaysWiseBal { get; set; }
     
         public virtual int SP_ADD_ActivityMonitor(string pSessionID, Nullable<int> pUserID, string pIP, string pLoginGUID, string pData, string pActivity, string pURL)
         {
@@ -126,27 +123,6 @@ namespace DataAccessLayer
                 new ObjectParameter("pExpires", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADD_SessionStart", pSessionIDParameter, pUserIDParameter, pIPParameter, pLoginGUIDParameter, pLoginTimeParameter, pExpiresParameter);
-        }
-    
-        public virtual int SP_AddDaysInBlotterReport(Nullable<decimal> dTLValue, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<int> bR)
-        {
-            var dTLValueParameter = dTLValue.HasValue ?
-                new ObjectParameter("DTLValue", dTLValue) :
-                new ObjectParameter("DTLValue", typeof(decimal));
-    
-            var startDateParameter = startDate.HasValue ?
-                new ObjectParameter("StartDate", startDate) :
-                new ObjectParameter("StartDate", typeof(System.DateTime));
-    
-            var endDateParameter = endDate.HasValue ?
-                new ObjectParameter("EndDate", endDate) :
-                new ObjectParameter("EndDate", typeof(System.DateTime));
-    
-            var bRParameter = bR.HasValue ?
-                new ObjectParameter("BR", bR) :
-                new ObjectParameter("BR", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_AddDaysInBlotterReport", dTLValueParameter, startDateParameter, endDateParameter, bRParameter);
         }
     
         public virtual int SP_DeleteBlotterOutright(Nullable<long> id, Nullable<int> userID)
@@ -424,15 +400,6 @@ namespace DataAccessLayer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetAllWebPages_Result>("SP_GetAllWebPages", wPIDParameter);
         }
     
-        public virtual ObjectResult<SP_GetCRRFINCONPeriods_Result> SP_GetCRRFINCONPeriods(Nullable<int> bR)
-        {
-            var bRParameter = bR.HasValue ?
-                new ObjectParameter("BR", bR) :
-                new ObjectParameter("BR", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetCRRFINCONPeriods_Result>("SP_GetCRRFINCONPeriods", bRParameter);
-        }
-    
         public virtual ObjectResult<SP_GETLatestBlotterDTLPerDayWise_Result> SP_GETLatestBlotterDTLPerDayWise(Nullable<int> bR, string startdate)
         {
             var bRParameter = bR.HasValue ?
@@ -547,35 +514,6 @@ namespace DataAccessLayer
                 new ObjectParameter("BR", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetSBP_Reserved_Result>("SP_GetSBP_Reserved", userIDParameter, branchIDParameter, bRParameter);
-        }
-    
-        public virtual ObjectResult<SP_GetSBPBlotterCRRFINCON_Result> SP_GetSBPBlotterCRRFINCON(Nullable<int> userID, Nullable<int> branchID, Nullable<int> curID, Nullable<int> bR, Nullable<System.DateTime> satrtDate, Nullable<System.DateTime> endDate)
-        {
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            var branchIDParameter = branchID.HasValue ?
-                new ObjectParameter("BranchID", branchID) :
-                new ObjectParameter("BranchID", typeof(int));
-    
-            var curIDParameter = curID.HasValue ?
-                new ObjectParameter("CurID", curID) :
-                new ObjectParameter("CurID", typeof(int));
-    
-            var bRParameter = bR.HasValue ?
-                new ObjectParameter("BR", bR) :
-                new ObjectParameter("BR", typeof(int));
-    
-            var satrtDateParameter = satrtDate.HasValue ?
-                new ObjectParameter("SatrtDate", satrtDate) :
-                new ObjectParameter("SatrtDate", typeof(System.DateTime));
-    
-            var endDateParameter = endDate.HasValue ?
-                new ObjectParameter("EndDate", endDate) :
-                new ObjectParameter("EndDate", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetSBPBlotterCRRFINCON_Result>("SP_GetSBPBlotterCRRFINCON", userIDParameter, branchIDParameter, curIDParameter, bRParameter, satrtDateParameter, endDateParameter);
         }
     
         public virtual ObjectResult<SP_GetSBPBlotterFR_Result> SP_GetSBPBlotterFR(Nullable<int> userID, Nullable<int> branchID, Nullable<int> curID, Nullable<int> bR, string dateVal)
@@ -1560,6 +1498,27 @@ namespace DataAccessLayer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_UpdateBlotterOutright", idParameter, dataTypeParameter, bankParameter, rateParameter, issue_DateParameter, issueTypeParameter, brokerParameter, inFlowParameter, outFLowParameter, noteParameter, userIDParameter, bRParameter);
         }
     
+        public virtual int SP_AddDaysInBlotterReport(Nullable<decimal> dTLValue, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<int> bR)
+        {
+            var dTLValueParameter = dTLValue.HasValue ?
+                new ObjectParameter("DTLValue", dTLValue) :
+                new ObjectParameter("DTLValue", typeof(decimal));
+    
+            var startDateParameter = startDate.HasValue ?
+                new ObjectParameter("StartDate", startDate) :
+                new ObjectParameter("StartDate", typeof(System.DateTime));
+    
+            var endDateParameter = endDate.HasValue ?
+                new ObjectParameter("EndDate", endDate) :
+                new ObjectParameter("EndDate", typeof(System.DateTime));
+    
+            var bRParameter = bR.HasValue ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_AddDaysInBlotterReport", dTLValueParameter, startDateParameter, endDateParameter, bRParameter);
+        }
+    
         public virtual ObjectResult<SP_GetAll_SBPBlotterClearing_DashBoard_Result> SP_GetAll_SBPBlotterClearing_DashBoard(Nullable<int> userID, Nullable<int> branchID, Nullable<int> curID, Nullable<int> bR, string dateVal)
         {
             var userIDParameter = userID.HasValue ?
@@ -1658,6 +1617,44 @@ namespace DataAccessLayer
                 new ObjectParameter("DateVal", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetAll_SBPBlotterTrade_Dashboard_Result>("SP_GetAll_SBPBlotterTrade_Dashboard", userIDParameter, branchIDParameter, curIDParameter, bRParameter, dateValParameter);
+        }
+    
+        public virtual ObjectResult<SP_GetSBPBlotterCRRFINCON_Result> SP_GetSBPBlotterCRRFINCON(Nullable<int> userID, Nullable<int> branchID, Nullable<int> curID, Nullable<int> bR, Nullable<System.DateTime> satrtDate, Nullable<System.DateTime> endDate)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var branchIDParameter = branchID.HasValue ?
+                new ObjectParameter("BranchID", branchID) :
+                new ObjectParameter("BranchID", typeof(int));
+    
+            var curIDParameter = curID.HasValue ?
+                new ObjectParameter("CurID", curID) :
+                new ObjectParameter("CurID", typeof(int));
+    
+            var bRParameter = bR.HasValue ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(int));
+    
+            var satrtDateParameter = satrtDate.HasValue ?
+                new ObjectParameter("SatrtDate", satrtDate) :
+                new ObjectParameter("SatrtDate", typeof(System.DateTime));
+    
+            var endDateParameter = endDate.HasValue ?
+                new ObjectParameter("EndDate", endDate) :
+                new ObjectParameter("EndDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetSBPBlotterCRRFINCON_Result>("SP_GetSBPBlotterCRRFINCON", userIDParameter, branchIDParameter, curIDParameter, bRParameter, satrtDateParameter, endDateParameter);
+        }
+    
+        public virtual ObjectResult<SP_GetCRRFINCONPeriods_Result> SP_GetCRRFINCONPeriods(Nullable<int> bR)
+        {
+            var bRParameter = bR.HasValue ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetCRRFINCONPeriods_Result>("SP_GetCRRFINCONPeriods", bRParameter);
         }
     }
 }

@@ -5,22 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="OPICSWEBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="BlotterDataColor">
-          <Key>
-            <PropertyRef Name="Sno" />
-          </Key>
-          <Property Name="Sno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DealNo" Type="int" />
-          <Property Name="Description" Type="nvarchar(max)" />
-          <Property Name="Status" Type="varchar" MaxLength="10" />
-          <Property Name="Inflow" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="Outflow" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="Balance" Type="numeric" Precision="18" Scale="1" />
-          <Property Name="Recon_isActive" Type="bit" />
-          <Property Name="CreateDate" Type="datetime" />
-          <Property Name="UpdateDate" Type="datetime" />
-          <Property Name="UserId" Type="int" />
-        </EntityType>
         <EntityType Name="BlotterSBP_Reserved">
           <Key>
             <PropertyRef Name="SNo" />
@@ -249,6 +233,8 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterConversionRate' does not h
           <Property Name="BID" Type="int" Nullable="false" />
           <Property Name="CurID" Type="int" Nullable="false" />
           <Property Name="Flag" Type="varchar" MaxLength="2" />
+          <Property Name="Calc1" Type="int" />
+          <Property Name="Calc2" Type="int" />
         </EntityType>
         <EntityType Name="SBP_BlotterCRRReportCalcSetup">
           <Key>
@@ -261,6 +247,9 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterConversionRate' does not h
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="UpdateDate" Type="datetime" />
           <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="date" />
+          <Property Name="EndDate" Type="date" />
+          <Property Name="Calc" Type="int" />
         </EntityType>
         <EntityType Name="SBP_BlotterCRRReportDaysWiseBal">
           <Key>
@@ -302,6 +291,8 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterConversionRate' does not h
           <Property Name="Reserve" Type="float" />
           <Property Name="CRR5PcrReqWithoutEB" Type="numeric" Precision="18" Scale="0" />
           <Property Name="BlotterBalance" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Calc1" Type="int" />
+          <Property Name="Calc2" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -453,40 +444,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
           <Property Name="BID" Type="int" Nullable="false" />
           <Property Name="CurID" Type="int" Nullable="false" />
           <Property Name="Flag" Type="varchar" MaxLength="2" />
-        </EntityType>
-        <EntityType Name="SBP_BlotterManualData">
-          <Key>
-            <PropertyRef Name="SNo" />
-          </Key>
-          <Property Name="SNo" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DataType" Type="varchar" MaxLength="100" />
-          <Property Name="Inflow" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="OutFlow" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="NetBalance" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="DateFor" Type="date" />
-          <Property Name="UserID" Type="int" Nullable="false" />
-          <Property Name="CreateDate" Type="datetime" />
-          <Property Name="UpdateDate" Type="datetime" />
-          <Property Name="BR" Type="int" />
-          <Property Name="CurID" Type="int" Nullable="false" />
-          <Property Name="Flag" Type="varchar" MaxLength="2" />
-          <Property Name="AdjBalance" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="isAdjusted" Type="bit" />
-          <Property Name="NostroBank" Type="bigint" />
-          <Property Name="NostroCode" Type="varchar" MaxLength="20" />
-        </EntityType>
-        <EntityType Name="SBP_BlotterManualDeals">
-          <Key>
-            <PropertyRef Name="SNo" />
-          </Key>
-          <Property Name="SNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Description" Type="nvarchar" MaxLength="250" />
-          <Property Name="DealDate" Type="date" />
-          <Property Name="InFlow" Type="numeric" Precision="19" Scale="4" />
-          <Property Name="OutFlow" Type="numeric" Precision="19" Scale="4" />
-          <Property Name="CurrentDate" Type="datetime" />
-          <Property Name="DealStatus" Type="nchar" MaxLength="1" />
-          <Property Name="BR" Type="varchar" MaxLength="2" />
         </EntityType>
         <EntityType Name="SBP_BlotterManualEstBalance">
           <Key>
@@ -1025,30 +982,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="SBP_BlotterFundingRepo">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SBP_BlotterManualData_CurID">
-          <End Role="Currencies" Type="Self.Currencies" Multiplicity="1" />
-          <End Role="SBP_BlotterManualData" Type="Self.SBP_BlotterManualData" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Currencies">
-              <PropertyRef Name="CID" />
-            </Principal>
-            <Dependent Role="SBP_BlotterManualData">
-              <PropertyRef Name="CurID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SBP_BlotterManualData_UserID">
-          <End Role="SBP_LoginInfo" Type="Self.SBP_LoginInfo" Multiplicity="1" />
-          <End Role="SBP_BlotterManualData" Type="Self.SBP_BlotterManualData" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SBP_LoginInfo">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SBP_BlotterManualData">
               <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1749,6 +1682,14 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Parameter Name="BR" Type="int" Mode="In" />
           <Parameter Name="BID" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_UpdateBranchBalanceByBranchId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ReconDate" Type="date" Mode="In" />
+          <Parameter Name="ReconInflow" Type="numeric" Mode="In" />
+          <Parameter Name="Recon_OutFLow" Type="numeric" Mode="In" />
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="BR" Type="int" Mode="In" />
+          <Parameter Name="BID" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_UpdateDaysInBlotterReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DTLValue" Type="numeric" Mode="In" />
           <Parameter Name="StartDate" Type="datetime" Mode="In" />
@@ -1820,7 +1761,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Parameter Name="BlotterType" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="OPICSWEBModelStoreContainer">
-          <EntitySet Name="BlotterDataColor" EntityType="Self.BlotterDataColor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BlotterSBP_Reserved" EntityType="Self.BlotterSBP_Reserved" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Branches" EntityType="Self.Branches" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Currencies" EntityType="Self.Currencies" Schema="dbo" store:Type="Tables" />
@@ -1838,8 +1778,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <EntitySet Name="SBP_BlotterDTLDaysWiseBal" EntityType="Self.SBP_BlotterDTLDaysWiseBal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterFundingRepo" EntityType="Self.SBP_BlotterFundingRepo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterFundsTransfer" EntityType="Self.SBP_BlotterFundsTransfer" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SBP_BlotterManualData" EntityType="Self.SBP_BlotterManualData" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SBP_BlotterManualDeals" EntityType="Self.SBP_BlotterManualDeals" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterManualEstBalance" EntityType="Self.SBP_BlotterManualEstBalance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterOpeningBalance" EntityType="Self.SBP_BlotterOpeningBalance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterOpeningClosingBalanceDIfferential" EntityType="Self.SBP_BlotterOpeningClosingBalanceDIfferential" Schema="dbo" store:Type="Tables" />
@@ -1991,14 +1929,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             <End Role="SBP_LoginInfo" EntitySet="SBP_LoginInfo" />
             <End Role="SBP_BlotterFundingRepo" EntitySet="SBP_BlotterFundingRepo" />
           </AssociationSet>
-          <AssociationSet Name="FK_SBP_BlotterManualData_CurID" Association="Self.FK_SBP_BlotterManualData_CurID">
-            <End Role="Currencies" EntitySet="Currencies" />
-            <End Role="SBP_BlotterManualData" EntitySet="SBP_BlotterManualData" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SBP_BlotterManualData_UserID" Association="Self.FK_SBP_BlotterManualData_UserID">
-            <End Role="SBP_LoginInfo" EntitySet="SBP_LoginInfo" />
-            <End Role="SBP_BlotterManualData" EntitySet="SBP_BlotterManualData" />
-          </AssociationSet>
           <AssociationSet Name="FK_SBP_BlotterManualEstBalance_BranchID" Association="Self.FK_SBP_BlotterManualEstBalance_BranchID">
             <End Role="Branches" EntitySet="Branches" />
             <End Role="SBP_BlotterManualEstBalance" EntitySet="SBP_BlotterManualEstBalance" />
@@ -2112,22 +2042,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BlotterEF" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="BlotterDataColor">
-          <Key>
-            <PropertyRef Name="Sno" />
-          </Key>
-          <Property Name="Sno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DealNo" Type="Int32" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Inflow" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="Outflow" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="Balance" Type="Decimal" Precision="18" Scale="1" />
-          <Property Name="Recon_isActive" Type="Boolean" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
-          <Property Name="UserId" Type="Int32" />
-        </EntityType>
         <EntityType Name="BlotterSBP_Reserved">
           <Key>
             <PropertyRef Name="SNo" />
@@ -2159,7 +2073,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Property Name="isActive" Type="Boolean" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="SBP_BlotterCRRFINCON" Relationship="Self.FK_BlotterCRRFINCON_BranchID" FromRole="Branches" ToRole="SBP_BlotterCRRFINCON" />
           <NavigationProperty Name="SBP_BlotterBai_Muajjal" Relationship="Self.FK_SBP_BlotterBai_Muajjal_BranchID" FromRole="Branches" ToRole="SBP_BlotterBai_Muajjal" />
           <NavigationProperty Name="SBP_BlotterBreakups" Relationship="Self.FK_SBP_BlotterBreakups_BranchID" FromRole="Branches" ToRole="SBP_BlotterBreakups" />
           <NavigationProperty Name="SBP_BlotterClearing" Relationship="Self.FK_SBP_BlotterClearing_BranchID" FromRole="Branches" ToRole="SBP_BlotterClearing" />
@@ -2172,6 +2085,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <NavigationProperty Name="SBP_BlotterFundsTransfer" Relationship="Self.FK_SBP_SBP_BlotterFundsTransfer_BranchID" FromRole="Branches" ToRole="SBP_BlotterFundsTransfer" />
           <NavigationProperty Name="SBP_BlotterManualEstBalance" Relationship="BlotterEF.FK_SBP_BlotterManualEstBalance_BranchID" FromRole="Branches" ToRole="SBP_BlotterManualEstBalance" />
           <NavigationProperty Name="SBP_BlotterBranchBalances" Relationship="BlotterEF.FK_SBP_BlotterBranchBalances_BranchID" FromRole="Branches" ToRole="SBP_BlotterBranchBalances" />
+          <NavigationProperty Name="SBP_BlotterCRRFINCON" Relationship="BlotterEF.FK_BlotterCRRFINCON_BranchID" FromRole="Branches" ToRole="SBP_BlotterCRRFINCON" />
         </EntityType>
         <EntityType Name="Currency">
           <Key>
@@ -2184,7 +2098,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Property Name="isActive" Type="Boolean" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="SBP_BlotterCRRFINCON" Relationship="Self.FK_BlotterCRRFINCON_CurID" FromRole="Currencies" ToRole="SBP_BlotterCRRFINCON" />
           <NavigationProperty Name="SBP_BlotterBai_Muajjal" Relationship="Self.FK_SBP_BlotterBai_Muajjal_CurID" FromRole="Currencies" ToRole="SBP_BlotterBai_Muajjal" />
           <NavigationProperty Name="SBP_BlotterBreakups" Relationship="Self.FK_SBP_BlotterBreakups_CurID" FromRole="Currencies" ToRole="SBP_BlotterBreakups" />
           <NavigationProperty Name="SBP_BlotterClearing" Relationship="Self.FK_SBP_BlotterClearing_CurID" FromRole="Currencies" ToRole="SBP_BlotterClearing" />
@@ -2197,7 +2110,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <NavigationProperty Name="SBP_BlotterFundsTransfer" Relationship="Self.FK_SBP_SBP_BlotterFundsTransfer_CurID" FromRole="Currencies" ToRole="SBP_BlotterFundsTransfer" />
           <NavigationProperty Name="SBP_BlotterManualEstBalance" Relationship="BlotterEF.FK_SBP_SBP_BlotterManualEstBalance_CurID" FromRole="Currency" ToRole="SBP_BlotterManualEstBalance" />
           <NavigationProperty Name="SBP_BlotterBranchBalances" Relationship="BlotterEF.FK_SBP_BlotterBranchBalances_CurID" FromRole="Currency" ToRole="SBP_BlotterBranchBalances" />
-          <NavigationProperty Name="SBP_BlotterManualData1" Relationship="BlotterEF.FK_SBP_BlotterManualData_CurID1" FromRole="Currency" ToRole="SBP_BlotterManualData1" />
+          <NavigationProperty Name="SBP_BlotterCRRFINCON" Relationship="BlotterEF.FK_BlotterCRRFINCON_CurID" FromRole="Currency" ToRole="SBP_BlotterCRRFINCON" />
         </EntityType>
         <EntityType Name="GazettedHoliday">
           <Key>
@@ -2351,37 +2264,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Property Name="CurID" Type="Int32" Nullable="false" />
           <Property Name="Flag" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="SBP_BlotterCRRFINCON">
-          <Key>
-            <PropertyRef Name="SNo" />
-          </Key>
-          <Property Name="SNo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StartDate" Type="DateTime" Precision="0" />
-          <Property Name="EndDate" Type="DateTime" Precision="0" />
-          <Property Name="DemandTimeLiablities" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="TimeLiablitiesOverOneYear" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DemandTimeLiablitiesTotal" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="PreMatureDeposit" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DemandTimeLiablitiesTotalForCRR" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="Penalty" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ExtraBenefits" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="CRR1Requirement" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="CRR2Requirement" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="RequirementPenalty" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="RequirementExtBenefit" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="BalMaintAgainstPenalty" Type="Double" />
-          <Property Name="BalMaintAgainstExtBenft" Type="Double" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
-          <Property Name="BR" Type="Int32" Nullable="false" />
-          <Property Name="BID" Type="Int32" Nullable="false" />
-          <Property Name="CurID" Type="Int32" Nullable="false" />
-          <Property Name="Flag" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Branch" Relationship="Self.FK_BlotterCRRFINCON_BranchID" FromRole="SBP_BlotterCRRFINCON" ToRole="Branches" />
-          <NavigationProperty Name="Currency" Relationship="Self.FK_BlotterCRRFINCON_CurID" FromRole="SBP_BlotterCRRFINCON" ToRole="Currencies" />
-          <NavigationProperty Name="SBP_LoginInfo" Relationship="Self.FK_SBP_BlotterCRRFINCON_UserID" FromRole="SBP_BlotterCRRFINCON" ToRole="SBP_LoginInfo" />
-        </EntityType>
         <EntityType Name="SBP_BlotterCRRReportCalcSetup">
           <Key>
             <PropertyRef Name="ID" />
@@ -2394,47 +2276,9 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="SBP_LoginInfo" Relationship="Self.FK_SBP_BlotterCRRReportCalcSetup_UserID" FromRole="SBP_BlotterCRRReportCalcSetup" ToRole="SBP_LoginInfo" />
-        </EntityType>
-        <EntityType Name="SBP_BlotterCRRReportDaysWiseBal">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CRRFinconId" Type="Int32" Nullable="false" />
-          <Property Name="ReportDate" Type="DateTime" Precision="0" />
-          <Property Name="WeekDays" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="KarachiTotal" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="HyderabadTotal" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="SukkurTotal" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="LahoreTotal" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="FaisalabadTotal" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="GWalaTotal" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="MultanTotal" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="SialkotTotal" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="Isalamabad" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="PindiTotal" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="PeshawarTotal" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="BhawalpurTotal" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="MuzafarbadTotal" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DIKhanTotal" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="QuettaTotal" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="GawadarTotal" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="OtherTotal" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="PakistanToTal" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="CRR3PcrReq" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="CRR5PcrReq" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="BalMaintain3Pcr" Type="Double" />
-          <Property Name="BalMaintain5Pcr" Type="Double" />
-          <Property Name="Penalty" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="BR" Type="Int32" />
-          <Property Name="createDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
-          <Property Name="AvgForRemDays" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ReserveSurplus" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="Reserve" Type="Double" />
-          <Property Name="CRR5PcrReqWithoutEB" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="BlotterBalance" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="StartDate" Type="DateTime" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="Calc" Type="Int32" />
         </EntityType>
         <EntityType Name="SBP_BlotterDMMO">
           <Key>
@@ -2574,19 +2418,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <NavigationProperty Name="Branch" Relationship="Self.FK_SBP_SBP_BlotterFundsTransfer_BranchID" FromRole="SBP_BlotterFundsTransfer" ToRole="Branches" />
           <NavigationProperty Name="Currency" Relationship="Self.FK_SBP_SBP_BlotterFundsTransfer_CurID" FromRole="SBP_BlotterFundsTransfer" ToRole="Currencies" />
           <NavigationProperty Name="SBP_LoginInfo" Relationship="Self.FK_SBP_SBP_BlotterFundsTransfer_UserID" FromRole="SBP_BlotterFundsTransfer" ToRole="SBP_LoginInfo" />
-        </EntityType>
-        <EntityType Name="SBP_BlotterManualDeals">
-          <Key>
-            <PropertyRef Name="SNo" />
-          </Key>
-          <Property Name="SNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="DealDate" Type="DateTime" Precision="0" />
-          <Property Name="InFlow" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="OutFlow" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="CurrentDate" Type="DateTime" Precision="3" />
-          <Property Name="DealStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
-          <Property Name="BR" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="SBP_BlotterOpeningBalance">
           <Key>
@@ -2806,7 +2637,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <NavigationProperty Name="SBP_BlotterBai_Muajjal" Relationship="Self.FK_SBP_BlotterBai_Muajjal_UserID" FromRole="SBP_LoginInfo" ToRole="SBP_BlotterBai_Muajjal" />
           <NavigationProperty Name="SBP_BlotterBreakups" Relationship="Self.FK_SBP_BlotterBreakups_UserID" FromRole="SBP_LoginInfo" ToRole="SBP_BlotterBreakups" />
           <NavigationProperty Name="SBP_BlotterClearing" Relationship="Self.FK_SBP_BlotterClearing_UserID" FromRole="SBP_LoginInfo" ToRole="SBP_BlotterClearing" />
-          <NavigationProperty Name="SBP_BlotterCRRFINCON" Relationship="Self.FK_SBP_BlotterCRRFINCON_UserID" FromRole="SBP_LoginInfo" ToRole="SBP_BlotterCRRFINCON" />
           <NavigationProperty Name="SBP_BlotterCRRReportCalcSetup" Relationship="Self.FK_SBP_BlotterCRRReportCalcSetup_UserID" FromRole="SBP_LoginInfo" ToRole="SBP_BlotterCRRReportCalcSetup" />
           <NavigationProperty Name="SBP_BlotterFundingRepo" Relationship="Self.FK_SBP_BlotterFundingRepo_UserID" FromRole="SBP_LoginInfo" ToRole="SBP_BlotterFundingRepo" />
           <NavigationProperty Name="SBP_BlotterFundsTransfer" Relationship="Self.FK_SBP_SBP_BlotterFundsTransfer_UserID" FromRole="SBP_LoginInfo" ToRole="SBP_BlotterFundsTransfer" />
@@ -2818,7 +2648,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <NavigationProperty Name="UserRoleRelations" Relationship="Self.FK_URRUserID" FromRole="SBP_LoginInfo" ToRole="UserRoleRelation" />
           <NavigationProperty Name="SBP_BlotterManualEstBalance" Relationship="BlotterEF.FK_SBP_BlotterManualEstBalance_UserID" FromRole="SBP_LoginInfo" ToRole="SBP_BlotterManualEstBalance" />
           <NavigationProperty Name="SBP_BlotterBranchBalances" Relationship="BlotterEF.FK_SBP_BlotterBranchBalances_UserID" FromRole="SBP_LoginInfo" ToRole="SBP_BlotterBranchBalances" />
-          <NavigationProperty Name="SBP_BlotterManualData1" Relationship="BlotterEF.FK_SBP_BlotterManualData_UserID1" FromRole="SBP_LoginInfo" ToRole="SBP_BlotterManualData1" />
+          <NavigationProperty Name="SBP_BlotterCRRFINCON" Relationship="BlotterEF.FK_SBP_BlotterCRRFINCON_UserID" FromRole="SBP_LoginInfo" ToRole="SBP_BlotterCRRFINCON" />
         </EntityType>
         <EntityType Name="UserPageRelation">
           <Key>
@@ -2924,18 +2754,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Property Name="BID" Type="Int32" />
           <Property Name="Flag" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
-        <Association Name="FK_BlotterCRRFINCON_BranchID">
-          <End Role="Branches" Type="BlotterEF.Branches" Multiplicity="1" />
-          <End Role="SBP_BlotterCRRFINCON" Type="Self.SBP_BlotterCRRFINCON" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Branches">
-              <PropertyRef Name="BID" />
-            </Principal>
-            <Dependent Role="SBP_BlotterCRRFINCON">
-              <PropertyRef Name="BID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_SBP_BlotterBai_Muajjal_BranchID">
           <End Role="Branches" Type="BlotterEF.Branches" Multiplicity="1" />
           <End Role="SBP_BlotterBai_Muajjal" Type="Self.SBP_BlotterBai_Muajjal" Multiplicity="*" />
@@ -3053,18 +2871,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             </Principal>
             <Dependent Role="SBP_BlotterFundsTransfer">
               <PropertyRef Name="BID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_BlotterCRRFINCON_CurID">
-          <End Role="Currencies" Type="Self.Currency" Multiplicity="1" />
-          <End Role="SBP_BlotterCRRFINCON" Type="Self.SBP_BlotterCRRFINCON" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Currencies">
-              <PropertyRef Name="CID" />
-            </Principal>
-            <Dependent Role="SBP_BlotterCRRFINCON">
-              <PropertyRef Name="CurID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3232,18 +3038,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="SBP_BlotterClearing">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SBP_BlotterCRRFINCON_UserID">
-          <End Role="SBP_LoginInfo" Type="Self.SBP_LoginInfo" Multiplicity="1" />
-          <End Role="SBP_BlotterCRRFINCON" Type="Self.SBP_BlotterCRRFINCON" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SBP_LoginInfo">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SBP_BlotterCRRFINCON">
               <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
@@ -3441,7 +3235,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="BlotterEntity" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="BlotterDataColors" EntityType="Self.BlotterDataColor" />
           <EntitySet Name="BlotterSBP_Reserved" EntityType="Self.BlotterSBP_Reserved" />
           <EntitySet Name="Branches" EntityType="BlotterEF.Branches" />
           <EntitySet Name="Currencies" EntityType="Self.Currency" />
@@ -3452,14 +3245,11 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <EntitySet Name="SBP_BlotterBreakups" EntityType="Self.SBP_BlotterBreakups" />
           <EntitySet Name="SBP_BlotterClearing" EntityType="Self.SBP_BlotterClearing" />
           <EntitySet Name="SBP_BlotterCRD" EntityType="Self.SBP_BlotterCRD" />
-          <EntitySet Name="SBP_BlotterCRRFINCON" EntityType="Self.SBP_BlotterCRRFINCON" />
           <EntitySet Name="SBP_BlotterCRRReportCalcSetup" EntityType="Self.SBP_BlotterCRRReportCalcSetup" />
-          <EntitySet Name="SBP_BlotterCRRReportDaysWiseBal" EntityType="Self.SBP_BlotterCRRReportDaysWiseBal" />
           <EntitySet Name="SBP_BlotterDMMO" EntityType="Self.SBP_BlotterDMMO" />
           <EntitySet Name="SBP_BlotterDTLDaysWiseBal" EntityType="Self.SBP_BlotterDTLDaysWiseBal" />
           <EntitySet Name="SBP_BlotterFundingRepo" EntityType="Self.SBP_BlotterFundingRepo" />
           <EntitySet Name="SBP_BlotterFundsTransfer" EntityType="Self.SBP_BlotterFundsTransfer" />
-          <EntitySet Name="SBP_BlotterManualDeals" EntityType="Self.SBP_BlotterManualDeals" />
           <EntitySet Name="SBP_BlotterOpeningBalance" EntityType="Self.SBP_BlotterOpeningBalance" />
           <EntitySet Name="SBP_BlotterOpeningClosingBalanceDIfferential" EntityType="Self.SBP_BlotterOpeningClosingBalanceDIfferential" />
           <EntitySet Name="SBP_BlotterOutrights" EntityType="Self.SBP_BlotterOutrights" />
@@ -3477,10 +3267,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <EntitySet Name="SBP_BlotterConversionRate" EntityType="Self.SBP_BlotterConversionRate" />
           <EntitySet Name="SBP_BlotterCRRReportFCY" EntityType="Self.SBP_BlotterCRRReportFCY" />
           <EntitySet Name="SBP_BlotterReserved" EntityType="Self.SBP_BlotterReserved" />
-          <AssociationSet Name="FK_BlotterCRRFINCON_BranchID" Association="Self.FK_BlotterCRRFINCON_BranchID">
-            <End Role="Branches" EntitySet="Branches" />
-            <End Role="SBP_BlotterCRRFINCON" EntitySet="SBP_BlotterCRRFINCON" />
-          </AssociationSet>
           <AssociationSet Name="FK_SBP_BlotterBai_Muajjal_BranchID" Association="Self.FK_SBP_BlotterBai_Muajjal_BranchID">
             <End Role="Branches" EntitySet="Branches" />
             <End Role="SBP_BlotterBai_Muajjal" EntitySet="SBP_BlotterBai_Muajjal" />
@@ -3520,10 +3306,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <AssociationSet Name="FK_SBP_SBP_BlotterFundsTransfer_BranchID" Association="Self.FK_SBP_SBP_BlotterFundsTransfer_BranchID">
             <End Role="Branches" EntitySet="Branches" />
             <End Role="SBP_BlotterFundsTransfer" EntitySet="SBP_BlotterFundsTransfer" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BlotterCRRFINCON_CurID" Association="Self.FK_BlotterCRRFINCON_CurID">
-            <End Role="Currencies" EntitySet="Currencies" />
-            <End Role="SBP_BlotterCRRFINCON" EntitySet="SBP_BlotterCRRFINCON" />
           </AssociationSet>
           <AssociationSet Name="FK_SBP_BlotterBai_Muajjal_CurID" Association="Self.FK_SBP_BlotterBai_Muajjal_CurID">
             <End Role="Currencies" EntitySet="Currencies" />
@@ -3580,10 +3362,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <AssociationSet Name="FK_SBP_BlotterClearing_UserID" Association="Self.FK_SBP_BlotterClearing_UserID">
             <End Role="SBP_LoginInfo" EntitySet="SBP_LoginInfo" />
             <End Role="SBP_BlotterClearing" EntitySet="SBP_BlotterClearing" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SBP_BlotterCRRFINCON_UserID" Association="Self.FK_SBP_BlotterCRRFINCON_UserID">
-            <End Role="SBP_LoginInfo" EntitySet="SBP_LoginInfo" />
-            <End Role="SBP_BlotterCRRFINCON" EntitySet="SBP_BlotterCRRFINCON" />
           </AssociationSet>
           <AssociationSet Name="FK_SBP_BlotterCRRReportCalcSetup_UserID" Association="Self.FK_SBP_BlotterCRRReportCalcSetup_UserID">
             <End Role="SBP_LoginInfo" EntitySet="SBP_LoginInfo" />
@@ -3666,12 +3444,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             <Parameter Name="pLoginTime" Mode="In" Type="DateTime" />
             <Parameter Name="pExpires" Mode="In" Type="DateTime" />
           </FunctionImport>
-          <FunctionImport Name="SP_AddDaysInBlotterReport">
-            <Parameter Name="DTLValue" Mode="In" Type="Decimal" />
-            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
-            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
-            <Parameter Name="BR" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="SP_DeleteBlotterOutright">
             <Parameter Name="id" Mode="In" Type="Int64" />
             <Parameter Name="UserID" Mode="In" Type="Int32" />
@@ -3751,9 +3523,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <FunctionImport Name="SP_GetAllWebPages" ReturnType="Collection(BlotterEF.SP_GetAllWebPages_Result)">
           <Parameter Name="WPID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="SP_GetCRRFINCONPeriods" ReturnType="Collection(BlotterEF.SP_GetCRRFINCONPeriods_Result)">
-          <Parameter Name="BR" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="SP_GETLatestBlotterDTLPerDayWise" ReturnType="Collection(BlotterEF.SP_GETLatestBlotterDTLPerDayWise_Result)">
             <Parameter Name="BR" Mode="In" Type="Int32" />
             <Parameter Name="startdate" Mode="In" Type="String" />
@@ -3788,14 +3557,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="BranchID" Mode="In" Type="Int32" />
             <Parameter Name="BR" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="SP_GetSBPBlotterCRRFINCON" ReturnType="Collection(BlotterEF.SP_GetSBPBlotterCRRFINCON_Result)">
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
-            <Parameter Name="BranchID" Mode="In" Type="Int32" />
-            <Parameter Name="CurID" Mode="In" Type="Int32" />
-            <Parameter Name="BR" Mode="In" Type="Int32" />
-            <Parameter Name="SatrtDate" Mode="In" Type="DateTime" />
-            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="SP_GetSBPBlotterFR" ReturnType="Collection(BlotterEF.SP_GetSBPBlotterFR_Result)">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
@@ -4069,15 +3830,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             <Parameter Name="BR" Mode="In" Type="Int32" />
             <Parameter Name="BID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <EntitySet Name="SBP_BlotterManualData" EntityType="BlotterEF.SBP_BlotterManualData" />
-          <AssociationSet Name="FK_SBP_BlotterManualData_CurID1" Association="BlotterEF.FK_SBP_BlotterManualData_CurID1">
-            <End Role="Currency" EntitySet="Currencies" />
-            <End Role="SBP_BlotterManualData1" EntitySet="SBP_BlotterManualData" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SBP_BlotterManualData_UserID1" Association="BlotterEF.FK_SBP_BlotterManualData_UserID1">
-            <End Role="SBP_LoginInfo" EntitySet="SBP_LoginInfo" />
-            <End Role="SBP_BlotterManualData1" EntitySet="SBP_BlotterManualData" />
-          </AssociationSet>
+          
           <FunctionImport Name="SP_InsertBlotterOutright">
             <Parameter Name="DataType" Mode="In" Type="String" />
             <Parameter Name="Bank" Mode="In" Type="String" />
@@ -4103,6 +3856,26 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             <Parameter Name="OutFLow" Mode="In" Type="Decimal" />
             <Parameter Name="Note" Mode="In" Type="String" />
             <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="BR" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="SBP_BlotterCRRFINCON" EntityType="BlotterEF.SBP_BlotterCRRFINCON" />
+          <EntitySet Name="SBP_BlotterCRRReportDaysWiseBal" EntityType="BlotterEF.SBP_BlotterCRRReportDaysWiseBal" />
+          <AssociationSet Name="FK_BlotterCRRFINCON_BranchID" Association="BlotterEF.FK_BlotterCRRFINCON_BranchID">
+            <End Role="Branches" EntitySet="Branches" />
+            <End Role="SBP_BlotterCRRFINCON" EntitySet="SBP_BlotterCRRFINCON" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlotterCRRFINCON_CurID" Association="BlotterEF.FK_BlotterCRRFINCON_CurID">
+            <End Role="Currency" EntitySet="Currencies" />
+            <End Role="SBP_BlotterCRRFINCON" EntitySet="SBP_BlotterCRRFINCON" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SBP_BlotterCRRFINCON_UserID" Association="BlotterEF.FK_SBP_BlotterCRRFINCON_UserID">
+            <End Role="SBP_LoginInfo" EntitySet="SBP_LoginInfo" />
+            <End Role="SBP_BlotterCRRFINCON" EntitySet="SBP_BlotterCRRFINCON" />
+          </AssociationSet>
+          <FunctionImport Name="SP_AddDaysInBlotterReport">
+            <Parameter Name="DTLValue" Mode="In" Type="Decimal" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
             <Parameter Name="BR" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_GetAll_SBPBlotterClearing_DashBoard" ReturnType="Collection(BlotterEF.SP_GetAll_SBPBlotterClearing_DashBoard_Result)">
@@ -4132,6 +3905,17 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             <Parameter Name="CurID" Mode="In" Type="Int32" />
             <Parameter Name="BR" Mode="In" Type="Int32" />
             <Parameter Name="DateVal" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_GetSBPBlotterCRRFINCON" ReturnType="Collection(BlotterEF.SP_GetSBPBlotterCRRFINCON_Result)">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="BranchID" Mode="In" Type="Int32" />
+            <Parameter Name="CurID" Mode="In" Type="Int32" />
+            <Parameter Name="BR" Mode="In" Type="Int32" />
+            <Parameter Name="SatrtDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SP_GetCRRFINCONPeriods" ReturnType="Collection(BlotterEF.SP_GetCRRFINCONPeriods_Result)">
+            <Parameter Name="BR" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_GetAll_SBPBlotterClearing_Result">
@@ -4291,10 +4075,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="UpdateDate" Nullable="true" Precision="23" />
           <Property Type="Int32" Name="BlotterType" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="SP_GetCRRFINCONPeriods_Result">
-          <Property Type="DateTime" Name="StartDate" Nullable="true" />
-          <Property Type="DateTime" Name="EndDate" Nullable="true" />
         </ComplexType>
         <ComplexType Name="SP_GETLatestBlotterDTLPerDayWise_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -4460,31 +4240,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Property Type="Decimal" Name="ReservedBalance" Nullable="true" Precision="18" Scale="0" />
           <Property Type="Decimal" Name="SBPBalanace" Nullable="true" Precision="18" Scale="0" />
           <Property Type="Decimal" Name="BalanceDifference" Nullable="true" Precision="18" Scale="0" />
-        </ComplexType>
-        <ComplexType Name="SP_GetSBPBlotterCRRFINCON_Result">
-          <Property Type="Int64" Name="SNo" Nullable="false" />
-          <Property Type="DateTime" Name="StartDate" Nullable="true" />
-          <Property Type="DateTime" Name="EndDate" Nullable="true" />
-          <Property Type="Decimal" Name="DemandTimeLiablities" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="TimeLiablitiesOverOneYear" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="DemandTimeLiablitiesTotal" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="PreMatureDeposit" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="DemandTimeLiablitiesTotalForCRR" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="Penalty" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="ExtraBenefits" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="CRR1Requirement" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="CRR2Requirement" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="RequirementPenalty" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="RequirementExtBenefit" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Double" Name="BalMaintAgainstPenalty" Nullable="true" />
-          <Property Type="Double" Name="BalMaintAgainstExtBenft" Nullable="true" />
-          <Property Type="Int32" Name="UserID" Nullable="false" />
-          <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="UpdateDate" Nullable="true" Precision="23" />
-          <Property Type="Int32" Name="BR" Nullable="false" />
-          <Property Type="Int32" Name="BID" Nullable="false" />
-          <Property Type="Int32" Name="CurID" Nullable="false" />
-          <Property Type="String" Name="Flag" Nullable="true" MaxLength="2" />
         </ComplexType>
         <ComplexType Name="SP_GetSBPBlotterFR_Result">
           <Property Type="Int64" Name="SNo" Nullable="false" />
@@ -4821,49 +4576,114 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="SBP_BlotterManualData">
+        <EntityType Name="SBP_BlotterCRRFINCON">
           <Key>
             <PropertyRef Name="SNo" />
           </Key>
           <Property Name="SNo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DataType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Inflow" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="OutFlow" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="NetBalance" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DateFor" Type="DateTime" Precision="0" />
+          <Property Name="StartDate" Type="DateTime" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="DemandTimeLiablities" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TimeLiablitiesOverOneYear" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="DemandTimeLiablitiesTotal" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="PreMatureDeposit" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="DemandTimeLiablitiesTotalForCRR" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Penalty" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ExtraBenefits" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CRR1Requirement" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CRR2Requirement" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="RequirementPenalty" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="RequirementExtBenefit" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="BalMaintAgainstPenalty" Type="Double" />
+          <Property Name="BalMaintAgainstExtBenft" Type="Double" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
-          <Property Name="BR" Type="Int32" />
+          <Property Name="BR" Type="Int32" Nullable="false" />
+          <Property Name="BID" Type="Int32" Nullable="false" />
           <Property Name="CurID" Type="Int32" Nullable="false" />
           <Property Name="Flag" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="AdjBalance" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="isAdjusted" Type="Boolean" />
-          <Property Name="NostroBank" Type="Int64" />
-          <Property Name="NostroCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Currency" Relationship="BlotterEF.FK_SBP_BlotterManualData_CurID1" FromRole="SBP_BlotterManualData1" ToRole="Currency" />
-          <NavigationProperty Name="SBP_LoginInfo" Relationship="BlotterEF.FK_SBP_BlotterManualData_UserID1" FromRole="SBP_BlotterManualData1" ToRole="SBP_LoginInfo" />
+          <Property Name="Calc1" Type="Int32" />
+          <Property Name="Calc2" Type="Int32" />
+          <NavigationProperty Name="Branch" Relationship="BlotterEF.FK_BlotterCRRFINCON_BranchID" FromRole="SBP_BlotterCRRFINCON" ToRole="Branches" />
+          <NavigationProperty Name="Currency" Relationship="BlotterEF.FK_BlotterCRRFINCON_CurID" FromRole="SBP_BlotterCRRFINCON" ToRole="Currency" />
+          <NavigationProperty Name="SBP_LoginInfo" Relationship="BlotterEF.FK_SBP_BlotterCRRFINCON_UserID" FromRole="SBP_BlotterCRRFINCON" ToRole="SBP_LoginInfo" />
         </EntityType>
-        <Association Name="FK_SBP_BlotterManualData_CurID1">
+        <EntityType Name="SBP_BlotterCRRReportDaysWiseBal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CRRFinconId" Type="Int32" Nullable="false" />
+          <Property Name="ReportDate" Type="DateTime" Precision="0" />
+          <Property Name="WeekDays" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="KarachiTotal" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="HyderabadTotal" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="SukkurTotal" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="LahoreTotal" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="FaisalabadTotal" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="GWalaTotal" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="MultanTotal" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="SialkotTotal" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Isalamabad" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="PindiTotal" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="PeshawarTotal" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="BhawalpurTotal" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="MuzafarbadTotal" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="DIKhanTotal" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="QuettaTotal" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="GawadarTotal" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="OtherTotal" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="PakistanToTal" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CRR3PcrReq" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CRR5PcrReq" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="BalMaintain3Pcr" Type="Double" />
+          <Property Name="BalMaintain5Pcr" Type="Double" />
+          <Property Name="Penalty" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BR" Type="Int32" />
+          <Property Name="createDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="AvgForRemDays" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ReserveSurplus" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Reserve" Type="Double" />
+          <Property Name="CRR5PcrReqWithoutEB" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="BlotterBalance" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Calc1" Type="Int32" />
+          <Property Name="Calc2" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_BlotterCRRFINCON_BranchID">
+          <End Type="BlotterEF.Branches" Role="Branches" Multiplicity="1" />
+          <End Type="BlotterEF.SBP_BlotterCRRFINCON" Role="SBP_BlotterCRRFINCON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branches">
+              <PropertyRef Name="BID" />
+            </Principal>
+            <Dependent Role="SBP_BlotterCRRFINCON">
+              <PropertyRef Name="BID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlotterCRRFINCON_CurID">
           <End Type="BlotterEF.Currency" Role="Currency" Multiplicity="1" />
-          <End Type="BlotterEF.SBP_BlotterManualData" Role="SBP_BlotterManualData1" Multiplicity="*" />
+          <End Type="BlotterEF.SBP_BlotterCRRFINCON" Role="SBP_BlotterCRRFINCON" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Currency">
               <PropertyRef Name="CID" />
             </Principal>
-            <Dependent Role="SBP_BlotterManualData1">
+            <Dependent Role="SBP_BlotterCRRFINCON">
               <PropertyRef Name="CurID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SBP_BlotterManualData_UserID1">
+        <Association Name="FK_SBP_BlotterCRRFINCON_UserID">
           <End Type="BlotterEF.SBP_LoginInfo" Role="SBP_LoginInfo" Multiplicity="1" />
-          <End Type="BlotterEF.SBP_BlotterManualData" Role="SBP_BlotterManualData1" Multiplicity="*" />
+          <End Type="BlotterEF.SBP_BlotterCRRFINCON" Role="SBP_BlotterCRRFINCON" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SBP_LoginInfo">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="SBP_BlotterManualData1">
+            <Dependent Role="SBP_BlotterCRRFINCON">
               <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
@@ -4938,29 +4758,46 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Property Type="String" Name="Flag" Nullable="true" MaxLength="2" />
           <Property Type="String" Name="BankCode" Nullable="true" MaxLength="20" />
         </ComplexType>
+        <ComplexType Name="SP_GetSBPBlotterCRRFINCON_Result">
+          <Property Type="Int64" Name="SNo" Nullable="false" />
+          <Property Type="DateTime" Name="StartDate" Nullable="true" />
+          <Property Type="DateTime" Name="EndDate" Nullable="true" />
+          <Property Type="Decimal" Name="DemandTimeLiablities" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="TimeLiablitiesOverOneYear" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="DemandTimeLiablitiesTotal" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="PreMatureDeposit" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="DemandTimeLiablitiesTotalForCRR" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="Penalty" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="ExtraBenefits" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="CRR1Requirement" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="CRR2Requirement" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="RequirementPenalty" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="RequirementExtBenefit" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Double" Name="BalMaintAgainstPenalty" Nullable="true" />
+          <Property Type="Double" Name="BalMaintAgainstExtBenft" Nullable="true" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="UpdateDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="BR" Nullable="false" />
+          <Property Type="Int32" Name="BID" Nullable="false" />
+          <Property Type="Int32" Name="CurID" Nullable="false" />
+          <Property Type="String" Name="Flag" Nullable="true" MaxLength="2" />
+          <Property Type="Int32" Name="Calc1" Nullable="true" />
+          <Property Type="Int32" Name="Calc2" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_GetCRRFINCONPeriods_Result">
+          <Property Type="DateTime" Name="StartDate" Nullable="true" />
+          <Property Type="DateTime" Name="EndDate" Nullable="true" />
+          <Property Type="Int32" Name="Calc1" Nullable="false" />
+          <Property Type="Int32" Name="Calc2" Nullable="false" />
+        </ComplexType>
+        
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="OPICSWEBModelStoreContainer" CdmEntityContainer="BlotterEntity">
-          <EntitySetMapping Name="BlotterDataColors">
-            <EntityTypeMapping TypeName="BlotterEF.BlotterDataColor">
-              <MappingFragment StoreEntitySet="BlotterDataColor">
-                <ScalarProperty Name="Sno" ColumnName="Sno" />
-                <ScalarProperty Name="DealNo" ColumnName="DealNo" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Inflow" ColumnName="Inflow" />
-                <ScalarProperty Name="Outflow" ColumnName="Outflow" />
-                <ScalarProperty Name="Balance" ColumnName="Balance" />
-                <ScalarProperty Name="Recon_isActive" ColumnName="Recon_isActive" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="BlotterSBP_Reserved">
             <EntityTypeMapping TypeName="BlotterEF.BlotterSBP_Reserved">
               <MappingFragment StoreEntitySet="BlotterSBP_Reserved">
@@ -5154,38 +4991,12 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="SBP_BlotterCRRFINCON">
-            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterCRRFINCON">
-              <MappingFragment StoreEntitySet="SBP_BlotterCRRFINCON">
-                <ScalarProperty Name="SNo" ColumnName="SNo" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="DemandTimeLiablities" ColumnName="DemandTimeLiablities" />
-                <ScalarProperty Name="TimeLiablitiesOverOneYear" ColumnName="TimeLiablitiesOverOneYear" />
-                <ScalarProperty Name="DemandTimeLiablitiesTotal" ColumnName="DemandTimeLiablitiesTotal" />
-                <ScalarProperty Name="PreMatureDeposit" ColumnName="PreMatureDeposit" />
-                <ScalarProperty Name="DemandTimeLiablitiesTotalForCRR" ColumnName="DemandTimeLiablitiesTotalForCRR" />
-                <ScalarProperty Name="Penalty" ColumnName="Penalty" />
-                <ScalarProperty Name="ExtraBenefits" ColumnName="ExtraBenefits" />
-                <ScalarProperty Name="CRR1Requirement" ColumnName="CRR1Requirement" />
-                <ScalarProperty Name="CRR2Requirement" ColumnName="CRR2Requirement" />
-                <ScalarProperty Name="RequirementPenalty" ColumnName="RequirementPenalty" />
-                <ScalarProperty Name="RequirementExtBenefit" ColumnName="RequirementExtBenefit" />
-                <ScalarProperty Name="BalMaintAgainstPenalty" ColumnName="BalMaintAgainstPenalty" />
-                <ScalarProperty Name="BalMaintAgainstExtBenft" ColumnName="BalMaintAgainstExtBenft" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="BR" ColumnName="BR" />
-                <ScalarProperty Name="BID" ColumnName="BID" />
-                <ScalarProperty Name="CurID" ColumnName="CurID" />
-                <ScalarProperty Name="Flag" ColumnName="Flag" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="SBP_BlotterCRRReportCalcSetup">
             <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterCRRReportCalcSetup">
               <MappingFragment StoreEntitySet="SBP_BlotterCRRReportCalcSetup">
+                <ScalarProperty Name="Calc" ColumnName="Calc" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="CalcVal1" ColumnName="CalcVal1" />
                 <ScalarProperty Name="CalcVal2" ColumnName="CalcVal2" />
@@ -5193,48 +5004,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SBP_BlotterCRRReportDaysWiseBal">
-            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterCRRReportDaysWiseBal">
-              <MappingFragment StoreEntitySet="SBP_BlotterCRRReportDaysWiseBal">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="CRRFinconId" ColumnName="CRRFinconId" />
-                <ScalarProperty Name="ReportDate" ColumnName="ReportDate" />
-                <ScalarProperty Name="WeekDays" ColumnName="WeekDays" />
-                <ScalarProperty Name="KarachiTotal" ColumnName="KarachiTotal" />
-                <ScalarProperty Name="HyderabadTotal" ColumnName="HyderabadTotal" />
-                <ScalarProperty Name="SukkurTotal" ColumnName="SukkurTotal" />
-                <ScalarProperty Name="LahoreTotal" ColumnName="LahoreTotal" />
-                <ScalarProperty Name="FaisalabadTotal" ColumnName="FaisalabadTotal" />
-                <ScalarProperty Name="GWalaTotal" ColumnName="GWalaTotal" />
-                <ScalarProperty Name="MultanTotal" ColumnName="MultanTotal" />
-                <ScalarProperty Name="SialkotTotal" ColumnName="SialkotTotal" />
-                <ScalarProperty Name="Isalamabad" ColumnName="Isalamabad" />
-                <ScalarProperty Name="PindiTotal" ColumnName="PindiTotal" />
-                <ScalarProperty Name="PeshawarTotal" ColumnName="PeshawarTotal" />
-                <ScalarProperty Name="BhawalpurTotal" ColumnName="BhawalpurTotal" />
-                <ScalarProperty Name="MuzafarbadTotal" ColumnName="MuzafarbadTotal" />
-                <ScalarProperty Name="DIKhanTotal" ColumnName="DIKhanTotal" />
-                <ScalarProperty Name="QuettaTotal" ColumnName="QuettaTotal" />
-                <ScalarProperty Name="GawadarTotal" ColumnName="GawadarTotal" />
-                <ScalarProperty Name="OtherTotal" ColumnName="OtherTotal" />
-                <ScalarProperty Name="PakistanToTal" ColumnName="PakistanToTal" />
-                <ScalarProperty Name="CRR3PcrReq" ColumnName="CRR3PcrReq" />
-                <ScalarProperty Name="CRR5PcrReq" ColumnName="CRR5PcrReq" />
-                <ScalarProperty Name="BalMaintain3Pcr" ColumnName="BalMaintain3Pcr" />
-                <ScalarProperty Name="BalMaintain5Pcr" ColumnName="BalMaintain5Pcr" />
-                <ScalarProperty Name="Penalty" ColumnName="Penalty" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="BR" ColumnName="BR" />
-                <ScalarProperty Name="createDate" ColumnName="createDate" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="AvgForRemDays" ColumnName="AvgForRemDays" />
-                <ScalarProperty Name="ReserveSurplus" ColumnName="ReserveSurplus" />
-                <ScalarProperty Name="Reserve" ColumnName="Reserve" />
-                <ScalarProperty Name="CRR5PcrReqWithoutEB" ColumnName="CRR5PcrReqWithoutEB" />
-                <ScalarProperty Name="BlotterBalance" ColumnName="BlotterBalance" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5372,20 +5141,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
                 <ScalarProperty Name="BID" ColumnName="BID" />
                 <ScalarProperty Name="CurID" ColumnName="CurID" />
                 <ScalarProperty Name="Flag" ColumnName="Flag" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SBP_BlotterManualDeals">
-            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterManualDeals">
-              <MappingFragment StoreEntitySet="SBP_BlotterManualDeals">
-                <ScalarProperty Name="SNo" ColumnName="SNo" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="DealDate" ColumnName="DealDate" />
-                <ScalarProperty Name="InFlow" ColumnName="InFlow" />
-                <ScalarProperty Name="OutFlow" ColumnName="OutFlow" />
-                <ScalarProperty Name="CurrentDate" ColumnName="CurrentDate" />
-                <ScalarProperty Name="DealStatus" ColumnName="DealStatus" />
-                <ScalarProperty Name="BR" ColumnName="BR" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5697,7 +5452,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SP_ADD_ActivityMonitor" FunctionName="OPICSWEBModel.Store.SP_ADD_ActivityMonitor" />
           <FunctionImportMapping FunctionImportName="SP_ADD_SessionStart" FunctionName="OPICSWEBModel.Store.SP_ADD_SessionStart" />
-          <FunctionImportMapping FunctionImportName="SP_AddDaysInBlotterReport" FunctionName="OPICSWEBModel.Store.SP_AddDaysInBlotterReport" />
           <FunctionImportMapping FunctionImportName="SP_DeleteBlotterOutright" FunctionName="OPICSWEBModel.Store.SP_DeleteBlotterOutright" />
           <FunctionImportMapping FunctionImportName="SP_DeleteHolidays" FunctionName="OPICSWEBModel.Store.SP_DeleteHolidays" />
           <FunctionImportMapping FunctionImportName="SP_DELETEReconBreakups" FunctionName="OPICSWEBModel.Store.SP_DELETEReconBreakups" />
@@ -5924,14 +5678,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_GetCRRFINCONPeriods" FunctionName="OPICSWEBModel.Store.SP_GetCRRFINCONPeriods">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="BlotterEF.SP_GetCRRFINCONPeriods_Result">
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_GETLatestBlotterDTLPerDayWise" FunctionName="OPICSWEBModel.Store.SP_GETLatestBlotterDTLPerDayWise">
             <ResultMapping>
               <ComplexTypeMapping TypeName="BlotterEF.SP_GETLatestBlotterDTLPerDayWise_Result">
@@ -6126,35 +5872,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
                 <ScalarProperty Name="ReservedBalance" ColumnName="ReservedBalance" />
                 <ScalarProperty Name="SBPBalanace" ColumnName="SBPBalanace" />
                 <ScalarProperty Name="BalanceDifference" ColumnName="BalanceDifference" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_GetSBPBlotterCRRFINCON" FunctionName="OPICSWEBModel.Store.SP_GetSBPBlotterCRRFINCON">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="BlotterEF.SP_GetSBPBlotterCRRFINCON_Result">
-                <ScalarProperty Name="SNo" ColumnName="SNo" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="DemandTimeLiablities" ColumnName="DemandTimeLiablities" />
-                <ScalarProperty Name="TimeLiablitiesOverOneYear" ColumnName="TimeLiablitiesOverOneYear" />
-                <ScalarProperty Name="DemandTimeLiablitiesTotal" ColumnName="DemandTimeLiablitiesTotal" />
-                <ScalarProperty Name="PreMatureDeposit" ColumnName="PreMatureDeposit" />
-                <ScalarProperty Name="DemandTimeLiablitiesTotalForCRR" ColumnName="DemandTimeLiablitiesTotalForCRR" />
-                <ScalarProperty Name="Penalty" ColumnName="Penalty" />
-                <ScalarProperty Name="ExtraBenefits" ColumnName="ExtraBenefits" />
-                <ScalarProperty Name="CRR1Requirement" ColumnName="CRR1Requirement" />
-                <ScalarProperty Name="CRR2Requirement" ColumnName="CRR2Requirement" />
-                <ScalarProperty Name="RequirementPenalty" ColumnName="RequirementPenalty" />
-                <ScalarProperty Name="RequirementExtBenefit" ColumnName="RequirementExtBenefit" />
-                <ScalarProperty Name="BalMaintAgainstPenalty" ColumnName="BalMaintAgainstPenalty" />
-                <ScalarProperty Name="BalMaintAgainstExtBenft" ColumnName="BalMaintAgainstExtBenft" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="BR" ColumnName="BR" />
-                <ScalarProperty Name="BID" ColumnName="BID" />
-                <ScalarProperty Name="CurID" ColumnName="CurID" />
-                <ScalarProperty Name="Flag" ColumnName="Flag" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -6505,30 +6222,85 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_InsertBlotterReconBreakups" FunctionName="OPICSWEBModel.Store.SP_InsertBlotterReconBreakups" />
           <FunctionImportMapping FunctionImportName="SP_UpdateBlotterReconBreakups" FunctionName="OPICSWEBModel.Store.SP_UpdateBlotterReconBreakups" />
-          <EntitySetMapping Name="SBP_BlotterManualData">
-            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterManualData">
-              <MappingFragment StoreEntitySet="SBP_BlotterManualData">
-                <ScalarProperty Name="NostroBank" ColumnName="NostroBank" />
-                <ScalarProperty Name="NostroCode" ColumnName="NostroCode" />
-                <ScalarProperty Name="isAdjusted" ColumnName="isAdjusted" />
-                <ScalarProperty Name="AdjBalance" ColumnName="AdjBalance" />
+          <FunctionImportMapping FunctionImportName="SP_UpdateBranchBalanceByBranchId" FunctionName="OPICSWEBModel.Store.SP_UpdateBranchBalanceByBranchId" />
+          <FunctionImportMapping FunctionImportName="SP_InsertBlotterOutright" FunctionName="OPICSWEBModel.Store.SP_InsertBlotterOutright" />
+          <FunctionImportMapping FunctionImportName="SP_UpdateBlotterOutright" FunctionName="OPICSWEBModel.Store.SP_UpdateBlotterOutright" />
+          <EntitySetMapping Name="SBP_BlotterCRRFINCON">
+            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterCRRFINCON">
+              <MappingFragment StoreEntitySet="SBP_BlotterCRRFINCON">
+                <ScalarProperty Name="Calc2" ColumnName="Calc2" />
+                <ScalarProperty Name="Calc1" ColumnName="Calc1" />
                 <ScalarProperty Name="Flag" ColumnName="Flag" />
                 <ScalarProperty Name="CurID" ColumnName="CurID" />
+                <ScalarProperty Name="BID" ColumnName="BID" />
                 <ScalarProperty Name="BR" ColumnName="BR" />
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="DateFor" ColumnName="DateFor" />
-                <ScalarProperty Name="NetBalance" ColumnName="NetBalance" />
-                <ScalarProperty Name="OutFlow" ColumnName="OutFlow" />
-                <ScalarProperty Name="Inflow" ColumnName="Inflow" />
-                <ScalarProperty Name="DataType" ColumnName="DataType" />
+                <ScalarProperty Name="BalMaintAgainstExtBenft" ColumnName="BalMaintAgainstExtBenft" />
+                <ScalarProperty Name="BalMaintAgainstPenalty" ColumnName="BalMaintAgainstPenalty" />
+                <ScalarProperty Name="RequirementExtBenefit" ColumnName="RequirementExtBenefit" />
+                <ScalarProperty Name="RequirementPenalty" ColumnName="RequirementPenalty" />
+                <ScalarProperty Name="CRR2Requirement" ColumnName="CRR2Requirement" />
+                <ScalarProperty Name="CRR1Requirement" ColumnName="CRR1Requirement" />
+                <ScalarProperty Name="ExtraBenefits" ColumnName="ExtraBenefits" />
+                <ScalarProperty Name="Penalty" ColumnName="Penalty" />
+                <ScalarProperty Name="DemandTimeLiablitiesTotalForCRR" ColumnName="DemandTimeLiablitiesTotalForCRR" />
+                <ScalarProperty Name="PreMatureDeposit" ColumnName="PreMatureDeposit" />
+                <ScalarProperty Name="DemandTimeLiablitiesTotal" ColumnName="DemandTimeLiablitiesTotal" />
+                <ScalarProperty Name="TimeLiablitiesOverOneYear" ColumnName="TimeLiablitiesOverOneYear" />
+                <ScalarProperty Name="DemandTimeLiablities" ColumnName="DemandTimeLiablities" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="SNo" ColumnName="SNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="SP_InsertBlotterOutright" FunctionName="OPICSWEBModel.Store.SP_InsertBlotterOutright" />
-          <FunctionImportMapping FunctionImportName="SP_UpdateBlotterOutright" FunctionName="OPICSWEBModel.Store.SP_UpdateBlotterOutright" />
+          <EntitySetMapping Name="SBP_BlotterCRRReportDaysWiseBal">
+            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterCRRReportDaysWiseBal">
+              <MappingFragment StoreEntitySet="SBP_BlotterCRRReportDaysWiseBal">
+                <ScalarProperty Name="Calc2" ColumnName="Calc2" />
+                <ScalarProperty Name="Calc1" ColumnName="Calc1" />
+                <ScalarProperty Name="BlotterBalance" ColumnName="BlotterBalance" />
+                <ScalarProperty Name="CRR5PcrReqWithoutEB" ColumnName="CRR5PcrReqWithoutEB" />
+                <ScalarProperty Name="Reserve" ColumnName="Reserve" />
+                <ScalarProperty Name="ReserveSurplus" ColumnName="ReserveSurplus" />
+                <ScalarProperty Name="AvgForRemDays" ColumnName="AvgForRemDays" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Penalty" ColumnName="Penalty" />
+                <ScalarProperty Name="BalMaintain5Pcr" ColumnName="BalMaintain5Pcr" />
+                <ScalarProperty Name="BalMaintain3Pcr" ColumnName="BalMaintain3Pcr" />
+                <ScalarProperty Name="CRR5PcrReq" ColumnName="CRR5PcrReq" />
+                <ScalarProperty Name="CRR3PcrReq" ColumnName="CRR3PcrReq" />
+                <ScalarProperty Name="PakistanToTal" ColumnName="PakistanToTal" />
+                <ScalarProperty Name="OtherTotal" ColumnName="OtherTotal" />
+                <ScalarProperty Name="GawadarTotal" ColumnName="GawadarTotal" />
+                <ScalarProperty Name="QuettaTotal" ColumnName="QuettaTotal" />
+                <ScalarProperty Name="DIKhanTotal" ColumnName="DIKhanTotal" />
+                <ScalarProperty Name="MuzafarbadTotal" ColumnName="MuzafarbadTotal" />
+                <ScalarProperty Name="BhawalpurTotal" ColumnName="BhawalpurTotal" />
+                <ScalarProperty Name="PeshawarTotal" ColumnName="PeshawarTotal" />
+                <ScalarProperty Name="PindiTotal" ColumnName="PindiTotal" />
+                <ScalarProperty Name="Isalamabad" ColumnName="Isalamabad" />
+                <ScalarProperty Name="SialkotTotal" ColumnName="SialkotTotal" />
+                <ScalarProperty Name="MultanTotal" ColumnName="MultanTotal" />
+                <ScalarProperty Name="GWalaTotal" ColumnName="GWalaTotal" />
+                <ScalarProperty Name="FaisalabadTotal" ColumnName="FaisalabadTotal" />
+                <ScalarProperty Name="LahoreTotal" ColumnName="LahoreTotal" />
+                <ScalarProperty Name="SukkurTotal" ColumnName="SukkurTotal" />
+                <ScalarProperty Name="HyderabadTotal" ColumnName="HyderabadTotal" />
+                <ScalarProperty Name="KarachiTotal" ColumnName="KarachiTotal" />
+                <ScalarProperty Name="WeekDays" ColumnName="WeekDays" />
+                <ScalarProperty Name="ReportDate" ColumnName="ReportDate" />
+                <ScalarProperty Name="CRRFinconId" ColumnName="CRRFinconId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_AddDaysInBlotterReport" FunctionName="OPICSWEBModel.Store.SP_AddDaysInBlotterReport" />
           <FunctionImportMapping FunctionImportName="SP_GetAll_SBPBlotterClearing_DashBoard" FunctionName="OPICSWEBModel.Store.SP_GetAll_SBPBlotterClearing_DashBoard">
             <ResultMapping>
               <ComplexTypeMapping TypeName="BlotterEF.SP_GetAll_SBPBlotterClearing_DashBoard_Result">
@@ -6612,6 +6384,47 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
                 <ScalarProperty Name="CurID" ColumnName="CurID" />
                 <ScalarProperty Name="Flag" ColumnName="Flag" />
                 <ScalarProperty Name="BankCode" ColumnName="BankCode" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_GetSBPBlotterCRRFINCON" FunctionName="OPICSWEBModel.Store.SP_GetSBPBlotterCRRFINCON">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BlotterEF.SP_GetSBPBlotterCRRFINCON_Result">
+                <ScalarProperty Name="SNo" ColumnName="SNo" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="DemandTimeLiablities" ColumnName="DemandTimeLiablities" />
+                <ScalarProperty Name="TimeLiablitiesOverOneYear" ColumnName="TimeLiablitiesOverOneYear" />
+                <ScalarProperty Name="DemandTimeLiablitiesTotal" ColumnName="DemandTimeLiablitiesTotal" />
+                <ScalarProperty Name="PreMatureDeposit" ColumnName="PreMatureDeposit" />
+                <ScalarProperty Name="DemandTimeLiablitiesTotalForCRR" ColumnName="DemandTimeLiablitiesTotalForCRR" />
+                <ScalarProperty Name="Penalty" ColumnName="Penalty" />
+                <ScalarProperty Name="ExtraBenefits" ColumnName="ExtraBenefits" />
+                <ScalarProperty Name="CRR1Requirement" ColumnName="CRR1Requirement" />
+                <ScalarProperty Name="CRR2Requirement" ColumnName="CRR2Requirement" />
+                <ScalarProperty Name="RequirementPenalty" ColumnName="RequirementPenalty" />
+                <ScalarProperty Name="RequirementExtBenefit" ColumnName="RequirementExtBenefit" />
+                <ScalarProperty Name="BalMaintAgainstPenalty" ColumnName="BalMaintAgainstPenalty" />
+                <ScalarProperty Name="BalMaintAgainstExtBenft" ColumnName="BalMaintAgainstExtBenft" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="BID" ColumnName="BID" />
+                <ScalarProperty Name="CurID" ColumnName="CurID" />
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+                <ScalarProperty Name="Calc1" ColumnName="Calc1" />
+                <ScalarProperty Name="Calc2" ColumnName="Calc2" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_GetCRRFINCONPeriods" FunctionName="OPICSWEBModel.Store.SP_GetCRRFINCONPeriods">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BlotterEF.SP_GetCRRFINCONPeriods_Result">
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Calc1" ColumnName="Calc1" />
+                <ScalarProperty Name="Calc2" ColumnName="Calc2" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

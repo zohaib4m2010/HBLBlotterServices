@@ -37,6 +37,8 @@ namespace DataAccessLayer
         public int BID { get; set; }
         public int CurID { get; set; }
         public string Flag { get; set; }
+        public Nullable<int> Calc1 { get; set; }
+        public Nullable<int> Calc2 { get; set; }
     
         public virtual Branches Branch { get; set; }
         public virtual Currency Currency { get; set; }
