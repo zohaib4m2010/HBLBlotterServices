@@ -78,6 +78,12 @@ namespace DataAccessLayer
             var results = DbContextB.SP_GetAll_SBPBlotterReconBreakups(UserID, BranchID, CurID, BR, DateVal).ToList();
             return results;
         }
+
+        public static List<SP_GetAll_SBPBlotterReconBreakups_Dashboard_Result> GetAllBlotterReconBreakupsDashBoard(int UserID, int BranchID, int CurID, int BR, string DateVal)
+        {
+            var results = DbContextB.SP_GetAll_SBPBlotterReconBreakups_Dashboard(UserID, BranchID, CurID, BR, DateVal).ToList();
+            return results;
+        }
         public static bool InsertReconBreakups(SBP_BlotterReconBreakups RBItem)
         {
             bool status;

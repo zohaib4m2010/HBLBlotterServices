@@ -18,6 +18,10 @@ namespace WebApiServices.Repository
             Mapper.CreateMap<DataAccessLayer.SP_GetAll_SBPBlotterReconBreakups_Result, Models.SP_GetAll_SBPBlotterReconBreakups_Results>();
 
 
+            Mapper.CreateMap<Models.SP_GetAll_SBPBlotterReconBreakups_Results_Dashboard, DataAccessLayer.SP_GetAll_SBPBlotterReconBreakups_Dashboard_Result>();
+            Mapper.CreateMap<DataAccessLayer.SP_GetAll_SBPBlotterReconBreakups_Dashboard_Result, Models.SP_GetAll_SBPBlotterReconBreakups_Results_Dashboard>();
+
+
             Mapper.CreateMap<Models.SBP_BlotterReconBreakups, DataAccessLayer.SBP_BlotterReconBreakups>();
             Mapper.CreateMap<DataAccessLayer.SBP_BlotterReconBreakups, Models.SBP_BlotterReconBreakups>();
         }

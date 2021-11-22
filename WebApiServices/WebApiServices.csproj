@@ -206,6 +206,7 @@
     <Compile Include="Models\sp_GetAllUsers_Result.cs" />
     <Compile Include="Models\SP_GetAll_SBPBlotterClearing_Dashboard_Result.cs" />
     <Compile Include="Models\SP_GetAll_SBPBlotterClearing_Result.cs" />
+    <Compile Include="Models\SP_GetAll_SBPBlotterReconBreakups_Results_Dashboard.cs" />
     <Compile Include="Models\SP_GetAll_SBPBlotterReconBreakups_Results.cs" />
     <Compile Include="Models\SP_GetAll_SBPBlotterRTGS_Dashboard_Result.cs" />
     <Compile Include="Models\SP_GetAll_SBPBlotterRTGS_Result.cs" />
