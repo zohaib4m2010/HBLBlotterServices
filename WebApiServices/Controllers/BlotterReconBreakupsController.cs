@@ -56,7 +56,7 @@ namespace WebApiServices.Controllers
         {
             EntityMapperBlotterReconBreakups<DataAccessLayer.SP_GetAll_SBPBlotterReconBreakups_Dashboard_Result, Models.SP_GetAll_SBPBlotterReconBreakups_Results_Dashboard> mapObj = new EntityMapperBlotterReconBreakups<DataAccessLayer.SP_GetAll_SBPBlotterReconBreakups_Dashboard_Result, Models.SP_GetAll_SBPBlotterReconBreakups_Results_Dashboard>();
 
-            List<DataAccessLayer.SP_GetAll_SBPBlotterReconBreakups_Result> blotterRBList = DAL.GetAllBlotterReconBreakups(UserID, BranchID, CurID, BR, DateVal);
+            List<DataAccessLayer.SP_GetAll_SBPBlotterReconBreakups_Dashboard_Result> blotterRBList = DAL.GetAllBlotterReconBreakupsDashBoard(UserID, BranchID, CurID, BR, DateVal);
             List<Models.SP_GetAll_SBPBlotterReconBreakups_Results_Dashboard> blotterRB = new List<Models.SP_GetAll_SBPBlotterReconBreakups_Results_Dashboard>();
             foreach (var item in blotterRBList)
             {
