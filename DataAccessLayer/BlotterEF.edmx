@@ -1411,6 +1411,10 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Parameter Name="BR" Type="int" Mode="In" />
           <Parameter Name="CurDate" Type="date" Mode="In" />
         </Function>
+        <Function Name="SP_GetAllRsfTTTBO_Dashboard" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BR" Type="int" Mode="In" />
+          <Parameter Name="CurDate" Type="date" Mode="In" />
+        </Function>
         <Function Name="SP_GETAllRTGSTransactionTitles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SP_GETAllTBOTransactionTitles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SP_GETAllTradeTransactionTitles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -3875,6 +3879,10 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             <Parameter Name="BR" Mode="In" Type="Int32" />
             <Parameter Name="DateVal" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SP_GetAllRsfTTTBO_Dashboard" ReturnType="Collection(BlotterEF.SP_GetAllRsfTTTBO_Dashboard_Result)">
+            <Parameter Name="BR" Mode="In" Type="Int32" />
+            <Parameter Name="CurDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_GetAll_SBPBlotterClearing_Result">
           <Property Type="Int64" Name="SNo" Nullable="false" />
@@ -4766,6 +4774,13 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Property Type="Int32" Name="BID" Nullable="true" />
           <Property Type="Int32" Name="CurID" Nullable="true" />
           <Property Type="String" Name="Flag" Nullable="true" MaxLength="2" />
+        </ComplexType>
+        <ComplexType Name="SP_GetAllRsfTTTBO_Dashboard_Result">
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="6" />
+          <Property Type="Int64" Name="SNo" Nullable="true" />
+          <Property Type="DateTime" Name="TBO_Date" Nullable="true" />
+          <Property Type="Decimal" Name="Inflow" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="Outflow" Nullable="true" Precision="38" Scale="0" />
         </ComplexType>
         
       </Schema>
@@ -6422,6 +6437,17 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
                 <ScalarProperty Name="BID" ColumnName="BID" />
                 <ScalarProperty Name="CurID" ColumnName="CurID" />
                 <ScalarProperty Name="Flag" ColumnName="Flag" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_GetAllRsfTTTBO_Dashboard" FunctionName="OPICSWEBModel.Store.SP_GetAllRsfTTTBO_Dashboard">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BlotterEF.SP_GetAllRsfTTTBO_Dashboard_Result">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="SNo" ColumnName="SNo" />
+                <ScalarProperty Name="TBO_Date" ColumnName="TBO_Date" />
+                <ScalarProperty Name="Inflow" ColumnName="Inflow" />
+                <ScalarProperty Name="Outflow" ColumnName="Outflow" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
