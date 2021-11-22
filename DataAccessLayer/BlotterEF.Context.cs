@@ -62,6 +62,7 @@ namespace DataAccessLayer
         public virtual DbSet<SBP_BlotterManualEstBalance> SBP_BlotterManualEstBalance { get; set; }
         public virtual DbSet<SBP_BlotterCRRFINCON> SBP_BlotterCRRFINCON { get; set; }
         public virtual DbSet<SBP_BlotterCRRReportDaysWiseBal> SBP_BlotterCRRReportDaysWiseBal { get; set; }
+        public virtual DbSet<SBP_BlotterProjection> SBP_BlotterProjection { get; set; }
     
         public virtual int SP_ADD_ActivityMonitor(string pSessionID, Nullable<int> pUserID, string pIP, string pLoginGUID, string pData, string pActivity, string pURL)
         {
@@ -1693,6 +1694,89 @@ namespace DataAccessLayer
                 new ObjectParameter("CurDate", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetAllRsfTTTBO_Dashboard_Result>("SP_GetAllRsfTTTBO_Dashboard", bRParameter, curDateParameter);
+        }
+    
+        public virtual ObjectResult<SP_GetSBP_Projection_Result> SP_GetSBP_Projection(Nullable<int> userID, Nullable<int> branchID, Nullable<int> bR, string dateVal)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var branchIDParameter = branchID.HasValue ?
+                new ObjectParameter("BranchID", branchID) :
+                new ObjectParameter("BranchID", typeof(int));
+    
+            var bRParameter = bR.HasValue ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(int));
+    
+            var dateValParameter = dateVal != null ?
+                new ObjectParameter("DateVal", dateVal) :
+                new ObjectParameter("DateVal", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetSBP_Projection_Result>("SP_GetSBP_Projection", userIDParameter, branchIDParameter, bRParameter, dateValParameter);
+        }
+    
+        public virtual int SP_InsertBlotterProjection(Nullable<System.DateTime> date, Nullable<decimal> inFlow, Nullable<decimal> outFLow, string note, Nullable<int> userID, Nullable<int> bR)
+        {
+            var dateParameter = date.HasValue ?
+                new ObjectParameter("Date", date) :
+                new ObjectParameter("Date", typeof(System.DateTime));
+    
+            var inFlowParameter = inFlow.HasValue ?
+                new ObjectParameter("InFlow", inFlow) :
+                new ObjectParameter("InFlow", typeof(decimal));
+    
+            var outFLowParameter = outFLow.HasValue ?
+                new ObjectParameter("OutFLow", outFLow) :
+                new ObjectParameter("OutFLow", typeof(decimal));
+    
+            var noteParameter = note != null ?
+                new ObjectParameter("Note", note) :
+                new ObjectParameter("Note", typeof(string));
+    
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var bRParameter = bR.HasValue ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_InsertBlotterProjection", dateParameter, inFlowParameter, outFLowParameter, noteParameter, userIDParameter, bRParameter);
+        }
+    
+        public virtual int SP_UpdateBlotterProjection(Nullable<long> iD, Nullable<System.DateTime> date, Nullable<decimal> inFlow, Nullable<decimal> outFLow, string note, Nullable<int> userID, Nullable<int> bR)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(long));
+    
+            var dateParameter = date.HasValue ?
+                new ObjectParameter("Date", date) :
+                new ObjectParameter("Date", typeof(System.DateTime));
+    
+            var inFlowParameter = inFlow.HasValue ?
+                new ObjectParameter("InFlow", inFlow) :
+                new ObjectParameter("InFlow", typeof(decimal));
+    
+            var outFLowParameter = outFLow.HasValue ?
+                new ObjectParameter("OutFLow", outFLow) :
+                new ObjectParameter("OutFLow", typeof(decimal));
+    
+            var noteParameter = note != null ?
+                new ObjectParameter("Note", note) :
+                new ObjectParameter("Note", typeof(string));
+    
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var bRParameter = bR.HasValue ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_UpdateBlotterProjection", iDParameter, dateParameter, inFlowParameter, outFLowParameter, noteParameter, userIDParameter, bRParameter);
         }
     }
 }

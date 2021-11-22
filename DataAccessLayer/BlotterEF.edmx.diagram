@@ -92,6 +92,7 @@
         <AssociationConnector Association="BlotterEF.FK_BlotterCRRFINCON_BranchID" />
         <AssociationConnector Association="BlotterEF.FK_BlotterCRRFINCON_CurID" />
         <AssociationConnector Association="BlotterEF.FK_SBP_BlotterCRRFINCON_UserID" />
+        <EntityTypeShape EntityType="BlotterEF.SBP_BlotterProjection" Width="1.5" PointX="5.375" PointY="8.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

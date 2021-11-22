@@ -146,6 +146,7 @@
     <Compile Include="Controllers\BlotterLoginController.cs" />
     <Compile Include="Controllers\BlotterOpenBalController.cs" />
     <Compile Include="Controllers\BlotterOutRightController.cs" />
+    <Compile Include="Controllers\BlotterProjectionController.cs" />
     <Compile Include="Controllers\BlotterReconBreakupsController.cs" />
     <Compile Include="Controllers\BlotterReservedDiffController.cs" />
     <Compile Include="Controllers\BlotterRSFController.cs" />
@@ -168,6 +169,7 @@
     <Compile Include="Models\GazettedHoliday.cs" />
     <Compile Include="Models\SBP_BlotterCRRFINCONPeriods.cs" />
     <Compile Include="Models\SBP_BlotterOutRight.cs" />
+    <Compile Include="Models\SBP_BlotterProjection.cs" />
     <Compile Include="Models\SBP_BlotterReconBreakups.cs" />
     <Compile Include="Models\SBP_BlotterReserved.cs" />
     <Compile Include="Models\BlotterSumEmail.cs" />
@@ -227,6 +229,7 @@
     <Compile Include="Models\SP_GetSBPBlotterRECON_Result.cs" />
     <Compile Include="Models\SP_GetSBP_DMMO_Result.cs" />
     <Compile Include="Models\SP_GetSBP_Reserved_Result.cs" />
+    <Compile Include="Models\SP_Get_BlotterProjection_Result.cs" />
     <Compile Include="Models\SP_SBPBlotterRunningBal.cs" />
     <Compile Include="Models\SP_SBPBlotter_FCY_Result.cs" />
     <Compile Include="Models\SP_SBPGetLoginInfo_Result.cs" />
@@ -250,6 +253,7 @@
     <Compile Include="Repository\EntityMapperBlotterFundsTransfer.cs" />
     <Compile Include="Repository\EntityMapperBlotterOpenBal.cs" />
     <Compile Include="Repository\EntityMapperBlotterOR.cs" />
+    <Compile Include="Repository\EntityMapperBlotterProjection.cs" />
     <Compile Include="Repository\EntityMapperBlotterReconBreakups.cs" />
     <Compile Include="Repository\EntityMapperBlotterRSF.cs" />
     <Compile Include="Repository\EntityMapperBlotterRTGS.cs" />

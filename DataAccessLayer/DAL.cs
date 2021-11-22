@@ -61,6 +61,89 @@ namespace DataAccessLayer
             var results = DbContextB.SP_ReconcileOPICSManualData(BR, Date).ToList();
             return results;
         }
+
+
+
+        //*****************************************************
+        //Blotter Projection Producers
+        //*****************************************************
+
+        public static List<SP_GetSBP_Projection_Result> GetAllBlotterProjection(int UserID, int BranchID, int BR, string DateVal)
+        {
+            return DbContextB.SP_GetSBP_Projection(UserID, BranchID, BR, DateVal).ToList();
+        }
+        public static SBP_BlotterProjection GetProjectionItem(int projId)
+        {
+            return DbContextB.SBP_BlotterProjection.Where(p => p.SNO == projId).FirstOrDefault();
+        }
+
+        public static bool InsertProjection(SBP_BlotterProjection ProjItem)
+        {
+            bool status;
+            try
+            {
+
+                DbContextB.SBP_BlotterProjection.Add(ProjItem);
+                DbContextB.SaveChanges();
+                status = true;
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine(ex.Message.ToString());
+                status = false;
+            }
+            return status;
+        }
+
+        public static bool UpdateProjection(SBP_BlotterProjection ProjItem)
+        {
+            bool status;
+            try
+            {
+                SBP_BlotterProjection ProjItems = DbContextB.SBP_BlotterProjection.Where(p => p.SNO == ProjItem.SNO).FirstOrDefault();
+                if (ProjItems != null)
+                {
+
+                    ProjItems.Proj_InFlow = ProjItem.Proj_InFlow;
+                    ProjItems.Proj_OutFlow = ProjItem.Proj_OutFlow;
+                    ProjItems.Date = ProjItem.Date;
+                    ProjItems.Note = ProjItem.Note;
+                    ProjItems.UpdateDate = ProjItem.UpdateDate;
+                    ProjItems.UserID = ProjItem.UserID;
+                    ProjItems.BR = ProjItem.BR;
+                    ProjItems.BID = ProjItem.BID;
+                    DbContextB.SaveChanges();
+                }
+                status = true;
+            }
+            catch (Exception ex)
+            {
+                status = false;
+            }
+            return status;
+        }
+
+        public static bool DeleteProjection(int id)
+        {
+            bool status;
+            try
+            {
+                SBP_BlotterProjection ProjItem = DbContextB.SBP_BlotterProjection.Where(p => p.SNO == id).FirstOrDefault();
+                if (ProjItem != null)
+                {
+                    DbContextB.SBP_BlotterProjection.Remove(ProjItem);
+                    DbContextB.SaveChanges();
+                }
+                status = true;
+            }
+            catch (Exception ex)
+            {
+                status = false;
+            }
+            return status;
+        }
+
+
         //*****************************************************
         //Recon Breakups Producers
         //*****************************************************

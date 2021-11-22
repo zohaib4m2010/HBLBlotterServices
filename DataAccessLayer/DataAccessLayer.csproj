@@ -158,6 +158,9 @@
     <Compile Include="SBP_BlotterOutrights.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="SBP_BlotterProjection.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="SBP_BlotterReconBreakups.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
@@ -294,6 +297,9 @@
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_GetSBP_DMMO_Result.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SP_GetSBP_Projection_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_GetSBP_Reserved_Result.cs">
