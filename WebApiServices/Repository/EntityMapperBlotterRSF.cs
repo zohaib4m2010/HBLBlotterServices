@@ -12,6 +12,10 @@ namespace WebApiServices.Repository
         {
             Mapper.CreateMap<Models.BlotterRSFTT, DataAccessLayer.SP_GetAllRsfTTTBO_Result>();
             Mapper.CreateMap<DataAccessLayer.SP_GetAllRsfTTTBO_Result, Models.BlotterRSFTT>();
+
+
+            Mapper.CreateMap<Models.BlotterRSFTTDashboard, DataAccessLayer.SP_GetAllRsfTTTBO_Dashboard_Result>();
+            Mapper.CreateMap<DataAccessLayer.SP_GetAllRsfTTTBO_Dashboard_Result, Models.BlotterRSFTTDashboard>();
         }
         public TDestination Translate(TSource obj)
         {

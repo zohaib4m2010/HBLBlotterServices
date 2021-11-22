@@ -1681,5 +1681,18 @@ namespace DataAccessLayer
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetAll_SBPBlotterReconBreakups_Dashboard_Result>("SP_GetAll_SBPBlotterReconBreakups_Dashboard", userIDParameter, branchIDParameter, curIDParameter, bRParameter, dateValParameter);
         }
+    
+        public virtual ObjectResult<SP_GetAllRsfTTTBO_Dashboard_Result> SP_GetAllRsfTTTBO_Dashboard(Nullable<int> bR, Nullable<System.DateTime> curDate)
+        {
+            var bRParameter = bR.HasValue ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(int));
+    
+            var curDateParameter = curDate.HasValue ?
+                new ObjectParameter("CurDate", curDate) :
+                new ObjectParameter("CurDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetAllRsfTTTBO_Dashboard_Result>("SP_GetAllRsfTTTBO_Dashboard", bRParameter, curDateParameter);
+        }
     }
 }

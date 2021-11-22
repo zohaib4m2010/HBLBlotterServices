@@ -2340,5 +2340,10 @@ namespace DataAccessLayer
         {
             return DbContextB.SP_GetAllRsfTTTBO(BR,CurDate).ToList();
         }
+
+        public static List<SP_GetAllRsfTTTBO_Dashboard_Result> GetAllRSFTT_Dasboard(int BR, DateTime CurDate)
+        {
+            return DbContextB.SP_GetAllRsfTTTBO_Dashboard(BR, CurDate).ToList();
+        }
     }
 }

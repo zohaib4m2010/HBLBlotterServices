@@ -197,6 +197,9 @@
     <Compile Include="SP_GETAllRECONBreakupsTransactionTitles_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="SP_GetAllRsfTTTBO_Dashboard_Result.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="SP_GetAllRsfTTTBO_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>

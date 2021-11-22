@@ -163,6 +163,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BlotterRSFTTDashboard.cs" />
     <Compile Include="Models\BlotterRSFTT.cs" />
     <Compile Include="Models\GazettedHoliday.cs" />
     <Compile Include="Models\SBP_BlotterCRRFINCONPeriods.cs" />
