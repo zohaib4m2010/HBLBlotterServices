@@ -51,6 +51,19 @@ namespace WebApiServices.Controllers
             }
             return Json<List<Models.SP_GetAll_SBPBlotterReconBreakups_Results>>(blotterRB);
         }
+        [HttpGet]
+        public JsonResult<List<Models.SP_GetAll_SBPBlotterReconBreakups_Results_Dashboard>> GetAllBlotterBreakupsDashboard(int UserID, int BranchID, int CurID, int BR, string DateVal)
+        {
+            EntityMapperBlotterReconBreakups<DataAccessLayer.SP_GetAll_SBPBlotterReconBreakups_Dashboard_Result, Models.SP_GetAll_SBPBlotterReconBreakups_Results_Dashboard> mapObj = new EntityMapperBlotterReconBreakups<DataAccessLayer.SP_GetAll_SBPBlotterReconBreakups_Dashboard_Result, Models.SP_GetAll_SBPBlotterReconBreakups_Results_Dashboard>();
+
+            List<DataAccessLayer.SP_GetAll_SBPBlotterReconBreakups_Result> blotterRBList = DAL.GetAllBlotterReconBreakups(UserID, BranchID, CurID, BR, DateVal);
+            List<Models.SP_GetAll_SBPBlotterReconBreakups_Results_Dashboard> blotterRB = new List<Models.SP_GetAll_SBPBlotterReconBreakups_Results_Dashboard>();
+            foreach (var item in blotterRBList)
+            {
+                blotterRB.Add(mapObj.Translate(item));
+            }
+            return Json<List<Models.SP_GetAll_SBPBlotterReconBreakups_Results_Dashboard>>(blotterRB);
+        }
         [HttpPost]
         public bool InsertReconBreakups(Models.SBP_BlotterReconBreakups blotterRB)
         {
