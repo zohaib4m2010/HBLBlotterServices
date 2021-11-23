@@ -106,6 +106,10 @@ namespace DataAccessLayer
 
                     ProjItems.Proj_InFlow = ProjItem.Proj_InFlow;
                     ProjItems.Proj_OutFlow = ProjItem.Proj_OutFlow;
+
+                    ProjItems.Custy = ProjItem.Custy;
+                    ProjItems.RSF_NBP = ProjItem.RSF_NBP;
+
                     ProjItems.Date = ProjItem.Date;
                     ProjItems.Note = ProjItem.Note;
                     ProjItems.UpdateDate = ProjItem.UpdateDate;
@@ -1211,19 +1215,20 @@ namespace DataAccessLayer
                 //else
                 //{
                     SBP_BlotterClearing CLRItems = DbContextB.SBP_BlotterClearing.Where(p => p.SNo == ClearingItem.SNo).FirstOrDefault();
-                    if (CLRItems != null)
-                    {
+                if (CLRItems != null)
+                {
 
                     CLRItems.DataType = ClearingItem.DataType;
                     CLRItems.TTID = ClearingItem.TTID;
                     CLRItems.Clearing_Date = ClearingItem.Clearing_Date;
                     CLRItems.Clearing_InFlow = ClearingItem.Clearing_InFlow;
-                        CLRItems.Clearing_OutFLow = ClearingItem.Clearing_OutFLow;
-                        CLRItems.Note = ClearingItem.Note;
-                        CLRItems.CurID = ClearingItem.CurID;
-                        CLRItems.UpdateDate = ClearingItem.UpdateDate;
+                    CLRItems.Clearing_OutFLow = ClearingItem.Clearing_OutFLow;
+                    CLRItems.Note = ClearingItem.Note;
+                    CLRItems.CurID = ClearingItem.CurID;
+                    CLRItems.UpdateDate = ClearingItem.UpdateDate;
                     DbContextB.SaveChanges();
-                    }
+                }
+              
                     status = true;
                 //}
             }
@@ -2034,7 +2039,7 @@ namespace DataAccessLayer
         {
             bool status;
             try
-            {
+            {   
 
                 DbContextB.SBP_BlotterTrade.Add(TradeItem);
                 DbContextB.SaveChanges();

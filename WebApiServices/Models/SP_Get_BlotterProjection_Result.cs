@@ -11,6 +11,9 @@ namespace WebApiServices.Models
         public Nullable<System.DateTime> Date { get; set; }
         public Nullable<decimal> Proj_InFlow { get; set; }
         public Nullable<decimal> Proj_OutFlow { get; set; }
-        
+
+        public Nullable<decimal> Custy { get; set; }
+        public Nullable<decimal> RSF_NBP { get; set; }
+
     }
 }

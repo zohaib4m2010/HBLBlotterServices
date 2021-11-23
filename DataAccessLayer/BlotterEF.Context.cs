@@ -1696,27 +1696,6 @@ namespace DataAccessLayer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetAllRsfTTTBO_Dashboard_Result>("SP_GetAllRsfTTTBO_Dashboard", bRParameter, curDateParameter);
         }
     
-        public virtual ObjectResult<SP_GetSBP_Projection_Result> SP_GetSBP_Projection(Nullable<int> userID, Nullable<int> branchID, Nullable<int> bR, string dateVal)
-        {
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            var branchIDParameter = branchID.HasValue ?
-                new ObjectParameter("BranchID", branchID) :
-                new ObjectParameter("BranchID", typeof(int));
-    
-            var bRParameter = bR.HasValue ?
-                new ObjectParameter("BR", bR) :
-                new ObjectParameter("BR", typeof(int));
-    
-            var dateValParameter = dateVal != null ?
-                new ObjectParameter("DateVal", dateVal) :
-                new ObjectParameter("DateVal", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetSBP_Projection_Result>("SP_GetSBP_Projection", userIDParameter, branchIDParameter, bRParameter, dateValParameter);
-        }
-    
         public virtual int SP_InsertBlotterProjection(Nullable<System.DateTime> date, Nullable<decimal> inFlow, Nullable<decimal> outFLow, string note, Nullable<int> userID, Nullable<int> bR)
         {
             var dateParameter = date.HasValue ?
@@ -1777,6 +1756,27 @@ namespace DataAccessLayer
                 new ObjectParameter("BR", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_UpdateBlotterProjection", iDParameter, dateParameter, inFlowParameter, outFLowParameter, noteParameter, userIDParameter, bRParameter);
+        }
+    
+        public virtual ObjectResult<SP_GetSBP_Projection_Result> SP_GetSBP_Projection(Nullable<int> userID, Nullable<int> branchID, Nullable<int> bR, string dateVal)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var branchIDParameter = branchID.HasValue ?
+                new ObjectParameter("BranchID", branchID) :
+                new ObjectParameter("BranchID", typeof(int));
+    
+            var bRParameter = bR.HasValue ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(int));
+    
+            var dateValParameter = dateVal != null ?
+                new ObjectParameter("DateVal", dateVal) :
+                new ObjectParameter("DateVal", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetSBP_Projection_Result>("SP_GetSBP_Projection", userIDParameter, branchIDParameter, bRParameter, dateValParameter);
         }
     }
 }

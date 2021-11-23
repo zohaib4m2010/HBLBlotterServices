@@ -17,5 +17,7 @@ namespace DataAccessLayer
         public Nullable<System.DateTime> Date { get; set; }
         public decimal Proj_InFlow { get; set; }
         public decimal Proj_OutFlow { get; set; }
+        public decimal Custy { get; set; }
+        public decimal RSF_NBP { get; set; }
     }
 }
