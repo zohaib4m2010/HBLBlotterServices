@@ -12,6 +12,11 @@ namespace WebApiServices.Models
         public Nullable<int> CRRFinconID { get; set; }
         public Nullable<decimal> Proj_InFlow { get; set; }
         public Nullable<decimal> Proj_OutFlow { get; set; }
+
+
+        public Nullable<decimal> Custy { get; set; }
+        public Nullable<decimal> RSF_NBP { get; set; }
+
         public string Note { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }

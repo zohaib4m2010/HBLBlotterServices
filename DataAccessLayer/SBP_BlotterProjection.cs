@@ -27,5 +27,7 @@ namespace DataAccessLayer
         public Nullable<int> BID { get; set; }
         public string Flag { get; set; }
         public Nullable<int> CRRFinconID { get; set; }
+        public Nullable<decimal> Custy { get; set; }
+        public Nullable<decimal> RSF_NBP { get; set; }
     }
 }

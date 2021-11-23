@@ -247,9 +247,9 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterConversionRate' does not h
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="UpdateDate" Type="datetime" />
           <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Calc" Type="int" />
           <Property Name="StartDate" Type="date" />
           <Property Name="EndDate" Type="date" />
-          <Property Name="Calc" Type="int" />
         </EntityType>
         <EntityType Name="SBP_BlotterCRRReportDaysWiseBal">
           <Key>
@@ -538,6 +538,8 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
           <Property Name="BID" Type="int" />
           <Property Name="Flag" Type="nchar" MaxLength="10" />
           <Property Name="CRRFinconID" Type="int" />
+          <Property Name="Custy" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="RSF_NBP" Type="numeric" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="SBP_BlotterReconBreakups">
           <Key>
@@ -3926,12 +3928,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             <Parameter Name="CurDate" Mode="In" Type="DateTime" />
           </FunctionImport>
           <EntitySet Name="SBP_BlotterProjection" EntityType="BlotterEF.SBP_BlotterProjection" />
-          <FunctionImport Name="SP_GetSBP_Projection" ReturnType="Collection(BlotterEF.SP_GetSBP_Projection_Result)">
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
-            <Parameter Name="BranchID" Mode="In" Type="Int32" />
-            <Parameter Name="BR" Mode="In" Type="Int32" />
-            <Parameter Name="DateVal" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="SP_InsertBlotterProjection">
             <Parameter Name="Date" Mode="In" Type="DateTime" />
             <Parameter Name="InFlow" Mode="In" Type="Decimal" />
@@ -3948,6 +3944,12 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             <Parameter Name="Note" Mode="In" Type="String" />
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="BR" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_GetSBP_Projection" ReturnType="Collection(BlotterEF.SP_GetSBP_Projection_Result)">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="BranchID" Mode="In" Type="Int32" />
+            <Parameter Name="BR" Mode="In" Type="Int32" />
+            <Parameter Name="DateVal" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_GetAll_SBPBlotterClearing_Result">
@@ -4865,12 +4867,16 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Property Name="BID" Type="Int32" />
           <Property Name="Flag" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="CRRFinconID" Type="Int32" />
+          <Property Name="Custy" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="RSF_NBP" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
         <ComplexType Name="SP_GetSBP_Projection_Result">
           <Property Type="Int32" Name="sno" Nullable="false" />
           <Property Type="DateTime" Name="Date" Nullable="true" />
           <Property Type="Decimal" Name="Proj_InFlow" Nullable="false" Precision="18" Scale="0" />
           <Property Type="Decimal" Name="Proj_OutFlow" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="Custy" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="RSF_NBP" Nullable="false" Precision="18" Scale="0" />
         </ComplexType>
         
       </Schema>
@@ -6544,6 +6550,8 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <EntitySetMapping Name="SBP_BlotterProjection">
             <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterProjection">
               <MappingFragment StoreEntitySet="SBP_BlotterProjection">
+                <ScalarProperty Name="RSF_NBP" ColumnName="RSF_NBP" />
+                <ScalarProperty Name="Custy" ColumnName="Custy" />
                 <ScalarProperty Name="CRRFinconID" ColumnName="CRRFinconID" />
                 <ScalarProperty Name="Flag" ColumnName="Flag" />
                 <ScalarProperty Name="BID" ColumnName="BID" />
@@ -6560,6 +6568,8 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_InsertBlotterProjection" FunctionName="OPICSWEBModel.Store.SP_InsertBlotterProjection" />
+          <FunctionImportMapping FunctionImportName="SP_UpdateBlotterProjection" FunctionName="OPICSWEBModel.Store.SP_UpdateBlotterProjection" />
           <FunctionImportMapping FunctionImportName="SP_GetSBP_Projection" FunctionName="OPICSWEBModel.Store.SP_GetSBP_Projection">
             <ResultMapping>
               <ComplexTypeMapping TypeName="BlotterEF.SP_GetSBP_Projection_Result">
@@ -6567,11 +6577,11 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Proj_InFlow" ColumnName="Proj_InFlow" />
                 <ScalarProperty Name="Proj_OutFlow" ColumnName="Proj_OutFlow" />
+                <ScalarProperty Name="Custy" ColumnName="Custy" />
+                <ScalarProperty Name="RSF_NBP" ColumnName="RSF_NBP" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_InsertBlotterProjection" FunctionName="OPICSWEBModel.Store.SP_InsertBlotterProjection" />
-          <FunctionImportMapping FunctionImportName="SP_UpdateBlotterProjection" FunctionName="OPICSWEBModel.Store.SP_UpdateBlotterProjection" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
