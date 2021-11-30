@@ -10,9 +10,8 @@
 namespace DataAccessLayer
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class SBP_BlotterCRRReportCalcSetup
+    public partial class SP_GETAll_MAX_BlotterCRRReportCalcSetup_Result
     {
         public int ID { get; set; }
         public Nullable<double> CalcVal1 { get; set; }
@@ -24,7 +23,5 @@ namespace DataAccessLayer
         public Nullable<int> Calc { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
-    
-        public virtual SBP_LoginInfo SBP_LoginInfo { get; set; }
     }
 }

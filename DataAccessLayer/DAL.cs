@@ -1165,6 +1165,10 @@ namespace DataAccessLayer
         {
             return DbContextB.SP_GETAllClearingTransactionTitles().ToList();
         }
+        public static List<SP_GETAll_MAX_BlotterCRRReportCalcSetup_Result> GetAllRecordCRRReportCalc()
+        {
+            return DbContextB.SP_GETAll_MAX_BlotterCRRReportCalcSetup().ToList();
+        }
         public static List<SP_GetAll_SBPBlotterClearing_Result> GetAllBlotterClearing(int UserID, int BranchID, int CurID, int BR, string DateVal)
         {
             return DbContextB.SP_GetAll_SBPBlotterClearing(UserID, BranchID, CurID, BR,DateVal).ToList();
@@ -1263,8 +1267,50 @@ namespace DataAccessLayer
         //*****************************************************
         //FundsTransfer Producers
         //*****************************************************
+        public static bool InsertSBP_BlotterCRRReportCalcSetup(SBP_BlotterCRRReportCalcSetup CalcItem)
+        {
+            bool status;
+            try
+            {
+              
+                DbContextB.SBP_BlotterCRRReportCalcSetup.Add(CalcItem);
+                DbContextB.SaveChanges();
+                status = true;
+                //}
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine(ex.Message.ToString());
+                status = false;
+            }
+            return status;
+        }
+        public static bool UpdateSBP_BlotterCRRReportCalcSetup(SBP_BlotterCRRReportCalcSetup CalcItem)
+        {
+            bool status;
+            try
+            {
+               
+                SBP_BlotterCRRReportCalcSetup CLRItems = DbContextB.SBP_BlotterCRRReportCalcSetup.Where(p => p.ID == CalcItem.ID).FirstOrDefault();
+                if (CLRItems != null)
+                {
+                    CLRItems.CalcVal1 = CalcItem.CalcVal1;
+                    CLRItems.CalcVal2 = CalcItem.CalcVal2;
+                    CLRItems.StartDate = CalcItem.StartDate;
+                    CLRItems.EndDate = CalcItem.EndDate;
+              
+                    DbContextB.SaveChanges();
+                }
 
-
+                status = true;
+                //}
+            }
+            catch (Exception ex)
+            {
+                status = false;
+            }
+            return status;
+        }
         public static List<SBP_BlotterFundsTransfer> GetAllBlotterFundsTransfer(int UserID, int BranchID, int CurID, int BR, string DateVal)
         {
             string currentDate = DateTime.Now.ToString("yyyy-MM-dd");

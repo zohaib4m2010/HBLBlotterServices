@@ -37,7 +37,6 @@ namespace DataAccessLayer
         public virtual DbSet<SBP_BlotterBreakups> SBP_BlotterBreakups { get; set; }
         public virtual DbSet<SBP_BlotterClearing> SBP_BlotterClearing { get; set; }
         public virtual DbSet<SBP_BlotterCRD> SBP_BlotterCRD { get; set; }
-        public virtual DbSet<SBP_BlotterCRRReportCalcSetup> SBP_BlotterCRRReportCalcSetup { get; set; }
         public virtual DbSet<SBP_BlotterDMMO> SBP_BlotterDMMO { get; set; }
         public virtual DbSet<SBP_BlotterDTLDaysWiseBal> SBP_BlotterDTLDaysWiseBal { get; set; }
         public virtual DbSet<SBP_BlotterFundingRepo> SBP_BlotterFundingRepo { get; set; }
@@ -63,6 +62,7 @@ namespace DataAccessLayer
         public virtual DbSet<SBP_BlotterCRRFINCON> SBP_BlotterCRRFINCON { get; set; }
         public virtual DbSet<SBP_BlotterCRRReportDaysWiseBal> SBP_BlotterCRRReportDaysWiseBal { get; set; }
         public virtual DbSet<SBP_BlotterProjection> SBP_BlotterProjection { get; set; }
+        public virtual DbSet<SBP_BlotterCRRReportCalcSetup> SBP_BlotterCRRReportCalcSetup { get; set; }
     
         public virtual int SP_ADD_ActivityMonitor(string pSessionID, Nullable<int> pUserID, string pIP, string pLoginGUID, string pData, string pActivity, string pURL)
         {
@@ -1683,19 +1683,6 @@ namespace DataAccessLayer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetAll_SBPBlotterReconBreakups_Dashboard_Result>("SP_GetAll_SBPBlotterReconBreakups_Dashboard", userIDParameter, branchIDParameter, curIDParameter, bRParameter, dateValParameter);
         }
     
-        public virtual ObjectResult<SP_GetAllRsfTTTBO_Dashboard_Result> SP_GetAllRsfTTTBO_Dashboard(Nullable<int> bR, Nullable<System.DateTime> curDate)
-        {
-            var bRParameter = bR.HasValue ?
-                new ObjectParameter("BR", bR) :
-                new ObjectParameter("BR", typeof(int));
-    
-            var curDateParameter = curDate.HasValue ?
-                new ObjectParameter("CurDate", curDate) :
-                new ObjectParameter("CurDate", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetAllRsfTTTBO_Dashboard_Result>("SP_GetAllRsfTTTBO_Dashboard", bRParameter, curDateParameter);
-        }
-    
         public virtual int SP_InsertBlotterProjection(Nullable<System.DateTime> date, Nullable<decimal> inFlow, Nullable<decimal> outFLow, string note, Nullable<int> userID, Nullable<int> bR)
         {
             var dateParameter = date.HasValue ?
@@ -1777,6 +1764,24 @@ namespace DataAccessLayer
                 new ObjectParameter("DateVal", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetSBP_Projection_Result>("SP_GetSBP_Projection", userIDParameter, branchIDParameter, bRParameter, dateValParameter);
+        }
+    
+        public virtual ObjectResult<SP_GETAll_MAX_BlotterCRRReportCalcSetup_Result> SP_GETAll_MAX_BlotterCRRReportCalcSetup()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GETAll_MAX_BlotterCRRReportCalcSetup_Result>("SP_GETAll_MAX_BlotterCRRReportCalcSetup");
+        }
+    
+        public virtual ObjectResult<SP_GetAllRsfTTTBO_Dashboard_Result> SP_GetAllRsfTTTBO_Dashboard(Nullable<int> bR, Nullable<System.DateTime> curDate)
+        {
+            var bRParameter = bR.HasValue ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(int));
+    
+            var curDateParameter = curDate.HasValue ?
+                new ObjectParameter("CurDate", curDate) :
+                new ObjectParameter("CurDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetAllRsfTTTBO_Dashboard_Result>("SP_GetAllRsfTTTBO_Dashboard", bRParameter, curDateParameter);
         }
     }
 }
