@@ -29,6 +29,7 @@ namespace WebApiServices.Models
         public decimal GawadarTotal { get; set; }
         public decimal OtherTotal { get; set; }
         public decimal PakistanToTal { get; set; }
+        public decimal PreBal { get; set; }
         public decimal CRR3PcrReq { get; set; }
         public decimal CRR5PcrReq { get; set; }
         public double BalMaintain3Pcr { get; set; }

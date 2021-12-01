@@ -401,19 +401,6 @@ namespace DataAccessLayer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetAllWebPages_Result>("SP_GetAllWebPages", wPIDParameter);
         }
     
-        public virtual ObjectResult<SP_GETLatestBlotterDTLPerDayWise_Result> SP_GETLatestBlotterDTLPerDayWise(Nullable<int> bR, string startdate)
-        {
-            var bRParameter = bR.HasValue ?
-                new ObjectParameter("BR", bR) :
-                new ObjectParameter("BR", typeof(int));
-    
-            var startdateParameter = startdate != null ?
-                new ObjectParameter("startdate", startdate) :
-                new ObjectParameter("startdate", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GETLatestBlotterDTLPerDayWise_Result>("SP_GETLatestBlotterDTLPerDayWise", bRParameter, startdateParameter);
-        }
-    
         public virtual ObjectResult<SP_GETLatestBlotterDTLReportDayWise_Result> SP_GETLatestBlotterDTLReportDayWise(Nullable<int> bR, string startdate, string enddate)
         {
             var bRParameter = bR.HasValue ?
@@ -1782,6 +1769,19 @@ namespace DataAccessLayer
                 new ObjectParameter("CurDate", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetAllRsfTTTBO_Dashboard_Result>("SP_GetAllRsfTTTBO_Dashboard", bRParameter, curDateParameter);
+        }
+    
+        public virtual ObjectResult<SP_GETLatestBlotterDTLPerDayWise_Result> SP_GETLatestBlotterDTLPerDayWise(Nullable<int> bR, string startdate)
+        {
+            var bRParameter = bR.HasValue ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(int));
+    
+            var startdateParameter = startdate != null ?
+                new ObjectParameter("startdate", startdate) :
+                new ObjectParameter("startdate", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GETLatestBlotterDTLPerDayWise_Result>("SP_GETLatestBlotterDTLPerDayWise", bRParameter, startdateParameter);
         }
     }
 }

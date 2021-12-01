@@ -247,9 +247,9 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterConversionRate' does not h
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="UpdateDate" Type="datetime" />
           <Property Name="UserID" Type="int" Nullable="false" />
-          <Property Name="Calc" Type="int" />
           <Property Name="StartDate" Type="date" />
           <Property Name="EndDate" Type="date" />
+          <Property Name="Calc" Type="int" />
         </EntityType>
         <EntityType Name="SBP_BlotterCRRReportDaysWiseBal">
           <Key>
@@ -538,8 +538,8 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
           <Property Name="BID" Type="int" />
           <Property Name="Flag" Type="nchar" MaxLength="10" />
           <Property Name="CRRFinconID" Type="int" />
-          <Property Name="Custy" Type="numeric" Precision="18" Scale="0" />
           <Property Name="RSF_NBP" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Custy" Type="numeric" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="SBP_BlotterReconBreakups">
           <Key>
@@ -3490,10 +3490,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <FunctionImport Name="SP_GetAllWebPages" ReturnType="Collection(BlotterEF.SP_GetAllWebPages_Result)">
           <Parameter Name="WPID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="SP_GETLatestBlotterDTLPerDayWise" ReturnType="Collection(BlotterEF.SP_GETLatestBlotterDTLPerDayWise_Result)">
-            <Parameter Name="BR" Mode="In" Type="Int32" />
-            <Parameter Name="startdate" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="SP_GETLatestBlotterDTLReportDayWise" ReturnType="Collection(BlotterEF.SP_GETLatestBlotterDTLReportDayWise_Result)">
             <Parameter Name="BR" Mode="In" Type="Int32" />
             <Parameter Name="startdate" Mode="In" Type="String" />
@@ -3925,6 +3921,10 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             <Parameter Name="BR" Mode="In" Type="Int32" />
             <Parameter Name="CurDate" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <FunctionImport Name="SP_GETLatestBlotterDTLPerDayWise" ReturnType="Collection(BlotterEF.SP_GETLatestBlotterDTLPerDayWise_Result)">
+            <Parameter Name="BR" Mode="In" Type="Int32" />
+            <Parameter Name="startdate" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_GetAll_SBPBlotterClearing_Result">
           <Property Type="Int64" Name="SNo" Nullable="false" />
@@ -4083,47 +4083,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="UpdateDate" Nullable="true" Precision="23" />
           <Property Type="Int32" Name="BlotterType" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="SP_GETLatestBlotterDTLPerDayWise_Result">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="Int64" Name="CRRFinconId" Nullable="false" />
-          <Property Type="DateTime" Name="ReportDate" Nullable="true" />
-          <Property Type="String" Name="WeekDays" Nullable="true" MaxLength="20" />
-          <Property Type="Decimal" Name="KarachiTotal" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="HyderabadTotal" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="SukkurTotal" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="LahoreTotal" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="FaisalabadTotal" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="GWalaTotal" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="MultanTotal" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="SialkotTotal" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="Isalamabad" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="PindiTotal" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="PeshawarTotal" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="BhawalpurTotal" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="MuzafarbadTotal" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="DIKhanTotal" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="QuettaTotal" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="GawadarTotal" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="OtherTotal" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="PakistanToTal" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="CRR3PcrReq" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="CRR5PcrReq" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Double" Name="BalMaintain3Pcr" Nullable="false" />
-          <Property Type="Double" Name="BalMaintain5Pcr" Nullable="false" />
-          <Property Type="Decimal" Name="Penalty" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="AvgForRemDays" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="ReserveSurplus" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Double" Name="Reserve" Nullable="false" />
-          <Property Type="Decimal" Name="CRR5PcrReqWithoutEB" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Double" Name="BalMaintAgainstExtBenft" Nullable="true" />
-          <Property Type="Double" Name="BalMaintAgainstPenalty" Nullable="true" />
-          <Property Type="Decimal" Name="ReservedSBP" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="ReservedSBPDif" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="String" Name="Remarks" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="BR" Nullable="false" />
-          <Property Type="DateTime" Name="createDate" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="UpdateDate" Nullable="true" Precision="23" />
         </ComplexType>
         <ComplexType Name="SP_GETLatestBlotterDTLReportDayWise_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -4892,6 +4851,48 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Property Type="DateTime" Name="TBO_Date" Nullable="true" />
           <Property Type="Decimal" Name="Inflow" Nullable="true" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="Outflow" Nullable="true" Precision="38" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="SP_GETLatestBlotterDTLPerDayWise_Result">
+          <Property Type="Int32" Name="Id" Nullable="true" />
+          <Property Type="Int64" Name="CRRFinconId" Nullable="true" />
+          <Property Type="DateTime" Name="ReportDate" Nullable="true" />
+          <Property Type="String" Name="WeekDays" Nullable="true" MaxLength="20" />
+          <Property Type="Decimal" Name="KarachiTotal" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="HyderabadTotal" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="SukkurTotal" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="LahoreTotal" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="FaisalabadTotal" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="GWalaTotal" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="MultanTotal" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="SialkotTotal" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="Isalamabad" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="PindiTotal" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="PeshawarTotal" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="BhawalpurTotal" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="MuzafarbadTotal" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="DIKhanTotal" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="QuettaTotal" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="GawadarTotal" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="OtherTotal" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="PakistanToTal" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="PreBal" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="CRR3PcrReq" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="CRR5PcrReq" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Double" Name="BalMaintain3Pcr" Nullable="false" />
+          <Property Type="Double" Name="BalMaintain5Pcr" Nullable="false" />
+          <Property Type="Decimal" Name="Penalty" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="AvgForRemDays" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="ReserveSurplus" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Double" Name="Reserve" Nullable="false" />
+          <Property Type="Decimal" Name="CRR5PcrReqWithoutEB" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Double" Name="BalMaintAgainstExtBenft" Nullable="true" />
+          <Property Type="Double" Name="BalMaintAgainstPenalty" Nullable="true" />
+          <Property Type="Decimal" Name="ReservedSBP" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="ReservedSBPDif" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="Remarks" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="BR" Nullable="true" />
+          <Property Type="DateTime" Name="createDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="UpdateDate" Nullable="true" Precision="23" />
         </ComplexType>
         
       </Schema>
@@ -5764,51 +5765,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_GETLatestBlotterDTLPerDayWise" FunctionName="OPICSWEBModel.Store.SP_GETLatestBlotterDTLPerDayWise">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="BlotterEF.SP_GETLatestBlotterDTLPerDayWise_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="CRRFinconId" ColumnName="CRRFinconId" />
-                <ScalarProperty Name="ReportDate" ColumnName="ReportDate" />
-                <ScalarProperty Name="WeekDays" ColumnName="WeekDays" />
-                <ScalarProperty Name="KarachiTotal" ColumnName="KarachiTotal" />
-                <ScalarProperty Name="HyderabadTotal" ColumnName="HyderabadTotal" />
-                <ScalarProperty Name="SukkurTotal" ColumnName="SukkurTotal" />
-                <ScalarProperty Name="LahoreTotal" ColumnName="LahoreTotal" />
-                <ScalarProperty Name="FaisalabadTotal" ColumnName="FaisalabadTotal" />
-                <ScalarProperty Name="GWalaTotal" ColumnName="GWalaTotal" />
-                <ScalarProperty Name="MultanTotal" ColumnName="MultanTotal" />
-                <ScalarProperty Name="SialkotTotal" ColumnName="SialkotTotal" />
-                <ScalarProperty Name="Isalamabad" ColumnName="Isalamabad" />
-                <ScalarProperty Name="PindiTotal" ColumnName="PindiTotal" />
-                <ScalarProperty Name="PeshawarTotal" ColumnName="PeshawarTotal" />
-                <ScalarProperty Name="BhawalpurTotal" ColumnName="BhawalpurTotal" />
-                <ScalarProperty Name="MuzafarbadTotal" ColumnName="MuzafarbadTotal" />
-                <ScalarProperty Name="DIKhanTotal" ColumnName="DIKhanTotal" />
-                <ScalarProperty Name="QuettaTotal" ColumnName="QuettaTotal" />
-                <ScalarProperty Name="GawadarTotal" ColumnName="GawadarTotal" />
-                <ScalarProperty Name="OtherTotal" ColumnName="OtherTotal" />
-                <ScalarProperty Name="PakistanToTal" ColumnName="PakistanToTal" />
-                <ScalarProperty Name="CRR3PcrReq" ColumnName="CRR3PcrReq" />
-                <ScalarProperty Name="CRR5PcrReq" ColumnName="CRR5PcrReq" />
-                <ScalarProperty Name="BalMaintain3Pcr" ColumnName="BalMaintain3Pcr" />
-                <ScalarProperty Name="BalMaintain5Pcr" ColumnName="BalMaintain5Pcr" />
-                <ScalarProperty Name="Penalty" ColumnName="Penalty" />
-                <ScalarProperty Name="AvgForRemDays" ColumnName="AvgForRemDays" />
-                <ScalarProperty Name="ReserveSurplus" ColumnName="ReserveSurplus" />
-                <ScalarProperty Name="Reserve" ColumnName="Reserve" />
-                <ScalarProperty Name="CRR5PcrReqWithoutEB" ColumnName="CRR5PcrReqWithoutEB" />
-                <ScalarProperty Name="BalMaintAgainstExtBenft" ColumnName="BalMaintAgainstExtBenft" />
-                <ScalarProperty Name="BalMaintAgainstPenalty" ColumnName="BalMaintAgainstPenalty" />
-                <ScalarProperty Name="ReservedSBP" ColumnName="ReservedSBP" />
-                <ScalarProperty Name="ReservedSBPDif" ColumnName="ReservedSBPDif" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="BR" ColumnName="BR" />
-                <ScalarProperty Name="createDate" ColumnName="createDate" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_GETLatestBlotterDTLReportDayWise" FunctionName="OPICSWEBModel.Store.SP_GETLatestBlotterDTLReportDayWise">
             <ResultMapping>
               <ComplexTypeMapping TypeName="BlotterEF.SP_GETLatestBlotterDTLReportDayWise_Result">
@@ -6611,6 +6567,52 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
                 <ScalarProperty Name="TBO_Date" ColumnName="TBO_Date" />
                 <ScalarProperty Name="Inflow" ColumnName="Inflow" />
                 <ScalarProperty Name="Outflow" ColumnName="Outflow" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_GETLatestBlotterDTLPerDayWise" FunctionName="OPICSWEBModel.Store.SP_GETLatestBlotterDTLPerDayWise">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BlotterEF.SP_GETLatestBlotterDTLPerDayWise_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CRRFinconId" ColumnName="CRRFinconId" />
+                <ScalarProperty Name="ReportDate" ColumnName="ReportDate" />
+                <ScalarProperty Name="WeekDays" ColumnName="WeekDays" />
+                <ScalarProperty Name="KarachiTotal" ColumnName="KarachiTotal" />
+                <ScalarProperty Name="HyderabadTotal" ColumnName="HyderabadTotal" />
+                <ScalarProperty Name="SukkurTotal" ColumnName="SukkurTotal" />
+                <ScalarProperty Name="LahoreTotal" ColumnName="LahoreTotal" />
+                <ScalarProperty Name="FaisalabadTotal" ColumnName="FaisalabadTotal" />
+                <ScalarProperty Name="GWalaTotal" ColumnName="GWalaTotal" />
+                <ScalarProperty Name="MultanTotal" ColumnName="MultanTotal" />
+                <ScalarProperty Name="SialkotTotal" ColumnName="SialkotTotal" />
+                <ScalarProperty Name="Isalamabad" ColumnName="Isalamabad" />
+                <ScalarProperty Name="PindiTotal" ColumnName="PindiTotal" />
+                <ScalarProperty Name="PeshawarTotal" ColumnName="PeshawarTotal" />
+                <ScalarProperty Name="BhawalpurTotal" ColumnName="BhawalpurTotal" />
+                <ScalarProperty Name="MuzafarbadTotal" ColumnName="MuzafarbadTotal" />
+                <ScalarProperty Name="DIKhanTotal" ColumnName="DIKhanTotal" />
+                <ScalarProperty Name="QuettaTotal" ColumnName="QuettaTotal" />
+                <ScalarProperty Name="GawadarTotal" ColumnName="GawadarTotal" />
+                <ScalarProperty Name="OtherTotal" ColumnName="OtherTotal" />
+                <ScalarProperty Name="PakistanToTal" ColumnName="PakistanToTal" />
+                <ScalarProperty Name="PreBal" ColumnName="PreBal" />
+                <ScalarProperty Name="CRR3PcrReq" ColumnName="CRR3PcrReq" />
+                <ScalarProperty Name="CRR5PcrReq" ColumnName="CRR5PcrReq" />
+                <ScalarProperty Name="BalMaintain3Pcr" ColumnName="BalMaintain3Pcr" />
+                <ScalarProperty Name="BalMaintain5Pcr" ColumnName="BalMaintain5Pcr" />
+                <ScalarProperty Name="Penalty" ColumnName="Penalty" />
+                <ScalarProperty Name="AvgForRemDays" ColumnName="AvgForRemDays" />
+                <ScalarProperty Name="ReserveSurplus" ColumnName="ReserveSurplus" />
+                <ScalarProperty Name="Reserve" ColumnName="Reserve" />
+                <ScalarProperty Name="CRR5PcrReqWithoutEB" ColumnName="CRR5PcrReqWithoutEB" />
+                <ScalarProperty Name="BalMaintAgainstExtBenft" ColumnName="BalMaintAgainstExtBenft" />
+                <ScalarProperty Name="BalMaintAgainstPenalty" ColumnName="BalMaintAgainstPenalty" />
+                <ScalarProperty Name="ReservedSBP" ColumnName="ReservedSBP" />
+                <ScalarProperty Name="ReservedSBPDif" ColumnName="ReservedSBPDif" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
