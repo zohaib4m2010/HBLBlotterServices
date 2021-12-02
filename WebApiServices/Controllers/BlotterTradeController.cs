@@ -65,6 +65,21 @@ namespace WebApiServices.Controllers
             }
             return Json<List<Models.SP_GetAll_SBPBlotterTrade_Dashboard_Result>>(blotterTrade);
         }
+
+
+        [HttpGet]
+        public JsonResult<List<Models.SP_GetAll_SBPBlotterDailyFlows_Dashboard_Result>> GetAllBlotterDailyflowsDashboard(int UserID, int BranchID, int CurID, int BR, string DateVal)
+        {
+            EntityMapperBlotterDailyFlows<DataAccessLayer.SP_GetAll_SBPBlotterDailyFlows_Dashboard_Result, Models.SP_GetAll_SBPBlotterDailyFlows_Dashboard_Result> mapObj = new EntityMapperBlotterDailyFlows<DataAccessLayer.SP_GetAll_SBPBlotterDailyFlows_Dashboard_Result, Models.SP_GetAll_SBPBlotterDailyFlows_Dashboard_Result>();
+
+            List<DataAccessLayer.SP_GetAll_SBPBlotterDailyFlows_Dashboard_Result> blotterTradeList = DAL.GetAllBlotterDailyflowsDashboard(UserID, BranchID, CurID, BR, DateVal);
+            List<Models.SP_GetAll_SBPBlotterDailyFlows_Dashboard_Result> blotterTrade = new List<Models.SP_GetAll_SBPBlotterDailyFlows_Dashboard_Result>();
+            foreach (var item in blotterTradeList)
+            {
+                blotterTrade.Add(mapObj.Translate(item));
+            }
+            return Json<List<Models.SP_GetAll_SBPBlotterDailyFlows_Dashboard_Result>>(blotterTrade);
+        }
         [HttpPost]
         public bool InsertTrade(Models.SBP_BlotterTrade blotterTrade)
         {

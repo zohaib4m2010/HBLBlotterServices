@@ -233,6 +233,9 @@
     <Compile Include="SP_GetAll_SBPBlotterClearing_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="SP_GetAll_SBPBlotterDailyFlows_Dashboard_Result.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="SP_GetAll_SBPBlotterReconBreakups_Dashboard_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>

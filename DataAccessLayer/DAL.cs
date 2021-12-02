@@ -2077,6 +2077,14 @@ namespace DataAccessLayer
             // return DbContextB.SBP_BlotterTrade.Where(p => p.UserID == UserID && p.BR == BranchID && p.CurID == CurID).ToList();
             return DbContextB.SP_GetAll_SBPBlotterTrade_Dashboard(UserID, BranchID, CurID, BR, DateVal).ToList();
         }
+
+        public static List<SP_GetAll_SBPBlotterDailyFlows_Dashboard_Result> GetAllBlotterDailyflowsDashboard(int UserID, int BranchID, int CurID, int BR, string DateVal)
+        {
+            // return DbContextB.SBP_BlotterTrade.Where(p => p.UserID == UserID && p.BR == BranchID && p.CurID == CurID).ToList();
+            return DbContextB.SP_GetAll_SBPBlotterDailyFlows_Dashboard(UserID, BranchID, CurID, BR, DateVal).ToList();
+        }
+
+        
         public static SBP_BlotterTrade GetTradeItem(int TradeId)
         {
             return DbContextB.SBP_BlotterTrade.Where(p => p.SNo == TradeId).FirstOrDefault();

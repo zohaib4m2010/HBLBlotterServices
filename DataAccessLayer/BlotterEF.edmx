@@ -247,9 +247,9 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterConversionRate' does not h
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="UpdateDate" Type="datetime" />
           <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Calc" Type="int" />
           <Property Name="StartDate" Type="date" />
           <Property Name="EndDate" Type="date" />
-          <Property Name="Calc" Type="int" />
         </EntityType>
         <EntityType Name="SBP_BlotterCRRReportDaysWiseBal">
           <Key>
@@ -538,8 +538,8 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
           <Property Name="BID" Type="int" />
           <Property Name="Flag" Type="nchar" MaxLength="10" />
           <Property Name="CRRFinconID" Type="int" />
-          <Property Name="RSF_NBP" Type="numeric" Precision="18" Scale="0" />
           <Property Name="Custy" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="RSF_NBP" Type="numeric" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="SBP_BlotterReconBreakups">
           <Key>
@@ -1351,6 +1351,13 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Parameter Name="DateVal" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_GetAll_SBPBlotterClearing_DashBoard" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="BranchID" Type="int" Mode="In" />
+          <Parameter Name="CurID" Type="int" Mode="In" />
+          <Parameter Name="BR" Type="int" Mode="In" />
+          <Parameter Name="DateVal" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_GetAll_SBPBlotterDailyFlows_Dashboard" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
           <Parameter Name="BranchID" Type="int" Mode="In" />
           <Parameter Name="CurID" Type="int" Mode="In" />
@@ -3925,6 +3932,13 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             <Parameter Name="BR" Mode="In" Type="Int32" />
             <Parameter Name="startdate" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SP_GetAll_SBPBlotterDailyFlows_Dashboard" ReturnType="Collection(BlotterEF.SP_GetAll_SBPBlotterDailyFlows_Dashboard_Result)">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="BranchID" Mode="In" Type="Int32" />
+            <Parameter Name="CurID" Mode="In" Type="Int32" />
+            <Parameter Name="BR" Mode="In" Type="Int32" />
+            <Parameter Name="DateVal" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_GetAll_SBPBlotterClearing_Result">
           <Property Type="Int64" Name="SNo" Nullable="false" />
@@ -4893,6 +4907,24 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Property Type="Int32" Name="BR" Nullable="true" />
           <Property Type="DateTime" Name="createDate" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="UpdateDate" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="SP_GetAll_SBPBlotterDailyFlows_Dashboard_Result">
+          <Property Type="Int64" Name="SNo" Nullable="false" />
+          <Property Type="Int32" Name="TTID" Nullable="false" />
+          <Property Type="String" Name="TransactionType" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="Trade_Date" Nullable="true" />
+          <Property Type="String" Name="TradeCOde" Nullable="true" MaxLength="20" />
+          <Property Type="Decimal" Name="Trade_InFlow" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="Trade_OutFLow" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="String" Name="BankName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Note" Nullable="true" MaxLength="250" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="UpdateDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="BR" Nullable="true" />
+          <Property Type="Int32" Name="BID" Nullable="true" />
+          <Property Type="Int32" Name="CurID" Nullable="true" />
+          <Property Type="String" Name="Flag" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="BankCode" Nullable="true" MaxLength="20" />
         </ComplexType>
         
       </Schema>
@@ -6613,6 +6645,28 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
                 <ScalarProperty Name="BR" ColumnName="BR" />
                 <ScalarProperty Name="createDate" ColumnName="createDate" />
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_GetAll_SBPBlotterDailyFlows_Dashboard" FunctionName="OPICSWEBModel.Store.SP_GetAll_SBPBlotterDailyFlows_Dashboard">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BlotterEF.SP_GetAll_SBPBlotterDailyFlows_Dashboard_Result">
+                <ScalarProperty Name="SNo" ColumnName="SNo" />
+                <ScalarProperty Name="TTID" ColumnName="TTID" />
+                <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
+                <ScalarProperty Name="Trade_Date" ColumnName="Trade_Date" />
+                <ScalarProperty Name="TradeCOde" ColumnName="TradeCOde" />
+                <ScalarProperty Name="Trade_InFlow" ColumnName="Trade_InFlow" />
+                <ScalarProperty Name="Trade_OutFLow" ColumnName="Trade_OutFLow" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="BID" ColumnName="BID" />
+                <ScalarProperty Name="CurID" ColumnName="CurID" />
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+                <ScalarProperty Name="BankCode" ColumnName="BankCode" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
