@@ -213,7 +213,7 @@ namespace DataAccessLayer
             bool status;
             try
             {
-                 DbContextB.SP_UpdateBranchBalanceByBranchId(RBItem.RECON_Date, RBItem.RECON_InFlow, RBItem.RECON_OutFLow, RBItem.UserID, RBItem.BR, RBItem.BID);
+                DbContextB.SP_UpdateBranchBalanceByBranchId(RBItem.RECON_Date, RBItem.RECON_InFlow, RBItem.RECON_OutFLow, RBItem.UserID, RBItem.BR, RBItem.BID);
                 status = true;
 
             }
@@ -2084,7 +2084,7 @@ namespace DataAccessLayer
             return DbContextB.SP_GetAll_SBPBlotterDailyFlows_Dashboard(UserID, BranchID, CurID, BR, DateVal).ToList();
         }
 
-        
+
         public static SBP_BlotterTrade GetTradeItem(int TradeId)
         {
             return DbContextB.SBP_BlotterTrade.Where(p => p.SNo == TradeId).FirstOrDefault();

@@ -247,9 +247,9 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterConversionRate' does not h
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="UpdateDate" Type="datetime" />
           <Property Name="UserID" Type="int" Nullable="false" />
-          <Property Name="Calc" Type="int" />
           <Property Name="StartDate" Type="date" />
           <Property Name="EndDate" Type="date" />
+          <Property Name="Calc" Type="int" />
         </EntityType>
         <EntityType Name="SBP_BlotterCRRReportDaysWiseBal">
           <Key>
@@ -538,8 +538,8 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
           <Property Name="BID" Type="int" />
           <Property Name="Flag" Type="nchar" MaxLength="10" />
           <Property Name="CRRFinconID" Type="int" />
-          <Property Name="Custy" Type="numeric" Precision="18" Scale="0" />
           <Property Name="RSF_NBP" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Custy" Type="numeric" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="SBP_BlotterReconBreakups">
           <Key>
@@ -3939,6 +3939,14 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             <Parameter Name="BR" Mode="In" Type="Int32" />
             <Parameter Name="DateVal" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SP_UpdateBranchBalanceByBranchId">
+            <Parameter Name="ReconDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ReconInflow" Mode="In" Type="Decimal" />
+            <Parameter Name="Recon_OutFLow" Mode="In" Type="Decimal" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="BR" Mode="In" Type="Int32" />
+            <Parameter Name="BID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_GetAll_SBPBlotterClearing_Result">
           <Property Type="Int64" Name="SNo" Nullable="false" />
@@ -6670,6 +6678,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_UpdateBranchBalanceByBranchId" FunctionName="OPICSWEBModel.Store.SP_UpdateBranchBalanceByBranchId" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
