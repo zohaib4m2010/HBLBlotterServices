@@ -1708,6 +1708,14 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Parameter Name="BR" Type="int" Mode="In" />
           <Parameter Name="BID" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_UpdateBranchBalanceByBranchId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ReconDate" Type="date" Mode="In" />
+          <Parameter Name="ReconInflow" Type="numeric" Mode="In" />
+          <Parameter Name="Recon_OutFLow" Type="numeric" Mode="In" />
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="BR" Type="int" Mode="In" />
+          <Parameter Name="BID" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_UpdateDaysInBlotterReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DTLValue" Type="numeric" Mode="In" />
           <Parameter Name="StartDate" Type="datetime" Mode="In" />
@@ -3788,14 +3796,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             <Parameter Name="ReconInflow" Mode="In" Type="Decimal" />
             <Parameter Name="Recon_OutFLow" Mode="In" Type="Decimal" />
             <Parameter Name="Note" Mode="In" Type="String" />
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
-            <Parameter Name="BR" Mode="In" Type="Int32" />
-            <Parameter Name="BID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="SP_UpdateBranchBalanceByBranchId">
-            <Parameter Name="ReconDate" Mode="In" Type="DateTime" />
-            <Parameter Name="ReconInflow" Mode="In" Type="Decimal" />
-            <Parameter Name="Recon_OutFLow" Mode="In" Type="Decimal" />
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="BR" Mode="In" Type="Int32" />
             <Parameter Name="BID" Mode="In" Type="Int32" />
