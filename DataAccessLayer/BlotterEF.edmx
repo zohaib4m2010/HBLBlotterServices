@@ -1518,6 +1518,13 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Parameter Name="BR" Type="int" Mode="In" />
           <Parameter Name="DateVal" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_GetSBPBlotterFRAuto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="BranchID" Type="int" Mode="In" />
+          <Parameter Name="CurID" Type="int" Mode="In" />
+          <Parameter Name="BR" Type="int" Mode="In" />
+          <Parameter Name="DateVal" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_GetSBPBlotterGH" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="GHID" Type="int" Mode="In" />
         </Function>
@@ -3939,6 +3946,13 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             <Parameter Name="BR" Mode="In" Type="Int32" />
             <Parameter Name="DateVal" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SP_GetSBPBlotterFRAuto" ReturnType="Collection(BlotterEF.SP_GetSBPBlotterFRAuto_Result)">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="BranchID" Mode="In" Type="Int32" />
+            <Parameter Name="CurID" Mode="In" Type="Int32" />
+            <Parameter Name="BR" Mode="In" Type="Int32" />
+            <Parameter Name="DateVal" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_GetAll_SBPBlotterClearing_Result">
           <Property Type="Int64" Name="SNo" Nullable="false" />
@@ -4925,6 +4939,29 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Property Type="Int32" Name="CurID" Nullable="true" />
           <Property Type="String" Name="Flag" Nullable="true" MaxLength="2" />
           <Property Type="String" Name="BankCode" Nullable="true" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="SP_GetSBPBlotterFRAuto_Result">
+          <Property Type="Int64" Name="SNo" Nullable="false" />
+          <Property Type="String" Name="DataType" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Bank" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Days" Nullable="true" />
+          <Property Type="Double" Name="Rate" Nullable="true" />
+          <Property Type="String" Name="DealType" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Broker" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="Issue_Date" Nullable="true" />
+          <Property Type="String" Name="IssueType" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="InFlow" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="OutFLow" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="String" Name="Note" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="UpdateDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="BR" Nullable="false" />
+          <Property Type="Int32" Name="BID" Nullable="false" />
+          <Property Type="Int32" Name="CurID" Nullable="false" />
+          <Property Type="String" Name="Flag" Nullable="true" MaxLength="2" />
+          <Property Type="DateTime" Name="Date" Nullable="true" />
+          <Property Type="Boolean" Name="Status" Nullable="true" />
         </ComplexType>
         
       </Schema>
@@ -6667,6 +6704,33 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
                 <ScalarProperty Name="CurID" ColumnName="CurID" />
                 <ScalarProperty Name="Flag" ColumnName="Flag" />
                 <ScalarProperty Name="BankCode" ColumnName="BankCode" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_GetSBPBlotterFRAuto" FunctionName="OPICSWEBModel.Store.SP_GetSBPBlotterFRAuto">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BlotterEF.SP_GetSBPBlotterFRAuto_Result">
+                <ScalarProperty Name="SNo" ColumnName="SNo" />
+                <ScalarProperty Name="DataType" ColumnName="DataType" />
+                <ScalarProperty Name="Bank" ColumnName="Bank" />
+                <ScalarProperty Name="Days" ColumnName="Days" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="DealType" ColumnName="DealType" />
+                <ScalarProperty Name="Broker" ColumnName="Broker" />
+                <ScalarProperty Name="Issue_Date" ColumnName="Issue_Date" />
+                <ScalarProperty Name="IssueType" ColumnName="IssueType" />
+                <ScalarProperty Name="InFlow" ColumnName="InFlow" />
+                <ScalarProperty Name="OutFLow" ColumnName="OutFLow" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="BID" ColumnName="BID" />
+                <ScalarProperty Name="CurID" ColumnName="CurID" />
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
