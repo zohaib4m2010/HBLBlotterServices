@@ -247,9 +247,9 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterConversionRate' does not h
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="UpdateDate" Type="datetime" />
           <Property Name="UserID" Type="int" Nullable="false" />
-          <Property Name="Calc" Type="int" />
           <Property Name="StartDate" Type="date" />
           <Property Name="EndDate" Type="date" />
+          <Property Name="Calc" Type="int" />
         </EntityType>
         <EntityType Name="SBP_BlotterCRRReportDaysWiseBal">
           <Key>
@@ -538,8 +538,8 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
           <Property Name="BID" Type="int" />
           <Property Name="Flag" Type="nchar" MaxLength="10" />
           <Property Name="CRRFinconID" Type="int" />
-          <Property Name="Custy" Type="numeric" Precision="18" Scale="0" />
           <Property Name="RSF_NBP" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Custy" Type="numeric" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="SBP_BlotterReconBreakups">
           <Key>
@@ -1711,6 +1711,14 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Parameter Name="ReconInflow" Type="numeric" Mode="In" />
           <Parameter Name="Recon_OutFLow" Type="numeric" Mode="In" />
           <Parameter Name="Note" Type="nvarchar" Mode="In" />
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="BR" Type="int" Mode="In" />
+          <Parameter Name="BID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_UpdateBranchBalanceByBranchId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ReconDate" Type="date" Mode="In" />
+          <Parameter Name="ReconInflow" Type="numeric" Mode="In" />
+          <Parameter Name="Recon_OutFLow" Type="numeric" Mode="In" />
           <Parameter Name="UserID" Type="int" Mode="In" />
           <Parameter Name="BR" Type="int" Mode="In" />
           <Parameter Name="BID" Type="int" Mode="In" />
@@ -3799,14 +3807,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             <Parameter Name="BR" Mode="In" Type="Int32" />
             <Parameter Name="BID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="SP_UpdateBranchBalanceByBranchId">
-            <Parameter Name="ReconDate" Mode="In" Type="DateTime" />
-            <Parameter Name="ReconInflow" Mode="In" Type="Decimal" />
-            <Parameter Name="Recon_OutFLow" Mode="In" Type="Decimal" />
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
-            <Parameter Name="BR" Mode="In" Type="Int32" />
-            <Parameter Name="BID" Mode="In" Type="Int32" />
-          </FunctionImport>
           
           <FunctionImport Name="SP_InsertBlotterOutright">
             <Parameter Name="DataType" Mode="In" Type="String" />
@@ -3945,6 +3945,14 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             <Parameter Name="CurID" Mode="In" Type="Int32" />
             <Parameter Name="BR" Mode="In" Type="Int32" />
             <Parameter Name="DateVal" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_UpdateBranchBalanceByBranchId">
+            <Parameter Name="ReconDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ReconInflow" Mode="In" Type="Decimal" />
+            <Parameter Name="Recon_OutFLow" Mode="In" Type="Decimal" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="BR" Mode="In" Type="Int32" />
+            <Parameter Name="BID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_GetSBPBlotterFRAuto" ReturnType="Collection(BlotterEF.SP_GetSBPBlotterFRAuto_Result)">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
