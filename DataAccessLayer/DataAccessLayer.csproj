@@ -290,6 +290,9 @@
     <Compile Include="SP_GetSBPBlotterCRRFINCON_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="SP_GetSBPBlotterFRAuto_Result.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="SP_GetSBPBlotterFR_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>

@@ -188,6 +188,19 @@ namespace WebApiServices.Controllers
             return Json<List<Models.SP_GetSBPBlotterFR_Result>>(blotterFR);
         }
 
+        [HttpGet]
+        public JsonResult<List<Models.SP_GetSBPBlotterFRAuto_Result>> GetAllblotterFundingRepoAuto(int UserID, int BranchID, int CurID, int BR, string DateVal)
+        {
+            EntitiyMapperBlotterFR<DataAccessLayer.SP_GetSBPBlotterFRAuto_Result, Models.SP_GetSBPBlotterFRAuto_Result> mapObj = new EntitiyMapperBlotterFR<DataAccessLayer.SP_GetSBPBlotterFRAuto_Result, Models.SP_GetSBPBlotterFRAuto_Result>();
+            
+            List<DataAccessLayer.SP_GetSBPBlotterFRAuto_Result> blotterFRList = DAL.GetAllblotterFundingRepoAuto(UserID, BranchID, CurID, BR, DateVal);
+            List<Models.SP_GetSBPBlotterFRAuto_Result> blotterFR = new List<Models.SP_GetSBPBlotterFRAuto_Result>();
+            foreach (var item in blotterFRList)
+            {
+                blotterFR.Add(mapObj.Translate(item));
+            }
+            return Json<List<Models.SP_GetSBPBlotterFRAuto_Result>>(blotterFR);
+        }
 
         [HttpPost]
         public bool InsertFundingRepo(List<Models.SBP_BlotterFundingRepo> blotterFR)

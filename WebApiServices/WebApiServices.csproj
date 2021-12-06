@@ -227,6 +227,7 @@
     <Compile Include="Models\SP_GetLatestBreakup_Result.cs" />
     <Compile Include="Models\SP_GetOPICSManualData_Result.cs" />
     <Compile Include="Models\SP_GetSBPBlotterCRD_Result.cs" />
+    <Compile Include="Models\SP_GetSBPBlotterFRAuto_Result.cs" />
     <Compile Include="Models\SP_GetSBPBlotterFR_Result.cs" />
     <Compile Include="Models\SP_GetSBPBlotterGH_Result.cs" />
     <Compile Include="Models\SP_GetSBPBlotterOpeningClosingBalanceDIfferential_Result.cs" />

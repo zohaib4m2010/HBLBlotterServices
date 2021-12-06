@@ -1848,6 +1848,10 @@ namespace DataAccessLayer
         {
             return DbContextB.SP_GetSBPBlotterFR(UserID, BranchID, CurID, BR,DateVal).ToList();
         }
+        public static List<SP_GetSBPBlotterFRAuto_Result> GetAllblotterFundingRepoAuto(int UserID, int BranchID, int CurID, int BR, string DateVal)
+        {
+            return DbContextB.SP_GetSBPBlotterFRAuto(UserID, BranchID, CurID, BR, DateVal).ToList();
+        }
         public static SBP_BlotterFundingRepo GetSBP_BlotterFundingRepoById(int FundingRepoId)
         {
             return DbContextB.SBP_BlotterFundingRepo.Where(p => p.SNo == FundingRepoId).FirstOrDefault();

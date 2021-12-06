@@ -1780,6 +1780,31 @@ namespace DataAccessLayer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetAll_SBPBlotterDailyFlows_Dashboard_Result>("SP_GetAll_SBPBlotterDailyFlows_Dashboard", userIDParameter, branchIDParameter, curIDParameter, bRParameter, dateValParameter);
         }
     
+        public virtual ObjectResult<SP_GetSBPBlotterFRAuto_Result> SP_GetSBPBlotterFRAuto(Nullable<int> userID, Nullable<int> branchID, Nullable<int> curID, Nullable<int> bR, string dateVal)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var branchIDParameter = branchID.HasValue ?
+                new ObjectParameter("BranchID", branchID) :
+                new ObjectParameter("BranchID", typeof(int));
+    
+            var curIDParameter = curID.HasValue ?
+                new ObjectParameter("CurID", curID) :
+                new ObjectParameter("CurID", typeof(int));
+    
+            var bRParameter = bR.HasValue ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(int));
+    
+            var dateValParameter = dateVal != null ?
+                new ObjectParameter("DateVal", dateVal) :
+                new ObjectParameter("DateVal", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetSBPBlotterFRAuto_Result>("SP_GetSBPBlotterFRAuto", userIDParameter, branchIDParameter, curIDParameter, bRParameter, dateValParameter);
+        }
+    
         public virtual int SP_UpdateBranchBalanceByBranchId(Nullable<System.DateTime> reconDate, Nullable<decimal> reconInflow, Nullable<decimal> recon_OutFLow, Nullable<int> userID, Nullable<int> bR, Nullable<int> bID)
         {
             var reconDateParameter = reconDate.HasValue ?
