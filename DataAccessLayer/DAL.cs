@@ -1840,7 +1840,10 @@ namespace DataAccessLayer
         //*****************************************************
         //Funding Repo Producers
         //*****************************************************
-
+        public static List<GetIssueTypeTitles_Result> GetAllIssueTypeTitles()
+        {
+            return DbContextB.GetIssueTypeTitles().ToList();
+        }
         public static List<SP_GetSBPBlotterFR_Result> GetAllBlotterFundingRepo(int UserID, int BranchID, int CurID, int BR, string DateVal)
         {
             return DbContextB.SP_GetSBPBlotterFR(UserID, BranchID, CurID, BR,DateVal).ToList();

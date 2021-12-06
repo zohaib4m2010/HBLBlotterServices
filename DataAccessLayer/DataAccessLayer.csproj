@@ -100,6 +100,9 @@
     <Compile Include="GazettedHoliday.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetIssueTypeTitles_Result.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="NostroBank.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>

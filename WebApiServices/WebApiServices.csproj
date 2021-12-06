@@ -168,6 +168,7 @@
     <Compile Include="Models\BlotterRSFTTDashboard.cs" />
     <Compile Include="Models\BlotterRSFTT.cs" />
     <Compile Include="Models\GazettedHoliday.cs" />
+    <Compile Include="Models\IssueTypeTitles.cs" />
     <Compile Include="Models\SBP_BlotterCRRReportCalcSetup.cs" />
     <Compile Include="Models\SBP_BlotterCRRFINCONPeriods.cs" />
     <Compile Include="Models\SBP_BlotterOutRight.cs" />
@@ -269,6 +270,7 @@
     <Compile Include="Repository\EntityMapperBlotterLogin.cs" />
     <Compile Include="Repository\EntityMapperBranches.cs" />
     <Compile Include="Repository\EntityMapperCurrencies.cs" />
+    <Compile Include="Repository\EntityMapperIssueTypeTitles.cs" />
     <Compile Include="Repository\EntityMapperNostroBank.cs" />
     <Compile Include="Repository\EntityMapperUserPageRelation.cs" />
     <Compile Include="Repository\EntityMapperUserRole.cs" />

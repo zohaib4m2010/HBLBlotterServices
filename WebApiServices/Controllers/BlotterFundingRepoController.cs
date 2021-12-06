@@ -161,7 +161,17 @@ namespace WebApiServices.Controllers
 
         #endregion
 
-
+        public JsonResult<List<Models.IssueTypeTitles>> GetIssueTypeTitles()
+        {
+            EntityMapperIssueTypeTitles<DataAccessLayer.GetIssueTypeTitles_Result, Models.IssueTypeTitles> mapObj = new EntityMapperIssueTypeTitles<DataAccessLayer.GetIssueTypeTitles_Result, Models.IssueTypeTitles>();
+            List<DataAccessLayer.GetIssueTypeTitles_Result> IssueTypes = DAL.GetAllIssueTypeTitles();
+            List<Models.IssueTypeTitles> titles = new List<Models.IssueTypeTitles>();
+            foreach(var items in IssueTypes)
+            {
+                titles.Add(mapObj.Translate(items));
+            }
+            return Json<List<Models.IssueTypeTitles>>(titles);
+        }
 
 
         [HttpGet]
