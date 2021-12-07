@@ -87,9 +87,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BlotterEF.edmx</DependentUpon>
     </Compile>
-    <Compile Include="BlotterSBP_Reserved.cs">
-      <DependentUpon>BlotterEF.tt</DependentUpon>
-    </Compile>
     <Compile Include="Branches.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
@@ -300,6 +297,9 @@
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_GetSBPBlotterOpeningClosingBalanceDIfferential_Result.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SP_GetSBPBlotterOutRrightAuto_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_GetSBPBlotterOutRright_Result.cs">

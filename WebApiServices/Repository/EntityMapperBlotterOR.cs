@@ -17,8 +17,12 @@ namespace WebApiServices.Repository
             Mapper.CreateMap<Models.SBP_BlotterOutRight, DataAccessLayer.SP_GetSBPBlotterOutRright_Result>();
             Mapper.CreateMap<DataAccessLayer.SP_GetSBPBlotterOutRright_Result, Models.SBP_BlotterOutRight>();
 
+
             Mapper.CreateMap<Models.SP_GetSBPBlotterOR_Result, DataAccessLayer.SP_GetSBPBlotterOutRright_Result>();
             Mapper.CreateMap<DataAccessLayer.SP_GetSBPBlotterOutRright_Result, Models.SP_GetSBPBlotterOR_Result>();
+
+            Mapper.CreateMap<Models.SP_GetSBPBlotterOR_Result, DataAccessLayer.SP_GetSBPBlotterOutRrightAuto_Result>();
+            Mapper.CreateMap<DataAccessLayer.SP_GetSBPBlotterOutRrightAuto_Result, Models.SP_GetSBPBlotterOR_Result>();
         }
         public TDestination Translate(TSource obj)
         {

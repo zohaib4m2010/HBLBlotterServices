@@ -5,25 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="OPICSWEBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="BlotterSBP_Reserved">
-          <Key>
-            <PropertyRef Name="SNo" />
-          </Key>
-          <Property Name="SNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Date" Type="date" />
-          <Property Name="CRRFinconID" Type="int" />
-          <Property Name="ReservedBalance" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="SBPBalanace" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="BalanceDifference" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="Note" Type="varchar" MaxLength="200" />
-          <Property Name="CreateDate" Type="datetime" />
-          <Property Name="UpdateDate" Type="datetime" />
-          <Property Name="UserID" Type="int" />
-          <Property Name="CurID" Type="int" />
-          <Property Name="BR" Type="int" />
-          <Property Name="BID" Type="int" />
-          <Property Name="Flag" Type="nchar" MaxLength="10" />
-        </EntityType>
         <EntityType Name="Branches">
           <Key>
             <PropertyRef Name="BID" />
@@ -247,9 +228,9 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterConversionRate' does not h
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="UpdateDate" Type="datetime" />
           <Property Name="UserID" Type="int" Nullable="false" />
-          <Property Name="Calc" Type="int" />
           <Property Name="StartDate" Type="date" />
           <Property Name="EndDate" Type="date" />
+          <Property Name="Calc" Type="int" />
         </EntityType>
         <EntityType Name="SBP_BlotterCRRReportDaysWiseBal">
           <Key>
@@ -561,8 +542,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
           <Property Name="Flag" Type="varchar" MaxLength="2" />
           <Property Name="DataType" Type="varchar" MaxLength="50" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="SBP_BlotterReserved">
           <Key>
             <PropertyRef Name="SNo" />
@@ -798,42 +777,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="SBP_BlotterBai_Muajjal">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SBP_BlotterBranchBalances_BranchID">
-          <End Role="Branches" Type="Self.Branches" Multiplicity="1" />
-          <End Role="SBP_BlotterBranchBalances" Type="Self.SBP_BlotterBranchBalances" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Branches">
-              <PropertyRef Name="BID" />
-            </Principal>
-            <Dependent Role="SBP_BlotterBranchBalances">
-              <PropertyRef Name="BID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SBP_BlotterBranchBalances_CurID">
-          <End Role="Currencies" Type="Self.Currencies" Multiplicity="1" />
-          <End Role="SBP_BlotterBranchBalances" Type="Self.SBP_BlotterBranchBalances" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Currencies">
-              <PropertyRef Name="CID" />
-            </Principal>
-            <Dependent Role="SBP_BlotterBranchBalances">
-              <PropertyRef Name="CurID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SBP_BlotterBranchBalances_UserID">
-          <End Role="SBP_LoginInfo" Type="Self.SBP_LoginInfo" Multiplicity="1" />
-          <End Role="SBP_BlotterBranchBalances" Type="Self.SBP_BlotterBranchBalances" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SBP_LoginInfo">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SBP_BlotterBranchBalances">
               <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1330,7 +1273,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="GetIssueTypeTitles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SP_ADD_ActivityMonitor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pSessionID" Type="varchar" Mode="In" />
           <Parameter Name="pUserID" Type="int" Mode="In" />
@@ -1572,6 +1514,10 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Parameter Name="DateVal" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_GetSBPBlotterOutRright" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BR" Type="int" Mode="In" />
+          <Parameter Name="DateVal" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_GetSBPBlotterOutRrightAuto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BR" Type="int" Mode="In" />
           <Parameter Name="DateVal" Type="varchar" Mode="In" />
         </Function>
@@ -1831,7 +1777,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Parameter Name="BlotterType" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="OPICSWEBModelStoreContainer">
-          <EntitySet Name="BlotterSBP_Reserved" EntityType="Self.BlotterSBP_Reserved" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Branches" EntityType="Self.Branches" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Currencies" EntityType="Self.Currencies" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GazettedHolidays" EntityType="Self.GazettedHolidays" Schema="dbo" store:Type="Tables" />
@@ -1854,6 +1799,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <EntitySet Name="SBP_BlotterOutrights" EntityType="Self.SBP_BlotterOutrights" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterProjection" EntityType="Self.SBP_BlotterProjection" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterReconBreakups" EntityType="Self.SBP_BlotterReconBreakups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SBP_BlotterReserved" EntityType="Self.SBP_BlotterReserved" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterRTGS" EntityType="Self.SBP_BlotterRTGS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterTBO" EntityType="Self.SBP_BlotterTBO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterTrade" EntityType="Self.SBP_BlotterTrade" Schema="dbo" store:Type="Tables" />
@@ -1894,24 +1840,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
     [SBP_BlotterCRRReportFCY].[Flag] AS [Flag]
     FROM [dbo].[SBP_BlotterCRRReportFCY] AS [SBP_BlotterCRRReportFCY]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="SBP_BlotterReserved" EntityType="Self.SBP_BlotterReserved" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [SBP_BlotterReserved].[SNo] AS [SNo], 
-    [SBP_BlotterReserved].[Date] AS [Date], 
-    [SBP_BlotterReserved].[CRRFinconID] AS [CRRFinconID], 
-    [SBP_BlotterReserved].[ReservedBalance] AS [ReservedBalance], 
-    [SBP_BlotterReserved].[SBPBalanace] AS [SBPBalanace], 
-    [SBP_BlotterReserved].[BalanceDifference] AS [BalanceDifference], 
-    [SBP_BlotterReserved].[Note] AS [Note], 
-    [SBP_BlotterReserved].[CreateDate] AS [CreateDate], 
-    [SBP_BlotterReserved].[UpdateDate] AS [UpdateDate], 
-    [SBP_BlotterReserved].[UserID] AS [UserID], 
-    [SBP_BlotterReserved].[CurID] AS [CurID], 
-    [SBP_BlotterReserved].[BR] AS [BR], 
-    [SBP_BlotterReserved].[BID] AS [BID], 
-    [SBP_BlotterReserved].[Flag] AS [Flag]
-    FROM [dbo].[SBP_BlotterReserved] AS [SBP_BlotterReserved]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_BlotterCRRFINCON_BranchID" Association="Self.FK_BlotterCRRFINCON_BranchID">
             <End Role="Branches" EntitySet="Branches" />
             <End Role="SBP_BlotterCRRFINCON" EntitySet="SBP_BlotterCRRFINCON" />
@@ -1931,18 +1859,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <AssociationSet Name="FK_SBP_BlotterBai_Muajjal_UserID" Association="Self.FK_SBP_BlotterBai_Muajjal_UserID">
             <End Role="SBP_LoginInfo" EntitySet="SBP_LoginInfo" />
             <End Role="SBP_BlotterBai_Muajjal" EntitySet="SBP_BlotterBai_Muajjal" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SBP_BlotterBranchBalances_BranchID" Association="Self.FK_SBP_BlotterBranchBalances_BranchID">
-            <End Role="Branches" EntitySet="Branches" />
-            <End Role="SBP_BlotterBranchBalances" EntitySet="SBP_BlotterBranchBalances" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SBP_BlotterBranchBalances_CurID" Association="Self.FK_SBP_BlotterBranchBalances_CurID">
-            <End Role="Currencies" EntitySet="Currencies" />
-            <End Role="SBP_BlotterBranchBalances" EntitySet="SBP_BlotterBranchBalances" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SBP_BlotterBranchBalances_UserID" Association="Self.FK_SBP_BlotterBranchBalances_UserID">
-            <End Role="SBP_LoginInfo" EntitySet="SBP_LoginInfo" />
-            <End Role="SBP_BlotterBranchBalances" EntitySet="SBP_BlotterBranchBalances" />
           </AssociationSet>
           <AssociationSet Name="FK_SBP_BlotterBreakups_BranchID" Association="Self.FK_SBP_BlotterBreakups_BranchID">
             <End Role="Branches" EntitySet="Branches" />
@@ -2113,25 +2029,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BlotterEF" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="BlotterSBP_Reserved">
-          <Key>
-            <PropertyRef Name="SNo" />
-          </Key>
-          <Property Name="SNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Date" Type="DateTime" Precision="0" />
-          <Property Name="CRRFinconID" Type="Int32" />
-          <Property Name="ReservedBalance" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="SBPBalanace" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="BalanceDifference" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="Note" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
-          <Property Name="UserID" Type="Int32" />
-          <Property Name="CurID" Type="Int32" />
-          <Property Name="BR" Type="Int32" />
-          <Property Name="BID" Type="Int32" />
-          <Property Name="Flag" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-        </EntityType>
         <EntityType Name="Branches">
           <Key>
             <PropertyRef Name="BID" />
@@ -2790,25 +2687,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <NavigationProperty Name="Branch" Relationship="Self.FK_SBP_BlotterCRRReportFCY_BranchID" FromRole="SBP_BlotterCRRReportFCY" ToRole="Branches" />
           <NavigationProperty Name="SBP_LoginInfo" Relationship="Self.FK_SBP_BlotterCRRReportFCY_UserID" FromRole="SBP_BlotterCRRReportFCY" ToRole="SBP_LoginInfo" />
         </EntityType>
-        <EntityType Name="SBP_BlotterReserved">
-          <Key>
-            <PropertyRef Name="SNo" />
-          </Key>
-          <Property Name="SNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Date" Type="DateTime" Precision="0" />
-          <Property Name="CRRFinconID" Type="Int32" />
-          <Property Name="ReservedBalance" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="SBPBalanace" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="BalanceDifference" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="Note" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
-          <Property Name="UserID" Type="Int32" />
-          <Property Name="CurID" Type="Int32" />
-          <Property Name="BR" Type="Int32" />
-          <Property Name="BID" Type="Int32" />
-          <Property Name="Flag" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-        </EntityType>
         <Association Name="FK_SBP_BlotterBai_Muajjal_BranchID">
           <End Role="Branches" Type="BlotterEF.Branches" Multiplicity="1" />
           <End Role="SBP_BlotterBai_Muajjal" Type="Self.SBP_BlotterBai_Muajjal" Multiplicity="*" />
@@ -3278,7 +3156,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="BlotterEntity" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="BlotterSBP_Reserved" EntityType="Self.BlotterSBP_Reserved" />
           <EntitySet Name="Branches" EntityType="BlotterEF.Branches" />
           <EntitySet Name="Currencies" EntityType="Self.Currency" />
           <EntitySet Name="GazettedHolidays" EntityType="Self.GazettedHoliday" />
@@ -3308,7 +3185,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <EntitySet Name="WebPages" EntityType="Self.WebPage" />
           <EntitySet Name="SBP_BlotterConversionRate" EntityType="Self.SBP_BlotterConversionRate" />
           <EntitySet Name="SBP_BlotterCRRReportFCY" EntityType="Self.SBP_BlotterCRRReportFCY" />
-          <EntitySet Name="SBP_BlotterReserved" EntityType="Self.SBP_BlotterReserved" />
           <AssociationSet Name="FK_SBP_BlotterBai_Muajjal_BranchID" Association="Self.FK_SBP_BlotterBai_Muajjal_BranchID">
             <End Role="Branches" EntitySet="Branches" />
             <End Role="SBP_BlotterBai_Muajjal" EntitySet="SBP_BlotterBai_Muajjal" />
@@ -4004,10 +3880,15 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             <Parameter Name="BID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetIssueTypeTitles" ReturnType="Collection(BlotterEF.GetIssueTypeTitles_Result)" />
+          <EntitySet Name="SBP_BlotterReserved" EntityType="BlotterEF.SBP_BlotterReserved" />
           <FunctionImport Name="SP_GetSBPBlotterFRAuto" ReturnType="Collection(BlotterEF.SP_GetSBPBlotterFRAuto_Result)">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="BranchID" Mode="In" Type="Int32" />
             <Parameter Name="CurID" Mode="In" Type="Int32" />
+            <Parameter Name="BR" Mode="In" Type="Int32" />
+            <Parameter Name="DateVal" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_GetSBPBlotterOutRrightAuto" ReturnType="Collection(BlotterEF.SP_GetSBPBlotterOutRrightAuto_Result)">
             <Parameter Name="BR" Mode="In" Type="Int32" />
             <Parameter Name="DateVal" Mode="In" Type="String" />
           </FunctionImport>
@@ -5002,6 +4883,25 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Property Type="String" Name="Id" Nullable="false" MaxLength="1" />
           <Property Type="String" Name="Title" Nullable="false" MaxLength="7" />
         </ComplexType>
+        <EntityType Name="SBP_BlotterReserved">
+          <Key>
+            <PropertyRef Name="SNo" />
+          </Key>
+          <Property Name="SNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="CRRFinconID" Type="Int32" />
+          <Property Name="ReservedBalance" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="SBPBalanace" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="BalanceDifference" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Note" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="CurID" Type="Int32" />
+          <Property Name="BR" Type="Int32" />
+          <Property Name="BID" Type="Int32" />
+          <Property Name="Flag" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
         <ComplexType Name="SP_GetSBPBlotterFRAuto_Result">
           <Property Type="Int64" Name="SNo" Nullable="false" />
           <Property Type="String" Name="DataType" Nullable="true" MaxLength="50" />
@@ -5025,6 +4925,27 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
           <Property Type="DateTime" Name="Date" Nullable="true" />
           <Property Type="Boolean" Name="Status" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="SP_GetSBPBlotterOutRrightAuto_Result">
+          <Property Type="Int64" Name="SNo" Nullable="false" />
+          <Property Type="String" Name="DataType" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Bank" Nullable="true" MaxLength="50" />
+          <Property Type="Double" Name="Rate" Nullable="true" />
+          <Property Type="DateTime" Name="Issue_Date" Nullable="true" />
+          <Property Type="String" Name="IssueType" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Broker" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="InFlow" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="OutFLow" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="String" Name="Note" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="UserID" Nullable="true" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="UpdateDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="BR" Nullable="true" />
+          <Property Type="Int32" Name="BID" Nullable="true" />
+          <Property Type="Int32" Name="CurID" Nullable="true" />
+          <Property Type="String" Name="Flag" Nullable="true" MaxLength="2" />
+          <Property Type="DateTime" Name="Date" Nullable="true" />
+          <Property Type="Boolean" Name="Status" Nullable="true" />
+        </ComplexType>
         
       </Schema>
     </edmx:ConceptualModels>
@@ -5032,26 +4953,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="OPICSWEBModelStoreContainer" CdmEntityContainer="BlotterEntity">
-          <EntitySetMapping Name="BlotterSBP_Reserved">
-            <EntityTypeMapping TypeName="BlotterEF.BlotterSBP_Reserved">
-              <MappingFragment StoreEntitySet="BlotterSBP_Reserved">
-                <ScalarProperty Name="SNo" ColumnName="SNo" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="CRRFinconID" ColumnName="CRRFinconID" />
-                <ScalarProperty Name="ReservedBalance" ColumnName="ReservedBalance" />
-                <ScalarProperty Name="SBPBalanace" ColumnName="SBPBalanace" />
-                <ScalarProperty Name="BalanceDifference" ColumnName="BalanceDifference" />
-                <ScalarProperty Name="Note" ColumnName="Note" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="CurID" ColumnName="CurID" />
-                <ScalarProperty Name="BR" ColumnName="BR" />
-                <ScalarProperty Name="BID" ColumnName="BID" />
-                <ScalarProperty Name="Flag" ColumnName="Flag" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Branches">
             <EntityTypeMapping TypeName="BlotterEF.Branches">
               <MappingFragment StoreEntitySet="Branches">
@@ -5642,26 +5543,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="BR" ColumnName="BR" />
-                <ScalarProperty Name="BID" ColumnName="BID" />
-                <ScalarProperty Name="Flag" ColumnName="Flag" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SBP_BlotterReserved">
-            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterReserved">
-              <MappingFragment StoreEntitySet="SBP_BlotterReserved">
-                <ScalarProperty Name="SNo" ColumnName="SNo" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="CRRFinconID" ColumnName="CRRFinconID" />
-                <ScalarProperty Name="ReservedBalance" ColumnName="ReservedBalance" />
-                <ScalarProperty Name="SBPBalanace" ColumnName="SBPBalanace" />
-                <ScalarProperty Name="BalanceDifference" ColumnName="BalanceDifference" />
-                <ScalarProperty Name="Note" ColumnName="Note" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="CurID" ColumnName="CurID" />
                 <ScalarProperty Name="BR" ColumnName="BR" />
                 <ScalarProperty Name="BID" ColumnName="BID" />
                 <ScalarProperty Name="Flag" ColumnName="Flag" />
@@ -6770,14 +6651,26 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_UpdateBranchBalanceByBranchId" FunctionName="OPICSWEBModel.Store.SP_UpdateBranchBalanceByBranchId" />
-          <FunctionImportMapping FunctionImportName="GetIssueTypeTitles" FunctionName="OPICSWEBModel.Store.GetIssueTypeTitles">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="BlotterEF.GetIssueTypeTitles_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
+          <EntitySetMapping Name="SBP_BlotterReserved">
+            <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterReserved">
+              <MappingFragment StoreEntitySet="SBP_BlotterReserved">
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+                <ScalarProperty Name="BID" ColumnName="BID" />
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="CurID" ColumnName="CurID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="BalanceDifference" ColumnName="BalanceDifference" />
+                <ScalarProperty Name="SBPBalanace" ColumnName="SBPBalanace" />
+                <ScalarProperty Name="ReservedBalance" ColumnName="ReservedBalance" />
+                <ScalarProperty Name="CRRFinconID" ColumnName="CRRFinconID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="SNo" ColumnName="SNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SP_GetSBPBlotterFRAuto" FunctionName="OPICSWEBModel.Store.SP_GetSBPBlotterFRAuto">
             <ResultMapping>
               <ComplexTypeMapping TypeName="BlotterEF.SP_GetSBPBlotterFRAuto_Result">
@@ -6805,7 +6698,32 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-        </EntityContainerMapping>
+          <FunctionImportMapping FunctionImportName="SP_GetSBPBlotterOutRrightAuto" FunctionName="OPICSWEBModel.Store.SP_GetSBPBlotterOutRrightAuto">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BlotterEF.SP_GetSBPBlotterOutRrightAuto_Result">
+                <ScalarProperty Name="SNo" ColumnName="SNo" />
+                <ScalarProperty Name="DataType" ColumnName="DataType" />
+                <ScalarProperty Name="Bank" ColumnName="Bank" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="Issue_Date" ColumnName="Issue_Date" />
+                <ScalarProperty Name="IssueType" ColumnName="IssueType" />
+                <ScalarProperty Name="Broker" ColumnName="Broker" />
+                <ScalarProperty Name="InFlow" ColumnName="InFlow" />
+                <ScalarProperty Name="OutFLow" ColumnName="OutFLow" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="BR" ColumnName="BR" />
+                <ScalarProperty Name="BID" ColumnName="BID" />
+                <ScalarProperty Name="CurID" ColumnName="CurID" />
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

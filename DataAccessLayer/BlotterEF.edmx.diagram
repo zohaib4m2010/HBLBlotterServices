@@ -5,7 +5,6 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="4cb0d034cc1f44a685634a5d8bff8a7e" Name="Diagram1" ZoomLevel="82">
-        <EntityTypeShape EntityType="BlotterEF.BlotterSBP_Reserved" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BlotterEF.Branches" Width="1.5" PointX="3.75" PointY="27.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BlotterEF.Currency" Width="1.5" PointX="3.75" PointY="22.25" IsExpanded="true" />
         <EntityTypeShape EntityType="BlotterEF.GazettedHoliday" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
@@ -35,7 +34,6 @@
         <EntityTypeShape EntityType="BlotterEF.WebPage" Width="1.5" PointX="9.75" PointY="55.375" IsExpanded="true" />
         <EntityTypeShape EntityType="BlotterEF.SBP_BlotterConversionRate" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BlotterEF.SBP_BlotterCRRReportFCY" Width="1.5" PointX="12" PointY="49.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="BlotterEF.SBP_BlotterReserved" Width="1.5" PointX="0.75" PointY="12.75" IsExpanded="true" />
         <AssociationConnector Association="BlotterEF.FK_SBP_BlotterBai_Muajjal_BranchID" ManuallyRouted="false" />
         <AssociationConnector Association="BlotterEF.FK_SBP_BlotterBreakups_BranchID" ManuallyRouted="false" />
         <AssociationConnector Association="BlotterEF.FK_SBP_BlotterClearing_BranchID" ManuallyRouted="false" />
@@ -93,6 +91,7 @@
         <EntityTypeShape EntityType="BlotterEF.SBP_BlotterProjection" Width="1.5" PointX="5.375" PointY="8.75" />
         <EntityTypeShape EntityType="BlotterEF.SBP_BlotterCRRReportCalcSetup" Width="1.5" PointX="3.375" PointY="45.375" />
         <AssociationConnector Association="BlotterEF.FK_SBP_BlotterCRRReportCalcSetup_UserID" />
+        <EntityTypeShape EntityType="BlotterEF.SBP_BlotterReserved" Width="1.5" PointX="0.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

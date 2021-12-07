@@ -15,8 +15,8 @@ namespace WebApiServices.Repository
             Mapper.CreateMap<Models.SBP_BlotterFundingRepo, DataAccessLayer.SBP_BlotterFundingRepo>();
             Mapper.CreateMap<DataAccessLayer.SBP_BlotterFundingRepo, Models.SBP_BlotterFundingRepo>();
 
-            Mapper.CreateMap<Models.SBP_BlotterFundingRepo, DataAccessLayer.SP_GetSBPBlotterFR_Result>();
-            Mapper.CreateMap<DataAccessLayer.SP_GetSBPBlotterFR_Result, Models.SBP_BlotterFundingRepo>();
+            Mapper.CreateMap<Models.SP_GetSBPBlotterFRAuto_Result, DataAccessLayer.SP_GetSBPBlotterFRAuto_Result>();
+            Mapper.CreateMap<DataAccessLayer.SP_GetSBPBlotterFRAuto_Result, Models.SP_GetSBPBlotterFRAuto_Result>();
 
             Mapper.CreateMap<Models.SP_GetSBPBlotterFR_Result, DataAccessLayer.SP_GetSBPBlotterFR_Result>();
             Mapper.CreateMap<DataAccessLayer.SP_GetSBPBlotterFR_Result, Models.SP_GetSBPBlotterFR_Result>();

@@ -10,23 +10,27 @@
 namespace DataAccessLayer
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class BlotterSBP_Reserved
+    public partial class SP_GetSBPBlotterOutRrightAuto_Result
     {
-        public int SNo { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
-        public Nullable<int> CRRFinconID { get; set; }
-        public Nullable<decimal> ReservedBalance { get; set; }
-        public Nullable<decimal> SBPBalanace { get; set; }
-        public Nullable<decimal> BalanceDifference { get; set; }
+        public long SNo { get; set; }
+        public string DataType { get; set; }
+        public string Bank { get; set; }
+        public Nullable<double> Rate { get; set; }
+        public Nullable<System.DateTime> Issue_Date { get; set; }
+        public string IssueType { get; set; }
+        public string Broker { get; set; }
+        public Nullable<decimal> InFlow { get; set; }
+        public Nullable<decimal> OutFLow { get; set; }
         public string Note { get; set; }
+        public Nullable<int> UserID { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
-        public Nullable<int> UserID { get; set; }
-        public Nullable<int> CurID { get; set; }
         public Nullable<int> BR { get; set; }
         public Nullable<int> BID { get; set; }
+        public Nullable<int> CurID { get; set; }
         public string Flag { get; set; }
+        public Nullable<System.DateTime> Date { get; set; }
+        public Nullable<bool> Status { get; set; }
     }
 }

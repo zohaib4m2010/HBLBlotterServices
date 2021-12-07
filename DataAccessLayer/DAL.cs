@@ -254,6 +254,10 @@ namespace DataAccessLayer
         {
             return DbContextB.SP_GetSBPBlotterOutRright( BR, DateVal).ToList();
         }
+        public static List<SP_GetSBPBlotterOutRrightAuto_Result> GetAllBlotterOutRightAuto(int UserID, int BranchID, int CurID, int BR, string DateVal)
+        {
+            return DbContextB.SP_GetSBPBlotterOutRrightAuto(BR, DateVal).ToList();
+        }
         public static SBP_BlotterOutrights GetSBP_BlotterOutRightById(int OutRightId)
         {
             return DbContextB.SBP_BlotterOutrights.Where(p => p.SNo == OutRightId).FirstOrDefault();
@@ -1509,7 +1513,6 @@ namespace DataAccessLayer
 
         public static List<SBP_BlotterBai_Muajjal> GetAllBlotterBai_Muajjal(int UserID, int BranchID, int CurID, int BR, string DateVal)
         {
-            string currentDate = DateTime.Now.ToString("yyyy-MM-dd");
             return DbContextB.SBP_BlotterBai_Muajjal.Where(p => p.BID == BranchID && p.CurID == CurID && p.BR == BR && (p.ValueDate.ToString() == DateVal || (DateVal == null && p.ValueDate >= DateTime.Today))).ToList();
         }
         public static SBP_BlotterBai_Muajjal GetBai_MuajjalItem(int Bai_MuajjalId)
@@ -2265,6 +2268,12 @@ namespace DataAccessLayer
                 SBP_BlotterReserved ReservedItems = DbContextB.SBP_BlotterReserved.Where(p => p.SNo == ReservedItem.SNo).FirstOrDefault();
                 if (ReservedItems != null)
                 {
+                    ReservedItems.BR = ReservedItem.BR;
+                    ReservedItems.BID = ReservedItem.BID;
+                    ReservedItems.UserID = ReservedItem.UserID;
+                    ReservedItems.CurID = ReservedItem.CurID;
+                    ReservedItems.BalanceDifference = ReservedItem.BalanceDifference;
+                    ReservedItems.BalanceDifference = ReservedItem.BalanceDifference;
                     ReservedItems.BalanceDifference = ReservedItem.BalanceDifference;
                     ReservedItems.SBPBalanace = ReservedItem.SBPBalanace;
                     ReservedItems.UpdateDate = ReservedItem.UpdateDate;

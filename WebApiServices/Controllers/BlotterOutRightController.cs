@@ -30,6 +30,19 @@ namespace WebApiServices.Controllers
             return Json<List<Models.SP_GetSBPBlotterOR_Result>>(blotterOR);
         }
 
+        [HttpGet]
+        public JsonResult<List<Models.SP_GetSBPBlotterOR_Result>> GetAllBlotterOutRightAuto(int UserID, int BranchID, int CurID, int BR, string DateVal)
+        {
+            EntityMapperBlotterOR<DataAccessLayer.SP_GetSBPBlotterOutRrightAuto_Result, Models.SP_GetSBPBlotterOR_Result> mapObj = new EntityMapperBlotterOR<DataAccessLayer.SP_GetSBPBlotterOutRrightAuto_Result, Models.SP_GetSBPBlotterOR_Result>();
+
+            List<DataAccessLayer.SP_GetSBPBlotterOutRrightAuto_Result> blotterORList = DAL.GetAllBlotterOutRightAuto(UserID, BranchID, CurID, BR, DateVal);
+            List<Models.SP_GetSBPBlotterOR_Result> blotterOR = new List<Models.SP_GetSBPBlotterOR_Result>();
+            foreach (var item in blotterORList)
+            {
+                blotterOR.Add(mapObj.Translate(item));
+            }
+            return Json<List<Models.SP_GetSBPBlotterOR_Result>>(blotterOR);
+        }
 
         [HttpPost]
         public bool InsertOutRight(List<Models.SBP_BlotterOutRight> blotterOR)
