@@ -1439,7 +1439,10 @@ namespace DataAccessLayer
                         FundsTransferItem.FT_OutFLow = 0;
                     }
                 }
-                SBP_BlotterFundsTransfer CLRItems2 = DbContextB.SBP_BlotterFundsTransfer.Where(p => p.SNo != FundsTransferItem.SNo).FirstOrDefault();
+                long addSno = FundsTransferItem.SNo + 1;
+                FundsTransferItem.SNo = addSno;
+                SBP_BlotterFundsTransfer CLRItems2 = DbContextB.SBP_BlotterFundsTransfer.Where(p => p.SNo == FundsTransferItem.SNo).FirstOrDefault();
+                //SBP_BlotterFundsTransfer CLRItems2 = DbContextB.SBP_BlotterFundsTransfer.Where(p => p.SNo != addSno).FirstOrDefault();
                 if (CLRItems2 != null)
                 {
 
