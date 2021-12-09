@@ -268,7 +268,7 @@ namespace DataAccessLayer
             bool status;
             try
             {
-                DbContextB.SP_InsertBlotterOutright(OutRightIdItem.DataType, OutRightIdItem.Bank, OutRightIdItem.Rate, OutRightIdItem.Issue_Date, OutRightIdItem.IssueType, OutRightIdItem.Broker, OutRightIdItem.InFlow, OutRightIdItem.OutFLow, OutRightIdItem.Note, OutRightIdItem.UserID, OutRightIdItem.BR);
+                DbContextB.SP_InsertBlotterOutright(OutRightIdItem.DataType, OutRightIdItem.Bank, OutRightIdItem.Rate, OutRightIdItem.Issue_Date, OutRightIdItem.IssueType, OutRightIdItem.Broker, OutRightIdItem.InFlow, OutRightIdItem.OutFLow,OutRightIdItem.Date, OutRightIdItem.Note, OutRightIdItem.UserID, OutRightIdItem.BR);
                 status = true;
             }
             catch (Exception ex)
@@ -284,7 +284,7 @@ namespace DataAccessLayer
             bool status;
             try
             {
-                DbContextB.SP_UpdateBlotterOutright(OutRightIdItem.SNo, OutRightIdItem.DataType, OutRightIdItem.Bank, OutRightIdItem.Rate, OutRightIdItem.Issue_Date, OutRightIdItem.IssueType, OutRightIdItem.Broker, OutRightIdItem.InFlow, OutRightIdItem.OutFLow, OutRightIdItem.Note, OutRightIdItem.UserID, OutRightIdItem.BR);
+                DbContextB.SP_UpdateBlotterOutright(OutRightIdItem.SNo, OutRightIdItem.DataType, OutRightIdItem.Bank, OutRightIdItem.Rate, OutRightIdItem.Issue_Date, OutRightIdItem.IssueType, OutRightIdItem.Broker, OutRightIdItem.InFlow, OutRightIdItem.OutFLow, OutRightIdItem.Date, OutRightIdItem.Note, OutRightIdItem.UserID, OutRightIdItem.BR);
                 status = true;
             }
             catch (Exception ex)

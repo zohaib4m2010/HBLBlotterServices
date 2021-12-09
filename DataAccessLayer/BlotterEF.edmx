@@ -1546,6 +1546,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
           <Parameter Name="Broker" Type="varchar" Mode="In" />
           <Parameter Name="InFlow" Type="numeric" Mode="In" />
           <Parameter Name="OutFLow" Type="numeric" Mode="In" />
+          <Parameter Name="Date" Type="date" Mode="In" />
           <Parameter Name="Note" Type="nvarchar" Mode="In" />
           <Parameter Name="UserID" Type="int" Mode="In" />
           <Parameter Name="BR" Type="int" Mode="In" />
@@ -1672,6 +1673,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
           <Parameter Name="Broker" Type="varchar" Mode="In" />
           <Parameter Name="InFlow" Type="numeric" Mode="In" />
           <Parameter Name="OutFLow" Type="numeric" Mode="In" />
+          <Parameter Name="Date" Type="date" Mode="In" />
           <Parameter Name="Note" Type="nvarchar" Mode="In" />
           <Parameter Name="UserID" Type="int" Mode="In" />
           <Parameter Name="BR" Type="int" Mode="In" />
@@ -3732,34 +3734,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
             <Parameter Name="BR" Mode="In" Type="Int32" />
             <Parameter Name="BID" Mode="In" Type="Int32" />
           </FunctionImport>
-          
-          <FunctionImport Name="SP_InsertBlotterOutright">
-            <Parameter Name="DataType" Mode="In" Type="String" />
-            <Parameter Name="Bank" Mode="In" Type="String" />
-            <Parameter Name="Rate" Mode="In" Type="Double" />
-            <Parameter Name="Issue_Date" Mode="In" Type="DateTime" />
-            <Parameter Name="IssueType" Mode="In" Type="String" />
-            <Parameter Name="Broker" Mode="In" Type="String" />
-            <Parameter Name="InFlow" Mode="In" Type="Decimal" />
-            <Parameter Name="OutFLow" Mode="In" Type="Decimal" />
-            <Parameter Name="Note" Mode="In" Type="String" />
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
-            <Parameter Name="BR" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="SP_UpdateBlotterOutright">
-            <Parameter Name="id" Mode="In" Type="Int64" />
-            <Parameter Name="DataType" Mode="In" Type="String" />
-            <Parameter Name="Bank" Mode="In" Type="String" />
-            <Parameter Name="Rate" Mode="In" Type="Double" />
-            <Parameter Name="Issue_Date" Mode="In" Type="DateTime" />
-            <Parameter Name="IssueType" Mode="In" Type="String" />
-            <Parameter Name="Broker" Mode="In" Type="String" />
-            <Parameter Name="InFlow" Mode="In" Type="Decimal" />
-            <Parameter Name="OutFLow" Mode="In" Type="Decimal" />
-            <Parameter Name="Note" Mode="In" Type="String" />
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
-            <Parameter Name="BR" Mode="In" Type="Int32" />
-          </FunctionImport>
           <EntitySet Name="SBP_BlotterCRRFINCON" EntityType="BlotterEF.SBP_BlotterCRRFINCON" />
           <EntitySet Name="SBP_BlotterCRRReportDaysWiseBal" EntityType="BlotterEF.SBP_BlotterCRRReportDaysWiseBal" />
           <AssociationSet Name="FK_BlotterCRRFINCON_BranchID" Association="BlotterEF.FK_BlotterCRRFINCON_BranchID">
@@ -3891,6 +3865,35 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
           <FunctionImport Name="SP_GetSBPBlotterOutRrightAuto" ReturnType="Collection(BlotterEF.SP_GetSBPBlotterOutRrightAuto_Result)">
             <Parameter Name="BR" Mode="In" Type="Int32" />
             <Parameter Name="DateVal" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_InsertBlotterOutright">
+            <Parameter Name="DataType" Mode="In" Type="String" />
+            <Parameter Name="Bank" Mode="In" Type="String" />
+            <Parameter Name="Rate" Mode="In" Type="Double" />
+            <Parameter Name="Issue_Date" Mode="In" Type="DateTime" />
+            <Parameter Name="IssueType" Mode="In" Type="String" />
+            <Parameter Name="Broker" Mode="In" Type="String" />
+            <Parameter Name="InFlow" Mode="In" Type="Decimal" />
+            <Parameter Name="OutFLow" Mode="In" Type="Decimal" />
+            <Parameter Name="Date" Mode="In" Type="DateTime" />
+            <Parameter Name="Note" Mode="In" Type="String" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="BR" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_UpdateBlotterOutright">
+            <Parameter Name="id" Mode="In" Type="Int64" />
+            <Parameter Name="DataType" Mode="In" Type="String" />
+            <Parameter Name="Bank" Mode="In" Type="String" />
+            <Parameter Name="Rate" Mode="In" Type="Double" />
+            <Parameter Name="Issue_Date" Mode="In" Type="DateTime" />
+            <Parameter Name="IssueType" Mode="In" Type="String" />
+            <Parameter Name="Broker" Mode="In" Type="String" />
+            <Parameter Name="InFlow" Mode="In" Type="Decimal" />
+            <Parameter Name="OutFLow" Mode="In" Type="Decimal" />
+            <Parameter Name="Date" Mode="In" Type="DateTime" />
+            <Parameter Name="Note" Mode="In" Type="String" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="BR" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_GetAll_SBPBlotterClearing_Result">
@@ -6276,8 +6279,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_InsertBlotterReconBreakups" FunctionName="OPICSWEBModel.Store.SP_InsertBlotterReconBreakups" />
           <FunctionImportMapping FunctionImportName="SP_UpdateBlotterReconBreakups" FunctionName="OPICSWEBModel.Store.SP_UpdateBlotterReconBreakups" />
-          <FunctionImportMapping FunctionImportName="SP_InsertBlotterOutright" FunctionName="OPICSWEBModel.Store.SP_InsertBlotterOutright" />
-          <FunctionImportMapping FunctionImportName="SP_UpdateBlotterOutright" FunctionName="OPICSWEBModel.Store.SP_UpdateBlotterOutright" />
           <EntitySetMapping Name="SBP_BlotterCRRFINCON">
             <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterCRRFINCON">
               <MappingFragment StoreEntitySet="SBP_BlotterCRRFINCON">
@@ -6723,6 +6724,8 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_InsertBlotterOutright" FunctionName="OPICSWEBModel.Store.SP_InsertBlotterOutright" />
+          <FunctionImportMapping FunctionImportName="SP_UpdateBlotterOutright" FunctionName="OPICSWEBModel.Store.SP_UpdateBlotterOutright" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
