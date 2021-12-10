@@ -5,6 +5,24 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="OPICSWEBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BlotterSBP_Sheduler">
+          <Key>
+            <PropertyRef Name="SID" />
+          </Key>
+          <Property Name="SID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RegTimerStatus" Type="bit" />
+          <Property Name="RegStartTime" Type="varchar" MaxLength="50" />
+          <Property Name="RegEndTime" Type="varchar" MaxLength="50" />
+          <Property Name="RegFreq" Type="varchar" MaxLength="50" />
+          <Property Name="RegIsUpdated" Type="bit" />
+          <Property Name="RegIsRun" Type="bit" />
+          <Property Name="FwdTimerStatus" Type="bit" />
+          <Property Name="FwdStartTime" Type="varchar" MaxLength="50" />
+          <Property Name="FwdEndTime" Type="varchar" MaxLength="50" />
+          <Property Name="FwdFreq" Type="varchar" MaxLength="50" />
+          <Property Name="FwdIsUpdated" Type="bit" />
+          <Property Name="FwdIsRun" Type="bit" />
+        </EntityType>
         <EntityType Name="Branches">
           <Key>
             <PropertyRef Name="BID" />
@@ -228,9 +246,9 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterConversionRate' does not h
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="UpdateDate" Type="datetime" />
           <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Calc" Type="int" />
           <Property Name="StartDate" Type="date" />
           <Property Name="EndDate" Type="date" />
-          <Property Name="Calc" Type="int" />
         </EntityType>
         <EntityType Name="SBP_BlotterCRRReportDaysWiseBal">
           <Key>
@@ -519,8 +537,8 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
           <Property Name="BID" Type="int" />
           <Property Name="Flag" Type="nchar" MaxLength="10" />
           <Property Name="CRRFinconID" Type="int" />
-          <Property Name="RSF_NBP" Type="numeric" Precision="18" Scale="0" />
           <Property Name="Custy" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="RSF_NBP" Type="numeric" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="SBP_BlotterReconBreakups">
           <Key>
@@ -542,6 +560,8 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
           <Property Name="Flag" Type="varchar" MaxLength="2" />
           <Property Name="DataType" Type="varchar" MaxLength="50" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterReserved' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="SBP_BlotterReserved">
           <Key>
             <PropertyRef Name="SNo" />
@@ -1504,6 +1524,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
           <Parameter Name="BR" Type="int" Mode="In" />
           <Parameter Name="DateVal" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_GetSBPBlotterGetSheduler" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SP_GetSBPBlotterGH" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="GHID" Type="int" Mode="In" />
         </Function>
@@ -1700,19 +1721,16 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
           <Parameter Name="BR" Type="int" Mode="In" />
           <Parameter Name="BID" Type="int" Mode="In" />
         </Function>
-        <Function Name="SP_UpdateBranchBalanceByBranchId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ReconDate" Type="date" Mode="In" />
-          <Parameter Name="ReconInflow" Type="numeric" Mode="In" />
-          <Parameter Name="Recon_OutFLow" Type="numeric" Mode="In" />
-          <Parameter Name="UserID" Type="int" Mode="In" />
-          <Parameter Name="BR" Type="int" Mode="In" />
-          <Parameter Name="BID" Type="int" Mode="In" />
-        </Function>
         <Function Name="SP_UpdateDaysInBlotterReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DTLValue" Type="numeric" Mode="In" />
           <Parameter Name="StartDate" Type="datetime" Mode="In" />
           <Parameter Name="EndDate" Type="datetime" Mode="In" />
           <Parameter Name="BR" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_UpdatedSBPBlotterGetSheduler" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="type" Type="int" Mode="In" />
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="Updated" Type="bit" Mode="In" />
         </Function>
         <Function Name="SP_UpdateHolidays" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="GHID" Type="int" Mode="In" />
@@ -1779,6 +1797,7 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
           <Parameter Name="BlotterType" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="OPICSWEBModelStoreContainer">
+          <EntitySet Name="BlotterSBP_Sheduler" EntityType="Self.BlotterSBP_Sheduler" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Branches" EntityType="Self.Branches" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Currencies" EntityType="Self.Currencies" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GazettedHolidays" EntityType="Self.GazettedHolidays" Schema="dbo" store:Type="Tables" />
@@ -1801,7 +1820,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
           <EntitySet Name="SBP_BlotterOutrights" EntityType="Self.SBP_BlotterOutrights" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterProjection" EntityType="Self.SBP_BlotterProjection" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterReconBreakups" EntityType="Self.SBP_BlotterReconBreakups" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SBP_BlotterReserved" EntityType="Self.SBP_BlotterReserved" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterRTGS" EntityType="Self.SBP_BlotterRTGS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterTBO" EntityType="Self.SBP_BlotterTBO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SBP_BlotterTrade" EntityType="Self.SBP_BlotterTrade" Schema="dbo" store:Type="Tables" />
@@ -1841,6 +1859,24 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
     [SBP_BlotterCRRReportFCY].[BID] AS [BID], 
     [SBP_BlotterCRRReportFCY].[Flag] AS [Flag]
     FROM [dbo].[SBP_BlotterCRRReportFCY] AS [SBP_BlotterCRRReportFCY]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="SBP_BlotterReserved" EntityType="Self.SBP_BlotterReserved" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [SBP_BlotterReserved].[SNo] AS [SNo], 
+    [SBP_BlotterReserved].[Date] AS [Date], 
+    [SBP_BlotterReserved].[CRRFinconID] AS [CRRFinconID], 
+    [SBP_BlotterReserved].[ReservedBalance] AS [ReservedBalance], 
+    [SBP_BlotterReserved].[SBPBalanace] AS [SBPBalanace], 
+    [SBP_BlotterReserved].[BalanceDifference] AS [BalanceDifference], 
+    [SBP_BlotterReserved].[Note] AS [Note], 
+    [SBP_BlotterReserved].[CreateDate] AS [CreateDate], 
+    [SBP_BlotterReserved].[UpdateDate] AS [UpdateDate], 
+    [SBP_BlotterReserved].[UserID] AS [UserID], 
+    [SBP_BlotterReserved].[CurID] AS [CurID], 
+    [SBP_BlotterReserved].[BR] AS [BR], 
+    [SBP_BlotterReserved].[BID] AS [BID], 
+    [SBP_BlotterReserved].[Flag] AS [Flag]
+    FROM [dbo].[SBP_BlotterReserved] AS [SBP_BlotterReserved]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_BlotterCRRFINCON_BranchID" Association="Self.FK_BlotterCRRFINCON_BranchID">
             <End Role="Branches" EntitySet="Branches" />
@@ -3866,20 +3902,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
             <Parameter Name="BR" Mode="In" Type="Int32" />
             <Parameter Name="DateVal" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_InsertBlotterOutright">
-            <Parameter Name="DataType" Mode="In" Type="String" />
-            <Parameter Name="Bank" Mode="In" Type="String" />
-            <Parameter Name="Rate" Mode="In" Type="Double" />
-            <Parameter Name="Issue_Date" Mode="In" Type="DateTime" />
-            <Parameter Name="IssueType" Mode="In" Type="String" />
-            <Parameter Name="Broker" Mode="In" Type="String" />
-            <Parameter Name="InFlow" Mode="In" Type="Decimal" />
-            <Parameter Name="OutFLow" Mode="In" Type="Decimal" />
-            <Parameter Name="Date" Mode="In" Type="DateTime" />
-            <Parameter Name="Note" Mode="In" Type="String" />
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
-            <Parameter Name="BR" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="SP_UpdateBlotterOutright">
             <Parameter Name="id" Mode="In" Type="Int64" />
             <Parameter Name="DataType" Mode="In" Type="String" />
@@ -3894,6 +3916,27 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
             <Parameter Name="Note" Mode="In" Type="String" />
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="BR" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_InsertBlotterOutright">
+            <Parameter Name="DataType" Mode="In" Type="String" />
+            <Parameter Name="Bank" Mode="In" Type="String" />
+            <Parameter Name="Rate" Mode="In" Type="Double" />
+            <Parameter Name="Issue_Date" Mode="In" Type="DateTime" />
+            <Parameter Name="IssueType" Mode="In" Type="String" />
+            <Parameter Name="Broker" Mode="In" Type="String" />
+            <Parameter Name="InFlow" Mode="In" Type="Decimal" />
+            <Parameter Name="OutFLow" Mode="In" Type="Decimal" />
+            <Parameter Name="Date" Mode="In" Type="DateTime" />
+            <Parameter Name="Note" Mode="In" Type="String" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="BR" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_GetSBPBlotterGetSheduler" ReturnType="Collection(BlotterEF.SP_GetSBPBlotterGetSheduler_Result)" />
+          <EntitySet Name="BlotterSBP_Sheduler" EntityType="BlotterEF.BlotterSBP_Sheduler" />
+          <FunctionImport Name="SP_UpdatedSBPBlotterGetSheduler">
+            <Parameter Name="type" Mode="In" Type="Int32" />
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="Updated" Mode="In" Type="Boolean" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_GetAll_SBPBlotterClearing_Result">
@@ -4949,6 +4992,39 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
           <Property Type="DateTime" Name="Date" Nullable="true" />
           <Property Type="Boolean" Name="Status" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="SP_GetSBPBlotterGetSheduler_Result">
+          <Property Type="Int32" Name="SID" Nullable="false" />
+          <Property Type="Boolean" Name="RegTimerStatus" Nullable="true" />
+          <Property Type="String" Name="RegStartTime" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="RegEndTime" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="RegFreq" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="RegIsUpdated" Nullable="true" />
+          <Property Type="Boolean" Name="RegIsRun" Nullable="true" />
+          <Property Type="Boolean" Name="FwdTimerStatus" Nullable="true" />
+          <Property Type="String" Name="FwdStartTime" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="FwdEndTime" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="FwdFreq" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="FwdIsUpdated" Nullable="true" />
+          <Property Type="Boolean" Name="FwdIsRun" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="BlotterSBP_Sheduler">
+          <Key>
+            <PropertyRef Name="SID" />
+          </Key>
+          <Property Name="SID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RegTimerStatus" Type="Boolean" />
+          <Property Name="RegStartTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RegEndTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RegFreq" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RegIsUpdated" Type="Boolean" />
+          <Property Name="RegIsRun" Type="Boolean" />
+          <Property Name="FwdTimerStatus" Type="Boolean" />
+          <Property Name="FwdStartTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FwdEndTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FwdFreq" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FwdIsUpdated" Type="Boolean" />
+          <Property Name="FwdIsRun" Type="Boolean" />
+        </EntityType>
         
       </Schema>
     </edmx:ConceptualModels>
@@ -6651,7 +6727,6 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_UpdateBranchBalanceByBranchId" FunctionName="OPICSWEBModel.Store.SP_UpdateBranchBalanceByBranchId" />
           <EntitySetMapping Name="SBP_BlotterReserved">
             <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterReserved">
               <MappingFragment StoreEntitySet="SBP_BlotterReserved">
@@ -6724,8 +6799,47 @@ warning 6002: The table/view 'OPICSWEB.dbo.SBP_BlotterCRRReportFCY' does not hav
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_InsertBlotterOutright" FunctionName="OPICSWEBModel.Store.SP_InsertBlotterOutright" />
           <FunctionImportMapping FunctionImportName="SP_UpdateBlotterOutright" FunctionName="OPICSWEBModel.Store.SP_UpdateBlotterOutright" />
+          <FunctionImportMapping FunctionImportName="SP_InsertBlotterOutright" FunctionName="OPICSWEBModel.Store.SP_InsertBlotterOutright" />
+          <FunctionImportMapping FunctionImportName="SP_GetSBPBlotterGetSheduler" FunctionName="OPICSWEBModel.Store.SP_GetSBPBlotterGetSheduler">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BlotterEF.SP_GetSBPBlotterGetSheduler_Result">
+                <ScalarProperty Name="SID" ColumnName="SID" />
+                <ScalarProperty Name="RegTimerStatus" ColumnName="RegTimerStatus" />
+                <ScalarProperty Name="RegStartTime" ColumnName="RegStartTime" />
+                <ScalarProperty Name="RegEndTime" ColumnName="RegEndTime" />
+                <ScalarProperty Name="RegFreq" ColumnName="RegFreq" />
+                <ScalarProperty Name="RegIsUpdated" ColumnName="RegIsUpdated" />
+                <ScalarProperty Name="RegIsRun" ColumnName="RegIsRun" />
+                <ScalarProperty Name="FwdTimerStatus" ColumnName="FwdTimerStatus" />
+                <ScalarProperty Name="FwdStartTime" ColumnName="FwdStartTime" />
+                <ScalarProperty Name="FwdEndTime" ColumnName="FwdEndTime" />
+                <ScalarProperty Name="FwdFreq" ColumnName="FwdFreq" />
+                <ScalarProperty Name="FwdIsUpdated" ColumnName="FwdIsUpdated" />
+                <ScalarProperty Name="FwdIsRun" ColumnName="FwdIsRun" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="BlotterSBP_Sheduler">
+            <EntityTypeMapping TypeName="BlotterEF.BlotterSBP_Sheduler">
+              <MappingFragment StoreEntitySet="BlotterSBP_Sheduler">
+                <ScalarProperty Name="FwdIsRun" ColumnName="FwdIsRun" />
+                <ScalarProperty Name="FwdIsUpdated" ColumnName="FwdIsUpdated" />
+                <ScalarProperty Name="FwdFreq" ColumnName="FwdFreq" />
+                <ScalarProperty Name="FwdEndTime" ColumnName="FwdEndTime" />
+                <ScalarProperty Name="FwdStartTime" ColumnName="FwdStartTime" />
+                <ScalarProperty Name="FwdTimerStatus" ColumnName="FwdTimerStatus" />
+                <ScalarProperty Name="RegIsRun" ColumnName="RegIsRun" />
+                <ScalarProperty Name="RegIsUpdated" ColumnName="RegIsUpdated" />
+                <ScalarProperty Name="RegFreq" ColumnName="RegFreq" />
+                <ScalarProperty Name="RegEndTime" ColumnName="RegEndTime" />
+                <ScalarProperty Name="RegStartTime" ColumnName="RegStartTime" />
+                <ScalarProperty Name="RegTimerStatus" ColumnName="RegTimerStatus" />
+                <ScalarProperty Name="SID" ColumnName="SID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_UpdatedSBPBlotterGetSheduler" FunctionName="OPICSWEBModel.Store.SP_UpdatedSBPBlotterGetSheduler" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

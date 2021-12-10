@@ -87,6 +87,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BlotterEF.edmx</DependentUpon>
     </Compile>
+    <Compile Include="BlotterSBP_Sheduler.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="Branches.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
@@ -291,6 +294,9 @@
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_GetSBPBlotterFR_Result.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SP_GetSBPBlotterGetSheduler_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_GetSBPBlotterGH_Result.cs">

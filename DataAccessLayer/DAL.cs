@@ -336,6 +336,16 @@ namespace DataAccessLayer
             }
         }
 
+         public static void IsUpdateSheduler(int type)
+        {
+            try
+            {
+                DbContextB.SP_UpdatedSBPBlotterGetSheduler(type, 1, false);
+            }
+            catch (Exception ex)
+            {
+            }
+        }
         //*****************************************************
         //GazettedHolidays Producers
         //*****************************************************
@@ -432,7 +442,16 @@ namespace DataAccessLayer
         //CRRFINCON Producers
         //*****************************************************
 
+        public static List<SP_GetSBPBlotterGetSheduler_Result> GetAllBlotterShedular()
+        {
+            
+            return DbContextB.SP_GetSBPBlotterGetSheduler().ToList();
+        }
 
+        public static BlotterSBP_Sheduler GetBlotterShedularID(int SID)
+        {
+            return DbContextB.BlotterSBP_Sheduler.Where(p => p.SID == SID).FirstOrDefault();
+        }
         public static List<SP_GetSBPBlotterCRRFINCON_Result> GetAllBlotterCRRFINCON(int UserID, int BranchID, int CurID, int BR, string StartDate, string EndDate)
         {
             var CurrentDate = DateTime.Now;
@@ -1209,7 +1228,50 @@ namespace DataAccessLayer
             }
             return status;
         }
+        public static bool UpdateSheduler(BlotterSBP_Sheduler blotterSheduler)
+        {
+            bool status;
+            try
+            {
+                //List<SBP_BlotterClearing> GetCount = DbContextB.SBP_BlotterClearing.Where(p => p.SNo != ClearingItem.SNo && p.TTID == ClearingItem.TTID && p.Clearing_Date == ClearingItem.Clearing_Date).ToList();
+                //if (GetCount.Count > 0)
+                //{
+                //    status = false;
+                //}
+                //else
+                //{
+                BlotterSBP_Sheduler CLRItems = DbContextB.BlotterSBP_Sheduler.Where(p => p.SID == blotterSheduler.SID).FirstOrDefault();
+                if (CLRItems != null)
+                {
 
+                   
+                    CLRItems.RegTimerStatus = blotterSheduler.RegTimerStatus;
+                    CLRItems.RegStartTime = blotterSheduler.RegStartTime;
+                    CLRItems.RegEndTime = blotterSheduler.RegEndTime;
+                    CLRItems.RegFreq = blotterSheduler.RegFreq;
+                    CLRItems.RegIsUpdated = blotterSheduler.RegIsUpdated;
+                    CLRItems.RegIsRun = blotterSheduler.RegIsRun;
+                    CLRItems.FwdTimerStatus = blotterSheduler.FwdTimerStatus;
+                    CLRItems.FwdStartTime = blotterSheduler.FwdStartTime;
+                    CLRItems.FwdEndTime = blotterSheduler.FwdEndTime;
+                    CLRItems.FwdFreq = blotterSheduler.FwdFreq;
+                    CLRItems.FwdIsUpdated = blotterSheduler.FwdIsUpdated;
+                    CLRItems.FwdIsRun = blotterSheduler.FwdIsRun;
+
+
+
+                    DbContextB.SaveChanges();
+                }
+
+                status = true;
+                //}
+            }
+            catch (Exception ex)
+            {
+                status = false;
+            }
+            return status;
+        }
         public static bool UpdateClearing(SBP_BlotterClearing ClearingItem)
         {
             bool status;

@@ -136,6 +136,7 @@
     <Compile Include="Controllers\BlotterBai_MuajjalController.cs" />
     <Compile Include="Controllers\BlotterBalanceDIfferentialController.cs" />
     <Compile Include="Controllers\BlotterBreakupsController.cs" />
+    <Compile Include="Controllers\BlotterShedulerController.cs" />
     <Compile Include="Controllers\BlotterCRRReportCalcController.cs" />
     <Compile Include="Controllers\BlotterClearingController.cs" />
     <Compile Include="Controllers\BlotterController.cs" />
@@ -169,6 +170,7 @@
     <Compile Include="Models\BlotterRSFTT.cs" />
     <Compile Include="Models\GazettedHoliday.cs" />
     <Compile Include="Models\IssueTypeTitles.cs" />
+    <Compile Include="Models\BlotterSBP_Sheduler.cs" />
     <Compile Include="Models\SBP_BlotterCRRReportCalcSetup.cs" />
     <Compile Include="Models\SBP_BlotterCRRFINCONPeriods.cs" />
     <Compile Include="Models\SBP_BlotterOutRight.cs" />
@@ -210,6 +212,7 @@
     <Compile Include="Models\SP_FXBlotter_Result.cs" />
     <Compile Include="Models\SP_GetAllUserPageRelations_Result.cs" />
     <Compile Include="Models\sp_GetAllUsers_Result.cs" />
+    <Compile Include="Models\SP_GetSBPBlotterGetSheduler_Result.cs" />
     <Compile Include="Models\SP_GetAll_SBPBlotterClearing_Dashboard_Result.cs" />
     <Compile Include="Models\SP_GETAll_MAX_BlotterCRRReportCalcSetup_Result.cs" />
     <Compile Include="Models\SP_GetAll_SBPBlotterClearing_Result.cs" />
@@ -256,6 +259,7 @@
     <Compile Include="Repository\EntityMapperBlotterBai_Muajjal.cs" />
     <Compile Include="Repository\EntityMapperBlotterBreakups.cs" />
     <Compile Include="Repository\EntityMappeBlotterCRRReportCalcSetup.cs" />
+    <Compile Include="Repository\EntityMapperBlotterSheduler.cs" />
     <Compile Include="Repository\EntityMapperBlotterFCY.cs" />
     <Compile Include="Repository\EntityMapperBlotterFundsTransfer.cs" />
     <Compile Include="Repository\EntityMapperBlotterOpenBal.cs" />
@@ -278,6 +282,7 @@
     <Compile Include="Repository\EntityMapperUsersProfile.cs" />
     <Compile Include="Repository\EntityMapperWebPages.cs" />
     <Compile Include="TimerClass\FillFwdDumpBlotter.cs" />
+    <Compile Include="TimerClass\scheduler.cs" />
     <Compile Include="TimerClass\FillRegDumpBlotter.cs" />
   </ItemGroup>
   <ItemGroup>

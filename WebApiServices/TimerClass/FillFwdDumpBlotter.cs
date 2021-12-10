@@ -11,12 +11,12 @@ namespace WebApiServices.TimerClass
     public class FillFwdDumpBlotter
     {
         private static System.Timers.Timer aTimer;
-        private static bool status = Convert.ToBoolean(ConfigurationManager.AppSettings["FwdTimerStatus"]);
-        private static DateTime start = Convert.ToDateTime(ConfigurationManager.AppSettings["FwdStartTime"]);
-        private static DateTime end = Convert.ToDateTime(ConfigurationManager.AppSettings["FwdEndTime"]);
-        private static string Freq = ConfigurationManager.AppSettings["FwdFreq"];
-        private static int FreqMinutes = Convert.ToInt32(Freq.Split(':')[0]);
-        private static int FreqSeconds = Convert.ToInt32(Freq.Split(':')[1]);
+        public static bool status ;
+        public static DateTime start ;
+        public static DateTime end;
+        public static string Freq ;
+        public static int FreqMinutes;
+        public static int FreqSeconds;
         public static void Start()
         {
 
