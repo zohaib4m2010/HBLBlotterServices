@@ -10,7 +10,6 @@
         <EntityTypeShape EntityType="BlotterEF.GazettedHoliday" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BlotterEF.NostroBank" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BlotterEF.SBP_BlotterBai_Muajjal" Width="1.5" PointX="3" PointY="39.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="BlotterEF.SBP_BlotterBranchBalances" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BlotterEF.SBP_BlotterBreakups" Width="1.5" PointX="6" PointY="38.125" IsExpanded="true" />
         <EntityTypeShape EntityType="BlotterEF.SBP_BlotterClearing" Width="1.5" PointX="3" PointY="33.375" IsExpanded="true" />
         <EntityTypeShape EntityType="BlotterEF.SBP_BlotterCRD" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
@@ -77,9 +76,6 @@
         <AssociationConnector Association="BlotterEF.FK_SBP_BlotterManualEstBalance_BranchID" />
         <AssociationConnector Association="BlotterEF.FK_SBP_SBP_BlotterManualEstBalance_CurID" />
         <AssociationConnector Association="BlotterEF.FK_SBP_BlotterManualEstBalance_UserID" />
-        <AssociationConnector Association="BlotterEF.FK_SBP_BlotterBranchBalances_BranchID" />
-        <AssociationConnector Association="BlotterEF.FK_SBP_BlotterBranchBalances_CurID" />
-        <AssociationConnector Association="BlotterEF.FK_SBP_BlotterBranchBalances_UserID" />
         <EntityTypeShape EntityType="BlotterEF.SBP_BlotterManualData" Width="1.5" PointX="11.375" PointY="27.125" />
         <AssociationConnector Association="BlotterEF.FK_SBP_BlotterManualData_CurID1" />
         <AssociationConnector Association="BlotterEF.FK_SBP_BlotterManualData_UserID1" />
@@ -92,6 +88,7 @@
         <EntityTypeShape EntityType="BlotterEF.SBP_BlotterCRRReportCalcSetup" Width="1.5" PointX="3.375" PointY="45.375" />
         <AssociationConnector Association="BlotterEF.FK_SBP_BlotterCRRReportCalcSetup_UserID" />
         <EntityTypeShape EntityType="BlotterEF.SBP_BlotterReserved" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="BlotterEF.BlotterSBP_Sheduler" Width="1.5" PointX="0.75" PointY="10.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

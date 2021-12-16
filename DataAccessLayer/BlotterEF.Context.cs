@@ -32,7 +32,6 @@ namespace DataAccessLayer
         public virtual DbSet<GazettedHoliday> GazettedHolidays { get; set; }
         public virtual DbSet<NostroBank> NostroBanks { get; set; }
         public virtual DbSet<SBP_BlotterBai_Muajjal> SBP_BlotterBai_Muajjal { get; set; }
-        public virtual DbSet<SBP_BlotterBranchBalances> SBP_BlotterBranchBalances { get; set; }
         public virtual DbSet<SBP_BlotterBreakups> SBP_BlotterBreakups { get; set; }
         public virtual DbSet<SBP_BlotterClearing> SBP_BlotterClearing { get; set; }
         public virtual DbSet<SBP_BlotterCRD> SBP_BlotterCRD { get; set; }
@@ -62,6 +61,7 @@ namespace DataAccessLayer
         public virtual DbSet<SBP_BlotterProjection> SBP_BlotterProjection { get; set; }
         public virtual DbSet<SBP_BlotterCRRReportCalcSetup> SBP_BlotterCRRReportCalcSetup { get; set; }
         public virtual DbSet<SBP_BlotterReserved> SBP_BlotterReserved { get; set; }
+        public virtual DbSet<BlotterSBP_Sheduler> BlotterSBP_Sheduler { get; set; }
     
         public virtual int SP_ADD_ActivityMonitor(string pSessionID, Nullable<int> pUserID, string pIP, string pLoginGUID, string pData, string pActivity, string pURL)
         {
@@ -347,19 +347,6 @@ namespace DataAccessLayer
         public virtual ObjectResult<SP_GETAllRECONBreakupsTransactionTitles_Result> SP_GETAllRECONBreakupsTransactionTitles()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GETAllRECONBreakupsTransactionTitles_Result>("SP_GETAllRECONBreakupsTransactionTitles");
-        }
-    
-        public virtual ObjectResult<SP_GetAllRsfTTTBO_Result> SP_GetAllRsfTTTBO(Nullable<int> bR, Nullable<System.DateTime> curDate)
-        {
-            var bRParameter = bR.HasValue ?
-                new ObjectParameter("BR", bR) :
-                new ObjectParameter("BR", typeof(int));
-    
-            var curDateParameter = curDate.HasValue ?
-                new ObjectParameter("CurDate", curDate) :
-                new ObjectParameter("CurDate", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetAllRsfTTTBO_Result>("SP_GetAllRsfTTTBO", bRParameter, curDateParameter);
         }
     
         public virtual ObjectResult<SP_GETAllRTGSTransactionTitles_Result> SP_GETAllRTGSTransactionTitles()
@@ -1043,7 +1030,7 @@ namespace DataAccessLayer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_UpdateLoginInfo", idParameter, userNameParameter, passwordParameter, contactNoParameter, emailParameter, branchIDParameter, departmentParameter, isActiveParameter, isConventionalParameter, isislamicParameter, createDateParameter, blotterTypeParameter, uRIDParameter);
         }
     
-        public virtual ObjectResult<SP_UpdateOpeningBalance_Result> SP_UpdateOpeningBalance(Nullable<long> id, Nullable<decimal> openBalActual, Nullable<decimal> adjOpenBal, Nullable<System.DateTime> balDate, string dataType, Nullable<int> userID, Nullable<System.DateTime> createDate, Nullable<System.DateTime> updateDate, Nullable<int> bR, Nullable<int> bID, Nullable<int> curID, string flag, Nullable<decimal> estimatedOpenBal)
+        public virtual int SP_UpdateOpeningBalance(Nullable<long> id, Nullable<decimal> openBalActual, Nullable<decimal> adjOpenBal, Nullable<System.DateTime> balDate, string dataType, Nullable<int> userID, Nullable<System.DateTime> createDate, Nullable<System.DateTime> updateDate, Nullable<int> bR, Nullable<int> bID, Nullable<int> curID, string flag, Nullable<decimal> estimatedOpenBal)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("Id", id) :
@@ -1097,7 +1084,7 @@ namespace DataAccessLayer
                 new ObjectParameter("EstimatedOpenBal", estimatedOpenBal) :
                 new ObjectParameter("EstimatedOpenBal", typeof(decimal));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_UpdateOpeningBalance_Result>("SP_UpdateOpeningBalance", idParameter, openBalActualParameter, adjOpenBalParameter, balDateParameter, dataTypeParameter, userIDParameter, createDateParameter, updateDateParameter, bRParameter, bIDParameter, curIDParameter, flagParameter, estimatedOpenBalParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_UpdateOpeningBalance", idParameter, openBalActualParameter, adjOpenBalParameter, balDateParameter, dataTypeParameter, userIDParameter, createDateParameter, updateDateParameter, bRParameter, bIDParameter, curIDParameter, flagParameter, estimatedOpenBalParameter);
         }
     
         public virtual ObjectResult<Nullable<bool>> SP_UpdateUserPassword(Nullable<int> userId, string oldPassword, string newPassword)
@@ -1857,6 +1844,103 @@ namespace DataAccessLayer
                 new ObjectParameter("BR", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_UpdateBlotterOutright", idParameter, dataTypeParameter, bankParameter, rateParameter, issue_DateParameter, issueTypeParameter, brokerParameter, inFlowParameter, outFLowParameter, dateParameter, noteParameter, userIDParameter, bRParameter);
+        }
+    
+        public virtual ObjectResult<SP_GetSBPBlotterGetSheduler_Result> SP_GetSBPBlotterGetSheduler()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetSBPBlotterGetSheduler_Result>("SP_GetSBPBlotterGetSheduler");
+        }
+    
+        public virtual int SP_UpdatedSBPBlotterGetSheduler(Nullable<int> type, Nullable<int> id, Nullable<bool> updated)
+        {
+            var typeParameter = type.HasValue ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(int));
+    
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var updatedParameter = updated.HasValue ?
+                new ObjectParameter("Updated", updated) :
+                new ObjectParameter("Updated", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_UpdatedSBPBlotterGetSheduler", typeParameter, idParameter, updatedParameter);
+        }
+    
+        public virtual ObjectResult<SP_GetAllRsfTTTBO_Result> SP_GetAllRsfTTTBO(Nullable<int> bR, Nullable<System.DateTime> date)
+        {
+            var bRParameter = bR.HasValue ?
+                new ObjectParameter("BR", bR) :
+                new ObjectParameter("BR", typeof(int));
+    
+            var dateParameter = date.HasValue ?
+                new ObjectParameter("Date", date) :
+                new ObjectParameter("Date", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetAllRsfTTTBO_Result>("SP_GetAllRsfTTTBO", bRParameter, dateParameter);
+        }
+    
+        public virtual int SP_UpdateBlotterSBP_Sheduler(Nullable<int> sID, Nullable<bool> regTimerStatus, string regStartTime, string regEndTime, string regFreq, Nullable<bool> regIsUpdated, Nullable<bool> regIsRun, Nullable<bool> fwdTimerStatus, string fwdStartTime, string fwdEndTime, string fwdFreq, Nullable<bool> fwdIsUpdated, Nullable<bool> fwdIsRun)
+        {
+            var sIDParameter = sID.HasValue ?
+                new ObjectParameter("SID", sID) :
+                new ObjectParameter("SID", typeof(int));
+    
+            var regTimerStatusParameter = regTimerStatus.HasValue ?
+                new ObjectParameter("RegTimerStatus", regTimerStatus) :
+                new ObjectParameter("RegTimerStatus", typeof(bool));
+    
+            var regStartTimeParameter = regStartTime != null ?
+                new ObjectParameter("RegStartTime", regStartTime) :
+                new ObjectParameter("RegStartTime", typeof(string));
+    
+            var regEndTimeParameter = regEndTime != null ?
+                new ObjectParameter("RegEndTime", regEndTime) :
+                new ObjectParameter("RegEndTime", typeof(string));
+    
+            var regFreqParameter = regFreq != null ?
+                new ObjectParameter("RegFreq", regFreq) :
+                new ObjectParameter("RegFreq", typeof(string));
+    
+            var regIsUpdatedParameter = regIsUpdated.HasValue ?
+                new ObjectParameter("RegIsUpdated", regIsUpdated) :
+                new ObjectParameter("RegIsUpdated", typeof(bool));
+    
+            var regIsRunParameter = regIsRun.HasValue ?
+                new ObjectParameter("RegIsRun", regIsRun) :
+                new ObjectParameter("RegIsRun", typeof(bool));
+    
+            var fwdTimerStatusParameter = fwdTimerStatus.HasValue ?
+                new ObjectParameter("FwdTimerStatus", fwdTimerStatus) :
+                new ObjectParameter("FwdTimerStatus", typeof(bool));
+    
+            var fwdStartTimeParameter = fwdStartTime != null ?
+                new ObjectParameter("FwdStartTime", fwdStartTime) :
+                new ObjectParameter("FwdStartTime", typeof(string));
+    
+            var fwdEndTimeParameter = fwdEndTime != null ?
+                new ObjectParameter("FwdEndTime", fwdEndTime) :
+                new ObjectParameter("FwdEndTime", typeof(string));
+    
+            var fwdFreqParameter = fwdFreq != null ?
+                new ObjectParameter("FwdFreq", fwdFreq) :
+                new ObjectParameter("FwdFreq", typeof(string));
+    
+            var fwdIsUpdatedParameter = fwdIsUpdated.HasValue ?
+                new ObjectParameter("FwdIsUpdated", fwdIsUpdated) :
+                new ObjectParameter("FwdIsUpdated", typeof(bool));
+    
+            var fwdIsRunParameter = fwdIsRun.HasValue ?
+                new ObjectParameter("FwdIsRun", fwdIsRun) :
+                new ObjectParameter("FwdIsRun", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_UpdateBlotterSBP_Sheduler", sIDParameter, regTimerStatusParameter, regStartTimeParameter, regEndTimeParameter, regFreqParameter, regIsUpdatedParameter, regIsRunParameter, fwdTimerStatusParameter, fwdStartTimeParameter, fwdEndTimeParameter, fwdFreqParameter, fwdIsUpdatedParameter, fwdIsRunParameter);
+        }
+    
+        public virtual int SP_TemporyLoop()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_TemporyLoop");
         }
     }
 }

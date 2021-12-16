@@ -12,15 +12,14 @@ namespace WebApiServices
     {
         protected void Application_Start()
         {
-            FillRegDumpBlotter.Start();
-            FillFwdDumpBlotter.Start();
+            scheduler.Start();
             GlobalConfiguration.Configure(WebApiConfig.Register);
         }
 
-        protected void Application_End() {
-            FillRegDumpBlotter.Stop();
-            FillFwdDumpBlotter.Stop();
+        protected void Application_End()
+        {
+            scheduler.Stop();
         }
-     
+
     }
 }

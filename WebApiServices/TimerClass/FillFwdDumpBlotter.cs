@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Reflection;
 using System.Timers;
 using System.Web;
 
@@ -10,13 +11,13 @@ namespace WebApiServices.TimerClass
 {
     public class FillFwdDumpBlotter
     {
-        private static System.Timers.Timer aTimer;
-        private static bool status = Convert.ToBoolean(ConfigurationManager.AppSettings["FwdTimerStatus"]);
-        private static DateTime start = Convert.ToDateTime(ConfigurationManager.AppSettings["FwdStartTime"]);
-        private static DateTime end = Convert.ToDateTime(ConfigurationManager.AppSettings["FwdEndTime"]);
-        private static string Freq = ConfigurationManager.AppSettings["FwdFreq"];
-        private static int FreqMinutes = Convert.ToInt32(Freq.Split(':')[0]);
-        private static int FreqSeconds = Convert.ToInt32(Freq.Split(':')[1]);
+        public static System.Timers.Timer FwdTimer=new Timer();
+        public static bool status;
+        public static DateTime start;
+        public static DateTime end;
+        public static string Freq;
+        public static int FreqMinutes;
+        public static int FreqSeconds;
         public static void Start()
         {
 
@@ -27,7 +28,7 @@ namespace WebApiServices.TimerClass
                 {
                     //DAL.TESTRECONTEST("Start after Status");
                     SetTimer();
-                    aTimer.Start();
+                    FwdTimer.Start();
                 }
                 catch (Exception ex) {
                     //DAL.TESTRECONTEST(ex.Message.ToString());
@@ -37,8 +38,8 @@ namespace WebApiServices.TimerClass
         }
         public static void Stop()
         {
-            aTimer.Stop();
-            aTimer.Dispose();
+            FwdTimer.Stop();
+            FwdTimer.Dispose();
         }
         private static void SetTimer()
         {
@@ -46,18 +47,18 @@ namespace WebApiServices.TimerClass
             {
                 //DAL.TESTRECONTEST("SetTimer");
                 // Create a timer with a two second interval.
-                aTimer = new System.Timers.Timer();
+                FwdTimer = new System.Timers.Timer();
                 // Hook up the Elapsed event for the timer. 
-                aTimer.Elapsed += OnTimedEvent;
+                FwdTimer.Elapsed += OnTimedEvent;
                 if (FreqMinutes > 0)
-                    aTimer.Interval = 1000 * 60 * FreqMinutes;
+                    FwdTimer.Interval = 1000 * 60 * FreqMinutes;
                 else
                     if (FreqSeconds > 0)
-                    aTimer.Interval = 1000 * FreqSeconds;
+                    FwdTimer.Interval = 1000 * FreqSeconds;
                 else
-                    aTimer.Interval = 1000 * 60 * 60;
-                aTimer.AutoReset = true;
-                aTimer.Enabled = true;
+                    FwdTimer.Interval = 1000 * 60 * 60;
+                FwdTimer.AutoReset = true;
+                FwdTimer.Enabled = true;
 
             }
             catch (Exception ex)
@@ -72,12 +73,15 @@ namespace WebApiServices.TimerClass
             //DAL.TESTRECONTEST("OnTimedEvent");
             if (DateTime.Now.ToLocalTime() >= start && DateTime.Now.ToLocalTime() <= end)
             {
+                Utilities.WriteLogs(MethodBase.GetCurrentMethod().Name, "Fwd Dump Started", "");
                 //DAL.TESTRECONTEST("OnTimedEvent if condition true");
                 DAL.FillFwdDumBlotterBR1();
                 DAL.FillFwdDumBlotterBR2();
             }
             else
             {
+                FwdTimer.Stop();
+                FwdTimer.Dispose();
                 //DAL.TESTRECONTEST("OnTimedEvent if condition false");
             }
         }

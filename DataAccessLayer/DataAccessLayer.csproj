@@ -43,6 +43,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -87,6 +88,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BlotterEF.edmx</DependentUpon>
     </Compile>
+    <Compile Include="BlotterSBP_Sheduler.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="Branches.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
@@ -105,9 +109,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SBP_BlotterBai_Muajjal.cs">
-      <DependentUpon>BlotterEF.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SBP_BlotterBranchBalances.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="SBP_BlotterBreakups.cs">
@@ -293,6 +294,9 @@
     <Compile Include="SP_GetSBPBlotterFR_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="SP_GetSBPBlotterGetSheduler_Result.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="SP_GetSBPBlotterGH_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
@@ -339,9 +343,6 @@
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_SBPGetLoginInfo_Result.cs">
-      <DependentUpon>BlotterEF.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SP_UpdateOpeningBalance_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
     <Compile Include="UserPageRelation.cs">

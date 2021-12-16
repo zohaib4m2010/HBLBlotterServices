@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,34 +19,102 @@ namespace DataAccessLayer
             DbContextB = new BlotterEntity();
 
         }
+        private static string fileLocation = ConfigurationManager.AppSettings.Get("DALLogFileLocation");
+        private static void WriteLogs(string method, string message, string innermessage)
+        {
+            try
+            {
+                if (!Directory.Exists(fileLocation))
+                {
+                    Directory.CreateDirectory(fileLocation);
+                }
+                //Pass the filepath and filename to the StreamWriter Constructor
+                using (StreamWriter sw = new StreamWriter((fileLocation+ "\\Logs_" + DateTime.Now.ToString("yyyyyddMM") + ".txt"), append: true))
+                {
+                    sw.WriteLine("Method | " + method);
+                    sw.WriteLine("Time | " + DateTime.Now.ToString("HH:mm:ss"));
+                    sw.WriteLine("Message | " + message);
+                    sw.WriteLine("InnerMessage | " + innermessage);
+                    sw.WriteLine("=========================================================================================================================================================================================");
+                    //Close the file
+                    sw.Close();
+                }
+            }
+            catch (Exception e)
+            {
+            }
+            finally
+            {
+            }
+        }
+        
         public static List<SP_SBPBlotter_Result> GetAllBlotterData(String Br, String DataType, String CurrentDate,bool LoadData)
         {
-            if (LoadData)
-                DbContextB.SP_SBPFillDumBlotter(Convert.ToDateTime(CurrentDate), Convert.ToInt32(Br));
-
-            var results = DbContextB.SP_SBPBlotter(Br, DataType,Convert.ToDateTime(CurrentDate)).ToList();
+            List<SP_SBPBlotter_Result> results = null;
+            try
+            {
+                if (LoadData)
+                    DbContextB.SP_SBPFillDumBlotter(Convert.ToDateTime(CurrentDate), Convert.ToInt32(Br));
+                results = DbContextB.SP_SBPBlotter(Br, DataType, Convert.ToDateTime(CurrentDate)).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
             return results;
         }
 
         public static List<SP_GETLatestBlotterDTLReportDayWise_Result> GetLatestBlotterDTLDayWise(int BR, string StartDate, string EndDate)
         {
-            var results = DbContextB.SP_GETLatestBlotterDTLReportDayWise(BR,StartDate,EndDate).ToList();
+            List<SP_GETLatestBlotterDTLReportDayWise_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GETLatestBlotterDTLReportDayWise(BR, StartDate, EndDate).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
             return results;
         }
         public static List<SP_GETLatestBlotterDTLPerDayWise_Result> GetLatestBlotterDTLPerDayWise(int BR, string StartDate)
         {
-            var results = DbContextB.SP_GETLatestBlotterDTLPerDayWise(BR, StartDate).ToList();
+            List<SP_GETLatestBlotterDTLPerDayWise_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GETLatestBlotterDTLPerDayWise(BR, StartDate).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
             return results;
         }
         public static SP_GETLatestBlotterDTLReportForToday_Result GetLatestBlotterDTLForToday(int BR)
         {
-            var results = DbContextB.SP_GETLatestBlotterDTLReportForToday(BR).FirstOrDefault();
+            SP_GETLatestBlotterDTLReportForToday_Result results = null;
+            try
+            {
+                results = DbContextB.SP_GETLatestBlotterDTLReportForToday(BR).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
             return results;
         }
 
         public static List<SP_GetOPICSManualData_Result> GetOPICSManualData(int BR, DateTime Date,string Flag)
         {
-            var results = DbContextB.SP_GetOPICSManualData(BR, Date,Flag).ToList();
+            List<SP_GetOPICSManualData_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GetOPICSManualData(BR, Date, Flag).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
             return results;
         }
 
@@ -51,18 +122,51 @@ namespace DataAccessLayer
 
         public static SP_GetOpeningBalance_Result GetOpeningBalance(int BR,DateTime Date)
         {
-            //var results = DbContextB.SP_GetOpeningBalance(BR ,DateTime.Now.AddDays(-38)).FirstOrDefault();
-            var results = DbContextB.SP_GetOpeningBalance(BR, Date).FirstOrDefault();
+            SP_GetOpeningBalance_Result results = null;
+            try
+            {
+                results = DbContextB.SP_GetOpeningBalance(BR, Date).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
             return results;
         }
 
         public static List<SP_ReconcileOPICSManualData_Result> ReconcileOPICSManualData(int BR, DateTime Date)
         {
-            var results = DbContextB.SP_ReconcileOPICSManualData(BR, Date).ToList();
+            List<SP_ReconcileOPICSManualData_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_ReconcileOPICSManualData(BR, Date).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
             return results;
         }
 
 
+        public static bool UpdateSheduler(BlotterSBP_Sheduler blotterSheduler)
+        {
+            bool status;
+            try
+            {
+                DbContextB.SP_UpdateBlotterSBP_Sheduler(blotterSheduler.SID, blotterSheduler.RegTimerStatus, blotterSheduler.RegStartTime, blotterSheduler.RegEndTime, blotterSheduler.RegFreq, blotterSheduler.RegIsUpdated, blotterSheduler.RegIsRun, blotterSheduler.FwdTimerStatus, blotterSheduler.FwdStartTime, blotterSheduler.FwdEndTime, blotterSheduler.FwdFreq, blotterSheduler.FwdIsUpdated, blotterSheduler.FwdIsRun);
+                
+
+                status = true;
+                //}
+            }
+            catch (Exception ex)
+            {
+                status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return status;
+        }
 
         //*****************************************************
         //Blotter Projection Producers
@@ -70,11 +174,29 @@ namespace DataAccessLayer
 
         public static List<SP_GetSBP_Projection_Result> GetAllBlotterProjection(int UserID, int BranchID, int BR, string DateVal)
         {
-            return DbContextB.SP_GetSBP_Projection(UserID, BranchID, BR, DateVal).ToList();
+            List<SP_GetSBP_Projection_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GetSBP_Projection(UserID, BranchID, BR, DateVal).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static SBP_BlotterProjection GetProjectionItem(int projId)
         {
-            return DbContextB.SBP_BlotterProjection.Where(p => p.SNO == projId).FirstOrDefault();
+            SBP_BlotterProjection results = null;
+            try
+            {
+                results = DbContextB.SBP_BlotterProjection.Where(p => p.SNO == projId).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
 
         public static bool InsertProjection(SBP_BlotterProjection ProjItem)
@@ -89,8 +211,8 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message.ToString());
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -123,6 +245,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -143,6 +266,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -153,22 +277,55 @@ namespace DataAccessLayer
         //*****************************************************
         public static List<SP_GETAllRECONBreakupsTransactionTitles_Result> GetAllReconBreakupsTransactionTitles()
         {
-            var results = DbContextB.SP_GETAllRECONBreakupsTransactionTitles().ToList();
+            List<SP_GETAllRECONBreakupsTransactionTitles_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GETAllRECONBreakupsTransactionTitles().ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
             return results;
         }
         public static SBP_BlotterReconBreakups GetRBItem(int id)
         {
-            return DbContextB.SBP_BlotterReconBreakups.Where(p => p.SNo == id).FirstOrDefault();
+            SBP_BlotterReconBreakups results = null;
+            try
+            {
+                results = DbContextB.SBP_BlotterReconBreakups.Where(p => p.SNo == id).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static List<SP_GetAll_SBPBlotterReconBreakups_Result> GetAllBlotterReconBreakups(int UserID, int BranchID, int CurID, int BR, string DateVal)
         {
-            var results = DbContextB.SP_GetAll_SBPBlotterReconBreakups(UserID, BranchID, CurID, BR, DateVal).ToList();
+            List<SP_GetAll_SBPBlotterReconBreakups_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GetAll_SBPBlotterReconBreakups(UserID, BranchID, CurID, BR, DateVal).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
             return results;
         }
 
         public static List<SP_GetAll_SBPBlotterReconBreakups_Dashboard_Result> GetAllBlotterReconBreakupsDashBoard(int UserID, int BranchID, int CurID, int BR, string DateVal)
         {
-            var results = DbContextB.SP_GetAll_SBPBlotterReconBreakups_Dashboard(UserID, BranchID, CurID, BR, DateVal).ToList();
+            List<SP_GetAll_SBPBlotterReconBreakups_Dashboard_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GetAll_SBPBlotterReconBreakups_Dashboard(UserID, BranchID, CurID, BR, DateVal).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
             return results;
         }
         public static bool InsertReconBreakups(SBP_BlotterReconBreakups RBItem)
@@ -183,8 +340,8 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message.ToString());
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -201,8 +358,8 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message.ToString());
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -219,8 +376,8 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message.ToString());
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -241,6 +398,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -252,15 +410,42 @@ namespace DataAccessLayer
 
         public static List<SP_GetSBPBlotterOutRright_Result> GetAllBlotterOutRight(int UserID, int BranchID, int CurID, int BR, string DateVal)
         {
-            return DbContextB.SP_GetSBPBlotterOutRright( BR, DateVal).ToList();
+            List<SP_GetSBPBlotterOutRright_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GetSBPBlotterOutRright(BR, DateVal).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static List<SP_GetSBPBlotterOutRrightAuto_Result> GetAllBlotterOutRightAuto(int UserID, int BranchID, int CurID, int BR, string DateVal)
         {
-            return DbContextB.SP_GetSBPBlotterOutRrightAuto(BR, DateVal).ToList();
+            List<SP_GetSBPBlotterOutRrightAuto_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GetSBPBlotterOutRrightAuto(BR, DateVal).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static SBP_BlotterOutrights GetSBP_BlotterOutRightById(int OutRightId)
         {
-            return DbContextB.SBP_BlotterOutrights.Where(p => p.SNo == OutRightId).FirstOrDefault();
+            SBP_BlotterOutrights results = null;
+            try
+            {
+                results = DbContextB.SBP_BlotterOutrights.Where(p => p.SNo == OutRightId).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
 
         public static bool InsertOutRight(SBP_BlotterOutrights OutRightIdItem)
@@ -273,8 +458,8 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message.ToString());
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -290,6 +475,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -306,6 +492,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -315,14 +502,26 @@ namespace DataAccessLayer
         //*****************************************************
 
 
-
+        public static void SP_TemporyLoop()
+        {
+            try
+            {
+                DbContextB.SP_TemporyLoop();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+        }
         public static void FillFwdDumBlotterBR1()
         {
             try
             {
                 DbContextB.SP_ReconcileOPICSManualDataFwd(1, DateTime.Now, true);
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
         }
         public static void FillFwdDumBlotterBR2()
@@ -333,6 +532,18 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+        }
+        public static void IsUpdateSheduler(int type)
+        {
+            try
+            {
+                DbContextB.SP_UpdatedSBPBlotterGetSheduler(type, 1, false);
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
         }
 
@@ -342,12 +553,29 @@ namespace DataAccessLayer
 
         public static List<SP_GetSBPBlotterGH_Result> GetAllBlotterGH()
         {
-            var CurrentDate = DateTime.Now;
-            return DbContextB.SP_GetSBPBlotterGH(null).ToList();
+            List<SP_GetSBPBlotterGH_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GetSBPBlotterGH(null).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static SP_GetSBPBlotterGH_Result GetGHItem(int GHId)
         {
-            return DbContextB.SP_GetSBPBlotterGH(GHId).FirstOrDefault();
+            SP_GetSBPBlotterGH_Result results = null;
+            try
+            {
+                results = DbContextB.SP_GetSBPBlotterGH(GHId).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
 
         public static bool InsertGH(string HolidayTitle,string GHDescription,DateTime GHDate, int UserID)
@@ -360,8 +588,9 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message.ToString());
+
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -378,6 +607,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -393,6 +623,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -405,8 +636,8 @@ namespace DataAccessLayer
         {
             try
             {
-                DbContextB.SP_SBPFillDumBlotter(DateTime.Now,1);
-                DbContextB.SP_ReconcileOPICSManualDataFwd(2, DateTime.Now, false);
+               // DbContextB.SP_SBPFillDumBlotter(DateTime.Now,1);
+                DbContextB.SP_ReconcileOPICSManualData(1, DateTime.Now);
             }
             catch (Exception ex)
             {
@@ -416,8 +647,8 @@ namespace DataAccessLayer
         {
             try
             {
-                DbContextB.SP_SBPFillDumBlotter(DateTime.Now, 2);
-                DbContextB.SP_ReconcileOPICSManualDataFwd(2, DateTime.Now,false);
+                //DbContextB.SP_SBPFillDumBlotter(DateTime.Now, 2);
+                DbContextB.SP_ReconcileOPICSManualData(2, DateTime.Now);
             }
             catch (Exception ex)
             {
@@ -433,19 +664,72 @@ namespace DataAccessLayer
         //*****************************************************
 
 
+        public static List<SP_GetSBPBlotterGetSheduler_Result> GetAllBlotterShedular()
+        {
+
+            List<SP_GetSBPBlotterGetSheduler_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GetSBPBlotterGetSheduler().ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
+        }
+
+        public static BlotterSBP_Sheduler GetBlotterShedularID(int SID)
+        {
+            BlotterSBP_Sheduler results = null;
+            try
+            {
+                results = DbContextB.BlotterSBP_Sheduler.Where(p => p.SID == SID).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
+        }
         public static List<SP_GetSBPBlotterCRRFINCON_Result> GetAllBlotterCRRFINCON(int UserID, int BranchID, int CurID, int BR, string StartDate, string EndDate)
         {
-            var CurrentDate = DateTime.Now;
-            return DbContextB.SP_GetSBPBlotterCRRFINCON(UserID, BranchID, CurID, BR,Convert.ToDateTime(StartDate),Convert.ToDateTime(EndDate)).ToList();
+            List<SP_GetSBPBlotterCRRFINCON_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GetSBPBlotterCRRFINCON(UserID, BranchID, CurID, BR, Convert.ToDateTime(StartDate), Convert.ToDateTime(EndDate)).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static List<SP_GetCRRFINCONPeriods_Result> GetAllBlotterCRRFINCONPeriods(int BR)
         {
-            var CurrentDate = DateTime.Now;
-            return DbContextB.SP_GetCRRFINCONPeriods(BR).ToList();
+            List<SP_GetCRRFINCONPeriods_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GetCRRFINCONPeriods(BR).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static SBP_BlotterCRRFINCON GetCRRFINCONItem(int CRRFINCONId)
         {
-            return DbContextB.SBP_BlotterCRRFINCON.Where(p => p.SNo == CRRFINCONId).FirstOrDefault();
+            SBP_BlotterCRRFINCON results = null;
+            try
+            {
+                results = DbContextB.SBP_BlotterCRRFINCON.Where(p => p.SNo == CRRFINCONId).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
 
         public static bool InsertCRRFINCON(SBP_BlotterCRRFINCON CRRFINCONItem)
@@ -477,8 +761,8 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message.ToString());
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -525,6 +809,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -545,6 +830,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -557,20 +843,56 @@ namespace DataAccessLayer
         //*****************************************************
         public static List<SP_GETAllTBOTransactionTitles_Result> GetAllTBOTransactionTitles()
         {
-            return DbContextB.SP_GETAllTBOTransactionTitles().ToList();
+            List<SP_GETAllTBOTransactionTitles_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GETAllTBOTransactionTitles().ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
 
         public static List<SP_GetAll_SBPBlotterTBO_Result> GetAllBlotterTBO(int UserID, int BranchID, int CurID, int BR, string DateVal)
         {
-            return DbContextB.SP_GetAll_SBPBlotterTBO(UserID, BranchID, CurID, BR,DateVal).ToList();
+            List<SP_GetAll_SBPBlotterTBO_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GetAll_SBPBlotterTBO(UserID, BranchID, CurID, BR, DateVal).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static List<SP_GetAll_SBPBlotterTBO_DashBoard_Result> GetAllBlotterTBODashboard(int UserID, int BranchID, int CurID, int BR, string DateVal)
         {
-            return DbContextB.SP_GetAll_SBPBlotterTBO_DashBoard(UserID, BranchID, CurID, BR, DateVal).ToList();
+            List<SP_GetAll_SBPBlotterTBO_DashBoard_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GetAll_SBPBlotterTBO_DashBoard(UserID, BranchID, CurID, BR, DateVal).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static SBP_BlotterTBO GetTBOItem(int TBOId)
         {
-            return DbContextB.SBP_BlotterTBO.Where(p => p.SNo == TBOId).FirstOrDefault();
+            SBP_BlotterTBO results = null;
+            try
+            {
+                results = DbContextB.SBP_BlotterTBO.Where(p => p.SNo == TBOId).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
 
         public static bool InsertTBO(SBP_BlotterTBO TBOItem)
@@ -585,8 +907,8 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message.ToString());
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -614,6 +936,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -634,6 +957,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -644,11 +968,29 @@ namespace DataAccessLayer
 
         public static List<NostroBank> GetAllNostroBank()
         {
-            return DbContextB.NostroBanks.ToList();
+            List<NostroBank> results = null;
+            try
+            {
+                results = DbContextB.NostroBanks.ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static NostroBank GetNostroBank(int Id)
         {
-            return DbContextB.NostroBanks.Where(p => p.ID == Id).FirstOrDefault();
+            NostroBank results = null;
+            try
+            {
+                results = DbContextB.NostroBanks.Where(p => p.ID == Id).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
 
         public static bool InsertNostroBank(NostroBank Item)
@@ -663,8 +1005,8 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message.ToString());
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -689,6 +1031,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -709,6 +1052,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -720,11 +1064,29 @@ namespace DataAccessLayer
 
         public static List<SP_GETUserRoles_Result> GetAllUserRole()
         {
-            return DbContextB.SP_GETUserRoles(null).ToList();
+            List<SP_GETUserRoles_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GETUserRoles(null).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static SP_GETUserRoles_Result GetUserRole(int Id)
         {
-            return DbContextB.SP_GETUserRoles(Id).FirstOrDefault();
+            SP_GETUserRoles_Result results = null;
+            try
+            {
+                results = DbContextB.SP_GETUserRoles(Id).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
 
         public static bool InsertUserRole(string RoleName,bool isActive)
@@ -738,6 +1100,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -753,6 +1116,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -768,6 +1132,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -778,25 +1143,70 @@ namespace DataAccessLayer
 
         public static List<SP_GETUserRoles_Result> GetActiveUserRoles()
         {
-            return DbContextB.SP_GETUserRoles(null).ToList();
+            List<SP_GETUserRoles_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GETUserRoles(null).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
 
         public static SP_GetAllWebPages_Result GetWebPageById(int ID)
         {
-            return DbContextB.SP_GetAllWebPages(ID).FirstOrDefault();
+            SP_GetAllWebPages_Result results = null;
+            try
+            {
+                results = DbContextB.SP_GetAllWebPages(ID).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static List<SP_GetNotListedUserPageRelations_Result> GetActiveWebPages(int URID)
         {
-            return DbContextB.SP_GetNotListedUserPageRelations(URID).ToList();
+            List<SP_GetNotListedUserPageRelations_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GetNotListedUserPageRelations(URID).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static List<SP_GetAllUserPageRelations_Result> GetAllUserPageRelations(int URID)
         {
-            return DbContextB.SP_GetAllUserPageRelations(URID).ToList();
+            List<SP_GetAllUserPageRelations_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GetAllUserPageRelations(URID).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
 
         public static SP_GetUserPageRelationById_Result GetUserPageRelationById(int UPRID)
         {
-            return DbContextB.SP_GetUserPageRelationById(UPRID).FirstOrDefault();
+            SP_GetUserPageRelationById_Result results = null;
+            try
+            {
+                results = DbContextB.SP_GetUserPageRelationById(UPRID).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static bool InsertUserPageRelation(int URID, int WPID, bool DateChangeAccess, bool EditAccess, bool DeleteAccess)
         {
@@ -809,8 +1219,8 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message.ToString());
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -825,6 +1235,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -839,6 +1250,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -848,11 +1260,29 @@ namespace DataAccessLayer
 
         public static List<SP_GetAllWebPages_Result> GetAllWebPages()
         {
-            return DbContextB.SP_GetAllWebPages(null).ToList();
+            List<SP_GetAllWebPages_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GetAllWebPages(null).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static SP_GetAllWebPages_Result GetWebPage(int Id)
         {
-            return DbContextB.SP_GetAllWebPages(Id).FirstOrDefault();
+            SP_GetAllWebPages_Result results = null;
+            try
+            {
+                results = DbContextB.SP_GetAllWebPages(Id).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
 
         public static bool InsertWebPages(string PageName,string ControllerName,string DisplayName,string PageDescription, int BlotterType,bool isActive)
@@ -868,6 +1298,7 @@ namespace DataAccessLayer
             {
                 System.Console.WriteLine(ex.Message.ToString());
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -884,6 +1315,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -899,6 +1331,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -909,11 +1342,29 @@ namespace DataAccessLayer
 
         public static List<Branches> GetAllBranches()
         {
-            return DbContextB.Branches.ToList();
+            List<Branches> results = null;
+            try
+            {
+                results = DbContextB.Branches.ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static Branches GetBranches(int Id)
         {
-            return DbContextB.Branches.Where(p => p.BID == Id).FirstOrDefault();
+            Branches results = null;
+            try
+            {
+                results = DbContextB.Branches.Where(p => p.BID == Id).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
 
         public static bool InsertBranches(Branches Item)
@@ -929,6 +1380,7 @@ namespace DataAccessLayer
             {
                 System.Console.WriteLine(ex.Message.ToString());
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -954,6 +1406,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -974,6 +1427,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -986,15 +1440,43 @@ namespace DataAccessLayer
 
         public static List<sp_GetAllUsers_Result> GetAllUsers()
         {
-            return DbContextB.sp_GetAllUsers().ToList();
+            List<sp_GetAllUsers_Result> results = null;
+            try
+            {
+                results = DbContextB.sp_GetAllUsers().ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static List<SP_GETUserRoles_Result> GetUserRoles()
         {
+            List<SP_GETUserRoles_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GETUserRoles(null).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
             return DbContextB.SP_GETUserRoles(null).ToList();
         }
         public static sp_GetUserById_Result GetUser(int Id)
         {
-            return DbContextB.sp_GetUserById(Id).FirstOrDefault();
+            sp_GetUserById_Result results = null;
+            try
+            {
+                results = DbContextB.sp_GetUserById(Id).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static bool InsertUser(sp_GetUserById_Result item)
         {
@@ -1016,6 +1498,7 @@ namespace DataAccessLayer
             {
                 System.Console.WriteLine(ex.Message.ToString());
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -1028,20 +1511,6 @@ namespace DataAccessLayer
                 SBP_LoginInfo Items = DbContextB.SBP_LoginInfo.Where(p => p.Id != Item.Id && p.Email == Item.Email).FirstOrDefault();
                 if (Items != null)
                 {
-                    //Items.UserName = Item.UserName;
-                    //Items.Password = Encoding.UTF8.GetBytes(Item.Password);
-                    //Items.ContactNo = Item.ContactNo;
-                    //Items.Email = Item.Email;
-                    //Items.Department = Item.Department;
-                    //Items.isActive = Item.isActive;
-                    //Items.isConventional = Item.isConventional;
-                    //Items.isislamic = Item.isislamic;
-                    //Items.BlotterType = Item.BlotterType;
-                    //Items.ChangePassword = true;
-                    //Items.UpdateDate = Item.UpdateDate;
-                    //Items.DefaultPage = Item.DefaultPage;
-                    //DbContextB.SaveChanges();
-
                     status = false;
                 }
                 else {
@@ -1053,6 +1522,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -1073,6 +1543,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -1084,11 +1555,29 @@ namespace DataAccessLayer
 
         public static SP_GetLatestBreakup_Result GetAllBlotterBreakups(int UserID, int BranchID, int CurID, int BR)
         {
-            return DbContextB.SP_GetLatestBreakup(UserID, BranchID, CurID, BR).FirstOrDefault();
+            SP_GetLatestBreakup_Result results = null;
+            try
+            {
+                results = DbContextB.SP_GetLatestBreakup(UserID, BranchID, CurID, BR).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static SBP_BlotterBreakups GetBlotterBreakups(int Id)
         {
-            return DbContextB.SBP_BlotterBreakups.Where(p => p.SNo == Id).FirstOrDefault();
+            SBP_BlotterBreakups results = null;
+            try
+            {
+                results = DbContextB.SBP_BlotterBreakups.Where(p => p.SNo == Id).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
 
         public static bool InsertBlotterBreakups(SBP_BlotterBreakups Item)
@@ -1105,6 +1594,7 @@ namespace DataAccessLayer
             {
                 System.Console.WriteLine(ex.Message.ToString());
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -1138,6 +1628,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -1158,6 +1649,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -1167,45 +1659,82 @@ namespace DataAccessLayer
         //*****************************************************
         public static List<SP_GETAllClearingTransactionTitles_Result> GetAllClearingTransactionTitles()
         {
-            return DbContextB.SP_GETAllClearingTransactionTitles().ToList();
+            List<SP_GETAllClearingTransactionTitles_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GETAllClearingTransactionTitles().ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static List<SP_GETAll_MAX_BlotterCRRReportCalcSetup_Result> GetAllRecordCRRReportCalc()
         {
-            return DbContextB.SP_GETAll_MAX_BlotterCRRReportCalcSetup().ToList();
+            List<SP_GETAll_MAX_BlotterCRRReportCalcSetup_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GETAll_MAX_BlotterCRRReportCalcSetup().ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static List<SP_GetAll_SBPBlotterClearing_Result> GetAllBlotterClearing(int UserID, int BranchID, int CurID, int BR, string DateVal)
         {
-            return DbContextB.SP_GetAll_SBPBlotterClearing(UserID, BranchID, CurID, BR,DateVal).ToList();
+            List<SP_GetAll_SBPBlotterClearing_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GetAll_SBPBlotterClearing(UserID, BranchID, CurID, BR, DateVal).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static List<SP_GetAll_SBPBlotterClearing_DashBoard_Result> GetAllBlotterClearingDashboard(int UserID, int BranchID, int CurID, int BR, string DateVal)
         {
-            return DbContextB.SP_GetAll_SBPBlotterClearing_DashBoard(UserID, BranchID, CurID, BR, DateVal).ToList();
+            List<SP_GetAll_SBPBlotterClearing_DashBoard_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GetAll_SBPBlotterClearing_DashBoard(UserID, BranchID, CurID, BR, DateVal).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static SBP_BlotterClearing GetClearingItem(int ClearingId)
         {
-            return DbContextB.SBP_BlotterClearing.Where(p => p.SNo == ClearingId).FirstOrDefault();
+            SBP_BlotterClearing results = null;
+            try
+            {
+                results = DbContextB.SBP_BlotterClearing.Where(p => p.SNo == ClearingId).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static bool InsertClearing(SBP_BlotterClearing ClearingItem)
         {
             bool status;
             try
             {
-                //List<SBP_BlotterClearing> GetCount = DbContextB.SBP_BlotterClearing.Where(p => p.TTID == ClearingItem.TTID && p.Clearing_Date == ClearingItem.Clearing_Date).ToList();
-                //if (GetCount.Count > 0)
-                //{
-                //    status = false;
-                //}
-                //else
-                //{
                     DbContextB.SBP_BlotterClearing.Add(ClearingItem);
                     DbContextB.SaveChanges();
                     status = true;
-                //}
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message.ToString());
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -1215,13 +1744,6 @@ namespace DataAccessLayer
             bool status;
             try
             {
-                //List<SBP_BlotterClearing> GetCount = DbContextB.SBP_BlotterClearing.Where(p => p.SNo != ClearingItem.SNo && p.TTID == ClearingItem.TTID && p.Clearing_Date == ClearingItem.Clearing_Date).ToList();
-                //if (GetCount.Count > 0)
-                //{
-                //    status = false;
-                //}
-                //else
-                //{
                     SBP_BlotterClearing CLRItems = DbContextB.SBP_BlotterClearing.Where(p => p.SNo == ClearingItem.SNo).FirstOrDefault();
                 if (CLRItems != null)
                 {
@@ -1238,11 +1760,11 @@ namespace DataAccessLayer
                 }
               
                     status = true;
-                //}
             }
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -1263,6 +1785,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -1284,8 +1807,8 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message.ToString());
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -1312,30 +1835,41 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
         public static List<SBP_BlotterFundsTransfer> GetAllBlotterFundsTransfer(int UserID, int BranchID, int CurID, int BR, string DateVal)
         {
-            string currentDate = DateTime.Now.ToString("yyyy-MM-dd");
-            return DbContextB.SBP_BlotterFundsTransfer.Where(p => p.BID== BranchID && p.CurID== CurID && p.BR== BR && (p.FT_Date.ToString() == DateVal || (DateVal == null && p.FT_Date >= DateTime.Today))).ToList();
+            List<SBP_BlotterFundsTransfer> results = null;
+            try
+            {
+                results = DbContextB.SBP_BlotterFundsTransfer.Where(p => p.BID == BranchID && p.CurID == CurID && p.BR == BR && (p.FT_Date.ToString() == DateVal || (DateVal == null && p.FT_Date >= DateTime.Today))).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static SBP_BlotterFundsTransfer GetFundsTransferItem(int FundsTransferId)
         {
-            return DbContextB.SBP_BlotterFundsTransfer.Where(p => p.SNo == FundsTransferId).FirstOrDefault();
+            SBP_BlotterFundsTransfer results = null;
+            try
+            {
+                results = DbContextB.SBP_BlotterFundsTransfer.Where(p => p.SNo == FundsTransferId).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static bool InsertFundsTransfer(SBP_BlotterFundsTransfer FundsTransferItem)
         {
             bool status;
             try
             {
-                //List<SBP_BlotterFundsTransfer> GetCount = DbContextB.SBP_BlotterFundsTransfer.Where(p => p.TTID == FundsTransferItem.TTID && p.FundsTransfer_Date == FundsTransferItem.FundsTransfer_Date).ToList();
-                //if (GetCount.Count > 0)
-                //{
-                //    status = false;
-                //}
-                //else
-                //{
                 DbContextB.SBP_BlotterFundsTransfer.Add(FundsTransferItem);
                 DbContextB.SaveChanges();
 
@@ -1381,6 +1915,7 @@ namespace DataAccessLayer
             {
                 System.Console.WriteLine(ex.Message.ToString());
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -1390,13 +1925,6 @@ namespace DataAccessLayer
             bool status;
             try
             {
-                //List<SBP_BlotterFundsTransfer> GetCount = DbContextB.SBP_BlotterFundsTransfer.Where(p => p.SNo != FundsTransferItem.SNo && p.TTID == FundsTransferItem.TTID && p.FundsTransfer_Date == FundsTransferItem.FundsTransfer_Date).ToList();
-                //if (GetCount.Count > 0)
-                //{
-                //    status = false;
-                //}
-                //else
-                //{
                 SBP_BlotterFundsTransfer CLRItems1 = DbContextB.SBP_BlotterFundsTransfer.Where(p => p.SNo == FundsTransferItem.SNo).FirstOrDefault();
                 if (CLRItems1 != null)
                 {
@@ -1439,7 +1967,9 @@ namespace DataAccessLayer
                         FundsTransferItem.FT_OutFLow = 0;
                     }
                 }
-                SBP_BlotterFundsTransfer CLRItems2 = DbContextB.SBP_BlotterFundsTransfer.Where(p => p.SNo != FundsTransferItem.SNo).FirstOrDefault();
+                long addSno = FundsTransferItem.SNo + 1;
+                FundsTransferItem.SNo = addSno;
+                SBP_BlotterFundsTransfer CLRItems2 = DbContextB.SBP_BlotterFundsTransfer.Where(p => p.SNo == FundsTransferItem.SNo).FirstOrDefault();
                 if (CLRItems2 != null)
                 {
 
@@ -1458,6 +1988,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -1502,6 +2033,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -1513,33 +2045,44 @@ namespace DataAccessLayer
 
         public static List<SBP_BlotterBai_Muajjal> GetAllBlotterBai_Muajjal(int UserID, int BranchID, int CurID, int BR, string DateVal)
         {
-            return DbContextB.SBP_BlotterBai_Muajjal.Where(p => p.BID == BranchID && p.CurID == CurID && p.BR == BR && (p.ValueDate.ToString() == DateVal || (DateVal == null && p.ValueDate >= DateTime.Today))).ToList();
+            List<SBP_BlotterBai_Muajjal> results = null;
+            try
+            {
+                results = DbContextB.SBP_BlotterBai_Muajjal.Where(p => p.BID == BranchID && p.CurID == CurID && p.BR == BR && (p.ValueDate.ToString() == DateVal || (DateVal == null && p.ValueDate >= DateTime.Today))).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static SBP_BlotterBai_Muajjal GetBai_MuajjalItem(int Bai_MuajjalId)
         {
-            return DbContextB.SBP_BlotterBai_Muajjal.Where(p => p.SNo == Bai_MuajjalId).FirstOrDefault();
+            SBP_BlotterBai_Muajjal results = null;
+            try
+            {
+                results = DbContextB.SBP_BlotterBai_Muajjal.Where(p => p.SNo == Bai_MuajjalId).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static bool InsertBai_Muajjal(SBP_BlotterBai_Muajjal Bai_MuajjalItem)
         {
             bool status;
             try
             {
-                //List<SBP_BlotterBai_Muajjal> GetCount = DbContextB.SBP_BlotterBai_Muajjal.Where(p => p.TTID == Bai_MuajjalItem.TTID && p.Bai_Muajjal_Date == Bai_MuajjalItem.Bai_Muajjal_Date).ToList();
-                //if (GetCount.Count > 0)
-                //{
-                //    status = false;
-                //}
-                //else
-                //{
                 DbContextB.SBP_BlotterBai_Muajjal.Add(Bai_MuajjalItem);
                 DbContextB.SaveChanges();
                 status = true;
-                //}
             }
             catch (Exception ex)
             {
                 System.Console.WriteLine(ex.Message.ToString());
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -1549,13 +2092,6 @@ namespace DataAccessLayer
             bool status;
             try
             {
-                //List<SBP_BlotterBai_Muajjal> GetCount = DbContextB.SBP_BlotterBai_Muajjal.Where(p => p.SNo != Bai_MuajjalItem.SNo && p.TTID == Bai_MuajjalItem.TTID && p.Bai_Muajjal_Date == Bai_MuajjalItem.Bai_Muajjal_Date).ToList();
-                //if (GetCount.Count > 0)
-                //{
-                //    status = false;
-                //}
-                //else
-                //{
                 SBP_BlotterBai_Muajjal CLRItems = DbContextB.SBP_BlotterBai_Muajjal.Where(p => p.SNo == Bai_MuajjalItem.SNo).FirstOrDefault();
                 if (CLRItems != null)
                 {
@@ -1571,11 +2107,11 @@ namespace DataAccessLayer
                     DbContextB.SaveChanges();
                 }
                 status = true;
-                //}
             }
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -1596,6 +2132,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -1622,6 +2159,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -1631,41 +2169,70 @@ namespace DataAccessLayer
         //*****************************************************
         public static List<SP_GETAllRTGSTransactionTitles_Result> GetAllRTGSTransactionTitles()
         {
-            return DbContextB.SP_GETAllRTGSTransactionTitles().ToList();
+            List<SP_GETAllRTGSTransactionTitles_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GETAllRTGSTransactionTitles().ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static List<SP_GetAll_SBPBlotterRTGS_Result> GetAllBlotterRTGS(int UserID, int BranchID, int CurID, int BR, string DateVal)
         {
-            return DbContextB.SP_GetAll_SBPBlotterRTGS(UserID, BranchID, CurID, BR,DateVal).ToList();
+            List<SP_GetAll_SBPBlotterRTGS_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GetAll_SBPBlotterRTGS(UserID, BranchID, CurID, BR, DateVal).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static List<SP_GetAll_SBPBlotterRTGS_Dashboard_Result> GetAllBlotterRTGSDashboard(int UserID, int BranchID, int CurID, int BR, string DateVal)
         {
-            return DbContextB.SP_GetAll_SBPBlotterRTGS_Dashboard(UserID, BranchID, CurID, BR, DateVal).ToList();
+            List<SP_GetAll_SBPBlotterRTGS_Dashboard_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GetAll_SBPBlotterRTGS_Dashboard(UserID, BranchID, CurID, BR, DateVal).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static SBP_BlotterRTGS GetRTGSItem(int RTGSId)
         {
-            return DbContextB.SBP_BlotterRTGS.Where(p => p.SNo == RTGSId).FirstOrDefault();
+            SBP_BlotterRTGS results = null;
+            try
+            {
+                results = DbContextB.SBP_BlotterRTGS.Where(p => p.SNo == RTGSId).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static bool InsertRTGS(SBP_BlotterRTGS RTGSItem)
         {
             bool status;
             try
             {
-                //List<SBP_BlotterRTGS> GetCount = DbContextB.SBP_BlotterRTGS.Where(p => p.TTID == RTGSItem.TTID && p.RTGS_Date == RTGSItem.RTGS_Date).ToList();
-                //if (GetCount.Count > 0)
-                //{
-                //    status = false;
-                //}
-                //else
-                //{
                     DbContextB.SBP_BlotterRTGS.Add(RTGSItem);
                     DbContextB.SaveChanges();
                     status = true;
-                //}
             }
             catch (Exception ex)
             {
                 System.Console.WriteLine(ex.Message.ToString());
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -1675,13 +2242,6 @@ namespace DataAccessLayer
             bool status;
             try
             {
-                //List<SBP_BlotterRTGS> GetCount = DbContextB.SBP_BlotterRTGS.Where(p => p.SNo != RTGSItem.SNo && p.TTID == RTGSItem.TTID && p.RTGS_Date == RTGSItem.RTGS_Date).ToList();
-                //if (GetCount.Count > 0)
-                //{
-                //    status = false;
-                //}
-                //else
-                //{
                     SBP_BlotterRTGS RTGSItems = DbContextB.SBP_BlotterRTGS.Where(p => p.SNo == RTGSItem.SNo).FirstOrDefault();
                     if (RTGSItems != null)
                 {
@@ -1696,11 +2256,11 @@ namespace DataAccessLayer
                     DbContextB.SaveChanges();
                     }
                     status = true;
-                //}
             }
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -1721,6 +2281,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -1733,11 +2294,29 @@ namespace DataAccessLayer
 
         public static List<SP_GetAllOpeningBalance_Result> GetAllBlotterOpenBal(int UserID, int BranchID, int CurID, int BR, string dateVal)
         {
-            return DbContextB.SP_GetAllOpeningBalance(UserID, BranchID, CurID, BR,dateVal).ToList();
+            List<SP_GetAllOpeningBalance_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GetAllOpeningBalance(UserID, BranchID, CurID, BR, dateVal).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static SBP_BlotterOpeningBalance GetOpenBalItem(int OpnBalId)
         {
-            return DbContextB.SBP_BlotterOpeningBalance.Where(p => p.Id == OpnBalId).FirstOrDefault();
+            SBP_BlotterOpeningBalance results = null;
+            try
+            {
+                results = DbContextB.SBP_BlotterOpeningBalance.Where(p => p.Id == OpnBalId).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static bool InsertOpenBal(SBP_BlotterOpeningBalance OpenBalItem)
         {
@@ -1745,31 +2324,12 @@ namespace DataAccessLayer
             try
             {
                 DbContextB.SP_InsertOpeningBalance(OpenBalItem.OpenBalActual, OpenBalItem.AdjOpenBal, OpenBalItem.BalDate, OpenBalItem.DataType, OpenBalItem.UserID, OpenBalItem.CreateDate, OpenBalItem.UpdateDate, OpenBalItem.BR, OpenBalItem.BID, OpenBalItem.CurID, OpenBalItem.Flag, OpenBalItem.EstimatedOpenBal);
-                //List<SBP_BlotterOpeningBalance> GetCount = DbContextB.SBP_BlotterOpeningBalance.Where(p => p.DataType == OpnBalItem.DataType &&  p.BalDate== OpnBalItem.BalDate && p.BR==OpnBalItem.BR).ToList();
-                //if (GetCount.Count > 0)
-                //{
-                //    SBP_BlotterOpeningBalance OpenBalItems = DbContextB.SBP_BlotterOpeningBalance.Where(p => p.DataType == OpnBalItem.DataType && p.BalDate == OpnBalItem.BalDate && p.BR == OpnBalItem.BR).FirstOrDefault();
-                //    if (OpenBalItems != null)
-                //    {
-                //        OpenBalItems.OpenBalActual = OpnBalItem.OpenBalActual;
-                //        OpenBalItems.AdjOpenBal = OpnBalItem.AdjOpenBal;
-                //        OpenBalItems.CurID = OpnBalItem.CurID;
-                //        OpenBalItems.UpdateDate = OpnBalItem.UpdateDate;
-                //        DbContextB.SaveChanges();
-                //    }
                 status = true;
-                //}
-                //else
-                //{
-                //    DbContextB.SBP_BlotterOpeningBalance.Add(OpnBalItem);
-                //    DbContextB.SaveChanges();
-                //    status = true;
-                //}
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message.ToString());
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -1780,40 +2340,12 @@ namespace DataAccessLayer
             try
             {
                 DbContextB.SP_UpdateOpeningBalance(OpenBalItem.Id,OpenBalItem.OpenBalActual,OpenBalItem.AdjOpenBal,OpenBalItem.BalDate,OpenBalItem.DataType,OpenBalItem.UserID,OpenBalItem.CreateDate,OpenBalItem.UpdateDate,OpenBalItem.BR,OpenBalItem.BID,OpenBalItem.CurID,OpenBalItem.Flag,OpenBalItem.EstimatedOpenBal);
-                //List<SBP_BlotterOpeningBalance> GetCount = DbContextB.SBP_BlotterOpeningBalance.Where(p => p.Id != OpenBalItem.Id && p.BalDate == OpenBalItem.BalDate && p.BR == OpenBalItem.BR).ToList();
-                //if (GetCount.Count > 0)
-                //{
-                //    SBP_BlotterOpeningBalance OpenBalItems = DbContextB.SBP_BlotterOpeningBalance.Where(p => p.Id == OpenBalItem.Id && p.BalDate == OpenBalItem.BalDate && p.BR == OpenBalItem.BR).FirstOrDefault();
-                //    if (OpenBalItems != null)
-                //    {
-                //        OpenBalItems.OpenBalActual = OpenBalItem.OpenBalActual;
-                //        OpenBalItems.AdjOpenBal = OpenBalItem.AdjOpenBal;
-                //        OpenBalItems.CurID = OpenBalItem.CurID;
-                //        OpenBalItems.UpdateDate = OpenBalItem.UpdateDate;
-                //        OpenBalItems.UserID = OpenBalItem.UserID;
-                //        DbContextB.SaveChanges();
-                //    }
                 status = true;
-                //}
-                //else
-                //{
-                //    SBP_BlotterOpeningBalance OpenBalItems = DbContextB.SBP_BlotterOpeningBalance.Where(p => p.Id == OpenBalItem.Id).FirstOrDefault();
-                //    if (OpenBalItems != null)
-                //    {
-                //        OpenBalItems.OpenBalActual = OpenBalItem.OpenBalActual;
-                //        OpenBalItems.AdjOpenBal = OpenBalItem.AdjOpenBal;
-                //        OpenBalItems.BalDate = OpenBalItem.BalDate;
-                //        OpenBalItems.CurID = OpenBalItem.CurID;
-                //        OpenBalItems.UpdateDate = OpenBalItem.UpdateDate;
-                //        OpenBalItems.UserID = OpenBalItem.UserID;
-                //        DbContextB.SaveChanges();
-                //    }
-                //    status = true;
-                //}
             }
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -1834,6 +2366,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -1845,19 +2378,55 @@ namespace DataAccessLayer
         //*****************************************************
         public static List<GetIssueTypeTitles_Result> GetAllIssueTypeTitles()
         {
-            return DbContextB.GetIssueTypeTitles().ToList();
+            List<GetIssueTypeTitles_Result> results = null;
+            try
+            {
+                results = DbContextB.GetIssueTypeTitles().ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static List<SP_GetSBPBlotterFR_Result> GetAllBlotterFundingRepo(int UserID, int BranchID, int CurID, int BR, string DateVal)
         {
-            return DbContextB.SP_GetSBPBlotterFR(UserID, BranchID, CurID, BR,DateVal).ToList();
+            List<SP_GetSBPBlotterFR_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GetSBPBlotterFR(UserID, BranchID, CurID, BR, DateVal).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static List<SP_GetSBPBlotterFRAuto_Result> GetAllblotterFundingRepoAuto(int UserID, int BranchID, int CurID, int BR, string DateVal)
         {
-            return DbContextB.SP_GetSBPBlotterFRAuto(UserID, BranchID, CurID, BR, DateVal).ToList();
+            List<SP_GetSBPBlotterFRAuto_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GetSBPBlotterFRAuto(UserID, BranchID, CurID, BR, DateVal).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static SBP_BlotterFundingRepo GetSBP_BlotterFundingRepoById(int FundingRepoId)
         {
-            return DbContextB.SBP_BlotterFundingRepo.Where(p => p.SNo == FundingRepoId).FirstOrDefault();
+            SBP_BlotterFundingRepo results = null;
+            try
+            {
+                results = DbContextB.SBP_BlotterFundingRepo.Where(p => p.SNo == FundingRepoId).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
 
         public static bool InsertFundingRepo(SBP_BlotterFundingRepo FundingRepoIdItem)
@@ -1871,8 +2440,8 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message.ToString());
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -1913,6 +2482,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -1933,6 +2503,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -1946,11 +2517,29 @@ namespace DataAccessLayer
 
         public static List<SBP_BlotterManualEstBalance> GetAllBlotterEstAdjBal(int UserID, int BranchID, int CurID, int BR)
         {
-            return DbContextB.SBP_BlotterManualEstBalance.Where(p => p.UserID == UserID && p.BID==BranchID && p.CurID==CurID && p.BR==BR && p.isAdjusted==true).ToList();
+            List<SBP_BlotterManualEstBalance> results = null;
+            try
+            {
+                results = DbContextB.SBP_BlotterManualEstBalance.Where(p => p.UserID == UserID && p.BID == BranchID && p.CurID == CurID && p.BR == BR && p.isAdjusted == true).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static SBP_BlotterManualEstBalance GetEstAdjBalById(int EstAdjBalId)
         {
-            return DbContextB.SBP_BlotterManualEstBalance.Where(p => p.SNo == EstAdjBalId).FirstOrDefault();
+            SBP_BlotterManualEstBalance results = null;
+            try
+            {
+                results = DbContextB.SBP_BlotterManualEstBalance.Where(p => p.SNo == EstAdjBalId).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static bool InsertEstAdjBal(SBP_BlotterManualEstBalance EstAdjBalItem)
         {
@@ -1980,8 +2569,8 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message.ToString());
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -2022,6 +2611,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -2042,6 +2632,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -2065,6 +2656,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -2074,24 +2666,57 @@ namespace DataAccessLayer
         //*****************************************************
         public static List<SP_GETAllTradeTransactionTitles_Result> GetAllTradeTransactionTitles()
         {
-            return DbContextB.SP_GETAllTradeTransactionTitles().ToList();
+            List<SP_GETAllTradeTransactionTitles_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GETAllTradeTransactionTitles().ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static List<SP_GetAll_SBPBlotterTrade_Result> GetAllBlotterTrade(int UserID, int BranchID, int CurID, int BR, string DateVal)
         {
-            // return DbContextB.SBP_BlotterTrade.Where(p => p.UserID == UserID && p.BR == BranchID && p.CurID == CurID).ToList();
-            return DbContextB.SP_GetAll_SBPBlotterTrade(UserID, BranchID, CurID, BR,DateVal).ToList();
+            List<SP_GetAll_SBPBlotterTrade_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GetAll_SBPBlotterTrade(UserID, BranchID, CurID, BR, DateVal).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
 
         public static List<SP_GetAll_SBPBlotterTrade_Dashboard_Result> GetAllBlotterTradeDashboard(int UserID, int BranchID, int CurID, int BR, string DateVal)
         {
-            // return DbContextB.SBP_BlotterTrade.Where(p => p.UserID == UserID && p.BR == BranchID && p.CurID == CurID).ToList();
-            return DbContextB.SP_GetAll_SBPBlotterTrade_Dashboard(UserID, BranchID, CurID, BR, DateVal).ToList();
+            List<SP_GetAll_SBPBlotterTrade_Dashboard_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GetAll_SBPBlotterTrade_Dashboard(UserID, BranchID, CurID, BR, DateVal).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
 
         public static List<SP_GetAll_SBPBlotterDailyFlows_Dashboard_Result> GetAllBlotterDailyflowsDashboard(int UserID, int BranchID, int CurID, int BR, string DateVal)
         {
-            // return DbContextB.SBP_BlotterTrade.Where(p => p.UserID == UserID && p.BR == BranchID && p.CurID == CurID).ToList();
-            return DbContextB.SP_GetAll_SBPBlotterDailyFlows_Dashboard(UserID, BranchID, CurID, BR, DateVal).ToList();
+            List<SP_GetAll_SBPBlotterDailyFlows_Dashboard_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GetAll_SBPBlotterDailyFlows_Dashboard(UserID, BranchID, CurID, BR, DateVal).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
 
 
@@ -2111,8 +2736,8 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message.ToString());
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -2140,6 +2765,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -2160,6 +2786,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -2171,11 +2798,29 @@ namespace DataAccessLayer
 
         public static List<SP_GetSBP_DMMO_Result> GetAllBlotterDMMO(int UserID, int BranchID, int BR, string DateVal)
         {
-            return DbContextB.SP_GetSBP_DMMO(UserID, BranchID, BR, DateVal).ToList();
+            List<SP_GetSBP_DMMO_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GetSBP_DMMO(UserID, BranchID, BR, DateVal).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static SBP_BlotterDMMO GetDMMOItem(int DMMOId)
         {
-            return DbContextB.SBP_BlotterDMMO.Where(p => p.SNo == DMMOId).FirstOrDefault();
+            SBP_BlotterDMMO results = null;
+            try
+            {
+                results = DbContextB.SBP_BlotterDMMO.Where(p => p.SNo == DMMOId).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
 
         public static bool InsertDMMO(SBP_BlotterDMMO DMMOItem)
@@ -2190,8 +2835,8 @@ namespace DataAccessLayer
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message.ToString());
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -2221,6 +2866,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -2241,6 +2887,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -2252,11 +2899,29 @@ namespace DataAccessLayer
 
         public static List<SP_GetSBP_Reserved_Result> GetAllBlotterReserved(int UserID, int BranchID, int BR)
         {
-            return DbContextB.SP_GetSBP_Reserved(UserID, BranchID, BR).ToList();
+            List<SP_GetSBP_Reserved_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GetSBP_Reserved(UserID, BranchID, BR).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
         public static SBP_BlotterReserved GetReservedItem(int DMMOId)
         {
-            return DbContextB.SBP_BlotterReserved.Where(p => p.SNo == DMMOId).FirstOrDefault();
+            SBP_BlotterReserved results = null;
+            try
+            {
+                results = DbContextB.SBP_BlotterReserved.Where(p => p.SNo == DMMOId).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
 
 
@@ -2284,111 +2949,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
-            }
-            return status;
-        }
-        //*****************************************************
-        //DTL DeskBoard Producers
-        //*****************************************************
-        public static SBP_BlotterDTLDaysWiseBal GetDTLDeskBoard(String BrCode)
-        {
-            //return DbContextB.SBP_BlotterDTLDaysWiseBal.ToList();
-            var maxID = DbContextB.SBP_BlotterDTLDaysWiseBal.Any() ? DbContextB.SBP_BlotterDTLDaysWiseBal.Max(p => p.Id) : 0;
-            return DbContextB.SBP_BlotterDTLDaysWiseBal.Where(p => p.Id == maxID && p.BR == BrCode).FirstOrDefault();
-        }
-        public static bool UpdateWiseBal(SBP_BlotterDTLDaysWiseBal WiseBalItem)
-        {
-            bool status;
-            try
-            {
-                SBP_BlotterDTLDaysWiseBal prodItem = DbContextB.SBP_BlotterDTLDaysWiseBal.Where(p => p.Id == WiseBalItem.Id).FirstOrDefault();
-                if (prodItem != null)
-                {
-                    //prodItem.Id = WiseBalItem.Id;
-                    prodItem.DTL_Days = WiseBalItem.DTL_Days;
-                    prodItem.DTL_Date = WiseBalItem.DTL_Date;
-                    prodItem.NextDate = WiseBalItem.NextDate;
-                    prodItem.DTL_Amount = WiseBalItem.DTL_Amount;
-                    prodItem.MinAmount_3P = WiseBalItem.MinAmount_3P;
-                    prodItem.MaxAmount_5P = WiseBalItem.MaxAmount_5P;
-
-                    prodItem.Friday_01 = WiseBalItem.Friday_01;
-                    prodItem.Date_01 = WiseBalItem.Date_01;
-                    prodItem.CashFlow_01 = WiseBalItem.CashFlow_01;
-                    prodItem.CashOutFlow_01 = WiseBalItem.CashOutFlow_01;
-
-                    prodItem.Saturday_02 = WiseBalItem.Saturday_02;
-                    prodItem.Date_02 = WiseBalItem.Date_02;
-                    prodItem.CashFlow_02 = WiseBalItem.CashFlow_02;
-                    prodItem.CashOutFlow_02 = WiseBalItem.CashOutFlow_02;
-
-                    prodItem.Sunday_03 = WiseBalItem.Sunday_03;
-                    prodItem.Date_03 = WiseBalItem.Date_03;
-                    prodItem.CashFlow_03 = WiseBalItem.CashFlow_03;
-                    prodItem.CashOutFlow_03 = WiseBalItem.CashOutFlow_03;
-
-                    prodItem.Monday_04 = WiseBalItem.Monday_04;
-                    prodItem.Date_04 = WiseBalItem.Date_04;
-                    prodItem.CashFlow_04 = WiseBalItem.CashFlow_04;
-                    prodItem.CashOutFlow_04 = WiseBalItem.CashOutFlow_04;
-
-                    prodItem.Tuesday_05 = WiseBalItem.Tuesday_05;
-                    prodItem.Date_05 = WiseBalItem.Date_05;
-                    prodItem.CashFlow_05 = WiseBalItem.CashFlow_05;
-                    prodItem.CashOutFlow_05 = WiseBalItem.CashOutFlow_05;
-
-                    prodItem.Wednesday_06 = WiseBalItem.Wednesday_06;
-                    prodItem.Date_06 = WiseBalItem.Date_06;
-                    prodItem.CashFlow_06 = WiseBalItem.CashFlow_06;
-                    prodItem.CashOutFlow_06 = WiseBalItem.CashOutFlow_06;
-
-                    prodItem.Thursday_07 = WiseBalItem.Thursday_07;
-                    prodItem.Date_07 = WiseBalItem.Date_07;
-                    prodItem.CashFlow_07 = WiseBalItem.CashFlow_07;
-                    prodItem.CashOutFlow_07 = WiseBalItem.CashOutFlow_07;
-
-                    prodItem.Friday_08 = WiseBalItem.Friday_08;
-                    prodItem.Date_08 = WiseBalItem.Date_08;
-                    prodItem.CashFlow_08 = WiseBalItem.CashFlow_08;
-                    prodItem.CashOutFlow_08 = WiseBalItem.CashOutFlow_08;
-
-                    prodItem.Saturday_09 = WiseBalItem.Saturday_09;
-                    prodItem.Date_09 = WiseBalItem.Date_09;
-                    prodItem.CashFlow_09 = WiseBalItem.CashFlow_09;
-                    prodItem.CashOutFlow_09 = WiseBalItem.CashOutFlow_09;
-
-                    prodItem.Sunday_10 = WiseBalItem.Sunday_10;
-                    prodItem.Date_10 = WiseBalItem.Date_10;
-                    prodItem.CashFlow_10 = WiseBalItem.CashFlow_10;
-                    prodItem.CashOutFlow_10 = WiseBalItem.CashOutFlow_10;
-
-                    prodItem.Monday_11 = WiseBalItem.Monday_11;
-                    prodItem.Date_11 = WiseBalItem.Date_11;
-                    prodItem.CashFlow_11 = WiseBalItem.CashFlow_11;
-                    prodItem.CashOutFlow_11 = WiseBalItem.CashOutFlow_11;
-
-                    prodItem.Tuesday_12 = WiseBalItem.Tuesday_12;
-                    prodItem.Date_12 = WiseBalItem.Date_12;
-                    prodItem.CashFlow_12 = WiseBalItem.CashFlow_12;
-                    prodItem.CashOutFlow_12 = WiseBalItem.CashOutFlow_12;
-
-                    prodItem.Wednesday_13 = WiseBalItem.Wednesday_13;
-                    prodItem.Date_13 = WiseBalItem.Date_13;
-                    prodItem.CashFlow_13 = WiseBalItem.CashFlow_13;
-                    prodItem.CashOutFlow_13 = WiseBalItem.CashOutFlow_13;
-
-                    prodItem.Thursday_14 = WiseBalItem.Thursday_14;
-                    prodItem.Date_14 = WiseBalItem.Date_14;
-                    prodItem.CashFlow_14 = WiseBalItem.CashFlow_14;
-                    prodItem.CashOutFlow_14 = WiseBalItem.CashOutFlow_14;
-                    prodItem.BR = WiseBalItem.BR;
-                    DbContextB.SaveChanges();
-                }
-                status = true;
-            }
-            catch (Exception ex)
-            {
-                status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -2397,30 +2958,60 @@ namespace DataAccessLayer
         //*****************************************************
         public static List<SP_SBPGetLoginInfo_Result> GetBlotterLogin(String userName, String password)
         {
-            var results = DbContextB.SP_SBPGetLoginInfo(userName, password).ToList();
-            return results;
+            List<SP_SBPGetLoginInfo_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_SBPGetLoginInfo(userName, password).ToList();
+            }
+            catch(Exception ex) {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name,ex.Message,ex.InnerException.ToString());
+            }
+                return results;
         }
         public static List<SP_SBPGetLoginInfoById_Result> GetBlotterLoginById(int id)
         {
-            var results = DbContextB.SP_SBPGetLoginInfoById(id).ToList();
+            List<SP_SBPGetLoginInfoById_Result> results = null;
+            try { 
+            results = DbContextB.SP_SBPGetLoginInfoById(id).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
             return results;
         }
 
         public static void SessionStart(string pSessionID, int pUserID, string pIP, string pLoginGUID, Nullable<DateTime> pLoginTime, Nullable<DateTime> pExpires)
         {
+            try { 
             DbContextB.SP_ADD_SessionStart(pSessionID, pUserID, pIP, pLoginGUID, pLoginTime, pExpires);
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
 
         }
         public static void ActivityMonitor(string pSessionID, int pUserID, string pIP, string pLoginGUID, string Data, string Activity, string URL)
         {
+            try { 
             DbContextB.SP_ADD_ActivityMonitor(pSessionID, pUserID, pIP, pLoginGUID, Data, Activity, URL);
-
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
         }
 
         public static void SessionStop(string pSessionID, int pUserID)
         {
+            try { 
             DbContextB.SP_SBPSessionStop(pSessionID, pUserID);
-
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
         }
 
 
@@ -2436,7 +3027,16 @@ namespace DataAccessLayer
 
         public static List<SP_GetSBPBlotterOpeningClosingBalanceDIfferential_Result> GetAllBlotterOpeningClosingBalanceDifferential(int BranchID, int CurID, int BR, string DateVal)
         {
-            return DbContextB.SP_GetSBPBlotterOpeningClosingBalanceDIfferential(BranchID, CurID, BR,DateVal).ToList();
+            List<SP_GetSBPBlotterOpeningClosingBalanceDIfferential_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GetSBPBlotterOpeningClosingBalanceDIfferential(BranchID, CurID, BR, DateVal).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
 
 
@@ -2467,6 +3067,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 status = false;
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
             return status;
         }
@@ -2476,8 +3077,16 @@ namespace DataAccessLayer
         //*****************************************************
         public static SP_GetAllBlotterCurrencyById_Result GetAllCurrenciesbyid(int userId)
         {
-            var result = DbContextB.SP_GetAllBlotterCurrencyById(userId).FirstOrDefault();
-            return result;
+            SP_GetAllBlotterCurrencyById_Result results = null;
+            try
+            {
+                results = DbContextB.SP_GetAllBlotterCurrencyById(userId).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
 
         //*****************************************************
@@ -2486,7 +3095,16 @@ namespace DataAccessLayer
 
         public static List<SP_GetAllNostroBankList_Result> GetAllNostroBankList(int currId)
         {
-            return DbContextB.SP_GetAllNostroBankList(currId).ToList();
+            List<SP_GetAllNostroBankList_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GetAllNostroBankList(currId).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
 
         #endregion
@@ -2496,12 +3114,30 @@ namespace DataAccessLayer
         //*****************************************************
         public static List<SP_GetAllRsfTTTBO_Result> GetAllRSFTT(int BR,DateTime CurDate)
         {
-            return DbContextB.SP_GetAllRsfTTTBO(BR,CurDate).ToList();
+            List< SP_GetAllRsfTTTBO_Result > results = null;
+            try
+            {
+                results = DbContextB.SP_GetAllRsfTTTBO(BR, CurDate).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
 
         public static List<SP_GetAllRsfTTTBO_Dashboard_Result> GetAllRSFTT_Dasboard(int BR, DateTime CurDate)
         {
-            return DbContextB.SP_GetAllRsfTTTBO_Dashboard(BR, CurDate).ToList();
+            List<SP_GetAllRsfTTTBO_Dashboard_Result> results = null;
+            try
+            {
+                results = DbContextB.SP_GetAllRsfTTTBO_Dashboard(BR, CurDate).ToList();
+            }
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
+            }
+            return results;
         }
     }
 }
