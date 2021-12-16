@@ -228,11 +228,8 @@ namespace DataAccessLayer
 
                     ProjItems.Proj_InFlow = ProjItem.Proj_InFlow;
                     ProjItems.Proj_OutFlow = ProjItem.Proj_OutFlow;
-
                     ProjItems.Custy = ProjItem.Custy;
                     ProjItems.RSF_NBP = ProjItem.RSF_NBP;
-
-                    ProjItems.Date = ProjItem.Date;
                     ProjItems.Note = ProjItem.Note;
                     ProjItems.UpdateDate = ProjItem.UpdateDate;
                     ProjItems.UserID = ProjItem.UserID;
@@ -2857,7 +2854,6 @@ namespace DataAccessLayer
                     DmmoItems.PakistanBalance = DMMOItem.PakistanBalance;
                     DmmoItems.BalanceDifference = DMMOItem.BalanceDifference;
                     DmmoItems.SBPBalanace = DMMOItem.SBPBalanace;
-                    DmmoItems.Date = DMMOItem.Date;
                     DmmoItems.Note = DMMOItem.Note;
                     DmmoItems.UpdateDate = DMMOItem.UpdateDate;
                     DmmoItems.UserID = DMMOItem.UserID;

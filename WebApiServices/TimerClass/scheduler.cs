@@ -143,8 +143,8 @@ namespace WebApiServices.TimerClass
 
                     if (FillFwdDumpBlotter.FwdTimer != null)
                     {
-                        if (FillRegDumpBlotter.RegTimer.Enabled)
-                            FillRegDumpBlotter.Stop();
+                        if (FillFwdDumpBlotter.FwdTimer.Enabled)
+                            FillFwdDumpBlotter.Stop();
                     }
                 }
             }
