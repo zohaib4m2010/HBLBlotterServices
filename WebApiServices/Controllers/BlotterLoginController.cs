@@ -6,42 +6,25 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Results;
+using WebApiServices.Classes;
 using WebApiServices.Models;
 using WebApiServices.Repository;
+using WebApiServices.TimerClass;
 
 namespace WebApiServices.Controllers
 {
     public class BlotterLoginController : ApiController
     {
-    
         // GET:   
         [HttpPost]
-        public JsonResult<List<Models.SP_SBPGetLoginInfo_Result>> GetAllBlotterLogin(UserProfile up)
+        public string GetAllBlotterLogin(UserProfile up)
         {
-            EntityMapperBlotterLogin<DataAccessLayer.SP_SBPGetLoginInfo_Result, Models.SP_SBPGetLoginInfo_Result> mapObj = 
-                new EntityMapperBlotterLogin<DataAccessLayer.SP_SBPGetLoginInfo_Result, Models.SP_SBPGetLoginInfo_Result>();
-
-            List<DataAccessLayer.SP_SBPGetLoginInfo_Result> blotterList = DAL.GetBlotterLogin( up.UserName,  up.Password);
-            List<Models.SP_SBPGetLoginInfo_Result> blotter = new List<Models.SP_SBPGetLoginInfo_Result>();
-            foreach (var item in blotterList)
-            {
-                blotter.Add(mapObj.Translate(item));
-            }
-            return Json<List<Models.SP_SBPGetLoginInfo_Result>>(blotter);
+            return Utilities.GetBlotterLogin(up.UserName, up.Password);
         }
         [HttpPost]
-        public JsonResult<List<Models.SP_SBPGetLoginInfo_Result>> GetAllBlotterLoginById(int id)
+        public string GetAllBlotterLoginById(int id)
         {
-            EntityMapperBlotterLogin<DataAccessLayer.SP_SBPGetLoginInfoById_Result, Models.SP_SBPGetLoginInfo_Result> mapObj =
-                new EntityMapperBlotterLogin<DataAccessLayer.SP_SBPGetLoginInfoById_Result, Models.SP_SBPGetLoginInfo_Result>();
-
-            List<DataAccessLayer.SP_SBPGetLoginInfoById_Result> blotterList = DAL.GetBlotterLoginById(id);
-            List<Models.SP_SBPGetLoginInfo_Result> blotter = new List<Models.SP_SBPGetLoginInfo_Result>();
-            foreach (var item in blotterList)
-            {
-                blotter.Add(mapObj.Translate(item));
-            }
-            return Json<List<Models.SP_SBPGetLoginInfo_Result>>(blotter);
+            return Utilities.GetBlotterLoginById(id);
         }
 
         [HttpPost]
