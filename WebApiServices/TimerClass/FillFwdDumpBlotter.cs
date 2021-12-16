@@ -75,9 +75,8 @@ namespace WebApiServices.TimerClass
             if (DateTime.Now.ToLocalTime() >= start && DateTime.Now.ToLocalTime() <= end)
             {
                 Utilities.WriteLogs(MethodBase.GetCurrentMethod().Name, "Fwd Dump Started", "");
-                //DAL.TESTRECONTEST("OnTimedEvent if condition true");
-                DAL.FillFwdDumBlotterBR1();
-                DAL.FillFwdDumBlotterBR2();
+                Utilities.FillFwdDumBlotterBR1();
+                Utilities.FillFwdDumBlotterBR2();
             }
             else
             {

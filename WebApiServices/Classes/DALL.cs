@@ -15,7 +15,7 @@ namespace WebApiServices.Classes
 
         private string GetConnectionString()
         {
-            return "Data Source=.;Initial Catalog=WebBlotter;Integrated Security=True;Pooling=True;Asynchronous Processing=False;MultipleActiveResultSets=True;Connect Timeout=0;";
+            return ConfigurationManager.AppSettings["BlotterEntityDALL"].ToString();//"Data Source=.;Initial Catalog=WebBlotter;Integrated Security=True;Pooling=True;Asynchronous Processing=False;MultipleActiveResultSets=True;Connect Timeout=0;";
         }
 
         public DataSet GetData(String spName, NameValueCollection nv)
