@@ -24,7 +24,6 @@
     </NuGetPackageImportStamp>
     <Use64BitIISExpress />
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,7 +33,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -43,7 +41,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
@@ -65,7 +62,6 @@
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
@@ -76,6 +72,8 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
@@ -104,13 +102,13 @@
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
     </Reference>
@@ -133,11 +131,12 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Classes\DAL.cs" />
+    <Compile Include="Classes\DALL.cs" />
     <Compile Include="Classes\SBP_WebApiResponse.cs" />
     <Compile Include="Controllers\BlotterBai_MuajjalController.cs" />
     <Compile Include="Controllers\BlotterBalanceDIfferentialController.cs" />
     <Compile Include="Controllers\BlotterBreakupsController.cs" />
+    <Compile Include="Controllers\BlotterShedulerController.cs" />
     <Compile Include="Controllers\BlotterCRRReportCalcController.cs" />
     <Compile Include="Controllers\BlotterClearingController.cs" />
     <Compile Include="Controllers\BlotterController.cs" />
@@ -154,7 +153,6 @@
     <Compile Include="Controllers\BlotterReservedDiffController.cs" />
     <Compile Include="Controllers\BlotterRSFController.cs" />
     <Compile Include="Controllers\BlotterRTGSController.cs" />
-    <Compile Include="Controllers\BlotterShedulerController.cs" />
     <Compile Include="Controllers\BlotterTBOController.cs" />
     <Compile Include="Controllers\BlotterTradeController.cs" />
     <Compile Include="Controllers\ChangePasswordController.cs" />
@@ -170,9 +168,9 @@
     </Compile>
     <Compile Include="Models\BlotterRSFTTDashboard.cs" />
     <Compile Include="Models\BlotterRSFTT.cs" />
-    <Compile Include="Models\BlotterSBP_Sheduler.cs" />
     <Compile Include="Models\GazettedHoliday.cs" />
     <Compile Include="Models\IssueTypeTitles.cs" />
+    <Compile Include="Models\BlotterSBP_Sheduler.cs" />
     <Compile Include="Models\SBP_BlotterCRRReportCalcSetup.cs" />
     <Compile Include="Models\SBP_BlotterCRRFINCONPeriods.cs" />
     <Compile Include="Models\SBP_BlotterOutRight.cs" />
@@ -214,6 +212,7 @@
     <Compile Include="Models\SP_FXBlotter_Result.cs" />
     <Compile Include="Models\SP_GetAllUserPageRelations_Result.cs" />
     <Compile Include="Models\sp_GetAllUsers_Result.cs" />
+    <Compile Include="Models\SP_GetSBPBlotterGetSheduler_Result.cs" />
     <Compile Include="Models\SP_GetAll_SBPBlotterClearing_Dashboard_Result.cs" />
     <Compile Include="Models\SP_GETAll_MAX_BlotterCRRReportCalcSetup_Result.cs" />
     <Compile Include="Models\SP_GetAll_SBPBlotterClearing_Result.cs" />
@@ -233,7 +232,6 @@
     <Compile Include="Models\SP_GetSBPBlotterCRD_Result.cs" />
     <Compile Include="Models\SP_GetSBPBlotterFRAuto_Result.cs" />
     <Compile Include="Models\SP_GetSBPBlotterFR_Result.cs" />
-    <Compile Include="Models\SP_GetSBPBlotterGetSheduler_Result.cs" />
     <Compile Include="Models\SP_GetSBPBlotterGH_Result.cs" />
     <Compile Include="Models\SP_GetSBPBlotterOpeningClosingBalanceDIfferential_Result.cs" />
     <Compile Include="Models\SP_GetSBPBlotterOR_Result.cs" />
@@ -261,6 +259,7 @@
     <Compile Include="Repository\EntityMapperBlotterBai_Muajjal.cs" />
     <Compile Include="Repository\EntityMapperBlotterBreakups.cs" />
     <Compile Include="Repository\EntityMappeBlotterCRRReportCalcSetup.cs" />
+    <Compile Include="Repository\EntityMapperBlotterSheduler.cs" />
     <Compile Include="Repository\EntityMapperBlotterFCY.cs" />
     <Compile Include="Repository\EntityMapperBlotterFundsTransfer.cs" />
     <Compile Include="Repository\EntityMapperBlotterOpenBal.cs" />
@@ -270,7 +269,6 @@
     <Compile Include="Repository\EntityMapperBlotterRSF.cs" />
     <Compile Include="Repository\EntityMapperBlotterRTGS.cs" />
     <Compile Include="Repository\EntityMapperBlotterDailyFlows.cs" />
-    <Compile Include="Repository\EntityMapperBlotterSheduler.cs" />
     <Compile Include="Repository\EntityMapperBlotterTrade.cs" />
     <Compile Include="Repository\EntityMapperBlotter.cs" />
     <Compile Include="Repository\EntityMapperBlotterClearing.cs" />
@@ -284,8 +282,8 @@
     <Compile Include="Repository\EntityMapperUsersProfile.cs" />
     <Compile Include="Repository\EntityMapperWebPages.cs" />
     <Compile Include="TimerClass\FillFwdDumpBlotter.cs" />
-    <Compile Include="TimerClass\FillRegDumpBlotter.cs" />
     <Compile Include="TimerClass\scheduler.cs" />
+    <Compile Include="TimerClass\FillRegDumpBlotter.cs" />
     <Compile Include="TimerClass\Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -304,7 +302,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\BlotterOutRight\" />
-    <Folder Include="Views\BlotterSheduler\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">

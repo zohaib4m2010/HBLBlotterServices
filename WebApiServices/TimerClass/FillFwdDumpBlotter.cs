@@ -11,7 +11,7 @@ namespace WebApiServices.TimerClass
 {
     public class FillFwdDumpBlotter
     {
-        public static System.Timers.Timer FwdTimer=new Timer();
+        public static System.Timers.Timer FwdTimer = new Timer();
         public static bool status;
         public static DateTime start;
         public static DateTime end;
@@ -30,7 +30,8 @@ namespace WebApiServices.TimerClass
                     SetTimer();
                     FwdTimer.Start();
                 }
-                catch (Exception ex) {
+                catch (Exception ex)
+                {
                     //DAL.TESTRECONTEST(ex.Message.ToString());
                     //.TESTRECONTEST(ex.InnerException.ToString());
                 }

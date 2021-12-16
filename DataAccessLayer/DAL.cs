@@ -29,7 +29,7 @@ namespace DataAccessLayer
                     Directory.CreateDirectory(fileLocation);
                 }
                 //Pass the filepath and filename to the StreamWriter Constructor
-                using (StreamWriter sw = new StreamWriter((fileLocation+ "\\Logs_" + DateTime.Now.ToString("yyyyyddMM") + ".txt"), append: true))
+                using (StreamWriter sw = new StreamWriter((fileLocation + "\\Logs_" + DateTime.Now.ToString("yyyyyddMM") + ".txt"), append: true))
                 {
                     sw.WriteLine("Method | " + method);
                     sw.WriteLine("Time | " + DateTime.Now.ToString("HH:mm:ss"));
@@ -47,8 +47,8 @@ namespace DataAccessLayer
             {
             }
         }
-        
-        public static List<SP_SBPBlotter_Result> GetAllBlotterData(String Br, String DataType, String CurrentDate,bool LoadData)
+
+        public static List<SP_SBPBlotter_Result> GetAllBlotterData(String Br, String DataType, String CurrentDate, bool LoadData)
         {
             List<SP_SBPBlotter_Result> results = null;
             try
@@ -104,7 +104,7 @@ namespace DataAccessLayer
             return results;
         }
 
-        public static List<SP_GetOPICSManualData_Result> GetOPICSManualData(int BR, DateTime Date,string Flag)
+        public static List<SP_GetOPICSManualData_Result> GetOPICSManualData(int BR, DateTime Date, string Flag)
         {
             List<SP_GetOPICSManualData_Result> results = null;
             try
@@ -120,7 +120,7 @@ namespace DataAccessLayer
 
 
 
-        public static SP_GetOpeningBalance_Result GetOpeningBalance(int BR,DateTime Date)
+        public static SP_GetOpeningBalance_Result GetOpeningBalance(int BR, DateTime Date)
         {
             SP_GetOpeningBalance_Result results = null;
             try
@@ -155,7 +155,7 @@ namespace DataAccessLayer
             try
             {
                 DbContextB.SP_UpdateBlotterSBP_Sheduler(blotterSheduler.SID, blotterSheduler.RegTimerStatus, blotterSheduler.RegStartTime, blotterSheduler.RegEndTime, blotterSheduler.RegFreq, blotterSheduler.RegIsUpdated, blotterSheduler.RegIsRun, blotterSheduler.FwdTimerStatus, blotterSheduler.FwdStartTime, blotterSheduler.FwdEndTime, blotterSheduler.FwdFreq, blotterSheduler.FwdIsUpdated, blotterSheduler.FwdIsRun);
-                
+
 
                 status = true;
                 //}
@@ -334,7 +334,7 @@ namespace DataAccessLayer
             try
             {
 
-                DbContextB.SP_InsertBlotterReconBreakups(RBItem.DataType,RBItem.TTID,RBItem.RECON_Date,RBItem.RECONCOde,RBItem.RECON_InFlow,RBItem.RECON_OutFLow,RBItem.Note,RBItem.UserID,RBItem.BR,RBItem.BID);
+                DbContextB.SP_InsertBlotterReconBreakups(RBItem.DataType, RBItem.TTID, RBItem.RECON_Date, RBItem.RECONCOde, RBItem.RECON_InFlow, RBItem.RECON_OutFLow, RBItem.Note, RBItem.UserID, RBItem.BR, RBItem.BID);
                 status = true;
 
             }
@@ -352,7 +352,7 @@ namespace DataAccessLayer
             {
 
 
-                DbContextB.SP_UpdateBlotterReconBreakups(RBItem.SNo,RBItem.DataType, RBItem.TTID, RBItem.RECON_Date, RBItem.RECONCOde, RBItem.RECON_InFlow, RBItem.RECON_OutFLow, RBItem.Note, RBItem.UserID, RBItem.BR, RBItem.BID);
+                DbContextB.SP_UpdateBlotterReconBreakups(RBItem.SNo, RBItem.DataType, RBItem.TTID, RBItem.RECON_Date, RBItem.RECONCOde, RBItem.RECON_InFlow, RBItem.RECON_OutFLow, RBItem.Note, RBItem.UserID, RBItem.BR, RBItem.BID);
                 status = true;
 
             }
@@ -453,7 +453,7 @@ namespace DataAccessLayer
             bool status;
             try
             {
-                DbContextB.SP_InsertBlotterOutright(OutRightIdItem.DataType, OutRightIdItem.Bank, OutRightIdItem.Rate, OutRightIdItem.Issue_Date, OutRightIdItem.IssueType, OutRightIdItem.Broker, OutRightIdItem.InFlow, OutRightIdItem.OutFLow,OutRightIdItem.Date, OutRightIdItem.Note, OutRightIdItem.UserID, OutRightIdItem.BR);
+                DbContextB.SP_InsertBlotterOutright(OutRightIdItem.DataType, OutRightIdItem.Bank, OutRightIdItem.Rate, OutRightIdItem.Issue_Date, OutRightIdItem.IssueType, OutRightIdItem.Broker, OutRightIdItem.InFlow, OutRightIdItem.OutFLow, OutRightIdItem.Date, OutRightIdItem.Note, OutRightIdItem.UserID, OutRightIdItem.BR);
                 status = true;
             }
             catch (Exception ex)
@@ -480,13 +480,13 @@ namespace DataAccessLayer
             return status;
         }
 
-        public static bool DeleteOutRight(int id,int UserId)
+        public static bool DeleteOutRight(int id, int UserId)
         {
             bool status;
             try
             {
-                DbContextB.SP_DeleteBlotterOutright(id,UserId);
-                
+                DbContextB.SP_DeleteBlotterOutright(id, UserId);
+
                 status = true;
             }
             catch (Exception ex)
@@ -528,7 +528,7 @@ namespace DataAccessLayer
         {
             try
             {
-                DbContextB.SP_ReconcileOPICSManualDataFwd(2, DateTime.Now,true);
+                DbContextB.SP_ReconcileOPICSManualDataFwd(2, DateTime.Now, true);
             }
             catch (Exception ex)
             {
@@ -578,12 +578,12 @@ namespace DataAccessLayer
             return results;
         }
 
-        public static bool InsertGH(string HolidayTitle,string GHDescription,DateTime GHDate, int UserID)
+        public static bool InsertGH(string HolidayTitle, string GHDescription, DateTime GHDate, int UserID)
         {
             bool status;
             try
             {
-                DbContextB.SP_InsertHolidays(HolidayTitle,GHDescription,GHDate,UserID);
+                DbContextB.SP_InsertHolidays(HolidayTitle, GHDescription, GHDate, UserID);
                 status = true;
             }
             catch (Exception ex)
@@ -595,13 +595,13 @@ namespace DataAccessLayer
             return status;
         }
 
-        public static bool UpdateGH(int GHID,string HolidayTitle, string GHDescription, DateTime GHDate, int UserID)
+        public static bool UpdateGH(int GHID, string HolidayTitle, string GHDescription, DateTime GHDate, int UserID)
         {
             bool status;
             try
             {
 
-                DbContextB.SP_UpdateHolidays(GHID,HolidayTitle, GHDescription, GHDate, UserID);
+                DbContextB.SP_UpdateHolidays(GHID, HolidayTitle, GHDescription, GHDate, UserID);
                 status = true;
             }
             catch (Exception ex)
@@ -636,7 +636,7 @@ namespace DataAccessLayer
         {
             try
             {
-               // DbContextB.SP_SBPFillDumBlotter(DateTime.Now,1);
+                // DbContextB.SP_SBPFillDumBlotter(DateTime.Now,1);
                 DbContextB.SP_ReconcileOPICSManualData(1, DateTime.Now);
             }
             catch (Exception ex)
@@ -737,7 +737,7 @@ namespace DataAccessLayer
             bool status;
             try
             {
-                List<SBP_BlotterCRRFINCON> GetCount = DbContextB.SBP_BlotterCRRFINCON.Where(p => CRRFINCONItem.StartDate >= p.StartDate && CRRFINCONItem.StartDate <= p.EndDate && p.BR == CRRFINCONItem.BR && p.CurID==CRRFINCONItem.CurID).ToList();
+                List<SBP_BlotterCRRFINCON> GetCount = DbContextB.SBP_BlotterCRRFINCON.Where(p => CRRFINCONItem.StartDate >= p.StartDate && CRRFINCONItem.StartDate <= p.EndDate && p.BR == CRRFINCONItem.BR && p.CurID == CRRFINCONItem.CurID).ToList();
                 if (GetCount.Count > 0)
                 {
                     status = false;
@@ -1089,12 +1089,12 @@ namespace DataAccessLayer
             return results;
         }
 
-        public static bool InsertUserRole(string RoleName,bool isActive)
+        public static bool InsertUserRole(string RoleName, bool isActive)
         {
             bool status;
             try
             {
-                DbContextB.SP_InsertUserRole(RoleName,isActive);
+                DbContextB.SP_InsertUserRole(RoleName, isActive);
                 status = true;
             }
             catch (Exception ex)
@@ -1105,12 +1105,12 @@ namespace DataAccessLayer
             return status;
         }
 
-        public static bool UpdateUserRole(int URID,string RoleName, bool isActive)
+        public static bool UpdateUserRole(int URID, string RoleName, bool isActive)
         {
             bool status;
             try
             {
-                DbContextB.SP_UPDATEUserRole(URID,RoleName, isActive);
+                DbContextB.SP_UPDATEUserRole(URID, RoleName, isActive);
                 status = true;
             }
             catch (Exception ex)
@@ -1224,12 +1224,12 @@ namespace DataAccessLayer
             }
             return status;
         }
-        public static bool UpdateUserPageRelation(int UPRID,int URID, int WPID, bool DateChangeAccess, bool EditAccess, bool DeleteAccess)
+        public static bool UpdateUserPageRelation(int UPRID, int URID, int WPID, bool DateChangeAccess, bool EditAccess, bool DeleteAccess)
         {
             bool status;
             try
             {
-                DbContextB.SP_UPDATEUserPageRelation(UPRID,URID,WPID,DateChangeAccess,EditAccess,DeleteAccess);
+                DbContextB.SP_UPDATEUserPageRelation(UPRID, URID, WPID, DateChangeAccess, EditAccess, DeleteAccess);
                 status = true;
             }
             catch (Exception ex)
@@ -1285,7 +1285,7 @@ namespace DataAccessLayer
             return results;
         }
 
-        public static bool InsertWebPages(string PageName,string ControllerName,string DisplayName,string PageDescription, int BlotterType,bool isActive)
+        public static bool InsertWebPages(string PageName, string ControllerName, string DisplayName, string PageDescription, int BlotterType, bool isActive)
         {
             bool status;
             try
@@ -1303,13 +1303,13 @@ namespace DataAccessLayer
             return status;
         }
 
-        public static bool UpdateWebPages(int WPID,string PageName, string ControllerName, string DisplayName, string PageDescription, int BlotterType, bool isActive)
+        public static bool UpdateWebPages(int WPID, string PageName, string ControllerName, string DisplayName, string PageDescription, int BlotterType, bool isActive)
         {
             bool status;
             try
             {
 
-                DbContextB.SP_UpdateWebPages(WPID,PageName, ControllerName, DisplayName, PageDescription, isActive, BlotterType);
+                DbContextB.SP_UpdateWebPages(WPID, PageName, ControllerName, DisplayName, PageDescription, isActive, BlotterType);
                 status = true;
             }
             catch (Exception ex)
@@ -1488,8 +1488,9 @@ namespace DataAccessLayer
                 {
                     status = false;
                 }
-                else {
-                    DbContextB.SP_InsertLoginInfo(item.UserName, item.Password, item.ContactNo, item.Email,item.Department, item.BranchID, item.isActive, item.isConventional, item.isislamic, item.CreateDate, item.BlotterType, item.URID);
+                else
+                {
+                    DbContextB.SP_InsertLoginInfo(item.UserName, item.Password, item.ContactNo, item.Email, item.Department, item.BranchID, item.isActive, item.isConventional, item.isislamic, item.CreateDate, item.BlotterType, item.URID);
                     DbContextB.SaveChanges();
                     status = true;
                 }
@@ -1513,8 +1514,9 @@ namespace DataAccessLayer
                 {
                     status = false;
                 }
-                else {
-                    DbContextB.SP_UpdateLoginInfo(Item.Id,Item.UserName, Item.Password, Item.ContactNo, Item.Email,Item.BranchID, Item.Department, Item.isActive, Item.isConventional, Item.isislamic, Item.CreateDate, Item.BlotterType, Item.URID);
+                else
+                {
+                    DbContextB.SP_UpdateLoginInfo(Item.Id, Item.UserName, Item.Password, Item.ContactNo, Item.Email, Item.BranchID, Item.Department, Item.isActive, Item.isConventional, Item.isislamic, Item.CreateDate, Item.BlotterType, Item.URID);
                     DbContextB.SaveChanges();
                     status = true;
                 }
@@ -1727,9 +1729,9 @@ namespace DataAccessLayer
             bool status;
             try
             {
-                    DbContextB.SBP_BlotterClearing.Add(ClearingItem);
-                    DbContextB.SaveChanges();
-                    status = true;
+                DbContextB.SBP_BlotterClearing.Add(ClearingItem);
+                DbContextB.SaveChanges();
+                status = true;
             }
             catch (Exception ex)
             {
@@ -1744,7 +1746,7 @@ namespace DataAccessLayer
             bool status;
             try
             {
-                    SBP_BlotterClearing CLRItems = DbContextB.SBP_BlotterClearing.Where(p => p.SNo == ClearingItem.SNo).FirstOrDefault();
+                SBP_BlotterClearing CLRItems = DbContextB.SBP_BlotterClearing.Where(p => p.SNo == ClearingItem.SNo).FirstOrDefault();
                 if (CLRItems != null)
                 {
 
@@ -1758,8 +1760,8 @@ namespace DataAccessLayer
                     CLRItems.UpdateDate = ClearingItem.UpdateDate;
                     DbContextB.SaveChanges();
                 }
-              
-                    status = true;
+
+                status = true;
             }
             catch (Exception ex)
             {
@@ -1799,7 +1801,7 @@ namespace DataAccessLayer
             bool status;
             try
             {
-              
+
                 DbContextB.SBP_BlotterCRRReportCalcSetup.Add(CalcItem);
                 DbContextB.SaveChanges();
                 status = true;
@@ -1817,7 +1819,7 @@ namespace DataAccessLayer
             bool status;
             try
             {
-               
+
                 SBP_BlotterCRRReportCalcSetup CLRItems = DbContextB.SBP_BlotterCRRReportCalcSetup.Where(p => p.ID == CalcItem.ID).FirstOrDefault();
                 if (CLRItems != null)
                 {
@@ -1825,7 +1827,7 @@ namespace DataAccessLayer
                     CLRItems.CalcVal2 = CalcItem.CalcVal2;
                     CLRItems.StartDate = CalcItem.StartDate;
                     CLRItems.EndDate = CalcItem.EndDate;
-              
+
                     DbContextB.SaveChanges();
                 }
 
@@ -1892,7 +1894,8 @@ namespace DataAccessLayer
 
 
                 }
-                else {
+                else
+                {
                     FundsTransferItem.DataType = "SBP";
                     if (FundsTransferItem.FT_InFlow != 0)
                     {
@@ -1954,7 +1957,8 @@ namespace DataAccessLayer
                         FundsTransferItem.FT_OutFLow = 0;
                     }
                 }
-                else {
+                else
+                {
                     FundsTransferItem.DataType = "SBP";
                     if (FundsTransferItem.FT_InFlow != 0)
                     {
@@ -2015,7 +2019,8 @@ namespace DataAccessLayer
                             }
                         }
                     }
-                    else {
+                    else
+                    {
                         FundsTransferItem = DbContextB.SBP_BlotterFundsTransfer.Where(p => p.FT_Date == CLRItems2.FT_Date && p.FT_OutFLow == CLRItems2.FT_OutFLow).ToList();
                         if (FundsTransferItem.Count > 0)
                         {
@@ -2141,7 +2146,7 @@ namespace DataAccessLayer
         //Change Password Producers
         //*****************************************************
 
-        public static bool UpdateUserPassword(int UserId,string OldPassword,string NewPassword)
+        public static bool UpdateUserPassword(int UserId, string OldPassword, string NewPassword)
         {
             bool status;
             try
@@ -2224,9 +2229,9 @@ namespace DataAccessLayer
             bool status;
             try
             {
-                    DbContextB.SBP_BlotterRTGS.Add(RTGSItem);
-                    DbContextB.SaveChanges();
-                    status = true;
+                DbContextB.SBP_BlotterRTGS.Add(RTGSItem);
+                DbContextB.SaveChanges();
+                status = true;
             }
             catch (Exception ex)
             {
@@ -2242,20 +2247,20 @@ namespace DataAccessLayer
             bool status;
             try
             {
-                    SBP_BlotterRTGS RTGSItems = DbContextB.SBP_BlotterRTGS.Where(p => p.SNo == RTGSItem.SNo).FirstOrDefault();
-                    if (RTGSItems != null)
+                SBP_BlotterRTGS RTGSItems = DbContextB.SBP_BlotterRTGS.Where(p => p.SNo == RTGSItem.SNo).FirstOrDefault();
+                if (RTGSItems != null)
                 {
                     RTGSItems.DataType = RTGSItem.DataType;
                     RTGSItems.TTID = RTGSItem.TTID;
                     RTGSItems.RTGS_Date = RTGSItem.RTGS_Date;
                     RTGSItems.RTGS_InFlow = RTGSItem.RTGS_InFlow;
-                        RTGSItems.RTGS_OutFLow = RTGSItem.RTGS_OutFLow;
-                        RTGSItems.CurID = RTGSItem.CurID;
-                        RTGSItems.Note = RTGSItem.Note;
-                        RTGSItems.UpdateDate = RTGSItem.UpdateDate;
+                    RTGSItems.RTGS_OutFLow = RTGSItem.RTGS_OutFLow;
+                    RTGSItems.CurID = RTGSItem.CurID;
+                    RTGSItems.Note = RTGSItem.Note;
+                    RTGSItems.UpdateDate = RTGSItem.UpdateDate;
                     DbContextB.SaveChanges();
-                    }
-                    status = true;
+                }
+                status = true;
             }
             catch (Exception ex)
             {
@@ -2339,7 +2344,7 @@ namespace DataAccessLayer
             bool status;
             try
             {
-                DbContextB.SP_UpdateOpeningBalance(OpenBalItem.Id,OpenBalItem.OpenBalActual,OpenBalItem.AdjOpenBal,OpenBalItem.BalDate,OpenBalItem.DataType,OpenBalItem.UserID,OpenBalItem.CreateDate,OpenBalItem.UpdateDate,OpenBalItem.BR,OpenBalItem.BID,OpenBalItem.CurID,OpenBalItem.Flag,OpenBalItem.EstimatedOpenBal);
+                DbContextB.SP_UpdateOpeningBalance(OpenBalItem.Id, OpenBalItem.OpenBalActual, OpenBalItem.AdjOpenBal, OpenBalItem.BalDate, OpenBalItem.DataType, OpenBalItem.UserID, OpenBalItem.CreateDate, OpenBalItem.UpdateDate, OpenBalItem.BR, OpenBalItem.BID, OpenBalItem.CurID, OpenBalItem.Flag, OpenBalItem.EstimatedOpenBal);
                 status = true;
             }
             catch (Exception ex)
@@ -2728,7 +2733,7 @@ namespace DataAccessLayer
         {
             bool status;
             try
-            {   
+            {
 
                 DbContextB.SBP_BlotterTrade.Add(TradeItem);
                 DbContextB.SaveChanges();
@@ -2963,16 +2968,18 @@ namespace DataAccessLayer
             {
                 results = DbContextB.SP_SBPGetLoginInfo(userName, password).ToList();
             }
-            catch(Exception ex) {
-                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name,ex.Message,ex.InnerException.ToString());
+            catch (Exception ex)
+            {
+                DAL.WriteLogs(MethodBase.GetCurrentMethod().Name, ex.Message, ex.InnerException.ToString());
             }
-                return results;
+            return results;
         }
         public static List<SP_SBPGetLoginInfoById_Result> GetBlotterLoginById(int id)
         {
             List<SP_SBPGetLoginInfoById_Result> results = null;
-            try { 
-            results = DbContextB.SP_SBPGetLoginInfoById(id).ToList();
+            try
+            {
+                results = DbContextB.SP_SBPGetLoginInfoById(id).ToList();
             }
             catch (Exception ex)
             {
@@ -2983,8 +2990,9 @@ namespace DataAccessLayer
 
         public static void SessionStart(string pSessionID, int pUserID, string pIP, string pLoginGUID, Nullable<DateTime> pLoginTime, Nullable<DateTime> pExpires)
         {
-            try { 
-            DbContextB.SP_ADD_SessionStart(pSessionID, pUserID, pIP, pLoginGUID, pLoginTime, pExpires);
+            try
+            {
+                DbContextB.SP_ADD_SessionStart(pSessionID, pUserID, pIP, pLoginGUID, pLoginTime, pExpires);
             }
             catch (Exception ex)
             {
@@ -2994,8 +3002,9 @@ namespace DataAccessLayer
         }
         public static void ActivityMonitor(string pSessionID, int pUserID, string pIP, string pLoginGUID, string Data, string Activity, string URL)
         {
-            try { 
-            DbContextB.SP_ADD_ActivityMonitor(pSessionID, pUserID, pIP, pLoginGUID, Data, Activity, URL);
+            try
+            {
+                DbContextB.SP_ADD_ActivityMonitor(pSessionID, pUserID, pIP, pLoginGUID, Data, Activity, URL);
             }
             catch (Exception ex)
             {
@@ -3005,8 +3014,9 @@ namespace DataAccessLayer
 
         public static void SessionStop(string pSessionID, int pUserID)
         {
-            try { 
-            DbContextB.SP_SBPSessionStop(pSessionID, pUserID);
+            try
+            {
+                DbContextB.SP_SBPSessionStop(pSessionID, pUserID);
             }
             catch (Exception ex)
             {
@@ -3017,7 +3027,7 @@ namespace DataAccessLayer
 
 
         #region  Add by Shakir
-       
+
 
 
 
@@ -3112,9 +3122,9 @@ namespace DataAccessLayer
         //*****************************************************
         //RSF/TT Procedures
         //*****************************************************
-        public static List<SP_GetAllRsfTTTBO_Result> GetAllRSFTT(int BR,DateTime CurDate)
+        public static List<SP_GetAllRsfTTTBO_Result> GetAllRSFTT(int BR, DateTime CurDate)
         {
-            List< SP_GetAllRsfTTTBO_Result > results = null;
+            List<SP_GetAllRsfTTTBO_Result> results = null;
             try
             {
                 results = DbContextB.SP_GetAllRsfTTTBO(BR, CurDate).ToList();

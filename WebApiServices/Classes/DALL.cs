@@ -5,16 +5,17 @@ using System.Web;
 using System.Data;
 using System.Collections.Specialized;
 using System.Data.SqlClient;
+using System.Configuration;
 
-namespace PocketDCR2.Classes
+namespace WebApiServices.Classes
 {
-    public class DAL
+    public class DALL
     {
         #region Public Functions
 
         private string GetConnectionString()
         {
-            return "";//ConfigurationManager.AppSettings["BlotterEntities"].toString();
+            return "Data Source=.;Initial Catalog=WebBlotter;Integrated Security=True;Pooling=True;Asynchronous Processing=False;MultipleActiveResultSets=True;Connect Timeout=0;";
         }
 
         public DataSet GetData(String spName, NameValueCollection nv)

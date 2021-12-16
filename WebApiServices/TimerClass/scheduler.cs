@@ -27,9 +27,8 @@ namespace WebApiServices.TimerClass
         {
             if (status)
             {
-                DAL.SP_TemporyLoop();
-                //SetTimer();
-                //aTimer.Start();
+                SetTimer();
+                aTimer.Start();
             }
         }
         public static void Stop()
@@ -55,7 +54,6 @@ namespace WebApiServices.TimerClass
         }
         private static void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
-
             if (DateTime.Now.ToLocalTime() >= start && DateTime.Now.ToLocalTime() <= end)
             {
                 if (FillRegDumpBlotter.RegTimer != null)
@@ -90,7 +88,8 @@ namespace WebApiServices.TimerClass
                             Utilities.WriteLogs(MethodBase.GetCurrentMethod().Name, "Reg Scheduler Updated", "");
                             DAL.IsUpdateSheduler(1);
                         }
-                        else {
+                        else
+                        {
                             if (FillRegDumpBlotter.RegTimer != null)
                             {
                                 if (!FillRegDumpBlotter.RegTimer.Enabled)

@@ -345,6 +345,9 @@
     <Compile Include="SP_SBPGetLoginInfo_Result.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="SP_UpdateOpeningBalance_Result.cs">
+      <DependentUpon>BlotterEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="UserPageRelation.cs">
       <DependentUpon>BlotterEF.tt</DependentUpon>
     </Compile>

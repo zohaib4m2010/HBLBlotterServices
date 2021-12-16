@@ -1697,14 +1697,6 @@ warning 6002: The table/view 'WebBlotter.dbo.SBP_BlotterCRRReportFCY' does not h
           <Parameter Name="FwdIsUpdated" Type="bit" Mode="In" />
           <Parameter Name="FwdIsRun" Type="bit" Mode="In" />
         </Function>
-        <Function Name="SP_UpdateBranchBalanceByBranchId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ReconDate" Type="date" Mode="In" />
-          <Parameter Name="ReconInflow" Type="numeric" Mode="In" />
-          <Parameter Name="Recon_OutFLow" Type="numeric" Mode="In" />
-          <Parameter Name="UserID" Type="int" Mode="In" />
-          <Parameter Name="BR" Type="int" Mode="In" />
-          <Parameter Name="BID" Type="int" Mode="In" />
-        </Function>
         <Function Name="SP_UpdateDaysInBlotterReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DTLValue" Type="numeric" Mode="In" />
           <Parameter Name="StartDate" Type="datetime" Mode="In" />
@@ -3403,6 +3395,10 @@ warning 6002: The table/view 'WebBlotter.dbo.SBP_BlotterCRRReportFCY' does not h
             <Parameter Name="DateVal" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_GETAllRECONBreakupsTransactionTitles" ReturnType="Collection(BlotterEF.SP_GETAllRECONBreakupsTransactionTitles_Result)" />
+          <FunctionImport Name="SP_GetAllRsfTTTBO" ReturnType="Collection(BlotterEF.SP_GetAllRsfTTTBO_Result)" >
+            <Parameter Name="BR" Mode="In" Type="Int32" />
+            <Parameter Name="Date" Mode="In" Type="DateTime" />
+          </FunctionImport>
           <FunctionImport Name="SP_GETAllRTGSTransactionTitles" ReturnType="Collection(BlotterEF.SP_GETAllRTGSTransactionTitles_Result)" />
           <FunctionImport Name="SP_GETAllTBOTransactionTitles" ReturnType="Collection(BlotterEF.SP_GETAllTBOTransactionTitles_Result)" />
           <FunctionImport Name="SP_GETAllTradeTransactionTitles" ReturnType="Collection(BlotterEF.SP_GETAllTradeTransactionTitles_Result)" />
@@ -3597,7 +3593,7 @@ warning 6002: The table/view 'WebBlotter.dbo.SBP_BlotterCRRReportFCY' does not h
             <Parameter Name="BlotterType" Mode="In" Type="String" />
             <Parameter Name="URID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="SP_UpdateOpeningBalance">
+          <FunctionImport Name="SP_UpdateOpeningBalance" ReturnType="Collection(BlotterEF.SP_UpdateOpeningBalance_Result)">
             <Parameter Name="Id" Mode="In" Type="Int64" />
             <Parameter Name="OpenBalActual" Mode="In" Type="Decimal" />
             <Parameter Name="AdjOpenBal" Mode="In" Type="Decimal" />
@@ -3828,7 +3824,8 @@ warning 6002: The table/view 'WebBlotter.dbo.SBP_BlotterCRRReportFCY' does not h
             <Parameter Name="BR" Mode="In" Type="Int32" />
             <Parameter Name="DateVal" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_InsertBlotterOutright">
+          <FunctionImport Name="SP_UpdateBlotterOutright">
+            <Parameter Name="id" Mode="In" Type="Int64" />
             <Parameter Name="DataType" Mode="In" Type="String" />
             <Parameter Name="Bank" Mode="In" Type="String" />
             <Parameter Name="Rate" Mode="In" Type="Double" />
@@ -3842,8 +3839,7 @@ warning 6002: The table/view 'WebBlotter.dbo.SBP_BlotterCRRReportFCY' does not h
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="BR" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="SP_UpdateBlotterOutright">
-            <Parameter Name="id" Mode="In" Type="Int64" />
+          <FunctionImport Name="SP_InsertBlotterOutright">
             <Parameter Name="DataType" Mode="In" Type="String" />
             <Parameter Name="Bank" Mode="In" Type="String" />
             <Parameter Name="Rate" Mode="In" Type="Double" />
@@ -3863,11 +3859,7 @@ warning 6002: The table/view 'WebBlotter.dbo.SBP_BlotterCRRReportFCY' does not h
             <Parameter Name="id" Mode="In" Type="Int32" />
             <Parameter Name="Updated" Mode="In" Type="Boolean" />
           </FunctionImport>
-          <EntitySet Name="BlotterSBP_Sheduler" EntityType="BlotterEF.BlotterSBP_Sheduler" />
-          <FunctionImport Name="SP_GetAllRsfTTTBO" ReturnType="Collection(BlotterEF.SP_GetAllRsfTTTBO_Result)">
-            <Parameter Name="BR" Mode="In" Type="Int32" />
-            <Parameter Name="Date" Mode="In" Type="DateTime" />
-          </FunctionImport>
+          <FunctionImport Name="SP_TemporyLoop" />
           <FunctionImport Name="SP_UpdateBlotterSBP_Sheduler">
             <Parameter Name="SID" Mode="In" Type="Int32" />
             <Parameter Name="RegTimerStatus" Mode="In" Type="Boolean" />
@@ -3883,7 +3875,7 @@ warning 6002: The table/view 'WebBlotter.dbo.SBP_BlotterCRRReportFCY' does not h
             <Parameter Name="FwdIsUpdated" Mode="In" Type="Boolean" />
             <Parameter Name="FwdIsRun" Mode="In" Type="Boolean" />
           </FunctionImport>
-          <FunctionImport Name="SP_TemporyLoop" />
+          <EntitySet Name="BlotterSBP_Sheduler" EntityType="BlotterEF.BlotterSBP_Sheduler" />
         </EntityContainer>
         <ComplexType Name="SP_GetAll_SBPBlotterClearing_Result">
           <Property Type="Int64" Name="SNo" Nullable="false" />
@@ -3987,6 +3979,13 @@ warning 6002: The table/view 'WebBlotter.dbo.SBP_BlotterCRRReportFCY' does not h
         <ComplexType Name="SP_GETAllRECONBreakupsTransactionTitles_Result">
           <Property Type="Int32" Name="TTID" Nullable="false" />
           <Property Type="String" Name="TranctionTitle" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="SP_GetAllRsfTTTBO_Result">
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="6" />
+          <Property Type="Int64" Name="SNo" Nullable="false" />
+          <Property Type="DateTime" Name="TBO_Date" Nullable="true" />
+          <Property Type="Decimal" Name="Inflow" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="Outflow" Nullable="true" Precision="38" Scale="0" />
         </ComplexType>
         <ComplexType Name="SP_GETAllRTGSTransactionTitles_Result">
           <Property Type="Int32" Name="TTID" Nullable="false" />
@@ -4343,6 +4342,16 @@ warning 6002: The table/view 'WebBlotter.dbo.SBP_BlotterCRRReportFCY' does not h
           <Property Type="Boolean" Name="ChangePassword" Nullable="true" />
           <Property Type="Int32" Name="CurrencyID" Nullable="true" />
           <Property Type="String" Name="Pages" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_UpdateOpeningBalance_Result">
+          <Property Type="Int64" Name="SNo" Nullable="false" />
+          <Property Type="String" Name="DataType" Nullable="true" MaxLength="100" />
+          <Property Type="Decimal" Name="Inflow" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="OutFlow" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="NetBalance" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="AdjBalance" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Boolean" Name="isAdjusted" Nullable="true" />
+          <Property Type="DateTime" Name="DateFor" Nullable="true" />
         </ComplexType>
         <ComplexType Name="SP_GETUserRoles_Result">
           <Property Type="Int32" Name="URID" Nullable="false" />
@@ -4918,13 +4927,6 @@ warning 6002: The table/view 'WebBlotter.dbo.SBP_BlotterCRRReportFCY' does not h
           <Property Name="FwdIsUpdated" Type="Boolean" />
           <Property Name="FwdIsRun" Type="Boolean" />
         </EntityType>
-        <ComplexType Name="SP_GetAllRsfTTTBO_Result">
-          <Property Type="String" Name="Description" Nullable="false" MaxLength="6" />
-          <Property Type="Int64" Name="SNo" Nullable="false" />
-          <Property Type="DateTime" Name="TBO_Date" Nullable="true" />
-          <Property Type="Decimal" Name="Inflow" Nullable="true" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="Outflow" Nullable="true" Precision="38" Scale="0" />
-        </ComplexType>
         
       </Schema>
     </edmx:ConceptualModels>
@@ -5654,6 +5656,17 @@ warning 6002: The table/view 'WebBlotter.dbo.SBP_BlotterCRRReportFCY' does not h
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_GetAllRsfTTTBO" FunctionName="OPICSWEBModel.Store.SP_GetAllRsfTTTBO">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BlotterEF.SP_GetAllRsfTTTBO_Result">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="SNo" ColumnName="SNo" />
+                <ScalarProperty Name="TBO_Date" ColumnName="TBO_Date" />
+                <ScalarProperty Name="Inflow" ColumnName="Inflow" />
+                <ScalarProperty Name="Outflow" ColumnName="Outflow" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_GETAllRTGSTransactionTitles" FunctionName="OPICSWEBModel.Store.SP_GETAllRTGSTransactionTitles">
             <ResultMapping>
               <ComplexTypeMapping TypeName="BlotterEF.SP_GETAllRTGSTransactionTitles_Result">
@@ -6122,6 +6135,18 @@ warning 6002: The table/view 'WebBlotter.dbo.SBP_BlotterCRRReportFCY' does not h
           <FunctionImportMapping FunctionImportName="SP_UpdateHolidays" FunctionName="OPICSWEBModel.Store.SP_UpdateHolidays" />
           <FunctionImportMapping FunctionImportName="SP_UpdateLoginInfo" FunctionName="OPICSWEBModel.Store.SP_UpdateLoginInfo" />
           <FunctionImportMapping FunctionImportName="SP_UpdateOpeningBalance" FunctionName="OPICSWEBModel.Store.SP_UpdateOpeningBalance">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BlotterEF.SP_UpdateOpeningBalance_Result">
+                <ScalarProperty Name="SNo" ColumnName="SNo" />
+                <ScalarProperty Name="DataType" ColumnName="DataType" />
+                <ScalarProperty Name="Inflow" ColumnName="Inflow" />
+                <ScalarProperty Name="OutFlow" ColumnName="OutFlow" />
+                <ScalarProperty Name="NetBalance" ColumnName="NetBalance" />
+                <ScalarProperty Name="AdjBalance" ColumnName="AdjBalance" />
+                <ScalarProperty Name="isAdjusted" ColumnName="isAdjusted" />
+                <ScalarProperty Name="DateFor" ColumnName="DateFor" />
+              </ComplexTypeMapping>
+            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_UpdateUserPassword" FunctionName="OPICSWEBModel.Store.SP_UpdateUserPassword" />
           <FunctionImportMapping FunctionImportName="SP_UPDATEUserRole" FunctionName="OPICSWEBModel.Store.SP_UPDATEUserRole" />
@@ -6562,7 +6587,6 @@ warning 6002: The table/view 'WebBlotter.dbo.SBP_BlotterCRRReportFCY' does not h
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_UpdateBranchBalanceByBranchId" FunctionName="OPICSWEBModel.Store.SP_UpdateBranchBalanceByBranchId" />
           <EntitySetMapping Name="SBP_BlotterReserved">
             <EntityTypeMapping TypeName="BlotterEF.SBP_BlotterReserved">
               <MappingFragment StoreEntitySet="SBP_BlotterReserved">
@@ -6635,8 +6659,8 @@ warning 6002: The table/view 'WebBlotter.dbo.SBP_BlotterCRRReportFCY' does not h
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_InsertBlotterOutright" FunctionName="OPICSWEBModel.Store.SP_InsertBlotterOutright" />
           <FunctionImportMapping FunctionImportName="SP_UpdateBlotterOutright" FunctionName="OPICSWEBModel.Store.SP_UpdateBlotterOutright" />
+          <FunctionImportMapping FunctionImportName="SP_InsertBlotterOutright" FunctionName="OPICSWEBModel.Store.SP_InsertBlotterOutright" />
           <FunctionImportMapping FunctionImportName="SP_GetSBPBlotterGetSheduler" FunctionName="OPICSWEBModel.Store.SP_GetSBPBlotterGetSheduler">
             <ResultMapping>
               <ComplexTypeMapping TypeName="BlotterEF.SP_GetSBPBlotterGetSheduler_Result">
@@ -6657,6 +6681,8 @@ warning 6002: The table/view 'WebBlotter.dbo.SBP_BlotterCRRReportFCY' does not h
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_UpdatedSBPBlotterGetSheduler" FunctionName="OPICSWEBModel.Store.SP_UpdatedSBPBlotterGetSheduler" />
+          <FunctionImportMapping FunctionImportName="SP_TemporyLoop" FunctionName="OPICSWEBModel.Store.SP_TemporyLoop" />
+          <FunctionImportMapping FunctionImportName="SP_UpdateBlotterSBP_Sheduler" FunctionName="OPICSWEBModel.Store.SP_UpdateBlotterSBP_Sheduler" />
           <EntitySetMapping Name="BlotterSBP_Sheduler">
             <EntityTypeMapping TypeName="BlotterEF.BlotterSBP_Sheduler">
               <MappingFragment StoreEntitySet="BlotterSBP_Sheduler">
@@ -6676,19 +6702,6 @@ warning 6002: The table/view 'WebBlotter.dbo.SBP_BlotterCRRReportFCY' does not h
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="SP_GetAllRsfTTTBO" FunctionName="OPICSWEBModel.Store.SP_GetAllRsfTTTBO">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="BlotterEF.SP_GetAllRsfTTTBO_Result">
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="SNo" ColumnName="SNo" />
-                <ScalarProperty Name="TBO_Date" ColumnName="TBO_Date" />
-                <ScalarProperty Name="Inflow" ColumnName="Inflow" />
-                <ScalarProperty Name="Outflow" ColumnName="Outflow" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_UpdateBlotterSBP_Sheduler" FunctionName="OPICSWEBModel.Store.SP_UpdateBlotterSBP_Sheduler" />
-          <FunctionImportMapping FunctionImportName="SP_TemporyLoop" FunctionName="OPICSWEBModel.Store.SP_TemporyLoop" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

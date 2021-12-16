@@ -12,7 +12,7 @@ namespace WebApiServices.TimerClass
     public class FillRegDumpBlotter
     {
 
-       public static System.Timers.Timer RegTimer=new Timer();
+        public static System.Timers.Timer RegTimer = new Timer();
         public static bool status;
         public static DateTime start;
         public static DateTime end;
@@ -53,14 +53,17 @@ namespace WebApiServices.TimerClass
             if (DateTime.Now.ToLocalTime() >= start && DateTime.Now.ToLocalTime() <= end)
             {
                 Utilities.WriteLogs(MethodBase.GetCurrentMethod().Name, "Reg Dump Started", "");
-                DAL.FillRegDumBlotterBR1();
-                DAL.FillRegDumBlotterBR2();
+                Utilities.FillRegDumBlotterBR1();
+                Utilities.FillRegDumBlotterBR2();
             }
             else
             {
-                RegTimer.Stop();
-                RegTimer.Dispose();
-                
+                if (RegTimer.Enabled)
+                {
+                    RegTimer.Stop();
+                    RegTimer.Dispose();
+                }
+
             }
         }
     }
