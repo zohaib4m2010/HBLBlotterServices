@@ -34,7 +34,7 @@ namespace WebApiServices.TimerClass
         public static void Stop()
         {
             aTimer.Stop();
-            aTimer.Dispose();
+            //aTimer.Dispose();
         }
         private static void SetTimer()
         {
@@ -54,11 +54,10 @@ namespace WebApiServices.TimerClass
         }
         private static void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
-            if (DateTime.Now.ToLocalTime() >= start && DateTime.Now.ToLocalTime() <= end)
+            if (DateTime.Now.ToString("dddd") != "Saturday" || DateTime.Now.ToString("dddd") != "Sunday")
             {
-                if (FillRegDumpBlotter.RegTimer != null)
+                if (DateTime.Now.ToLocalTime() >= start && DateTime.Now.ToLocalTime() <= end)
                 {
-
                     List<DataAccessLayer.SP_GetSBPBlotterGetSheduler_Result> GetSheduler = DAL.GetAllBlotterShedular();
                     if (GetSheduler != null)
                     {
@@ -90,7 +89,7 @@ namespace WebApiServices.TimerClass
                         }
                         else
                         {
-                            if (FillRegDumpBlotter.RegTimer != null)
+                            if (GetSheduler[0].RegIsRun == true)
                             {
                                 if (!FillRegDumpBlotter.RegTimer.Enabled)
                                     FillRegDumpBlotter.Start();
@@ -149,5 +148,6 @@ namespace WebApiServices.TimerClass
                 }
             }
         }
+
     }
 }

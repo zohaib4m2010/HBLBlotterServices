@@ -30,7 +30,7 @@ namespace WebApiServices.TimerClass
         public static void Stop()
         {
             RegTimer.Stop();
-            RegTimer.Dispose();
+            //RegTimer.Dispose();
         }
         private static void SetTimer()
         {
@@ -61,7 +61,7 @@ namespace WebApiServices.TimerClass
                 if (RegTimer.Enabled)
                 {
                     RegTimer.Stop();
-                    RegTimer.Dispose();
+                    //RegTimer.Dispose();
                 }
 
             }

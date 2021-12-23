@@ -20,33 +20,27 @@ namespace WebApiServices.TimerClass
         public static int FreqSeconds;
         public static void Start()
         {
-
-            //DAL.TESTRECONTEST("Start Before STatus");
             if (status)
             {
                 try
                 {
-                    //DAL.TESTRECONTEST("Start after Status");
                     SetTimer();
                     FwdTimer.Start();
                 }
                 catch (Exception ex)
                 {
-                    //DAL.TESTRECONTEST(ex.Message.ToString());
-                    //.TESTRECONTEST(ex.InnerException.ToString());
                 }
             }
         }
         public static void Stop()
         {
             FwdTimer.Stop();
-            FwdTimer.Dispose();
+            //FwdTimer.Dispose();
         }
         private static void SetTimer()
         {
             try
             {
-                //DAL.TESTRECONTEST("SetTimer");
                 // Create a timer with a two second interval.
                 FwdTimer = new System.Timers.Timer();
                 // Hook up the Elapsed event for the timer. 
@@ -64,14 +58,11 @@ namespace WebApiServices.TimerClass
             }
             catch (Exception ex)
             {
-                //DAL.TESTRECONTEST(ex.Message.ToString());
-                //DAL.TESTRECONTEST(ex.InnerException.ToString());
             }
         }
         private static void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
 
-            //DAL.TESTRECONTEST("OnTimedEvent");
             if (DateTime.Now.ToLocalTime() >= start && DateTime.Now.ToLocalTime() <= end)
             {
                 Utilities.WriteLogs(MethodBase.GetCurrentMethod().Name, "Fwd Dump Started", "");
@@ -81,8 +72,7 @@ namespace WebApiServices.TimerClass
             else
             {
                 FwdTimer.Stop();
-                FwdTimer.Dispose();
-                //DAL.TESTRECONTEST("OnTimedEvent if condition false");
+                //FwdTimer.Dispose();
             }
         }
     }
