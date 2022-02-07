@@ -1644,7 +1644,6 @@ warning 6002: The table/view 'WebBlotter.dbo.SBP_BlotterCRRReportFCY' does not h
           <Parameter Name="pSessionID" Type="varchar" Mode="In" />
           <Parameter Name="pUserID" Type="int" Mode="In" />
         </Function>
-        <Function Name="SP_TemporyLoop" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SP_UpdateBlotterOutright" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="bigint" Mode="In" />
           <Parameter Name="DataType" Type="varchar" Mode="In" />
@@ -1696,6 +1695,14 @@ warning 6002: The table/view 'WebBlotter.dbo.SBP_BlotterCRRReportFCY' does not h
           <Parameter Name="FwdFreq" Type="varchar" Mode="In" />
           <Parameter Name="FwdIsUpdated" Type="bit" Mode="In" />
           <Parameter Name="FwdIsRun" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="SP_UpdateBranchBalanceByBranchId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ReconDate" Type="date" Mode="In" />
+          <Parameter Name="ReconInflow" Type="numeric" Mode="In" />
+          <Parameter Name="Recon_OutFLow" Type="numeric" Mode="In" />
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="BR" Type="int" Mode="In" />
+          <Parameter Name="BID" Type="int" Mode="In" />
         </Function>
         <Function Name="SP_UpdateDaysInBlotterReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DTLValue" Type="numeric" Mode="In" />
@@ -3803,14 +3810,6 @@ warning 6002: The table/view 'WebBlotter.dbo.SBP_BlotterCRRReportFCY' does not h
             <Parameter Name="BR" Mode="In" Type="Int32" />
             <Parameter Name="DateVal" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_UpdateBranchBalanceByBranchId">
-            <Parameter Name="ReconDate" Mode="In" Type="DateTime" />
-            <Parameter Name="ReconInflow" Mode="In" Type="Decimal" />
-            <Parameter Name="Recon_OutFLow" Mode="In" Type="Decimal" />
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
-            <Parameter Name="BR" Mode="In" Type="Int32" />
-            <Parameter Name="BID" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="GetIssueTypeTitles" ReturnType="Collection(BlotterEF.GetIssueTypeTitles_Result)" />
           <EntitySet Name="SBP_BlotterReserved" EntityType="BlotterEF.SBP_BlotterReserved" />
           <FunctionImport Name="SP_GetSBPBlotterFRAuto" ReturnType="Collection(BlotterEF.SP_GetSBPBlotterFRAuto_Result)">
@@ -3876,6 +3875,14 @@ warning 6002: The table/view 'WebBlotter.dbo.SBP_BlotterCRRReportFCY' does not h
             <Parameter Name="FwdIsRun" Mode="In" Type="Boolean" />
           </FunctionImport>
           <EntitySet Name="BlotterSBP_Sheduler" EntityType="BlotterEF.BlotterSBP_Sheduler" />
+          <FunctionImport Name="SP_UpdateBranchBalanceByBranchId">
+            <Parameter Name="ReconDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ReconInflow" Mode="In" Type="Decimal" />
+            <Parameter Name="Recon_OutFLow" Mode="In" Type="Decimal" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="BR" Mode="In" Type="Int32" />
+            <Parameter Name="BID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_GetAll_SBPBlotterClearing_Result">
           <Property Type="Int64" Name="SNo" Nullable="false" />
@@ -6681,7 +6688,6 @@ warning 6002: The table/view 'WebBlotter.dbo.SBP_BlotterCRRReportFCY' does not h
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_UpdatedSBPBlotterGetSheduler" FunctionName="OPICSWEBModel.Store.SP_UpdatedSBPBlotterGetSheduler" />
-          <FunctionImportMapping FunctionImportName="SP_TemporyLoop" FunctionName="OPICSWEBModel.Store.SP_TemporyLoop" />
           <FunctionImportMapping FunctionImportName="SP_UpdateBlotterSBP_Sheduler" FunctionName="OPICSWEBModel.Store.SP_UpdateBlotterSBP_Sheduler" />
           <EntitySetMapping Name="BlotterSBP_Sheduler">
             <EntityTypeMapping TypeName="BlotterEF.BlotterSBP_Sheduler">
@@ -6702,6 +6708,7 @@ warning 6002: The table/view 'WebBlotter.dbo.SBP_BlotterCRRReportFCY' does not h
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_UpdateBranchBalanceByBranchId" FunctionName="OPICSWEBModel.Store.SP_UpdateBranchBalanceByBranchId" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
